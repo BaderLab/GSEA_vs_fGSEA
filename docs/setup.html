@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Setup | CBW pathways Workshops - example R notebooks</title>
+  <meta name="description" content="These are example R Notebooks to run g:profiler and GSEA and visualize results in Cytoscape with Enrichment map directly from R" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Setup | CBW pathways Workshops - example R notebooks" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="These are example R Notebooks to run g:profiler and GSEA and visualize results in Cytoscape with Enrichment map directly from R" />
+  <meta name="github-repo" content="risserlin/CBW_pathways_workshop_R_notebooks" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Setup | CBW pathways Workshops - example R notebooks" />
+  
+  <meta name="twitter:description" content="These are example R Notebooks to run g:profiler and GSEA and visualize results in Cytoscape with Enrichment map directly from R" />
+  
+
+<meta name="author" content="Ruth Isserlin" />
+
+
+<meta name="date" content="2023-03-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="intro.html"/>
+<link rel="next" href="methods.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Workshop R Notebooks</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Index</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> CBW Workshop example R Notebooks</a></li>
+<li class="chapter" data-level="3" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>3</b> Setup</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="setup.html"><a href="setup.html#docker-optional"><i class="fa fa-check"></i><b>3.1</b> Docker [Optional]</a></li>
+<li class="chapter" data-level="3.2" data-path="setup.html"><a href="setup.html#install-docker"><i class="fa fa-check"></i><b>3.2</b> Install Docker</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="setup.html"><a href="setup.html#windows"><i class="fa fa-check"></i><b>3.2.1</b> Windows</a></li>
+<li class="chapter" data-level="3.2.2" data-path="setup.html"><a href="setup.html#macos-linux"><i class="fa fa-check"></i><b>3.2.2</b> MacOS / Linux</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>4</b> Methods</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="methods.html"><a href="methods.html#math-example"><i class="fa fa-check"></i><b>4.1</b> math example</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>5.1</b> Example one</a></li>
+<li class="chapter" data-level="5.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>5.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="create-gmt-file-from-ensembl.html"><a href="create-gmt-file-from-ensembl.html"><i class="fa fa-check"></i><b>6</b> Create GMT file from Ensembl</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="create-gmt-file-from-ensembl.html"><a href="create-gmt-file-from-ensembl.html#load-libraries"><i class="fa fa-check"></i><b>6.1</b> Load Libraries</a></li>
+<li class="chapter" data-level="6.2" data-path="create-gmt-file-from-ensembl.html"><a href="create-gmt-file-from-ensembl.html#set-up-biomart-connection"><i class="fa fa-check"></i><b>6.2</b> Set up Biomart connection</a></li>
+<li class="chapter" data-level="6.3" data-path="create-gmt-file-from-ensembl.html"><a href="create-gmt-file-from-ensembl.html#get-species-go-annotations"><i class="fa fa-check"></i><b>6.3</b> Get species GO annotations</a></li>
+<li class="chapter" data-level="6.4" data-path="create-gmt-file-from-ensembl.html"><a href="create-gmt-file-from-ensembl.html#format-results-into-gmt-file"><i class="fa fa-check"></i><b>6.4</b> Format results into GMT file</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CBW pathways Workshops - example R notebooks</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="setup" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Setup<a href="setup.html#setup" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>As with many open source projects, <strong>R</strong> is a constantly evolving language with regular updates. There is a major release once a year with patch releases through out the year. Often scripts and packages will work from one release to the next (ignoring pesky warnings that a package was compiled on a previous version of R is common) but there are exceptions. Some newer packages will only work on the latest version of <strong>R</strong> so sometimes the choice of upgrading or not using a new package might present themselves. Often, the amount of packages and work that is need to upgrade is not realized until the process has begun. This is where docker demonstrates it most valuable features. You can create a new instance based on the latest release of <strong>R</strong> and all your needed packages without having to change any of your current settings.</p>
+<p>In order to use these notebooks supplied here you need to have <strong>R</strong> installed on your computer and a list of packages. Each notebook in this set will check for the required packages and install them if they are missing so at the base level you need to just have <strong>R</strong> installed.</p>
+<p>There are many different ways you can use and setup <strong>R</strong>. By simply installing <strong>R</strong> you can use it directly but it is highly recommended that you also install and use <a href="https://rstudio.com/products/rstudio/download/">RStudio</a> which is an Integrate development environment (IDE) for <strong>R</strong>. You cannot just download RStudio and use it. It requires an installation of <strong>R</strong>.</p>
+<p>You don’t need to install R and RStudio though. You can also use <strong>R</strong> and RStudio through docker. <strong>I highly recommend using docker instead</strong></p>
+<div id="docker-optional" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Docker [Optional]<a href="setup.html#docker-optional" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Changing versions and environments are a continuing struggle with bioinformatics pipelines and computational pipelines in general. An analysis written and performed a year ago might not run or produce the same results when it is run today. Recording package and system versions or not updating certain packages rarely work in the long run.</p>
+<p>One the best solutions to reproducibility issues is containing your workflow or pipeline in its own coding environment where everything from the operating system, programs and packages are defined and can be built from a set of given instructions. There are many systems that offer this type of control including:</p>
+<ul>
+<li><a href="https://www.docker.com/">Docker</a>.</li>
+<li><a href="https://sylabs.io/">Singularity</a></li>
+</ul>
+<p>“A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another.” <span class="citation">(<a href="#ref-docker" role="doc-biblioref"><span>“What Is a Container?”</span> n.d.</a>)</span></p>
+<p><strong>Why are containers great for Bioiformatics?</strong></p>
+<ul>
+<li>allows you to create environments to run bioinformatis pipelines.</li>
+<li>create a consistent environment to use for your pipelines.</li>
+<li>test modifications to the pipeline without disrupting your current set up.</li>
+<li>Coming back to an analysis years later and there is no need to install older versions of packages or programming languages. Simply create a container and re-run.</li>
+</ul>
+</div>
+<div id="install-docker" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Install Docker<a href="setup.html#install-docker" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>Download and install <a href="https://www.docker.com/products/docker-desktop">docker desktop</a>.</li>
+<li>Follow slightly different instructions for Windows or MacOS/Linux</li>
+</ol>
+<div id="windows" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Windows<a href="setup.html#windows" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>it might prompt you to install additional updates (for example - <a href="https://docs.Microsoft.com/en-us/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package" class="uri">https://docs.Microsoft.com/en-us/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package</a>) and require multiple restarts of your system or docker.</li>
+<li>launch docker desktop app.</li>
+<li>Open windows Power shell</li>
+<li>navigate to directory on your system where you plan on keeping all your code. For example: C:\USERS\risserlin\cbw_workshop_code</li>
+<li>Run the following command: (the only difference with the windows command is the way the current directory is written. ${PWD} instead of "$(pwd)")</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="setup.html#cb1-1" aria-hidden="true" tabindex="-1"></a>docker run <span class="sc">-</span>e PASSWORD<span class="ot">=</span>changeit <span class="sc">--</span>rm \</span>
+<span id="cb1-2"><a href="setup.html#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span>v <span class="sc">$</span>{PWD}<span class="sc">:</span><span class="er">/</span>home<span class="sc">/</span>rstudio<span class="sc">/</span>projects <span class="sc">-</span>p <span class="dv">8787</span><span class="sc">:</span><span class="dv">8787</span> \</span>
+<span id="cb1-3"><a href="setup.html#cb1-3" aria-hidden="true" tabindex="-1"></a>  risserlin<span class="sc">/</span>workshop_base_image</span></code></pre></div>
+<p align="center">
+<img src="images/docker_creation_output.png" alt="docker startup" width="95%" align="center" />
+</p>
+<ul>
+<li>Windows defender firewall might pop up with warning. Click on <em>Allow access</em>.</li>
+<li>In docker desktop you see all containers you are running and easily manage them.
+<p align="center">
+<img src="images/docker_rstudio.png" alt="R startup" width="75%" align="center" />
+</p></li>
+</ul>
+</div>
+<div id="macos-linux" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> MacOS / Linux<a href="setup.html#macos-linux" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>Open Terminal</li>
+<li>navigate to directory on your system where you plan on keeping all your code. For example: /Users/risserlin/bcb420_code</li>
+<li>Run the following command: (the only difference with the windows command is the way the current directory is written. ${PWD} instead of "$(pwd)")</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="setup.html#cb2-1" aria-hidden="true" tabindex="-1"></a>docker run <span class="sc">-</span>e PASSWORD<span class="ot">=</span>changeit <span class="sc">--</span>rm \</span>
+<span id="cb2-2"><a href="setup.html#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span>v <span class="st">&quot;$(pwd)&quot;</span><span class="sc">:</span><span class="er">/</span>home<span class="sc">/</span>rstudio<span class="sc">/</span>projects <span class="sc">-</span>p <span class="dv">8787</span><span class="sc">:</span><span class="dv">8787</span> \</span>
+<span id="cb2-3"><a href="setup.html#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">--</span>add<span class="sc">-</span>host <span class="st">&quot;localhost:My.IP.address&quot;</span></span>
+<span id="cb2-4"><a href="setup.html#cb2-4" aria-hidden="true" tabindex="-1"></a>  risserlin<span class="sc">/</span>workshop_base_image</span></code></pre></div>
+<p align="center">
+<img src="images/docker_creation_output.png" alt="docker startup" width="95%" align="center" />
+</p>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-docker" class="csl-entry">
+<span>“What Is a Container?”</span> n.d. <em>Docker</em>. <a href="https://www.docker.com/resources/what-container" class="uri">https://www.docker.com/resources/what-container</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="methods.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/02-setup.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["cbw_workshop_notebooks.pdf", "cbw_workshop_notebooks.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

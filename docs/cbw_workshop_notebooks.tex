@@ -1,0 +1,572 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\usepackage{booktabs}
+\usepackage{amsthm}
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=8pt plus 2pt minus 4pt
+  \thm@postskip=\thm@preskip
+}
+\makeatother
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={CBW pathways Workshops - example R notebooks},
+  pdfauthor={Ruth Isserlin},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{CBW pathways Workshops - example R notebooks}
+\author{Ruth Isserlin}
+\date{2023-03-31}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\hypertarget{index}{%
+\chapter{Index}\label{index}}
+
+\hypertarget{intro}{%
+\chapter{CBW Workshop example R Notebooks}\label{intro}}
+
+Do you want to run the pathways and network analysis from R instead of doing everything mannually as demonstrated in the workshop?
+
+Everything (almost!) that was discussed in the lectures and practicals can be done computationally through R.
+
+We are using the \textbf{bookdown} package (\protect\hyperlink{ref-R-bookdown}{Xie 2023}) in this Workshop R Notebooks book, which was built on top of R Markdown and \textbf{knitr} (\protect\hyperlink{ref-xie2015}{Xie 2015}).
+
+\hypertarget{setup}{%
+\chapter{Setup}\label{setup}}
+
+As with many open source projects, \textbf{R} is a constantly evolving language with regular updates. There is a major release once a year with patch releases through out the year. Often scripts and packages will work from one release to the next (ignoring pesky warnings that a package was compiled on a previous version of R is common) but there are exceptions. Some newer packages will only work on the latest version of \textbf{R} so sometimes the choice of upgrading or not using a new package might present themselves. Often, the amount of packages and work that is need to upgrade is not realized until the process has begun. This is where docker demonstrates it most valuable features. You can create a new instance based on the latest release of \textbf{R} and all your needed packages without having to change any of your current settings.
+
+In order to use these notebooks supplied here you need to have \textbf{R} installed on your computer and a list of packages. Each notebook in this set will check for the required packages and install them if they are missing so at the base level you need to just have \textbf{R} installed.
+
+There are many different ways you can use and setup \textbf{R}. By simply installing \textbf{R} you can use it directly but it is highly recommended that you also install and use \href{https://rstudio.com/products/rstudio/download/}{RStudio} which is an Integrate development environment (IDE) for \textbf{R}. You cannot just download RStudio and use it. It requires an installation of \textbf{R}.
+
+You don't need to install R and RStudio though. You can also use \textbf{R} and RStudio through docker. \textbf{I highly recommend using docker instead}
+
+\hypertarget{docker-optional}{%
+\section{Docker {[}Optional{]}}\label{docker-optional}}
+
+Changing versions and environments are a continuing struggle with bioinformatics pipelines and computational pipelines in general. An analysis written and performed a year ago might not run or produce the same results when it is run today. Recording package and system versions or not updating certain packages rarely work in the long run.
+
+One the best solutions to reproducibility issues is containing your workflow or pipeline in its own coding environment where everything from the operating system, programs and packages are defined and can be built from a set of given instructions. There are many systems that offer this type of control including:
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://www.docker.com/}{Docker}.
+\item
+  \href{https://sylabs.io/}{Singularity}
+\end{itemize}
+
+``A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another.'' (\protect\hyperlink{ref-docker}{{``What Is a Container?''} n.d.})
+
+\textbf{Why are containers great for Bioiformatics?}
+
+\begin{itemize}
+\tightlist
+\item
+  allows you to create environments to run bioinformatis pipelines.
+\item
+  create a consistent environment to use for your pipelines.
+\item
+  test modifications to the pipeline without disrupting your current set up.
+\item
+  Coming back to an analysis years later and there is no need to install older versions of packages or programming languages. Simply create a container and re-run.
+\end{itemize}
+
+\hypertarget{install-docker}{%
+\section{Install Docker}\label{install-docker}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Download and install \href{https://www.docker.com/products/docker-desktop}{docker desktop}.
+\item
+  Follow slightly different instructions for Windows or MacOS/Linux
+\end{enumerate}
+
+\hypertarget{windows}{%
+\subsection{Windows}\label{windows}}
+
+\begin{itemize}
+\tightlist
+\item
+  it might prompt you to install additional updates (for example - \url{https://docs.Microsoft.com/en-us/windows/wsl/install-win10\#step-4---download-the-linux-kernel-update-package}) and require multiple restarts of your system or docker.
+\item
+  launch docker desktop app.
+\item
+  Open windows Power shell
+\item
+  navigate to directory on your system where you plan on keeping all your code. For example: C:\textbackslash USERS\textbackslash risserlin\textbackslash cbw\_workshop\_code
+\item
+  Run the following command: (the only difference with the windows command is the way the current directory is written. \$\{PWD\} instead of "\$(pwd)")
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{docker run }\SpecialCharTok{{-}}\NormalTok{e PASSWORD}\OtherTok{=}\NormalTok{changeit }\SpecialCharTok{{-}{-}}\NormalTok{rm \textbackslash{}}
+  \SpecialCharTok{{-}}\NormalTok{v }\SpecialCharTok{$}\NormalTok{\{PWD\}}\SpecialCharTok{:}\ErrorTok{/}\NormalTok{home}\SpecialCharTok{/}\NormalTok{rstudio}\SpecialCharTok{/}\NormalTok{projects }\SpecialCharTok{{-}}\NormalTok{p }\DecValTok{8787}\SpecialCharTok{:}\DecValTok{8787}\NormalTok{ \textbackslash{}}
+\NormalTok{  risserlin}\SpecialCharTok{/}\NormalTok{workshop\_base\_image}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Windows defender firewall might pop up with warning. Click on \emph{Allow access}.
+\item
+  In docker desktop you see all containers you are running and easily manage them.
+\end{itemize}
+
+\hypertarget{macos-linux}{%
+\subsection{MacOS / Linux}\label{macos-linux}}
+
+\begin{itemize}
+\tightlist
+\item
+  Open Terminal
+\item
+  navigate to directory on your system where you plan on keeping all your code. For example: /Users/risserlin/bcb420\_code
+\item
+  Run the following command: (the only difference with the windows command is the way the current directory is written. \$\{PWD\} instead of "\$(pwd)")
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{docker run }\SpecialCharTok{{-}}\NormalTok{e PASSWORD}\OtherTok{=}\NormalTok{changeit }\SpecialCharTok{{-}{-}}\NormalTok{rm \textbackslash{}}
+  \SpecialCharTok{{-}}\NormalTok{v }\StringTok{"$(pwd)"}\SpecialCharTok{:}\ErrorTok{/}\NormalTok{home}\SpecialCharTok{/}\NormalTok{rstudio}\SpecialCharTok{/}\NormalTok{projects }\SpecialCharTok{{-}}\NormalTok{p }\DecValTok{8787}\SpecialCharTok{:}\DecValTok{8787}\NormalTok{ \textbackslash{}}
+  \SpecialCharTok{{-}{-}}\NormalTok{add}\SpecialCharTok{{-}}\NormalTok{host }\StringTok{"localhost:My.IP.address"}
+\NormalTok{  risserlin}\SpecialCharTok{/}\NormalTok{workshop\_base\_image}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{methods}{%
+\chapter{Methods}\label{methods}}
+
+We describe our methods in this chapter.
+
+Math can be added in body using usual syntax like this
+
+\hypertarget{math-example}{%
+\section{math example}\label{math-example}}
+
+\(p\) is unknown but expected to be around 1/3. Standard error will be approximated
+
+\[
+SE = \sqrt(\frac{p(1-p)}{n}) \approx \sqrt{\frac{1/3 (1 - 1/3)} {300}} = 0.027
+\]
+
+You can also use math in footnotes like this\footnote{where we mention \(p = \frac{a}{b}\)}.
+
+We will approximate standard error to 0.027\footnote{\(p\) is unknown but expected to be around 1/3. Standard error will be approximated
+
+  \[
+  SE = \sqrt(\frac{p(1-p)}{n}) \approx \sqrt{\frac{1/3 (1 - 1/3)} {300}} = 0.027
+  \]}
+
+\hypertarget{applications}{%
+\chapter{Applications}\label{applications}}
+
+Some \emph{significant} applications are demonstrated in this chapter.
+
+\hypertarget{example-one}{%
+\section{Example one}\label{example-one}}
+
+\hypertarget{example-two}{%
+\section{Example two}\label{example-two}}
+
+\hypertarget{create-gmt-file-from-ensembl}{%
+\chapter{Create GMT file from Ensembl}\label{create-gmt-file-from-ensembl}}
+
+The \href{https://download.baderlab.org/EM_Genesets/}{Baderlab geneset download site} is an updated resource for geneset files from GO, Reactome, WikiPathways, Pathbank, NetPath, HumanCyc, IOB, \ldots{} many others that can be used in \href{https://biit.cs.ut.ee/gprofiler/gost}{g:Profiler} or \href{https://www.gsea-msigdb.org/gsea/index.jsp}{GSEA} and many other enrichment tools that support the gmt format.
+
+Unfortunately genesets are only supplied for:
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://download.baderlab.org/EM_Genesets/current_release/Human/}{Human}
+\item
+  \href{https://download.baderlab.org/EM_Genesets/current_release/Mouse/}{Mouse}
+\item
+  \href{https://download.baderlab.org/EM_Genesets/current_release/Rat/}{Rat}
+\item
+  \href{https://download.baderlab.org/EM_Genesets/current_release/Woodchuck/}{Woodchuck}
+\end{itemize}
+
+If you are working in a different species you will need to generate your own gmt file. The best way to do this is through ensembl. Ensembl doesn't have annotations for all the pathway databases listed above but it has annotations for most species from GO.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{working\_dir }\OtherTok{\textless{}{-}} \StringTok{"./genereated\_data"}
+\NormalTok{species }\OtherTok{\textless{}{-}} \StringTok{"horse"}
+\NormalTok{ensembl\_dataset }\OtherTok{\textless{}{-}} \StringTok{"ecaballus\_gene\_ensembl"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#use library}
+\CommentTok{\#make sure biocManager is installed}
+\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)\}, }
+         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }
+           \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)\}, }
+         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{))}
+
+
+\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"biomaRt"}\NormalTok{)\}, }
+         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }
+\NormalTok{           BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\StringTok{"biomaRt"}\NormalTok{)\}, }
+         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"biomaRt"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{load-libraries}{%
+\section{Load Libraries}\label{load-libraries}}
+
+Create or set a directory to store all the generatd results
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{dir.exists}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{working\_dir))\{}
+  \FunctionTok{dir.create}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{working\_dir)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{set-up-biomart-connection}{%
+\section{Set up Biomart connection}\label{set-up-biomart-connection}}
+
+Connect to Biomart
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ensembl }\OtherTok{\textless{}{-}} \FunctionTok{useMart}\NormalTok{(}\StringTok{"ensembl"}\NormalTok{,}\AttributeTok{host =} \StringTok{"https://asia.ensembl.org"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Figure out which dataset you want to use - for some species there might be a few datasets to choose from. Not all of the datasets have common namesa associated with them. For example, if you search for `yeast' nothing will be returned but if you look for Saccharomyces or cerevisiae you will be able to find it.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{all\_datasets }\OtherTok{\textless{}{-}} \FunctionTok{listDatasets}\NormalTok{(ensembl)}
+
+\CommentTok{\#get all the datasets that match our species definition}
+\NormalTok{all\_datasets[}\FunctionTok{grep}\NormalTok{(all\_datasets}\SpecialCharTok{$}\NormalTok{description,}
+                  \AttributeTok{pattern=}\NormalTok{params}\SpecialCharTok{$}\NormalTok{species,}
+                  \AttributeTok{ignore.case =} \ConstantTok{TRUE}\NormalTok{),]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                         dataset                                 description
+## 60       ecaballus_gene_ensembl                     Horse genes (EquCab3.0)
+## 76          hcomes_gene_ensembl  Tiger tail seahorse genes (H_comes_QL1_v1)
+## 164 rferrumequinum_gene_ensembl Greater horseshoe bat genes (mRhiFer1_v1.p)
+##            version
+## 60       EquCab3.0
+## 76  H_comes_QL1_v1
+## 164  mRhiFer1_v1.p
+\end{verbatim}
+
+If you know the ensembl dataset that you want to use you can specify it in the parameters above or grab from the above table the dataset of the species that you are interested in.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ensembl\_dataset }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{ensembl\_dataset}
+\NormalTok{ensembl }\OtherTok{=} \FunctionTok{useDataset}\NormalTok{(ensembl\_dataset,}\AttributeTok{mart=}\NormalTok{ensembl)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{get-species-go-annotations}{%
+\section{Get species GO annotations}\label{get-species-go-annotations}}
+
+Get the GO annotations for our species
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{go\_annotation }\OtherTok{\textless{}{-}} \FunctionTok{getBM}\NormalTok{(}\AttributeTok{attributes =} \FunctionTok{c}\NormalTok{(}\StringTok{"external\_gene\_name"}\NormalTok{,}
+                                      \StringTok{"ensembl\_gene\_id"}\NormalTok{,}
+                                      \StringTok{"ensembl\_transcript\_id"}\NormalTok{,}
+                                      \StringTok{"go\_id"}\NormalTok{, }
+                                      \StringTok{"name\_1006"}\NormalTok{, }
+                                      \StringTok{"namespace\_1003"}\NormalTok{,}
+                                      \StringTok{"go\_linkage\_type"}\NormalTok{), }
+                       \AttributeTok{filters=}\FunctionTok{list}\NormalTok{(}\AttributeTok{biotype=}\StringTok{\textquotesingle{}protein\_coding\textquotesingle{}}\NormalTok{), }\AttributeTok{mart=}\NormalTok{ensembl);}
+
+\CommentTok{\#get just the go biological process subset}
+\DocumentationTok{\#\#\#\#\#}
+\CommentTok{\# Get rid of this line if you want to include all of go and not just biological process}
+\DocumentationTok{\#\#\#\#\#}
+\NormalTok{go\_annotation\_bp }\OtherTok{\textless{}{-}}\NormalTok{ go\_annotation[}\FunctionTok{which}\NormalTok{(go\_annotation}\SpecialCharTok{$}\NormalTok{namespace\_1003 }\SpecialCharTok{==} \StringTok{"biological\_process"}\NormalTok{),]}
+
+\CommentTok{\#compute the unique pathway sets}
+\NormalTok{go\_pathway\_sets }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(go\_annotation\_bp[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{],}
+                             \AttributeTok{by =} \FunctionTok{list}\NormalTok{(go\_annotation\_bp}\SpecialCharTok{$}\NormalTok{go\_id),}
+                             \AttributeTok{FUN =} \ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{list}\NormalTok{(}\FunctionTok{unique}\NormalTok{(x))\})}
+
+\CommentTok{\#unlist the go descriptions}
+\NormalTok{go\_pathway\_sets}\SpecialCharTok{$}\NormalTok{name\_1006 }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(go\_pathway\_sets,}\DecValTok{1}\NormalTok{,}\AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{}
+   \FunctionTok{paste}\NormalTok{(}\FunctionTok{gsub}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{name\_1006),}\AttributeTok{pattern=} \StringTok{"}\SpecialCharTok{\textbackslash{}"}\StringTok{"}\NormalTok{,}\AttributeTok{replacement =} \StringTok{""}\NormalTok{),}\AttributeTok{collapse =} \StringTok{""}\NormalTok{)\})}
+\end{Highlighting}
+\end{Shaded}
+
+There are two identifiers that you can choose from in the above table
+* external\_symbols
+* ensembl\_ids
+
+Each of these is stored as a list in the dataframe. In order to convert it to the right format for the gmt file we need to convert the list to string of tab delimited strings. (unfortunately there is no streaightforward way to write out a dataframe's column of lists.)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{go\_pathway\_sets[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{,}\StringTok{"external\_gene\_name"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] "MEF2A"    "SLC25A36" "OPA1"     "MGME1"    "SLC25A33" "TYMP"     "AKT3"    
+## [8] "PIF1"    
+## 
+## [[2]]
+## [1] "GNRH1" "GNRH2" "LIN9" 
+## 
+## [[3]]
+## [1] "ERCC6" "ERCC8" "LIG4"  "APLF"  "APTX"  "XRCC1" "SIRT1" "XNDC1"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{go\_pathway\_sets[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{,}\StringTok{"ensembl\_gene\_id"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] "ENSECAG00000011593" "ENSECAG00000010094" "ENSECAG00000024248"
+## [4] "ENSECAG00000012675" "ENSECAG00000016862" "ENSECAG00000001072"
+## [7] "ENSECAG00000019722" "ENSECAG00000005316"
+## 
+## [[2]]
+## [1] "ENSECAG00000010664" "ENSECAG00000039220" "ENSECAG00000014325"
+## 
+## [[3]]
+## [1] "ENSECAG00000014160" "ENSECAG00000018335" "ENSECAG00000003257"
+## [4] "ENSECAG00000013246" "ENSECAG00000012674" "ENSECAG00000014127"
+## [7] "ENSECAG00000013909" "ENSECAG00000042118"
+\end{verbatim}
+
+\hypertarget{format-results-into-gmt-file}{%
+\section{Format results into GMT file}\label{format-results-into-gmt-file}}
+
+Convert column of lists to a tab delimited string of gene names
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{go\_pathway\_sets}\SpecialCharTok{$}\NormalTok{collapsed\_genenames }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(go\_pathway\_sets,}\DecValTok{1}\NormalTok{,}\AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{}
+   \FunctionTok{paste}\NormalTok{(}\FunctionTok{gsub}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{external\_gene\_name),}\AttributeTok{pattern=} \StringTok{"}\SpecialCharTok{\textbackslash{}"}\StringTok{"}\NormalTok{,}\AttributeTok{replacement =} \StringTok{""}\NormalTok{),}\AttributeTok{collapse =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
+\NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
+
+Convert column of lists to a tab delimited string of gene names
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{go\_pathway\_sets}\SpecialCharTok{$}\NormalTok{collapsed\_ensemblids }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(go\_pathway\_sets,}\DecValTok{1}\NormalTok{,}\AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{}
+   \FunctionTok{paste}\NormalTok{(}\FunctionTok{gsub}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{ensembl\_gene\_id),}\AttributeTok{pattern=} \StringTok{"}\SpecialCharTok{\textbackslash{}"}\StringTok{"}\NormalTok{,}\AttributeTok{replacement =} \StringTok{""}\NormalTok{),}\AttributeTok{collapse =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
+\NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
+
+The format of the GMT file is described \href{here}{https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data\_formats\#GMT:\emph{Gene\_Matrix\_Transposed\_file\_format}.28.2A.gmt.29} and consists of rows with the following
+
+\begin{itemize}
+\tightlist
+\item
+  Name
+\item
+  Description
+\item
+  tab delimited list of genes a part of this geneset
+\end{itemize}
+
+Write out the gmt file with genenames
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gmt\_file\_genenames }\OtherTok{\textless{}{-}}\NormalTok{ go\_pathway\_sets[,}\FunctionTok{c}\NormalTok{(}\StringTok{"Group.1"}\NormalTok{,}\StringTok{"name\_1006"}\NormalTok{,}\StringTok{"collapsed\_genenames"}\NormalTok{)]}
+\FunctionTok{colnames}\NormalTok{(gmt\_file\_genenames)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{,}\StringTok{"description"}\NormalTok{) }
+
+\NormalTok{gmt\_genenames\_filename }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{working\_dir, }\FunctionTok{paste}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{species,ensembl\_dataset,}\StringTok{"GO\_genesets\_GN.gmt"}\NormalTok{,}\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{))}
+
+\FunctionTok{write.table}\NormalTok{(}\AttributeTok{x =}\NormalTok{ gmt\_file\_genenames,}\AttributeTok{file =}\NormalTok{ gmt\_genenames\_filename,}
+            \AttributeTok{quote =} \ConstantTok{FALSE}\NormalTok{,}\AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}\AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{,}
+            \AttributeTok{col.names=}\ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Write out the gmt file with ensembl ids
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gmt\_file\_ensemblids }\OtherTok{\textless{}{-}}\NormalTok{ go\_pathway\_sets[,}\FunctionTok{c}\NormalTok{(}\StringTok{"Group.1"}\NormalTok{,}\StringTok{"name\_1006"}\NormalTok{,}\StringTok{"collapsed\_ensemblids"}\NormalTok{)]}
+\FunctionTok{colnames}\NormalTok{(gmt\_file\_ensemblids)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{,}\StringTok{"description"}\NormalTok{) }
+
+\NormalTok{gmt\_ensemblids\_filename }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{working\_dir, }\FunctionTok{paste}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{species,ensembl\_dataset,}\StringTok{"GO\_genesets\_esemblids.gmt"}\NormalTok{,}\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{))}
+
+\FunctionTok{write.table}\NormalTok{(}\AttributeTok{x =}\NormalTok{ gmt\_file\_ensemblids,}\AttributeTok{file =}\NormalTok{ gmt\_ensemblids\_filename,}
+            \AttributeTok{quote =} \ConstantTok{FALSE}\NormalTok{,}\AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}\AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{,}
+            \AttributeTok{col.names=}\ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-docker}{}}%
+{``What Is a Container?''} n.d. \emph{Docker}. \url{https://www.docker.com/resources/what-container}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-xie2015}{}}%
+Xie, Yihui. 2015. \emph{Dynamic Documents with {R} and Knitr}. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC. \url{http://yihui.name/knitr/}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-bookdown}{}}%
+---------. 2023. \emph{Bookdown: Authoring Books and Technical Documents with r Markdown}. \url{https://CRAN.R-project.org/package=bookdown}.
+
+\end{CSLReferences}
+
+\end{document}
