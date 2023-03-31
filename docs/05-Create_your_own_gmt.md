@@ -19,10 +19,17 @@ Unfortunately genesets are only supplied for:
 If you are working in a different species you will need to generate your own gmt file. The best way to do this is through ensembl.  Ensembl doesn't have annotations for all the pathway databases listed above but it has annotations for most species from GO.
 
 
+The parameters are set in the params option on this notebook but you can also manually set them here.
+
 ```r
-working_dir <- "./genereated_data"
-species <- "horse"
-ensembl_dataset <- "ecaballus_gene_ensembl"
+# for example - working_dir <- "./genereated_data"
+working_dir <- params$working_dir
+
+# for example - species <- "horse"
+species <- params$species
+
+# for example - ensembl_dataset <- "ecaballus_gene_ensembl"
+ensembl_dataset <- params$ensembl_dataset
 ```
 
 
@@ -68,7 +75,7 @@ all_datasets <- listDatasets(ensembl)
 
 #get all the datasets that match our species definition
 all_datasets[grep(all_datasets$description,
-                  pattern=params$species,
+                  pattern=species,
                   ignore.case = TRUE),]
 ```
 
@@ -87,7 +94,6 @@ If you know the ensembl dataset that you want to use you can specify it in the p
 
 
 ```r
-ensembl_dataset <- params$ensembl_dataset
 ensembl = useDataset(ensembl_dataset,mart=ensembl)
 ```
 
@@ -109,7 +115,8 @@ go_annotation <- getBM(attributes = c("external_gene_name",
 #####
 # Get rid of this line if you want to include all of go and not just biological process
 #####
-go_annotation_bp <- go_annotation[which(go_annotation$namespace_1003 == "biological_process"),]
+go_annotation_bp <- go_annotation[which(
+  go_annotation$namespace_1003 == "biological_process"),]
 
 #compute the unique pathway sets
 go_pathway_sets <- aggregate(go_annotation_bp[,1:5],
@@ -118,7 +125,8 @@ go_pathway_sets <- aggregate(go_annotation_bp[,1:5],
 
 #unlist the go descriptions
 go_pathway_sets$name_1006 <- apply(go_pathway_sets,1,FUN=function(x){
-   paste(gsub(unlist(x$name_1006),pattern= "\"",replacement = ""),collapse = "")})
+   paste(gsub(unlist(x$name_1006),pattern= "\"",
+              replacement = ""),collapse = "")})
 ```
 
 There are two identifiers that you can choose from in the above table
@@ -167,8 +175,10 @@ go_pathway_sets[1:3,"ensembl_gene_id"]
 Convert column of lists to a tab delimited string of gene names
 
 ```r
-go_pathway_sets$collapsed_genenames <- apply(go_pathway_sets,1,FUN=function(x){
-   paste(gsub(unlist(x$external_gene_name),pattern= "\"",replacement = ""),collapse = "\t")
+go_pathway_sets$collapsed_genenames <- apply(go_pathway_sets,1,
+                                             FUN=function(x){
+   paste(gsub(unlist(x$external_gene_name),pattern= "\"",
+              replacement = ""),collapse = "\t")
 })
 ```
 
@@ -176,8 +186,10 @@ go_pathway_sets$collapsed_genenames <- apply(go_pathway_sets,1,FUN=function(x){
 Convert column of lists to a tab delimited string of gene names
 
 ```r
-go_pathway_sets$collapsed_ensemblids <- apply(go_pathway_sets,1,FUN=function(x){
-   paste(gsub(unlist(x$ensembl_gene_id),pattern= "\"",replacement = ""),collapse = "\t")
+go_pathway_sets$collapsed_ensemblids <- apply(go_pathway_sets,1,
+                                              FUN=function(x){
+   paste(gsub(unlist(x$ensembl_gene_id),pattern= "\"",
+              replacement = ""),collapse = "\t")
 })
 ```
 
@@ -191,10 +203,11 @@ Write out the gmt file with genenames
 
 
 ```r
-gmt_file_genenames <- go_pathway_sets[,c("Group.1","name_1006","collapsed_genenames")]
+gmt_file_genenames <- go_pathway_sets[,c("Group.1","name_1006",
+                                         "collapsed_genenames")]
 colnames(gmt_file_genenames)[1:2] <- c("name","description") 
 
-gmt_genenames_filename <- file.path(params$working_dir, paste(params$species,ensembl_dataset,"GO_genesets_GN.gmt",sep = "_"))
+gmt_genenames_filename <- file.path(params$working_dir, paste(species,ensembl_dataset,"GO_genesets_GN.gmt",sep = "_"))
 
 write.table(x = gmt_file_genenames,file = gmt_genenames_filename,
             quote = FALSE,sep = "\t",row.names = FALSE,
@@ -204,10 +217,11 @@ write.table(x = gmt_file_genenames,file = gmt_genenames_filename,
 Write out the gmt file with ensembl ids
 
 ```r
-gmt_file_ensemblids <- go_pathway_sets[,c("Group.1","name_1006","collapsed_ensemblids")]
+gmt_file_ensemblids <- go_pathway_sets[,c("Group.1","name_1006",
+                                          "collapsed_ensemblids")]
 colnames(gmt_file_ensemblids)[1:2] <- c("name","description") 
 
-gmt_ensemblids_filename <- file.path(params$working_dir, paste(params$species,ensembl_dataset,"GO_genesets_esemblids.gmt",sep = "_"))
+gmt_ensemblids_filename <- file.path(params$working_dir, paste(species,ensembl_dataset,"GO_genesets_esemblids.gmt",sep = "_"))
 
 write.table(x = gmt_file_ensemblids,file = gmt_ensemblids_filename,
             quote = FALSE,sep = "\t",row.names = FALSE,

@@ -331,11 +331,18 @@ Unfortunately genesets are only supplied for:
 
 If you are working in a different species you will need to generate your own gmt file. The best way to do this is through ensembl. Ensembl doesn't have annotations for all the pathway databases listed above but it has annotations for most species from GO.
 
+The parameters are set in the params option on this notebook but you can also manually set them here.
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{working\_dir }\OtherTok{\textless{}{-}} \StringTok{"./genereated\_data"}
-\NormalTok{species }\OtherTok{\textless{}{-}} \StringTok{"horse"}
-\NormalTok{ensembl\_dataset }\OtherTok{\textless{}{-}} \StringTok{"ecaballus\_gene\_ensembl"}
+\CommentTok{\# for example {-} working\_dir \textless{}{-} "./genereated\_data"}
+\NormalTok{working\_dir }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{working\_dir}
+
+\CommentTok{\# for example {-} species \textless{}{-} "horse"}
+\NormalTok{species }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{species}
+
+\CommentTok{\# for example {-} ensembl\_dataset \textless{}{-} "ecaballus\_gene\_ensembl"}
+\NormalTok{ensembl\_dataset }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{ensembl\_dataset}
 \end{Highlighting}
 \end{Shaded}
 
@@ -388,7 +395,7 @@ Figure out which dataset you want to use - for some species there might be a few
 
 \CommentTok{\#get all the datasets that match our species definition}
 \NormalTok{all\_datasets[}\FunctionTok{grep}\NormalTok{(all\_datasets}\SpecialCharTok{$}\NormalTok{description,}
-                  \AttributeTok{pattern=}\NormalTok{params}\SpecialCharTok{$}\NormalTok{species,}
+                  \AttributeTok{pattern=}\NormalTok{species,}
                   \AttributeTok{ignore.case =} \ConstantTok{TRUE}\NormalTok{),]}
 \end{Highlighting}
 \end{Shaded}
@@ -408,7 +415,6 @@ If you know the ensembl dataset that you want to use you can specify it in the p
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ensembl\_dataset }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{ensembl\_dataset}
 \NormalTok{ensembl }\OtherTok{=} \FunctionTok{useDataset}\NormalTok{(ensembl\_dataset,}\AttributeTok{mart=}\NormalTok{ensembl)}
 \end{Highlighting}
 \end{Shaded}
@@ -433,7 +439,8 @@ Get the GO annotations for our species
 \DocumentationTok{\#\#\#\#\#}
 \CommentTok{\# Get rid of this line if you want to include all of go and not just biological process}
 \DocumentationTok{\#\#\#\#\#}
-\NormalTok{go\_annotation\_bp }\OtherTok{\textless{}{-}}\NormalTok{ go\_annotation[}\FunctionTok{which}\NormalTok{(go\_annotation}\SpecialCharTok{$}\NormalTok{namespace\_1003 }\SpecialCharTok{==} \StringTok{"biological\_process"}\NormalTok{),]}
+\NormalTok{go\_annotation\_bp }\OtherTok{\textless{}{-}}\NormalTok{ go\_annotation[}\FunctionTok{which}\NormalTok{(}
+\NormalTok{  go\_annotation}\SpecialCharTok{$}\NormalTok{namespace\_1003 }\SpecialCharTok{==} \StringTok{"biological\_process"}\NormalTok{),]}
 
 \CommentTok{\#compute the unique pathway sets}
 \NormalTok{go\_pathway\_sets }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(go\_annotation\_bp[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{],}
@@ -442,7 +449,8 @@ Get the GO annotations for our species
 
 \CommentTok{\#unlist the go descriptions}
 \NormalTok{go\_pathway\_sets}\SpecialCharTok{$}\NormalTok{name\_1006 }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(go\_pathway\_sets,}\DecValTok{1}\NormalTok{,}\AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{}
-   \FunctionTok{paste}\NormalTok{(}\FunctionTok{gsub}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{name\_1006),}\AttributeTok{pattern=} \StringTok{"}\SpecialCharTok{\textbackslash{}"}\StringTok{"}\NormalTok{,}\AttributeTok{replacement =} \StringTok{""}\NormalTok{),}\AttributeTok{collapse =} \StringTok{""}\NormalTok{)\})}
+   \FunctionTok{paste}\NormalTok{(}\FunctionTok{gsub}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{name\_1006),}\AttributeTok{pattern=} \StringTok{"}\SpecialCharTok{\textbackslash{}"}\StringTok{"}\NormalTok{,}
+              \AttributeTok{replacement =} \StringTok{""}\NormalTok{),}\AttributeTok{collapse =} \StringTok{""}\NormalTok{)\})}
 \end{Highlighting}
 \end{Shaded}
 
@@ -498,8 +506,10 @@ Convert column of lists to a tab delimited string of gene names
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{go\_pathway\_sets}\SpecialCharTok{$}\NormalTok{collapsed\_genenames }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(go\_pathway\_sets,}\DecValTok{1}\NormalTok{,}\AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{}
-   \FunctionTok{paste}\NormalTok{(}\FunctionTok{gsub}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{external\_gene\_name),}\AttributeTok{pattern=} \StringTok{"}\SpecialCharTok{\textbackslash{}"}\StringTok{"}\NormalTok{,}\AttributeTok{replacement =} \StringTok{""}\NormalTok{),}\AttributeTok{collapse =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
+\NormalTok{go\_pathway\_sets}\SpecialCharTok{$}\NormalTok{collapsed\_genenames }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(go\_pathway\_sets,}\DecValTok{1}\NormalTok{,}
+                                             \AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{}
+   \FunctionTok{paste}\NormalTok{(}\FunctionTok{gsub}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{external\_gene\_name),}\AttributeTok{pattern=} \StringTok{"}\SpecialCharTok{\textbackslash{}"}\StringTok{"}\NormalTok{,}
+              \AttributeTok{replacement =} \StringTok{""}\NormalTok{),}\AttributeTok{collapse =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
 \NormalTok{\})}
 \end{Highlighting}
 \end{Shaded}
@@ -508,8 +518,10 @@ Convert column of lists to a tab delimited string of gene names
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{go\_pathway\_sets}\SpecialCharTok{$}\NormalTok{collapsed\_ensemblids }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(go\_pathway\_sets,}\DecValTok{1}\NormalTok{,}\AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{}
-   \FunctionTok{paste}\NormalTok{(}\FunctionTok{gsub}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{ensembl\_gene\_id),}\AttributeTok{pattern=} \StringTok{"}\SpecialCharTok{\textbackslash{}"}\StringTok{"}\NormalTok{,}\AttributeTok{replacement =} \StringTok{""}\NormalTok{),}\AttributeTok{collapse =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
+\NormalTok{go\_pathway\_sets}\SpecialCharTok{$}\NormalTok{collapsed\_ensemblids }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(go\_pathway\_sets,}\DecValTok{1}\NormalTok{,}
+                                              \AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{}
+   \FunctionTok{paste}\NormalTok{(}\FunctionTok{gsub}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{ensembl\_gene\_id),}\AttributeTok{pattern=} \StringTok{"}\SpecialCharTok{\textbackslash{}"}\StringTok{"}\NormalTok{,}
+              \AttributeTok{replacement =} \StringTok{""}\NormalTok{),}\AttributeTok{collapse =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
 \NormalTok{\})}
 \end{Highlighting}
 \end{Shaded}
@@ -530,10 +542,11 @@ Write out the gmt file with genenames
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gmt\_file\_genenames }\OtherTok{\textless{}{-}}\NormalTok{ go\_pathway\_sets[,}\FunctionTok{c}\NormalTok{(}\StringTok{"Group.1"}\NormalTok{,}\StringTok{"name\_1006"}\NormalTok{,}\StringTok{"collapsed\_genenames"}\NormalTok{)]}
+\NormalTok{gmt\_file\_genenames }\OtherTok{\textless{}{-}}\NormalTok{ go\_pathway\_sets[,}\FunctionTok{c}\NormalTok{(}\StringTok{"Group.1"}\NormalTok{,}\StringTok{"name\_1006"}\NormalTok{,}
+                                         \StringTok{"collapsed\_genenames"}\NormalTok{)]}
 \FunctionTok{colnames}\NormalTok{(gmt\_file\_genenames)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{,}\StringTok{"description"}\NormalTok{) }
 
-\NormalTok{gmt\_genenames\_filename }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{working\_dir, }\FunctionTok{paste}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{species,ensembl\_dataset,}\StringTok{"GO\_genesets\_GN.gmt"}\NormalTok{,}\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{))}
+\NormalTok{gmt\_genenames\_filename }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{working\_dir, }\FunctionTok{paste}\NormalTok{(species,ensembl\_dataset,}\StringTok{"GO\_genesets\_GN.gmt"}\NormalTok{,}\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{))}
 
 \FunctionTok{write.table}\NormalTok{(}\AttributeTok{x =}\NormalTok{ gmt\_file\_genenames,}\AttributeTok{file =}\NormalTok{ gmt\_genenames\_filename,}
             \AttributeTok{quote =} \ConstantTok{FALSE}\NormalTok{,}\AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}\AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{,}
@@ -545,10 +558,11 @@ Write out the gmt file with ensembl ids
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gmt\_file\_ensemblids }\OtherTok{\textless{}{-}}\NormalTok{ go\_pathway\_sets[,}\FunctionTok{c}\NormalTok{(}\StringTok{"Group.1"}\NormalTok{,}\StringTok{"name\_1006"}\NormalTok{,}\StringTok{"collapsed\_ensemblids"}\NormalTok{)]}
+\NormalTok{gmt\_file\_ensemblids }\OtherTok{\textless{}{-}}\NormalTok{ go\_pathway\_sets[,}\FunctionTok{c}\NormalTok{(}\StringTok{"Group.1"}\NormalTok{,}\StringTok{"name\_1006"}\NormalTok{,}
+                                          \StringTok{"collapsed\_ensemblids"}\NormalTok{)]}
 \FunctionTok{colnames}\NormalTok{(gmt\_file\_ensemblids)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{,}\StringTok{"description"}\NormalTok{) }
 
-\NormalTok{gmt\_ensemblids\_filename }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{working\_dir, }\FunctionTok{paste}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{species,ensembl\_dataset,}\StringTok{"GO\_genesets\_esemblids.gmt"}\NormalTok{,}\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{))}
+\NormalTok{gmt\_ensemblids\_filename }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{working\_dir, }\FunctionTok{paste}\NormalTok{(species,ensembl\_dataset,}\StringTok{"GO\_genesets\_esemblids.gmt"}\NormalTok{,}\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{))}
 
 \FunctionTok{write.table}\NormalTok{(}\AttributeTok{x =}\NormalTok{ gmt\_file\_ensemblids,}\AttributeTok{file =}\NormalTok{ gmt\_ensemblids\_filename,}
             \AttributeTok{quote =} \ConstantTok{FALSE}\NormalTok{,}\AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}\AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{,}
