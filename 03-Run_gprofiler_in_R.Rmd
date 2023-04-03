@@ -1,23 +1,189 @@
-# Methods
+---
+params:
+  working_dir: ./generated_data/g_profiler
+  data_dir: ./data
+  genelist_file: Supplementary_Table1_Cancer_drivers.txt
+  max_gs_size: 350
+  min_gs_size: 3
+  min_intersection: 3
+---
 
-We describe our methods in this chapter.
+# Run g:profiler from R
 
-Math can be added in body using usual syntax like this 
+Detailed instructions on how to run [g:Profiler](https://biit.cs.ut.ee/gprofiler/gost) programmatically from R
 
-## math example
+The parameters are set in the params option on this notebook but you can also manually set them here.
+```{r set parameters gprofiler}
+# for example - working_dir <- "./genereated_data"
+working_dir <- params$working_dir
 
-$p$ is unknown but expected to be around 1/3. Standard error will be approximated
+data_dir <- params$data_dir
 
-$$
-SE = \sqrt(\frac{p(1-p)}{n}) \approx \sqrt{\frac{1/3 (1 - 1/3)} {300}} = 0.027
-$$
+# for example - species <- "horse"
+genelist_file <- params$genelist_file
 
-You can also use math in footnotes like this^[where we mention $p = \frac{a}{b}$].
+# max size of the genesets for example -  350
+max_gs_size <- params$max_gs_size
 
-We will approximate standard error to 0.027[^longnote]
+# max size of the genesets for example - 3
+min_gs_size <- params$min_gs_size
 
-[^longnote]: $p$ is unknown but expected to be around 1/3. Standard error will be approximated
+#min intersection between your genelist and the geneset - for example 3
+min_intersection <- params$min_intersection 
 
-    $$
-    SE = \sqrt(\frac{p(1-p)}{n}) \approx \sqrt{\frac{1/3 (1 - 1/3)} {300}} = 0.027
-    $$
+```
+
+
+```{r load libraries gprofiler}
+#use library
+tryCatch(expr = { library("gprofiler2")}, 
+         error = function(e) { 
+           install.packages("gprofiler2")}, 
+         finally = library("gprofiler2"))
+
+tryCatch(expr = { library("GSA")}, 
+         error = function(e) { 
+           install.packages("GSA")}, 
+         finally = library("GSA"))
+
+```
+
+Create or set a directory to store all the generatd results
+```{r}
+
+if(!dir.exists(params$working_dir)){
+  dir.create(params$working_dir)
+}
+```
+
+Load in the set of genes that we will be running g:profiler with
+```{r load genelist gprofiler}
+ #load in the file
+    current_genelist <- read.table(file = 
+                                     file.path(data_dir, genelist_file),
+                                   header = FALSE,
+                                   sep = "\t", quote = "",
+                                   stringsAsFactors = FALSE)
+
+  query_set <- current_genelist$V1
+```
+
+
+With regards to pathway sets there are two options when using [g:Profiler](https://biit.cs.ut.ee/gprofiler/gost) - 
+  * Use the genesets that are supplied by [g:Profiler](https://biit.cs.ut.ee/gprofiler/gost)
+  * Upload your own genesets. 
+  
+The most common reasons for supplying your own genesets is the ability to use up to date annotations or in-house annotations that might not be available in the public sphere yet.  One of the greatest features of [g:Profiler](https://biit.cs.ut.ee/gprofiler/gost) is that it is updated on a regular basis and most of the previous versions are available online ont the [gprofiler archive](https://biit.cs.ut.ee/gprofiler/page/archives).
+
+The [gprofielr2](https://biit.cs.ut.ee/gprofiler/page/r) -[g:Profiler](https://biit.cs.ut.ee/gprofiler/gost) R implementation is a wrapper for the web version.  You require an internet connection to get enrichment results.  
+
+## Run g:profiler with supplied genesets
+For detailed descriptions of all the parameters that can be specified for the gost g:profiler function see -[here](https://rdrr.io/cran/gprofiler2/man/gost.html)
+
+For this query we are specifying - 
+  * query - the set of genes of interest, as loaded in from the `r genelist_file` file.
+  * significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.
+  * ordered_query - set to TRUE because for this set of genes they are ordered in order of their significance
+  * correction_method - set to fdr.  by default g:Profiler uses g:Scs
+  * organism - set to "hsapiens" for homo sapiens.  Organism names are constructed by concatenating the first letter of the name and the family name (according to gprofiler2 documentation)
+  * source - the geneset source databases to use for the analysis.  We recommend using GO biological process (GO:BP), WikiPathways (WP) and Reactome (Reac) but there are additional sources you can add (GO molecular function or cellular component(GO:MF, GO:CC), KEGG, transcription factors (TF), microRNA targets (MIRNA), corum complexes (CORUM), Human protein atlas (HPA),Human phenotype ontology (HP) ) 
+
+```{r run gprofiler supplied gs}
+gprofiler_results <- gost(query = query_set ,
+                          significant=FALSE,
+                          ordered_query = TRUE,
+                          exclude_iea=FALSE,
+                          correction_method = "fdr",
+                          organism = "hsapiens",
+                          source = c("REAC","WP","GO:BP"))
+```
+
+
+```{r}
+
+ #get the gprofiler results table
+enrichment_results <- gprofiler_results$result
+    
+enrichment_results[1:5,]
+
+```
+
+Filter the table to include just the columns that are required for the generic enrichment map file results [GEM](https://enrichmentmap.readthedocs.io/en/latest/FileFormats.html#generic-results-files). Restrict the results to just the ones that have at least min_gs_size and less than max_gs_size terms and  min_intersection size include only the term_id, term_name, p_value (and p_value again because the p_value is actually the corrected p-value.  The output file does not contain the nominal p_value.  For down stream analysis though it is expected to have both a p-value and a q-value so just duplicate the q-value as both p-value and q-value)
+```{r}
+# filer by params defined above
+enrichment_results <- subset(enrichment_results,term_size >= min_gs_size & 
+                                   term_size <= max_gs_size & 
+                                   intersection_size >= min_intersection , 
+                                 select = c(term_id,term_name,p_value,p_value ))
+
+```
+
+
+
+## Run g:profiler with your own genesets
+
+
+```{r download baderlab gmt file, message=FALSE, warning=FALSE, include=FALSE}
+gmt_url = "http://download.baderlab.org/EM_Genesets/current_release/Human/UniProt/"
+
+#list all the files on the server
+filenames = RCurl::getURL(gmt_url)
+tc = textConnection(filenames)
+contents = readLines(tc)
+close(tc)
+
+#get the gmt that has all the pathways and does not include terms inferred from electronic annotations(IEA)
+#start with gmt file that has pathways only
+rx = gregexpr("(?<=<a href=\")(.*.GOBP_AllPathways_no_GO_iea.*.)(.gmt)(?=\">)",
+  contents, perl = TRUE)
+gmt_file = unlist(regmatches(contents, rx))
+
+dest_gmt_file <- file.path(working_dir,gmt_file)
+
+download.file(
+    paste(gmt_url,gmt_file,sep=""),
+    destfile=dest_gmt_file
+)
+
+
+```
+
+
+## Upload the gmt file to gprofiler
+
+In order to use your own genesets with g:Profiler you need to upload the the file to their server first.  The function will return an ID that you need to specify in the organism parameter of the g:Profiler gost function call. 
+```{r}
+custom_gmt <- upload_GMT_file(gmtfile=dest_gmt_file)
+```
+
+For this query we are specifying - 
+  * query - the set of genes of interest, as loaded in from the `r genelist_file` file.
+  * significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.
+  * ordered_query - set to TRUE because for this set of genes they are ordered in order of their significance
+  * correction_method - set to fdr.  by default g:Profiler uses g:Scs
+  * organism - set to the custom_gmt ID ( for this run it is - `r custom_gmt`) that we received when we uploaded our genetset file.
+
+
+```{r run gprofiler upload gs}
+gprofiler_results_custom <- gost(query = query_set ,
+                                     significant=FALSE,
+                                 ordered_query = TRUE,
+                                    exclude_iea=FALSE,
+                                     correction_method = "fdr",
+                                     organism = custom_gmt)
+```
+
+
+## Create enrichment Results files 
+
+In order to use our results down stream in the Enrichment map we need to generate results files that we can pass to Enrichment Map.  
+
+Load in the GMT file
+```{r include=FALSE}
+library(GSA)
+
+genesets <- GSA.read.gmt(filename = dest_gmt_file)
+
+names(genesets$genesets) <- genesets$geneset.names
+```
+
