@@ -1,10 +1,20 @@
 # Setup
 
+## Install R and RStudio
+
 As with many open source projects, **R** is a constantly evolving language with regular updates.  There is a major release once a year with patch releases through out the year.  Often scripts and packages will work from one release to the next (ignoring pesky warnings that a package was compiled on a previous version of R is common) but there are exceptions.  Some newer packages will only work on the latest version of **R** so sometimes the choice of upgrading or not using a new package might present themselves.  Often, the amount of packages and work that is need to upgrade is not realized until the process has begun.  This is where docker demonstrates it most valuable features.  You can create a new instance based on the latest release of **R** and all your needed packages without having to change any of your current settings. 
 
-In order to use these notebooks supplied here you need to have **R** installed on your computer and a list of packages.  Each notebook in this set will check for the required packages and install them if they are missing so at the base level you need to just have **R** installed.  
+In order to use these notebooks supplied here you need to have:
 
-There are many different ways you can use and setup **R**.  By simply installing **R** you can use it directly but it is highly recommended that you also install and use [RStudio](https://rstudio.com/products/rstudio/download/) which is an Integrate development environment (IDE) for **R**.  You cannot just download RStudio and use it.  It requires an installation of **R**. 
+  * **R** installed on your computer and 
+  * a list of packages.  (including BiocManager, BiomaRt, gprofiler2, GSA)
+  
+Each notebook in this set will check for the required packages and install them if they are missing so at the base level you need to just have **R** installed.  
+
+There are many different ways you can use and setup **R**.  
+
+  1. By simply installing **R** you can use it directly but 
+  1. it is highly recommended that you also install and use [RStudio](https://rstudio.com/products/rstudio/download/) which is an Integrate development environment (IDE) for **R**.  You cannot just download RStudio and use it.  It requires an installation of **R**. 
 
 You don't need to install R and RStudio though.  You can also use **R** and RStudio through docker. **I highly recommend using docker instead**
 

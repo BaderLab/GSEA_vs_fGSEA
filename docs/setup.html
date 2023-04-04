@@ -23,7 +23,7 @@
 <meta name="author" content="Ruth Isserlin" />
 
 
-<meta name="date" content="2023-04-03" />
+<meta name="date" content="2023-04-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -162,11 +162,12 @@ div.csl-indent {
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> CBW Workshop example R Notebooks</a></li>
 <li class="chapter" data-level="3" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>3</b> Setup</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="setup.html"><a href="setup.html#docker-optional"><i class="fa fa-check"></i><b>3.1</b> Docker [Optional]</a></li>
-<li class="chapter" data-level="3.2" data-path="setup.html"><a href="setup.html#install-docker"><i class="fa fa-check"></i><b>3.2</b> Install Docker</a>
+<li class="chapter" data-level="3.1" data-path="setup.html"><a href="setup.html#install-r-and-rstudio"><i class="fa fa-check"></i><b>3.1</b> Install R and RStudio</a></li>
+<li class="chapter" data-level="3.2" data-path="setup.html"><a href="setup.html#docker-optional"><i class="fa fa-check"></i><b>3.2</b> Docker [Optional]</a></li>
+<li class="chapter" data-level="3.3" data-path="setup.html"><a href="setup.html#install-docker"><i class="fa fa-check"></i><b>3.3</b> Install Docker</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="setup.html"><a href="setup.html#windows"><i class="fa fa-check"></i><b>3.2.1</b> Windows</a></li>
-<li class="chapter" data-level="3.2.2" data-path="setup.html"><a href="setup.html#macos-linux"><i class="fa fa-check"></i><b>3.2.2</b> MacOS / Linux</a></li>
+<li class="chapter" data-level="3.3.1" data-path="setup.html"><a href="setup.html#windows"><i class="fa fa-check"></i><b>3.3.1</b> Windows</a></li>
+<li class="chapter" data-level="3.3.2" data-path="setup.html"><a href="setup.html#macos-linux"><i class="fa fa-check"></i><b>3.3.2</b> MacOS / Linux</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html"><i class="fa fa-check"></i><b>4</b> Run g:profiler from R</a>
@@ -210,12 +211,24 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="setup" class="section level1 hasAnchor" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Setup<a href="setup.html#setup" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="install-r-and-rstudio" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Install R and RStudio<a href="setup.html#install-r-and-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>As with many open source projects, <strong>R</strong> is a constantly evolving language with regular updates. There is a major release once a year with patch releases through out the year. Often scripts and packages will work from one release to the next (ignoring pesky warnings that a package was compiled on a previous version of R is common) but there are exceptions. Some newer packages will only work on the latest version of <strong>R</strong> so sometimes the choice of upgrading or not using a new package might present themselves. Often, the amount of packages and work that is need to upgrade is not realized until the process has begun. This is where docker demonstrates it most valuable features. You can create a new instance based on the latest release of <strong>R</strong> and all your needed packages without having to change any of your current settings.</p>
-<p>In order to use these notebooks supplied here you need to have <strong>R</strong> installed on your computer and a list of packages. Each notebook in this set will check for the required packages and install them if they are missing so at the base level you need to just have <strong>R</strong> installed.</p>
-<p>There are many different ways you can use and setup <strong>R</strong>. By simply installing <strong>R</strong> you can use it directly but it is highly recommended that you also install and use <a href="https://rstudio.com/products/rstudio/download/">RStudio</a> which is an Integrate development environment (IDE) for <strong>R</strong>. You cannot just download RStudio and use it. It requires an installation of <strong>R</strong>.</p>
+<p>In order to use these notebooks supplied here you need to have:</p>
+<ul>
+<li><strong>R</strong> installed on your computer and</li>
+<li>a list of packages. (including BiocManager, BiomaRt, gprofiler2, GSA)</li>
+</ul>
+<p>Each notebook in this set will check for the required packages and install them if they are missing so at the base level you need to just have <strong>R</strong> installed.</p>
+<p>There are many different ways you can use and setup <strong>R</strong>.</p>
+<ol style="list-style-type: decimal">
+<li>By simply installing <strong>R</strong> you can use it directly but</li>
+<li>it is highly recommended that you also install and use <a href="https://rstudio.com/products/rstudio/download/">RStudio</a> which is an Integrate development environment (IDE) for <strong>R</strong>. You cannot just download RStudio and use it. It requires an installation of <strong>R</strong>.</li>
+</ol>
 <p>You don’t need to install R and RStudio though. You can also use <strong>R</strong> and RStudio through docker. <strong>I highly recommend using docker instead</strong></p>
-<div id="docker-optional" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> Docker [Optional]<a href="setup.html#docker-optional" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="docker-optional" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Docker [Optional]<a href="setup.html#docker-optional" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Changing versions and environments are a continuing struggle with bioinformatics pipelines and computational pipelines in general. An analysis written and performed a year ago might not run or produce the same results when it is run today. Recording package and system versions or not updating certain packages rarely work in the long run.</p>
 <p>One the best solutions to reproducibility issues is containing your workflow or pipeline in its own coding environment where everything from the operating system, programs and packages are defined and can be built from a set of given instructions. There are many systems that offer this type of control including:</p>
 <ul>
@@ -231,14 +244,14 @@ div.csl-indent {
 <li>Coming back to an analysis years later and there is no need to install older versions of packages or programming languages. Simply create a container and re-run.</li>
 </ul>
 </div>
-<div id="install-docker" class="section level2 hasAnchor" number="3.2">
-<h2><span class="header-section-number">3.2</span> Install Docker<a href="setup.html#install-docker" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="install-docker" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Install Docker<a href="setup.html#install-docker" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ol style="list-style-type: decimal">
 <li>Download and install <a href="https://www.docker.com/products/docker-desktop">docker desktop</a>.</li>
 <li>Follow slightly different instructions for Windows or MacOS/Linux</li>
 </ol>
-<div id="windows" class="section level3 hasAnchor" number="3.2.1">
-<h3><span class="header-section-number">3.2.1</span> Windows<a href="setup.html#windows" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="windows" class="section level3 hasAnchor" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Windows<a href="setup.html#windows" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>it might prompt you to install additional updates (for example - <a href="https://docs.Microsoft.com/en-us/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package" class="uri">https://docs.Microsoft.com/en-us/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package</a>) and require multiple restarts of your system or docker.</li>
 <li>launch docker desktop app.</li>
@@ -260,8 +273,8 @@ div.csl-indent {
 </p></li>
 </ul>
 </div>
-<div id="macos-linux" class="section level3 hasAnchor" number="3.2.2">
-<h3><span class="header-section-number">3.2.2</span> MacOS / Linux<a href="setup.html#macos-linux" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="macos-linux" class="section level3 hasAnchor" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> MacOS / Linux<a href="setup.html#macos-linux" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Open Terminal</li>
 <li>navigate to directory on your system where you plan on keeping all your code. For example: /Users/risserlin/bcb420_code</li>
