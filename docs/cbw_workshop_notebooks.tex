@@ -145,7 +145,7 @@
 
 \title{CBW pathways Workshops - example R notebooks}
 \author{Ruth Isserlin}
-\date{2023-04-03}
+\date{2023-04-05}
 
 \begin{document}
 \maketitle
@@ -169,11 +169,33 @@ We are using the \textbf{bookdown} package (\protect\hyperlink{ref-R-bookdown}{X
 \hypertarget{setup}{%
 \chapter{Setup}\label{setup}}
 
+\hypertarget{install-r-and-rstudio}{%
+\section{Install R and RStudio}\label{install-r-and-rstudio}}
+
 As with many open source projects, \textbf{R} is a constantly evolving language with regular updates. There is a major release once a year with patch releases through out the year. Often scripts and packages will work from one release to the next (ignoring pesky warnings that a package was compiled on a previous version of R is common) but there are exceptions. Some newer packages will only work on the latest version of \textbf{R} so sometimes the choice of upgrading or not using a new package might present themselves. Often, the amount of packages and work that is need to upgrade is not realized until the process has begun. This is where docker demonstrates it most valuable features. You can create a new instance based on the latest release of \textbf{R} and all your needed packages without having to change any of your current settings.
 
-In order to use these notebooks supplied here you need to have \textbf{R} installed on your computer and a list of packages. Each notebook in this set will check for the required packages and install them if they are missing so at the base level you need to just have \textbf{R} installed.
+In order to use these notebooks supplied here you need to have:
 
-There are many different ways you can use and setup \textbf{R}. By simply installing \textbf{R} you can use it directly but it is highly recommended that you also install and use \href{https://rstudio.com/products/rstudio/download/}{RStudio} which is an Integrate development environment (IDE) for \textbf{R}. You cannot just download RStudio and use it. It requires an installation of \textbf{R}.
+\begin{itemize}
+\tightlist
+\item
+  \textbf{R} installed on your computer and
+\item
+  a list of packages. (including BiocManager, BiomaRt, gprofiler2, GSA)
+\end{itemize}
+
+Each notebook in this set will check for the required packages and install them if they are missing so at the base level you need to just have \textbf{R} installed.
+
+There are many different ways you can use and setup \textbf{R}.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  By simply installing \textbf{R} you can use it directly but
+\item
+  it is highly recommended that you also install and use \href{https://rstudio.com/products/rstudio/download/}{RStudio} which is an Integrate development environment (IDE) for \textbf{R}. You cannot just download RStudio and use it. It requires an installation of \textbf{R}.
+\end{enumerate}
 
 You don't need to install R and RStudio though. You can also use \textbf{R} and RStudio through docker. \textbf{I highly recommend using docker instead}
 
@@ -299,7 +321,12 @@ The parameters are set in the params option on this notebook but you can also ma
 \NormalTok{min\_gs\_size }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{min\_gs\_size}
 
 \CommentTok{\#min intersection between your genelist and the geneset {-} for example 3}
-\NormalTok{min\_intersection }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{min\_intersection }
+\NormalTok{min\_intersection }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{min\_intersection}
+
+\CommentTok{\# organism parameter used for g:profiler.  First letter of first word in species name followed by }
+\CommentTok{\# the second word}
+\CommentTok{\# for example {-} hsapiens}
+\NormalTok{organism }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{organism}
 \end{Highlighting}
 \end{Shaded}
 
@@ -344,8 +371,14 @@ Load in the set of genes that we will be running g:profiler with
 \end{Shaded}
 
 With regards to pathway sets there are two options when using \href{https://biit.cs.ut.ee/gprofiler/gost}{g:Profiler} -
-* Use the genesets that are supplied by \href{https://biit.cs.ut.ee/gprofiler/gost}{g:Profiler}
-* Upload your own genesets.
+
+\begin{itemize}
+\tightlist
+\item
+  Use the genesets that are supplied by \href{https://biit.cs.ut.ee/gprofiler/gost}{g:Profiler}
+\item
+  Upload your own genesets.
+\end{itemize}
 
 The most common reasons for supplying your own genesets is the ability to use up to date annotations or in-house annotations that might not be available in the public sphere yet. One of the greatest features of \href{https://biit.cs.ut.ee/gprofiler/gost}{g:Profiler} is that it is updated on a regular basis and most of the previous versions are available online ont the \href{https://biit.cs.ut.ee/gprofiler/page/archives}{gprofiler archive}.
 
@@ -357,12 +390,22 @@ The \href{https://biit.cs.ut.ee/gprofiler/page/r}{gprofielr2} -\href{https://bii
 For detailed descriptions of all the parameters that can be specified for the gost g:profiler function see -\href{https://rdrr.io/cran/gprofiler2/man/gost.html}{here}
 
 For this query we are specifying -
-* query - the set of genes of interest, as loaded in from the Supplementary\_Table1\_Cancer\_drivers.txt file.
-* significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.
-* ordered\_query - set to TRUE because for this set of genes they are ordered in order of their significance
-* correction\_method - set to fdr. by default g:Profiler uses g:Scs
-* organism - set to ``hsapiens'' for homo sapiens. Organism names are constructed by concatenating the first letter of the name and the family name (according to gprofiler2 documentation)
-* source - the geneset source databases to use for the analysis. We recommend using GO biological process (\url{GO:BP}), WikiPathways (WP) and Reactome (Reac) but there are additional sources you can add (GO molecular function or cellular component(\url{GO:MF}, \url{GO:CC}), KEGG, transcription factors (TF), microRNA targets (MIRNA), corum complexes (CORUM), Human protein atlas (HPA),Human phenotype ontology (HP) )
+
+\begin{itemize}
+\tightlist
+\item
+  query - the set of genes of interest, as loaded in from the Supplementary\_Table1\_Cancer\_drivers.txt file.
+\item
+  significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.
+\item
+  ordered\_query - set to TRUE because for this set of genes they are ordered in order of their significance
+\item
+  correction\_method - set to fdr. by default g:Profiler uses g:Scs
+\item
+  organism - set to ``hsapiens'' for homo sapiens. Organism names are constructed by concatenating the first letter of the name and the family name (according to gprofiler2 documentation)
+\item
+  source - the geneset source databases to use for the analysis. We recommend using GO biological process (\url{GO:BP}), WikiPathways (WP) and Reactome (Reac) but there are additional sources you can add (GO molecular function or cellular component(\url{GO:MF}, \url{GO:CC}), KEGG, transcription factors (TF), microRNA targets (MIRNA), corum complexes (CORUM), Human protein atlas (HPA),Human phenotype ontology (HP) )
+\end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -371,7 +414,7 @@ For this query we are specifying -
                           \AttributeTok{ordered\_query =} \ConstantTok{TRUE}\NormalTok{,}
                           \AttributeTok{exclude\_iea=}\ConstantTok{FALSE}\NormalTok{,}
                           \AttributeTok{correction\_method =} \StringTok{"fdr"}\NormalTok{,}
-                          \AttributeTok{organism =} \StringTok{"hsapiens"}\NormalTok{,}
+                          \AttributeTok{organism =}\NormalTok{ organism,}
                           \AttributeTok{source =} \FunctionTok{c}\NormalTok{(}\StringTok{"REAC"}\NormalTok{,}\StringTok{"WP"}\NormalTok{,}\StringTok{"GO:BP"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
@@ -424,8 +467,101 @@ Filter the table to include just the columns that are required for the generic e
 \end{Highlighting}
 \end{Shaded}
 
+In order to create a proper Generic enrichment results file we will need a copy of the gmt file used by g:Profiler. (also to create an Enrichment map).
+
+Download the gmt file used for this analysis from g:profiler
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#the link to the gmt file is static no matter what version}
+\NormalTok{gprofiler\_gmt\_url }\OtherTok{\textless{}{-}} \StringTok{"https://biit.cs.ut.ee/gprofiler//static/gprofiler\_full\_hsapiens.name.gmt"}
+
+\CommentTok{\#get version info gprofiler as the gmt file is always associated with a specific version of g:profiler}
+\NormalTok{gprofiler\_version }\OtherTok{\textless{}{-}} \FunctionTok{get\_version\_info}\NormalTok{(}\AttributeTok{organism=}\NormalTok{organism)}
+
+\NormalTok{gprofiler\_gmt\_filename }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(working\_dir,}
+                                            \FunctionTok{paste}\NormalTok{(}\StringTok{"gprofiler\_full"}\NormalTok{, organism,}
+\NormalTok{                                                  gprofiler\_version}\SpecialCharTok{$}\NormalTok{gprofiler\_version,}\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{,}
+                                                  \StringTok{".name.gmt"}\NormalTok{))}
+
+\FunctionTok{download.file}\NormalTok{(}\AttributeTok{url =}\NormalTok{ gprofiler\_gmt\_url, }\AttributeTok{destfile =}\NormalTok{ gprofiler\_gmt\_filename)}
+
+\CommentTok{\#load in the g:profiler geneset file}
+\NormalTok{capt\_output }\OtherTok{\textless{}{-}} \FunctionTok{capture.output}\NormalTok{(genesets\_gprofiler }\OtherTok{\textless{}{-}} \FunctionTok{GSA.read.gmt}\NormalTok{(}\AttributeTok{filename =}\NormalTok{ gprofiler\_gmt\_filename))}
+
+\FunctionTok{names}\NormalTok{(genesets\_gprofiler}\SpecialCharTok{$}\NormalTok{genesets) }\OtherTok{\textless{}{-}}\NormalTok{ genesets\_gprofiler}\SpecialCharTok{$}\NormalTok{geneset.names}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Given:}
+\CommentTok{\# query\_genes {-} genes used for enrichment analysis (or as query)}
+\CommentTok{\#}
+\CommentTok{\# returns {-} the genes that overlap with the query set and part of the given}
+\CommentTok{\#           genesets}
+\NormalTok{getGenesetGenes }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(query\_genes, subset\_genesets)\{}
+\NormalTok{  genes }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(subset\_genesets,}\AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{intersect}\NormalTok{(x,query\_genes)\})}
+  
+  \CommentTok{\# For each of the genes collapse to the comma separate text}
+\NormalTok{  genes\_collapsed }\OtherTok{\textless{}{-}} \FunctionTok{unlist}\NormalTok{(}\FunctionTok{lapply}\NormalTok{(genes,}\AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{paste}\NormalTok{(x,}\AttributeTok{collapse =} \StringTok{","}\NormalTok{)\}))}
+\NormalTok{  genes\_collapsed\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{term\_id =} \FunctionTok{names}\NormalTok{(genes), }\AttributeTok{genes =}\NormalTok{ genes\_collapsed,}\AttributeTok{stringsAsFactors =} \ConstantTok{FALSE}\NormalTok{)}
+  \FunctionTok{return}\NormalTok{(genes\_collapsed\_df)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{create-an-output-file-of-the-results---generic-enrichment-map-file-from-gprofiler-gmt}{%
+\section{Create an output file of the results - Generic enrichment Map file from g:profiler gmt}\label{create-an-output-file-of-the-results---generic-enrichment-map-file-from-gprofiler-gmt}}
+
+The file requires -
+
+\begin{itemize}
+\tightlist
+\item
+  name
+\item
+  description
+\item
+  p-value
+\item
+  q-value
+\item
+  phenotyp
+\item
+  list of genes (overlap of query set and original geneset)
+\end{itemize}
+
+The list of genes needs to be calculated using the gmt file and original query set. For each geneset found in the result find the overlap between the set of genes that are a part of the geneset and the query set.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(enrichment\_results) }\SpecialCharTok{\textgreater{}}\DecValTok{0}\NormalTok{)\{    }
+
+           \CommentTok{\#add phenotype to the results}
+\NormalTok{          enrichment\_results }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(enrichment\_results,}\DecValTok{1}\NormalTok{)}
+          
+          \CommentTok{\# Add the genes to the genesets}
+\NormalTok{          subset\_genesets }\OtherTok{\textless{}{-}}\NormalTok{ genesets\_gprofiler}\SpecialCharTok{$}\NormalTok{genesets[}\FunctionTok{which}\NormalTok{(genesets\_gprofiler}\SpecialCharTok{$}\NormalTok{geneset.names }\SpecialCharTok{\%in\%}\NormalTok{ enrichment\_results}\SpecialCharTok{$}\NormalTok{term\_id)]}
+          
+\NormalTok{          genes }\OtherTok{\textless{}{-}} \FunctionTok{getGenesetGenes}\NormalTok{(query\_set, subset\_genesets)}
+          
+\NormalTok{          enrichment\_results }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(enrichment\_results,genes,}\AttributeTok{by.x=}\DecValTok{1}\NormalTok{, }\AttributeTok{by.y=}\DecValTok{1}\NormalTok{)}
+          
+          \FunctionTok{colnames}\NormalTok{(enrichment\_results) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{,}\StringTok{"description"}\NormalTok{,}\StringTok{"p{-}value"}\NormalTok{,}\StringTok{"q{-}value"}\NormalTok{,}\StringTok{"phenotype"}\NormalTok{,}\StringTok{"genes"}\NormalTok{)}
+          
+\NormalTok{\}}
+
+\CommentTok{\#output the enrichment map file}
+\FunctionTok{write.table}\NormalTok{(enrichment\_results, }\AttributeTok{file =} \FunctionTok{file.path}\NormalTok{(working\_dir, }\StringTok{"gprofiler\_GEM\_using\_gprof\_gmt.txt"}\NormalTok{),}
+                                                 \AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{col.names =} \ConstantTok{TRUE}\NormalTok{,}\AttributeTok{quote =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
 \hypertarget{run-gprofiler-with-your-own-genesets}{%
 \section{Run g:profiler with your own genesets}\label{run-gprofiler-with-your-own-genesets}}
+
+Download the latest \href{https://download.baderlab.org/EM_Genesets/current_release/Human/}{Bader lab genesets}
 
 \hypertarget{upload-the-gmt-file-to-gprofiler}{%
 \section{Upload the gmt file to gprofiler}\label{upload-the-gmt-file-to-gprofiler}}
@@ -439,20 +575,29 @@ In order to use your own genesets with g:Profiler you need to upload the the fil
 \end{Shaded}
 
 \begin{verbatim}
-## Your custom annotations ID is gp__A9gE_WMmN_u4o
+## Your custom annotations ID is gp__a6ma_oV5h_onA
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 \end{verbatim}
 
 \begin{verbatim}
-## Just use: gost(my_genes, organism = 'gp__A9gE_WMmN_u4o')
+## Just use: gost(my_genes, organism = 'gp__a6ma_oV5h_onA')
 \end{verbatim}
 
 For this query we are specifying -
-* query - the set of genes of interest, as loaded in from the Supplementary\_Table1\_Cancer\_drivers.txt file.
-* significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.
-* ordered\_query - set to TRUE because for this set of genes they are ordered in order of their significance
-* correction\_method - set to fdr. by default g:Profiler uses g:Scs
-* organism - set to the custom\_gmt ID ( for this run it is - gp\_\_A9gE\_WMmN\_u4o) that we received when we uploaded our genetset file.
+
+\begin{itemize}
+\tightlist
+\item
+  query - the set of genes of interest, as loaded in from the Supplementary\_Table1\_Cancer\_drivers.txt file.
+\item
+  significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.
+\item
+  ordered\_query - set to TRUE because for this set of genes they are ordered in order of their significance
+\item
+  correction\_method - set to fdr. by default g:Profiler uses g:Scs
+\item
+  organism - set to the custom\_gmt ID ( for this run it is - gp\_\_a6ma\_oV5h\_onA) that we received when we uploaded our genetset file.
+\end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -461,7 +606,8 @@ For this query we are specifying -
                                  \AttributeTok{ordered\_query =} \ConstantTok{TRUE}\NormalTok{,}
                                     \AttributeTok{exclude\_iea=}\ConstantTok{FALSE}\NormalTok{,}
                                      \AttributeTok{correction\_method =} \StringTok{"fdr"}\NormalTok{,}
-                                     \AttributeTok{organism =}\NormalTok{ custom\_gmt)}
+                                 \AttributeTok{organism =}\NormalTok{ custom\_gmt}
+\NormalTok{                                     )}
 \end{Highlighting}
 \end{Shaded}
 
@@ -469,10 +615,66 @@ For this query we are specifying -
 ## Detected custom GMT source request
 \end{verbatim}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+ \CommentTok{\#get the gprofiler results table}
+\NormalTok{enrichment\_results\_customgmt }\OtherTok{\textless{}{-}}\NormalTok{ gprofiler\_results\_custom}\SpecialCharTok{$}\NormalTok{result}
+    
+\NormalTok{enrichment\_results\_customgmt[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{,]}
+\end{Highlighting}
+\end{Shaded}
+
 \begin{verbatim}
-## No results to show
-## Please make sure that the organism is correct or set significant = FALSE
+##     query significant      p_value term_size query_size intersection_size
+## 1 query_1        TRUE 6.730012e-37      4645        110                94
+## 2 query_1        TRUE 2.579228e-35      4747        110                93
+## 3 query_1        TRUE 2.579228e-35      4881        110                94
+## 4 query_1        TRUE 4.280880e-34      5230        110                95
+## 5 query_1        TRUE 2.069151e-33      3435        110                81
+##   precision     recall
+## 1 0.8545455 0.02023681
+## 2 0.8454545 0.01959132
+## 3 0.8545455 0.01925835
+## 4 0.8636364 0.01816444
+## 5 0.7363636 0.02358079
+##                                                                          term_id
+## 1                       REGULATION OF CELLULAR METABOLIC PROCESS%GOBP%GO:0031323
+## 2              REGULATION OF NITROGEN COMPOUND METABOLIC PROCESS%GOBP%GO:0051171
+## 3                        REGULATION OF PRIMARY METABOLIC PROCESS%GOBP%GO:0080090
+## 4                  REGULATION OF MACROMOLECULE METABOLIC PROCESS%GOBP%GO:0060255
+## 5 REGULATION OF NUCLEOBASE-CONTAINING COMPOUND METABOLIC PROCESS%GOBP%GO:0019219
+##                                                  source
+## 1 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol
+## 2 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol
+## 3 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol
+## 4 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol
+## 5 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol
+##                                                        term_name
+## 1                       regulation of cellular metabolic process
+## 2              regulation of nitrogen compound metabolic process
+## 3                        regulation of primary metabolic process
+## 4                  regulation of macromolecule metabolic process
+## 5 regulation of nucleobase-containing compound metabolic process
+##   effective_domain_size source_order parents
+## 1                 18525        18677    NULL
+## 2                 18525        11634    NULL
+## 3                 18525        11073    NULL
+## 4                 18525        10657    NULL
+## 5                 18525         5967    NULL
 \end{verbatim}
+
+Filter the table to include just the columns that are required for the generic enrichment map file results \href{https://enrichmentmap.readthedocs.io/en/latest/FileFormats.html\#generic-results-files}{GEM}. Restrict the results to just the ones that have at least min\_gs\_size and less than max\_gs\_size terms and min\_intersection size include only the term\_id, term\_name, p\_value (and p\_value again because the p\_value is actually the corrected p-value. The output file does not contain the nominal p\_value. For down stream analysis though it is expected to have both a p-value and a q-value so just duplicate the q-value as both p-value and q-value)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# filer by params defined above}
+\NormalTok{enrichment\_results\_customgmt }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(enrichment\_results\_customgmt,}
+\NormalTok{                                       term\_size }\SpecialCharTok{\textgreater{}=}\NormalTok{ min\_gs\_size }\SpecialCharTok{\&} 
+\NormalTok{                                   term\_size }\SpecialCharTok{\textless{}=}\NormalTok{ max\_gs\_size }\SpecialCharTok{\&} 
+\NormalTok{                                   intersection\_size }\SpecialCharTok{\textgreater{}=}\NormalTok{ min\_intersection , }
+                                 \AttributeTok{select =} \FunctionTok{c}\NormalTok{(term\_id,term\_name,p\_value,p\_value ))}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{create-enrichment-results-files}{%
 \section{Create enrichment Results files}\label{create-enrichment-results-files}}
@@ -480,6 +682,54 @@ For this query we are specifying -
 In order to use our results down stream in the Enrichment map we need to generate results files that we can pass to Enrichment Map.
 
 Load in the GMT file
+
+\hypertarget{create-an-output-file-of-the-results---generic-enrichment-map-file-from-baderlab-gmt}{%
+\section{Create an output file of the results - Generic enrichment Map file from Baderlab gmt}\label{create-an-output-file-of-the-results---generic-enrichment-map-file-from-baderlab-gmt}}
+
+The file requires -
+
+\begin{itemize}
+\tightlist
+\item
+  name
+\item
+  description
+\item
+  p-value
+\item
+  q-value
+\item
+  phenotyp
+\item
+  list of genes (overlap of query set and original geneset)
+\end{itemize}
+
+The list of genes needs to be calculated using the gmt file and original query set. For each geneset found in the result find the overlap between the set of genes that are a part of the geneset and the query set.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(enrichment\_results\_customgmt) }\SpecialCharTok{\textgreater{}}\DecValTok{0}\NormalTok{)\{    }
+
+           \CommentTok{\#add phenotype to the results}
+\NormalTok{          enrichment\_results\_customgmt }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(enrichment\_results\_customgmt,}\DecValTok{1}\NormalTok{)}
+          
+          \CommentTok{\# Add the genes to the genesets}
+\NormalTok{          subset\_genesets }\OtherTok{\textless{}{-}}\NormalTok{ genesets\_baderlab\_genesets}\SpecialCharTok{$}\NormalTok{genesets[}\FunctionTok{which}\NormalTok{(genesets\_baderlab\_genesets}\SpecialCharTok{$}\NormalTok{geneset.names }\SpecialCharTok{\%in\%}\NormalTok{ enrichment\_results\_customgmt}\SpecialCharTok{$}\NormalTok{term\_id)]}
+          
+\NormalTok{          genes }\OtherTok{\textless{}{-}} \FunctionTok{getGenesetGenes}\NormalTok{(query\_set, subset\_genesets)}
+          
+\NormalTok{          enrichment\_results\_customgmt }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(enrichment\_results\_customgmt,genes,}\AttributeTok{by.x=}\DecValTok{1}\NormalTok{, }\AttributeTok{by.y=}\DecValTok{1}\NormalTok{)}
+          
+          \FunctionTok{colnames}\NormalTok{(enrichment\_results\_customgmt) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{,}\StringTok{"description"}\NormalTok{,}\StringTok{"p{-}value"}\NormalTok{,}\StringTok{"q{-}value"}\NormalTok{,}\StringTok{"phenotype"}\NormalTok{,}\StringTok{"genes"}\NormalTok{)}
+          
+\NormalTok{\}}
+
+\CommentTok{\#output the enrichment map file}
+\FunctionTok{write.table}\NormalTok{(enrichment\_results\_customgmt, }
+            \AttributeTok{file =} \FunctionTok{file.path}\NormalTok{(working\_dir, }\StringTok{"gprofiler\_GEM\_using\_gprof\_gmt.txt"}\NormalTok{),}
+                                                 \AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{col.names =} \ConstantTok{TRUE}\NormalTok{,}\AttributeTok{quote =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{applications}{%
 \chapter{Applications}\label{applications}}

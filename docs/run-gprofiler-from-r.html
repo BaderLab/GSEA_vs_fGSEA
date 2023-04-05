@@ -23,7 +23,7 @@
 <meta name="author" content="Ruth Isserlin" />
 
 
-<meta name="date" content="2023-04-03" />
+<meta name="date" content="2023-04-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -162,19 +162,22 @@ div.csl-indent {
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> CBW Workshop example R Notebooks</a></li>
 <li class="chapter" data-level="3" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>3</b> Setup</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="setup.html"><a href="setup.html#docker-optional"><i class="fa fa-check"></i><b>3.1</b> Docker [Optional]</a></li>
-<li class="chapter" data-level="3.2" data-path="setup.html"><a href="setup.html#install-docker"><i class="fa fa-check"></i><b>3.2</b> Install Docker</a>
+<li class="chapter" data-level="3.1" data-path="setup.html"><a href="setup.html#install-r-and-rstudio"><i class="fa fa-check"></i><b>3.1</b> Install R and RStudio</a></li>
+<li class="chapter" data-level="3.2" data-path="setup.html"><a href="setup.html#docker-optional"><i class="fa fa-check"></i><b>3.2</b> Docker [Optional]</a></li>
+<li class="chapter" data-level="3.3" data-path="setup.html"><a href="setup.html#install-docker"><i class="fa fa-check"></i><b>3.3</b> Install Docker</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="setup.html"><a href="setup.html#windows"><i class="fa fa-check"></i><b>3.2.1</b> Windows</a></li>
-<li class="chapter" data-level="3.2.2" data-path="setup.html"><a href="setup.html#macos-linux"><i class="fa fa-check"></i><b>3.2.2</b> MacOS / Linux</a></li>
+<li class="chapter" data-level="3.3.1" data-path="setup.html"><a href="setup.html#windows"><i class="fa fa-check"></i><b>3.3.1</b> Windows</a></li>
+<li class="chapter" data-level="3.3.2" data-path="setup.html"><a href="setup.html#macos-linux"><i class="fa fa-check"></i><b>3.3.2</b> MacOS / Linux</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html"><i class="fa fa-check"></i><b>4</b> Run g:profiler from R</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#run-gprofiler-with-supplied-genesets"><i class="fa fa-check"></i><b>4.1</b> Run g:profiler with supplied genesets</a></li>
-<li class="chapter" data-level="4.2" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#run-gprofiler-with-your-own-genesets"><i class="fa fa-check"></i><b>4.2</b> Run g:profiler with your own genesets</a></li>
-<li class="chapter" data-level="4.3" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#upload-the-gmt-file-to-gprofiler"><i class="fa fa-check"></i><b>4.3</b> Upload the gmt file to gprofiler</a></li>
-<li class="chapter" data-level="4.4" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#create-enrichment-results-files"><i class="fa fa-check"></i><b>4.4</b> Create enrichment Results files</a></li>
+<li class="chapter" data-level="4.2" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#create-an-output-file-of-the-results---generic-enrichment-map-file-from-gprofiler-gmt"><i class="fa fa-check"></i><b>4.2</b> Create an output file of the results - Generic enrichment Map file from g:profiler gmt</a></li>
+<li class="chapter" data-level="4.3" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#run-gprofiler-with-your-own-genesets"><i class="fa fa-check"></i><b>4.3</b> Run g:profiler with your own genesets</a></li>
+<li class="chapter" data-level="4.4" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#upload-the-gmt-file-to-gprofiler"><i class="fa fa-check"></i><b>4.4</b> Upload the gmt file to gprofiler</a></li>
+<li class="chapter" data-level="4.5" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#create-enrichment-results-files"><i class="fa fa-check"></i><b>4.5</b> Create enrichment Results files</a></li>
+<li class="chapter" data-level="4.6" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#create-an-output-file-of-the-results---generic-enrichment-map-file-from-baderlab-gmt"><i class="fa fa-check"></i><b>4.6</b> Create an output file of the results - Generic enrichment Map file from Baderlab gmt</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a>
 <ul>
@@ -227,7 +230,12 @@ div.csl-indent {
 <span id="cb3-13"><a href="run-gprofiler-from-r.html#cb3-13" aria-hidden="true" tabindex="-1"></a>min_gs_size <span class="ot">&lt;-</span> params<span class="sc">$</span>min_gs_size</span>
 <span id="cb3-14"><a href="run-gprofiler-from-r.html#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-15"><a href="run-gprofiler-from-r.html#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#min intersection between your genelist and the geneset - for example 3</span></span>
-<span id="cb3-16"><a href="run-gprofiler-from-r.html#cb3-16" aria-hidden="true" tabindex="-1"></a>min_intersection <span class="ot">&lt;-</span> params<span class="sc">$</span>min_intersection </span></code></pre></div>
+<span id="cb3-16"><a href="run-gprofiler-from-r.html#cb3-16" aria-hidden="true" tabindex="-1"></a>min_intersection <span class="ot">&lt;-</span> params<span class="sc">$</span>min_intersection</span>
+<span id="cb3-17"><a href="run-gprofiler-from-r.html#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="run-gprofiler-from-r.html#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># organism parameter used for g:profiler.  First letter of first word in species name followed by </span></span>
+<span id="cb3-19"><a href="run-gprofiler-from-r.html#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># the second word</span></span>
+<span id="cb3-20"><a href="run-gprofiler-from-r.html#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co"># for example - hsapiens</span></span>
+<span id="cb3-21"><a href="run-gprofiler-from-r.html#cb3-21" aria-hidden="true" tabindex="-1"></a>organism <span class="ot">&lt;-</span> params<span class="sc">$</span>organism</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="run-gprofiler-from-r.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#use library</span></span>
 <span id="cb4-2"><a href="run-gprofiler-from-r.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;gprofiler2&quot;</span>)}, </span>
 <span id="cb4-3"><a href="run-gprofiler-from-r.html#cb4-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { </span>
@@ -251,27 +259,31 @@ div.csl-indent {
 <span id="cb6-6"><a href="run-gprofiler-from-r.html#cb6-6" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb6-7"><a href="run-gprofiler-from-r.html#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-8"><a href="run-gprofiler-from-r.html#cb6-8" aria-hidden="true" tabindex="-1"></a>  query_set <span class="ot">&lt;-</span> current_genelist<span class="sc">$</span>V1</span></code></pre></div>
-<p>With regards to pathway sets there are two options when using <a href="https://biit.cs.ut.ee/gprofiler/gost">g:Profiler</a> -
-* Use the genesets that are supplied by <a href="https://biit.cs.ut.ee/gprofiler/gost">g:Profiler</a>
-* Upload your own genesets.</p>
+<p>With regards to pathway sets there are two options when using <a href="https://biit.cs.ut.ee/gprofiler/gost">g:Profiler</a> -</p>
+<ul>
+<li>Use the genesets that are supplied by <a href="https://biit.cs.ut.ee/gprofiler/gost">g:Profiler</a></li>
+<li>Upload your own genesets.</li>
+</ul>
 <p>The most common reasons for supplying your own genesets is the ability to use up to date annotations or in-house annotations that might not be available in the public sphere yet. One of the greatest features of <a href="https://biit.cs.ut.ee/gprofiler/gost">g:Profiler</a> is that it is updated on a regular basis and most of the previous versions are available online ont the <a href="https://biit.cs.ut.ee/gprofiler/page/archives">gprofiler archive</a>.</p>
 <p>The <a href="https://biit.cs.ut.ee/gprofiler/page/r">gprofielr2</a> -<a href="https://biit.cs.ut.ee/gprofiler/gost">g:Profiler</a> R implementation is a wrapper for the web version. You require an internet connection to get enrichment results.</p>
 <div id="run-gprofiler-with-supplied-genesets" class="section level2 hasAnchor" number="4.1">
 <h2><span class="header-section-number">4.1</span> Run g:profiler with supplied genesets<a href="run-gprofiler-from-r.html#run-gprofiler-with-supplied-genesets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>For detailed descriptions of all the parameters that can be specified for the gost g:profiler function see -<a href="https://rdrr.io/cran/gprofiler2/man/gost.html">here</a></p>
-<p>For this query we are specifying -
-* query - the set of genes of interest, as loaded in from the Supplementary_Table1_Cancer_drivers.txt file.
-* significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.
-* ordered_query - set to TRUE because for this set of genes they are ordered in order of their significance
-* correction_method - set to fdr. by default g:Profiler uses g:Scs
-* organism - set to “hsapiens” for homo sapiens. Organism names are constructed by concatenating the first letter of the name and the family name (according to gprofiler2 documentation)
-* source - the geneset source databases to use for the analysis. We recommend using GO biological process (<a href="GO:BP" class="uri">GO:BP</a>), WikiPathways (WP) and Reactome (Reac) but there are additional sources you can add (GO molecular function or cellular component(<a href="GO:MF" class="uri">GO:MF</a>, <a href="GO:CC" class="uri">GO:CC</a>), KEGG, transcription factors (TF), microRNA targets (MIRNA), corum complexes (CORUM), Human protein atlas (HPA),Human phenotype ontology (HP) )</p>
+<p>For this query we are specifying -</p>
+<ul>
+<li>query - the set of genes of interest, as loaded in from the Supplementary_Table1_Cancer_drivers.txt file.</li>
+<li>significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.</li>
+<li>ordered_query - set to TRUE because for this set of genes they are ordered in order of their significance</li>
+<li>correction_method - set to fdr. by default g:Profiler uses g:Scs</li>
+<li>organism - set to “hsapiens” for homo sapiens. Organism names are constructed by concatenating the first letter of the name and the family name (according to gprofiler2 documentation)</li>
+<li>source - the geneset source databases to use for the analysis. We recommend using GO biological process (<a href="GO:BP" class="uri">GO:BP</a>), WikiPathways (WP) and Reactome (Reac) but there are additional sources you can add (GO molecular function or cellular component(<a href="GO:MF" class="uri">GO:MF</a>, <a href="GO:CC" class="uri">GO:CC</a>), KEGG, transcription factors (TF), microRNA targets (MIRNA), corum complexes (CORUM), Human protein atlas (HPA),Human phenotype ontology (HP) )</li>
+</ul>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="run-gprofiler-from-r.html#cb7-1" aria-hidden="true" tabindex="-1"></a>gprofiler_results <span class="ot">&lt;-</span> <span class="fu">gost</span>(<span class="at">query =</span> query_set ,</span>
 <span id="cb7-2"><a href="run-gprofiler-from-r.html#cb7-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">significant=</span><span class="cn">FALSE</span>,</span>
 <span id="cb7-3"><a href="run-gprofiler-from-r.html#cb7-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">ordered_query =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb7-4"><a href="run-gprofiler-from-r.html#cb7-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">exclude_iea=</span><span class="cn">FALSE</span>,</span>
 <span id="cb7-5"><a href="run-gprofiler-from-r.html#cb7-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">correction_method =</span> <span class="st">&quot;fdr&quot;</span>,</span>
-<span id="cb7-6"><a href="run-gprofiler-from-r.html#cb7-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">organism =</span> <span class="st">&quot;hsapiens&quot;</span>,</span>
+<span id="cb7-6"><a href="run-gprofiler-from-r.html#cb7-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">organism =</span> organism,</span>
 <span id="cb7-7"><a href="run-gprofiler-from-r.html#cb7-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">source =</span> <span class="fu">c</span>(<span class="st">&quot;REAC&quot;</span>,<span class="st">&quot;WP&quot;</span>,<span class="st">&quot;GO:BP&quot;</span>))</span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="run-gprofiler-from-r.html#cb8-1" aria-hidden="true" tabindex="-1"></a> <span class="co">#get the gprofiler results table</span></span>
 <span id="cb8-2"><a href="run-gprofiler-from-r.html#cb8-2" aria-hidden="true" tabindex="-1"></a>enrichment_results <span class="ot">&lt;-</span> gprofiler_results<span class="sc">$</span>result</span>
@@ -307,37 +319,183 @@ div.csl-indent {
 <span id="cb10-3"><a href="run-gprofiler-from-r.html#cb10-3" aria-hidden="true" tabindex="-1"></a>                                   term_size <span class="sc">&lt;=</span> max_gs_size <span class="sc">&amp;</span> </span>
 <span id="cb10-4"><a href="run-gprofiler-from-r.html#cb10-4" aria-hidden="true" tabindex="-1"></a>                                   intersection_size <span class="sc">&gt;=</span> min_intersection , </span>
 <span id="cb10-5"><a href="run-gprofiler-from-r.html#cb10-5" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">select =</span> <span class="fu">c</span>(term_id,term_name,p_value,p_value ))</span></code></pre></div>
+<p>In order to create a proper Generic enrichment results file we will need a copy of the gmt file used by g:Profiler. (also to create an Enrichment map).</p>
+<p>Download the gmt file used for this analysis from g:profiler</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="run-gprofiler-from-r.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#the link to the gmt file is static no matter what version</span></span>
+<span id="cb11-2"><a href="run-gprofiler-from-r.html#cb11-2" aria-hidden="true" tabindex="-1"></a>gprofiler_gmt_url <span class="ot">&lt;-</span> <span class="st">&quot;https://biit.cs.ut.ee/gprofiler//static/gprofiler_full_hsapiens.name.gmt&quot;</span></span>
+<span id="cb11-3"><a href="run-gprofiler-from-r.html#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="run-gprofiler-from-r.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#get version info gprofiler as the gmt file is always associated with a specific version of g:profiler</span></span>
+<span id="cb11-5"><a href="run-gprofiler-from-r.html#cb11-5" aria-hidden="true" tabindex="-1"></a>gprofiler_version <span class="ot">&lt;-</span> <span class="fu">get_version_info</span>(<span class="at">organism=</span>organism)</span>
+<span id="cb11-6"><a href="run-gprofiler-from-r.html#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="run-gprofiler-from-r.html#cb11-7" aria-hidden="true" tabindex="-1"></a>gprofiler_gmt_filename <span class="ot">&lt;-</span> <span class="fu">file.path</span>(working_dir,</span>
+<span id="cb11-8"><a href="run-gprofiler-from-r.html#cb11-8" aria-hidden="true" tabindex="-1"></a>                                            <span class="fu">paste</span>(<span class="st">&quot;gprofiler_full&quot;</span>, organism,</span>
+<span id="cb11-9"><a href="run-gprofiler-from-r.html#cb11-9" aria-hidden="true" tabindex="-1"></a>                                                  gprofiler_version<span class="sc">$</span>gprofiler_version,<span class="at">sep=</span><span class="st">&quot;_&quot;</span>,</span>
+<span id="cb11-10"><a href="run-gprofiler-from-r.html#cb11-10" aria-hidden="true" tabindex="-1"></a>                                                  <span class="st">&quot;.name.gmt&quot;</span>))</span>
+<span id="cb11-11"><a href="run-gprofiler-from-r.html#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="run-gprofiler-from-r.html#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url =</span> gprofiler_gmt_url, <span class="at">destfile =</span> gprofiler_gmt_filename)</span>
+<span id="cb11-13"><a href="run-gprofiler-from-r.html#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="run-gprofiler-from-r.html#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co">#load in the g:profiler geneset file</span></span>
+<span id="cb11-15"><a href="run-gprofiler-from-r.html#cb11-15" aria-hidden="true" tabindex="-1"></a>capt_output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(genesets_gprofiler <span class="ot">&lt;-</span> <span class="fu">GSA.read.gmt</span>(<span class="at">filename =</span> gprofiler_gmt_filename))</span>
+<span id="cb11-16"><a href="run-gprofiler-from-r.html#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="run-gprofiler-from-r.html#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(genesets_gprofiler<span class="sc">$</span>genesets) <span class="ot">&lt;-</span> genesets_gprofiler<span class="sc">$</span>geneset.names</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="run-gprofiler-from-r.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Given:</span></span>
+<span id="cb12-2"><a href="run-gprofiler-from-r.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># query_genes - genes used for enrichment analysis (or as query)</span></span>
+<span id="cb12-3"><a href="run-gprofiler-from-r.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb12-4"><a href="run-gprofiler-from-r.html#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># returns - the genes that overlap with the query set and part of the given</span></span>
+<span id="cb12-5"><a href="run-gprofiler-from-r.html#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#           genesets</span></span>
+<span id="cb12-6"><a href="run-gprofiler-from-r.html#cb12-6" aria-hidden="true" tabindex="-1"></a>getGenesetGenes <span class="ot">&lt;-</span> <span class="cf">function</span>(query_genes, subset_genesets){</span>
+<span id="cb12-7"><a href="run-gprofiler-from-r.html#cb12-7" aria-hidden="true" tabindex="-1"></a>  genes <span class="ot">&lt;-</span> <span class="fu">lapply</span>(subset_genesets,<span class="at">FUN=</span><span class="cf">function</span>(x){<span class="fu">intersect</span>(x,query_genes)})</span>
+<span id="cb12-8"><a href="run-gprofiler-from-r.html#cb12-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-9"><a href="run-gprofiler-from-r.html#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># For each of the genes collapse to the comma separate text</span></span>
+<span id="cb12-10"><a href="run-gprofiler-from-r.html#cb12-10" aria-hidden="true" tabindex="-1"></a>  genes_collapsed <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(genes,<span class="at">FUN=</span><span class="cf">function</span>(x){<span class="fu">paste</span>(x,<span class="at">collapse =</span> <span class="st">&quot;,&quot;</span>)}))</span>
+<span id="cb12-11"><a href="run-gprofiler-from-r.html#cb12-11" aria-hidden="true" tabindex="-1"></a>  genes_collapsed_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">term_id =</span> <span class="fu">names</span>(genes), <span class="at">genes =</span> genes_collapsed,<span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-12"><a href="run-gprofiler-from-r.html#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(genes_collapsed_df)</span>
+<span id="cb12-13"><a href="run-gprofiler-from-r.html#cb12-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
-<div id="run-gprofiler-with-your-own-genesets" class="section level2 hasAnchor" number="4.2">
-<h2><span class="header-section-number">4.2</span> Run g:profiler with your own genesets<a href="run-gprofiler-from-r.html#run-gprofiler-with-your-own-genesets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="create-an-output-file-of-the-results---generic-enrichment-map-file-from-gprofiler-gmt" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Create an output file of the results - Generic enrichment Map file from g:profiler gmt<a href="run-gprofiler-from-r.html#create-an-output-file-of-the-results---generic-enrichment-map-file-from-gprofiler-gmt" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The file requires -</p>
+<ul>
+<li>name</li>
+<li>description</li>
+<li>p-value</li>
+<li>q-value</li>
+<li>phenotyp</li>
+<li>list of genes (overlap of query set and original geneset)</li>
+</ul>
+<p>The list of genes needs to be calculated using the gmt file and original query set. For each geneset found in the result find the overlap between the set of genes that are a part of the geneset and the query set.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="run-gprofiler-from-r.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">nrow</span>(enrichment_results) <span class="sc">&gt;</span><span class="dv">0</span>){    </span>
+<span id="cb13-2"><a href="run-gprofiler-from-r.html#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="run-gprofiler-from-r.html#cb13-3" aria-hidden="true" tabindex="-1"></a>           <span class="co">#add phenotype to the results</span></span>
+<span id="cb13-4"><a href="run-gprofiler-from-r.html#cb13-4" aria-hidden="true" tabindex="-1"></a>          enrichment_results <span class="ot">&lt;-</span> <span class="fu">cbind</span>(enrichment_results,<span class="dv">1</span>)</span>
+<span id="cb13-5"><a href="run-gprofiler-from-r.html#cb13-5" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb13-6"><a href="run-gprofiler-from-r.html#cb13-6" aria-hidden="true" tabindex="-1"></a>          <span class="co"># Add the genes to the genesets</span></span>
+<span id="cb13-7"><a href="run-gprofiler-from-r.html#cb13-7" aria-hidden="true" tabindex="-1"></a>          subset_genesets <span class="ot">&lt;-</span> genesets_gprofiler<span class="sc">$</span>genesets[<span class="fu">which</span>(genesets_gprofiler<span class="sc">$</span>geneset.names <span class="sc">%in%</span> enrichment_results<span class="sc">$</span>term_id)]</span>
+<span id="cb13-8"><a href="run-gprofiler-from-r.html#cb13-8" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb13-9"><a href="run-gprofiler-from-r.html#cb13-9" aria-hidden="true" tabindex="-1"></a>          genes <span class="ot">&lt;-</span> <span class="fu">getGenesetGenes</span>(query_set, subset_genesets)</span>
+<span id="cb13-10"><a href="run-gprofiler-from-r.html#cb13-10" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb13-11"><a href="run-gprofiler-from-r.html#cb13-11" aria-hidden="true" tabindex="-1"></a>          enrichment_results <span class="ot">&lt;-</span> <span class="fu">merge</span>(enrichment_results,genes,<span class="at">by.x=</span><span class="dv">1</span>, <span class="at">by.y=</span><span class="dv">1</span>)</span>
+<span id="cb13-12"><a href="run-gprofiler-from-r.html#cb13-12" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb13-13"><a href="run-gprofiler-from-r.html#cb13-13" aria-hidden="true" tabindex="-1"></a>          <span class="fu">colnames</span>(enrichment_results) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;name&quot;</span>,<span class="st">&quot;description&quot;</span>,<span class="st">&quot;p-value&quot;</span>,<span class="st">&quot;q-value&quot;</span>,<span class="st">&quot;phenotype&quot;</span>,<span class="st">&quot;genes&quot;</span>)</span>
+<span id="cb13-14"><a href="run-gprofiler-from-r.html#cb13-14" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb13-15"><a href="run-gprofiler-from-r.html#cb13-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-16"><a href="run-gprofiler-from-r.html#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="run-gprofiler-from-r.html#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">#output the enrichment map file</span></span>
+<span id="cb13-18"><a href="run-gprofiler-from-r.html#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(enrichment_results, <span class="at">file =</span> <span class="fu">file.path</span>(working_dir, <span class="st">&quot;gprofiler_GEM_using_gprof_gmt.txt&quot;</span>),</span>
+<span id="cb13-19"><a href="run-gprofiler-from-r.html#cb13-19" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">row.names =</span> <span class="cn">FALSE</span>, <span class="at">col.names =</span> <span class="cn">TRUE</span>,<span class="at">quote =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 </div>
-<div id="upload-the-gmt-file-to-gprofiler" class="section level2 hasAnchor" number="4.3">
-<h2><span class="header-section-number">4.3</span> Upload the gmt file to gprofiler<a href="run-gprofiler-from-r.html#upload-the-gmt-file-to-gprofiler" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="run-gprofiler-with-your-own-genesets" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Run g:profiler with your own genesets<a href="run-gprofiler-from-r.html#run-gprofiler-with-your-own-genesets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Download the latest <a href="https://download.baderlab.org/EM_Genesets/current_release/Human/">Bader lab genesets</a></p>
+</div>
+<div id="upload-the-gmt-file-to-gprofiler" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Upload the gmt file to gprofiler<a href="run-gprofiler-from-r.html#upload-the-gmt-file-to-gprofiler" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In order to use your own genesets with g:Profiler you need to upload the the file to their server first. The function will return an ID that you need to specify in the organism parameter of the g:Profiler gost function call.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="run-gprofiler-from-r.html#cb11-1" aria-hidden="true" tabindex="-1"></a>custom_gmt <span class="ot">&lt;-</span> <span class="fu">upload_GMT_file</span>(<span class="at">gmtfile=</span>dest_gmt_file)</span></code></pre></div>
-<pre><code>## Your custom annotations ID is gp__UzTE_eEDz_1FI
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="run-gprofiler-from-r.html#cb14-1" aria-hidden="true" tabindex="-1"></a>custom_gmt <span class="ot">&lt;-</span> <span class="fu">upload_GMT_file</span>(<span class="at">gmtfile=</span>dest_gmt_file)</span></code></pre></div>
+<pre><code>## Your custom annotations ID is gp__IEDE_q3WW_hLY
 ## You can use this ID as an &#39;organism&#39; name in all the related enrichment tests against this custom source.</code></pre>
-<pre><code>## Just use: gost(my_genes, organism = &#39;gp__UzTE_eEDz_1FI&#39;)</code></pre>
-<p>For this query we are specifying -
-* query - the set of genes of interest, as loaded in from the Supplementary_Table1_Cancer_drivers.txt file.
-* significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.
-* ordered_query - set to TRUE because for this set of genes they are ordered in order of their significance
-* correction_method - set to fdr. by default g:Profiler uses g:Scs
-* organism - set to the custom_gmt ID ( for this run it is - gp__UzTE_eEDz_1FI) that we received when we uploaded our genetset file.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="run-gprofiler-from-r.html#cb14-1" aria-hidden="true" tabindex="-1"></a>gprofiler_results_custom <span class="ot">&lt;-</span> <span class="fu">gost</span>(<span class="at">query =</span> query_set ,</span>
-<span id="cb14-2"><a href="run-gprofiler-from-r.html#cb14-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">significant=</span><span class="cn">FALSE</span>,</span>
-<span id="cb14-3"><a href="run-gprofiler-from-r.html#cb14-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">ordered_query =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb14-4"><a href="run-gprofiler-from-r.html#cb14-4" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">exclude_iea=</span><span class="cn">FALSE</span>,</span>
-<span id="cb14-5"><a href="run-gprofiler-from-r.html#cb14-5" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">correction_method =</span> <span class="st">&quot;fdr&quot;</span>,</span>
-<span id="cb14-6"><a href="run-gprofiler-from-r.html#cb14-6" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">organism =</span> custom_gmt)</span></code></pre></div>
+<pre><code>## Just use: gost(my_genes, organism = &#39;gp__IEDE_q3WW_hLY&#39;)</code></pre>
+<p>For this query we are specifying -</p>
+<ul>
+<li>query - the set of genes of interest, as loaded in from the Supplementary_Table1_Cancer_drivers.txt file.</li>
+<li>significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.</li>
+<li>ordered_query - set to TRUE because for this set of genes they are ordered in order of their significance</li>
+<li>correction_method - set to fdr. by default g:Profiler uses g:Scs</li>
+<li>organism - set to the custom_gmt ID ( for this run it is - gp__IEDE_q3WW_hLY) that we received when we uploaded our genetset file.</li>
+</ul>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="run-gprofiler-from-r.html#cb17-1" aria-hidden="true" tabindex="-1"></a>gprofiler_results_custom <span class="ot">&lt;-</span> <span class="fu">gost</span>(<span class="at">query =</span> query_set ,</span>
+<span id="cb17-2"><a href="run-gprofiler-from-r.html#cb17-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">significant=</span><span class="cn">FALSE</span>,</span>
+<span id="cb17-3"><a href="run-gprofiler-from-r.html#cb17-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">ordered_query =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb17-4"><a href="run-gprofiler-from-r.html#cb17-4" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">exclude_iea=</span><span class="cn">FALSE</span>,</span>
+<span id="cb17-5"><a href="run-gprofiler-from-r.html#cb17-5" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">correction_method =</span> <span class="st">&quot;fdr&quot;</span>,</span>
+<span id="cb17-6"><a href="run-gprofiler-from-r.html#cb17-6" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">organism =</span> custom_gmt</span>
+<span id="cb17-7"><a href="run-gprofiler-from-r.html#cb17-7" aria-hidden="true" tabindex="-1"></a>                                     )</span></code></pre></div>
 <pre><code>## Detected custom GMT source request</code></pre>
-<pre><code>## No results to show
-## Please make sure that the organism is correct or set significant = FALSE</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="run-gprofiler-from-r.html#cb19-1" aria-hidden="true" tabindex="-1"></a> <span class="co">#get the gprofiler results table</span></span>
+<span id="cb19-2"><a href="run-gprofiler-from-r.html#cb19-2" aria-hidden="true" tabindex="-1"></a>enrichment_results_customgmt <span class="ot">&lt;-</span> gprofiler_results_custom<span class="sc">$</span>result</span>
+<span id="cb19-3"><a href="run-gprofiler-from-r.html#cb19-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-4"><a href="run-gprofiler-from-r.html#cb19-4" aria-hidden="true" tabindex="-1"></a>enrichment_results_customgmt[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,]</span></code></pre></div>
+<pre><code>##     query significant      p_value term_size query_size intersection_size
+## 1 query_1        TRUE 6.730012e-37      4645        110                94
+## 2 query_1        TRUE 2.579228e-35      4747        110                93
+## 3 query_1        TRUE 2.579228e-35      4881        110                94
+## 4 query_1        TRUE 4.280880e-34      5230        110                95
+## 5 query_1        TRUE 2.069151e-33      3435        110                81
+##   precision     recall
+## 1 0.8545455 0.02023681
+## 2 0.8454545 0.01959132
+## 3 0.8545455 0.01925835
+## 4 0.8636364 0.01816444
+## 5 0.7363636 0.02358079
+##                                                                          term_id
+## 1                       REGULATION OF CELLULAR METABOLIC PROCESS%GOBP%GO:0031323
+## 2              REGULATION OF NITROGEN COMPOUND METABOLIC PROCESS%GOBP%GO:0051171
+## 3                        REGULATION OF PRIMARY METABOLIC PROCESS%GOBP%GO:0080090
+## 4                  REGULATION OF MACROMOLECULE METABOLIC PROCESS%GOBP%GO:0060255
+## 5 REGULATION OF NUCLEOBASE-CONTAINING COMPOUND METABOLIC PROCESS%GOBP%GO:0019219
+##                                                  source
+## 1 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol
+## 2 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol
+## 3 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol
+## 4 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol
+## 5 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol
+##                                                        term_name
+## 1                       regulation of cellular metabolic process
+## 2              regulation of nitrogen compound metabolic process
+## 3                        regulation of primary metabolic process
+## 4                  regulation of macromolecule metabolic process
+## 5 regulation of nucleobase-containing compound metabolic process
+##   effective_domain_size source_order parents
+## 1                 18525        18677    NULL
+## 2                 18525        11634    NULL
+## 3                 18525        11073    NULL
+## 4                 18525        10657    NULL
+## 5                 18525         5967    NULL</code></pre>
+<p>Filter the table to include just the columns that are required for the generic enrichment map file results <a href="https://enrichmentmap.readthedocs.io/en/latest/FileFormats.html#generic-results-files">GEM</a>. Restrict the results to just the ones that have at least min_gs_size and less than max_gs_size terms and min_intersection size include only the term_id, term_name, p_value (and p_value again because the p_value is actually the corrected p-value. The output file does not contain the nominal p_value. For down stream analysis though it is expected to have both a p-value and a q-value so just duplicate the q-value as both p-value and q-value)</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="run-gprofiler-from-r.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filer by params defined above</span></span>
+<span id="cb21-2"><a href="run-gprofiler-from-r.html#cb21-2" aria-hidden="true" tabindex="-1"></a>enrichment_results_customgmt <span class="ot">&lt;-</span> <span class="fu">subset</span>(enrichment_results_customgmt,</span>
+<span id="cb21-3"><a href="run-gprofiler-from-r.html#cb21-3" aria-hidden="true" tabindex="-1"></a>                                       term_size <span class="sc">&gt;=</span> min_gs_size <span class="sc">&amp;</span> </span>
+<span id="cb21-4"><a href="run-gprofiler-from-r.html#cb21-4" aria-hidden="true" tabindex="-1"></a>                                   term_size <span class="sc">&lt;=</span> max_gs_size <span class="sc">&amp;</span> </span>
+<span id="cb21-5"><a href="run-gprofiler-from-r.html#cb21-5" aria-hidden="true" tabindex="-1"></a>                                   intersection_size <span class="sc">&gt;=</span> min_intersection , </span>
+<span id="cb21-6"><a href="run-gprofiler-from-r.html#cb21-6" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">select =</span> <span class="fu">c</span>(term_id,term_name,p_value,p_value ))</span></code></pre></div>
 </div>
-<div id="create-enrichment-results-files" class="section level2 hasAnchor" number="4.4">
-<h2><span class="header-section-number">4.4</span> Create enrichment Results files<a href="run-gprofiler-from-r.html#create-enrichment-results-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="create-enrichment-results-files" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Create enrichment Results files<a href="run-gprofiler-from-r.html#create-enrichment-results-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In order to use our results down stream in the Enrichment map we need to generate results files that we can pass to Enrichment Map.</p>
 <p>Load in the GMT file</p>
+</div>
+<div id="create-an-output-file-of-the-results---generic-enrichment-map-file-from-baderlab-gmt" class="section level2 hasAnchor" number="4.6">
+<h2><span class="header-section-number">4.6</span> Create an output file of the results - Generic enrichment Map file from Baderlab gmt<a href="run-gprofiler-from-r.html#create-an-output-file-of-the-results---generic-enrichment-map-file-from-baderlab-gmt" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The file requires -</p>
+<ul>
+<li>name</li>
+<li>description</li>
+<li>p-value</li>
+<li>q-value</li>
+<li>phenotyp</li>
+<li>list of genes (overlap of query set and original geneset)</li>
+</ul>
+<p>The list of genes needs to be calculated using the gmt file and original query set. For each geneset found in the result find the overlap between the set of genes that are a part of the geneset and the query set.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="run-gprofiler-from-r.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">nrow</span>(enrichment_results_customgmt) <span class="sc">&gt;</span><span class="dv">0</span>){    </span>
+<span id="cb22-2"><a href="run-gprofiler-from-r.html#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="run-gprofiler-from-r.html#cb22-3" aria-hidden="true" tabindex="-1"></a>           <span class="co">#add phenotype to the results</span></span>
+<span id="cb22-4"><a href="run-gprofiler-from-r.html#cb22-4" aria-hidden="true" tabindex="-1"></a>          enrichment_results_customgmt <span class="ot">&lt;-</span> <span class="fu">cbind</span>(enrichment_results_customgmt,<span class="dv">1</span>)</span>
+<span id="cb22-5"><a href="run-gprofiler-from-r.html#cb22-5" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb22-6"><a href="run-gprofiler-from-r.html#cb22-6" aria-hidden="true" tabindex="-1"></a>          <span class="co"># Add the genes to the genesets</span></span>
+<span id="cb22-7"><a href="run-gprofiler-from-r.html#cb22-7" aria-hidden="true" tabindex="-1"></a>          subset_genesets <span class="ot">&lt;-</span> genesets_baderlab_genesets<span class="sc">$</span>genesets[<span class="fu">which</span>(genesets_baderlab_genesets<span class="sc">$</span>geneset.names <span class="sc">%in%</span> enrichment_results_customgmt<span class="sc">$</span>term_id)]</span>
+<span id="cb22-8"><a href="run-gprofiler-from-r.html#cb22-8" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb22-9"><a href="run-gprofiler-from-r.html#cb22-9" aria-hidden="true" tabindex="-1"></a>          genes <span class="ot">&lt;-</span> <span class="fu">getGenesetGenes</span>(query_set, subset_genesets)</span>
+<span id="cb22-10"><a href="run-gprofiler-from-r.html#cb22-10" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb22-11"><a href="run-gprofiler-from-r.html#cb22-11" aria-hidden="true" tabindex="-1"></a>          enrichment_results_customgmt <span class="ot">&lt;-</span> <span class="fu">merge</span>(enrichment_results_customgmt,genes,<span class="at">by.x=</span><span class="dv">1</span>, <span class="at">by.y=</span><span class="dv">1</span>)</span>
+<span id="cb22-12"><a href="run-gprofiler-from-r.html#cb22-12" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb22-13"><a href="run-gprofiler-from-r.html#cb22-13" aria-hidden="true" tabindex="-1"></a>          <span class="fu">colnames</span>(enrichment_results_customgmt) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;name&quot;</span>,<span class="st">&quot;description&quot;</span>,<span class="st">&quot;p-value&quot;</span>,<span class="st">&quot;q-value&quot;</span>,<span class="st">&quot;phenotype&quot;</span>,<span class="st">&quot;genes&quot;</span>)</span>
+<span id="cb22-14"><a href="run-gprofiler-from-r.html#cb22-14" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb22-15"><a href="run-gprofiler-from-r.html#cb22-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-16"><a href="run-gprofiler-from-r.html#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-17"><a href="run-gprofiler-from-r.html#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="co">#output the enrichment map file</span></span>
+<span id="cb22-18"><a href="run-gprofiler-from-r.html#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(enrichment_results_customgmt, </span>
+<span id="cb22-19"><a href="run-gprofiler-from-r.html#cb22-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">file =</span> <span class="fu">file.path</span>(working_dir, <span class="st">&quot;gprofiler_GEM_using_gprof_gmt.txt&quot;</span>),</span>
+<span id="cb22-20"><a href="run-gprofiler-from-r.html#cb22-20" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">row.names =</span> <span class="cn">FALSE</span>, <span class="at">col.names =</span> <span class="cn">TRUE</span>,<span class="at">quote =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 
 </div>
 </div>
