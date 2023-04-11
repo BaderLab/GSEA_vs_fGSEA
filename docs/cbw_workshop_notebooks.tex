@@ -145,7 +145,7 @@
 
 \title{CBW pathways Workshops - example R notebooks}
 \author{Ruth Isserlin}
-\date{2023-04-05}
+\date{2023-04-11}
 
 \begin{document}
 \maketitle
@@ -575,12 +575,12 @@ In order to use your own genesets with g:Profiler you need to upload the the fil
 \end{Shaded}
 
 \begin{verbatim}
-## Your custom annotations ID is gp__a6ma_oV5h_onA
+## Your custom annotations ID is gp__15KB_4Xzp_hzo
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 \end{verbatim}
 
 \begin{verbatim}
-## Just use: gost(my_genes, organism = 'gp__a6ma_oV5h_onA')
+## Just use: gost(my_genes, organism = 'gp__15KB_4Xzp_hzo')
 \end{verbatim}
 
 For this query we are specifying -
@@ -596,7 +596,7 @@ For this query we are specifying -
 \item
   correction\_method - set to fdr. by default g:Profiler uses g:Scs
 \item
-  organism - set to the custom\_gmt ID ( for this run it is - gp\_\_a6ma\_oV5h\_onA) that we received when we uploaded our genetset file.
+  organism - set to the custom\_gmt ID ( for this run it is - gp\_\_15KB\_4Xzp\_hzo) that we received when we uploaded our genetset file.
 \end{itemize}
 
 \begin{Shaded}
@@ -731,16 +731,118 @@ The list of genes needs to be calculated using the gmt file and original query s
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{applications}{%
-\chapter{Applications}\label{applications}}
+\hypertarget{run-gsea-from-within-r}{%
+\chapter{Run GSEA from within R}\label{run-gsea-from-within-r}}
 
-Some \emph{significant} applications are demonstrated in this chapter.
+This notebook is based largely on the \href{https://baderlab.github.io/Cytoscape_workflows/EnrichmentMapPipeline/Protocol2_createEM.html}{original notebook} published with EnrichmentMap Protocol(\protect\hyperlink{ref-em2019}{Reimand et al. 2019})
 
-\hypertarget{example-one}{%
-\section{Example one}\label{example-one}}
+There is no package to run the original algorithm of GSEA(\protect\hyperlink{ref-gsea2005}{Subramanian et al. 2005}) in R. There are many packages that have been published to imitate the process but none are recognized by The GSEA team.\\
+\includegraphics{./images/gsea_r_package_message.png}
 
-\hypertarget{example-two}{%
-\section{Example two}\label{example-two}}
+\hypertarget{load-in-required-libraries}{%
+\section{Load in required libraries}\label{load-in-required-libraries}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#install required R and bioconductor packages}
+\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"RCurl"}\NormalTok{)\}, }
+         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{  }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"RCurl"}\NormalTok{)\}, }
+         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"RCurl"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{configurable-parameters}{%
+\section{Configurable Parameters}\label{configurable-parameters}}
+
+In order to run GSEA automatically through the notebook you will need to download the gsea jar from \href{http://software.broadinstitute.org/gsea/downloads.jsp}{here}. Specify the exact path to the gsea jar in the parameters in order to automatically compute enrichments using GSEA.
+
+If you are running this notebook using the \href{https://hub.docker.com/r/risserlin/workshop_base_image}{baderlab workshop docker image} then the image comes pre-installed with the gsea jar that you can use to run gsea directly in the docker.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#path to GSEA jar }
+\CommentTok{\# In order to run GSEA automatically you need to speciry the path to the gsea jar file.}
+\CommentTok{\# the gsea\_jar aneeds to be the full path to the GSEA 4.3.2 directory that you}
+\CommentTok{\# downloaded from GSEA. for example (/Users/johnsmith/GSEA\_4.3.2/gsea{-}cli.sh)}
+\NormalTok{gsea\_jar }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{gsea\_jar}
+
+\CommentTok{\#navigate to the directory where you put the downloaded protocol files.}
+
+\CommentTok{\#directory where all the data files are found.  For example {-}   ./data/ }
+\NormalTok{working\_dir }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{working\_dir}
+
+\CommentTok{\#The name to give the analysis in GSEA {-} for example Mesen\_vs\_Immuno}
+\NormalTok{analysis\_name }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{analysis\_name}
+
+\CommentTok{\#rank file to use in GSEA analysis.  }
+\CommentTok{\#For example {-} MesenchymalvsImmunoreactive\_edger\_ranks.rnk}
+\NormalTok{rnk\_file }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{rnk\_file}
+
+\CommentTok{\#run\_gsea {-} true/false}
+\CommentTok{\# This parameter is for the compilation of the notebook.  }
+\NormalTok{run\_gsea }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{run\_gsea}
+
+\CommentTok{\#specify if you are using docker.}
+\NormalTok{is\_docker }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{is\_docker}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{download-the-latest-pathway-definition-file}{%
+\section{Download the latest pathway definition file}\label{download-the-latest-pathway-definition-file}}
+
+Only Human, Mouse and Rat gene set files are currently available on the baderlab downloads site. If you are working with a species other than human (and it is either rat or mouse) change the gmt\_url below to correct species. Check \href{http://download.baderlab.org/EM_Genesets/current_release/}{here} to see all available species.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{run-gsea}{%
+\section{Run GSEA}\label{run-gsea}}
+
+(GSEA){[}\url{http://software.broadinstitute.org/gsea/index.jsp}{]} is a stand alone java program with many customizable options. It can be easily run through its integrated user interface. To make this a seemless pipeline we can run GSEA from the command line with a set of options. Any of the supplied options can be customized and there are many additional options that can be specified. For more details see (here){[}\url{http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm\#_Running_GSEA_from}{]}
+
+In the below command the following options have been specified:
+
+\begin{itemize}
+\tightlist
+\item
+  rnk - path to the rank file
+\item
+  gmx - path to the gene set definition (gmt) file
+\item
+  collapse - true/false indicates whether the expression/rnk file needs to be collapsed from probes to gene symbols
+\item
+  nperm - number of permutations
+\item
+  scoring\_scheme -
+\item
+  rpt\_label - name of the directory with output
+\item
+  rnd\_seed - random seed to use
+\item
+  set\_max - maximum size for individual gene sets. In GSEA interface this is set to 500 but we prefer to use a more stringent setting of 200.
+\item
+  set\_min - minimum size for individual gene sets
+\item
+  zip\_report - true/false to zip output directory
+\item
+  out - directory where to place the result directory.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{(run\_gsea)\{}
+\NormalTok{  command }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\StringTok{""}\NormalTok{,gsea\_jar,  }
+                   \StringTok{"GSEAPreRanked {-}gmx"}\NormalTok{, dest\_gmt\_file, }
+                   \StringTok{"{-}rnk"}\NormalTok{ ,}\FunctionTok{file.path}\NormalTok{(working\_dir,rnk\_file), }
+                   \StringTok{"{-}collapse false {-}nperm 1000 {-}scoring\_scheme weighted"}\NormalTok{, }
+                   \StringTok{"{-}rpt\_label "}\NormalTok{,analysis\_name,}
+                   \StringTok{"  {-}plot\_top\_x 20 {-}rnd\_seed 12345  {-}set\_max 200"}\NormalTok{,  }
+                   \StringTok{" {-}set\_min 15 {-}zip\_report false "}\NormalTok{,}
+                   \StringTok{" {-}out"}\NormalTok{ ,working\_dir, }
+                   \StringTok{" \textgreater{} gsea\_output.txt"}\NormalTok{,}\AttributeTok{sep=}\StringTok{" "}\NormalTok{)}
+  \FunctionTok{system}\NormalTok{(command)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{create-gmt-file-from-ensembl}{%
 \chapter{Create GMT file from Ensembl}\label{create-gmt-file-from-ensembl}}
@@ -1004,6 +1106,12 @@ Write out the gmt file with ensembl ids
 
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-em2019}{}}%
+Reimand, Jüri, Ruth Isserlin, Veronique Voisin, Mike Kucera, Christian Tannus-Lopes, Asha Rostamianfar, Lina Wadi, et al. 2019. {``Pathway Enrichment Analysis and Visualization of Omics Data Using g: Profiler, GSEA, Cytoscape and EnrichmentMap.''} \emph{Nature Protocols} 14 (2): 482--517.
+
+\leavevmode\vadjust pre{\hypertarget{ref-gsea2005}{}}%
+Subramanian, Aravind, Pablo Tamayo, Vamsi K Mootha, Sayan Mukherjee, Benjamin L Ebert, Michael A Gillette, Amanda Paulovich, et al. 2005. {``Gene Set Enrichment Analysis: A Knowledge-Based Approach for Interpreting Genome-Wide Expression Profiles.''} \emph{Proceedings of the National Academy of Sciences} 102 (43): 15545--50.
+
 \leavevmode\vadjust pre{\hypertarget{ref-docker}{}}%
 {``What Is a Container?''} n.d. \emph{Docker}. \url{https://www.docker.com/resources/what-container}.
 

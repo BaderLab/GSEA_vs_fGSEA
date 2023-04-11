@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Run GSEA from within R | CBW pathways Workshops - example R notebooks</title>
+  <meta name="description" content="These are example R Notebooks to run g:profiler and GSEA and visualize results in Cytoscape with Enrichment map directly from R" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Run GSEA from within R | CBW pathways Workshops - example R notebooks" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="These are example R Notebooks to run g:profiler and GSEA and visualize results in Cytoscape with Enrichment map directly from R" />
+  <meta name="github-repo" content="risserlin/CBW_pathways_workshop_R_notebooks" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Run GSEA from within R | CBW pathways Workshops - example R notebooks" />
+  
+  <meta name="twitter:description" content="These are example R Notebooks to run g:profiler and GSEA and visualize results in Cytoscape with Enrichment map directly from R" />
+  
+
+<meta name="author" content="Ruth Isserlin" />
+
+
+<meta name="date" content="2023-04-11" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="run-gprofiler-from-r.html"/>
+<link rel="next" href="create-gmt-file-from-ensembl.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Workshop R Notebooks</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Index</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> CBW Workshop example R Notebooks</a></li>
+<li class="chapter" data-level="3" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>3</b> Setup</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="setup.html"><a href="setup.html#install-r-and-rstudio"><i class="fa fa-check"></i><b>3.1</b> Install R and RStudio</a></li>
+<li class="chapter" data-level="3.2" data-path="setup.html"><a href="setup.html#docker-optional"><i class="fa fa-check"></i><b>3.2</b> Docker [Optional]</a></li>
+<li class="chapter" data-level="3.3" data-path="setup.html"><a href="setup.html#install-docker"><i class="fa fa-check"></i><b>3.3</b> Install Docker</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="setup.html"><a href="setup.html#windows"><i class="fa fa-check"></i><b>3.3.1</b> Windows</a></li>
+<li class="chapter" data-level="3.3.2" data-path="setup.html"><a href="setup.html#macos-linux"><i class="fa fa-check"></i><b>3.3.2</b> MacOS / Linux</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html"><i class="fa fa-check"></i><b>4</b> Run g:profiler from R</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#run-gprofiler-with-supplied-genesets"><i class="fa fa-check"></i><b>4.1</b> Run g:profiler with supplied genesets</a></li>
+<li class="chapter" data-level="4.2" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#create-an-output-file-of-the-results---generic-enrichment-map-file-from-gprofiler-gmt"><i class="fa fa-check"></i><b>4.2</b> Create an output file of the results - Generic enrichment Map file from g:profiler gmt</a></li>
+<li class="chapter" data-level="4.3" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#run-gprofiler-with-your-own-genesets"><i class="fa fa-check"></i><b>4.3</b> Run g:profiler with your own genesets</a></li>
+<li class="chapter" data-level="4.4" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#upload-the-gmt-file-to-gprofiler"><i class="fa fa-check"></i><b>4.4</b> Upload the gmt file to gprofiler</a></li>
+<li class="chapter" data-level="4.5" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#create-enrichment-results-files"><i class="fa fa-check"></i><b>4.5</b> Create enrichment Results files</a></li>
+<li class="chapter" data-level="4.6" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#create-an-output-file-of-the-results---generic-enrichment-map-file-from-baderlab-gmt"><i class="fa fa-check"></i><b>4.6</b> Create an output file of the results - Generic enrichment Map file from Baderlab gmt</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html"><i class="fa fa-check"></i><b>5</b> Run GSEA from within R</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#load-in-required-libraries"><i class="fa fa-check"></i><b>5.1</b> Load in required libraries</a></li>
+<li class="chapter" data-level="5.2" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#configurable-parameters"><i class="fa fa-check"></i><b>5.2</b> Configurable Parameters</a></li>
+<li class="chapter" data-level="5.3" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#download-the-latest-pathway-definition-file"><i class="fa fa-check"></i><b>5.3</b> Download the latest pathway definition file</a></li>
+<li class="chapter" data-level="5.4" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#run-gsea"><i class="fa fa-check"></i><b>5.4</b> Run GSEA</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="create-gmt-file-from-ensembl.html"><a href="create-gmt-file-from-ensembl.html"><i class="fa fa-check"></i><b>6</b> Create GMT file from Ensembl</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="create-gmt-file-from-ensembl.html"><a href="create-gmt-file-from-ensembl.html#load-libraries"><i class="fa fa-check"></i><b>6.1</b> Load Libraries</a></li>
+<li class="chapter" data-level="6.2" data-path="create-gmt-file-from-ensembl.html"><a href="create-gmt-file-from-ensembl.html#set-up-biomart-connection"><i class="fa fa-check"></i><b>6.2</b> Set up Biomart connection</a></li>
+<li class="chapter" data-level="6.3" data-path="create-gmt-file-from-ensembl.html"><a href="create-gmt-file-from-ensembl.html#get-species-go-annotations"><i class="fa fa-check"></i><b>6.3</b> Get species GO annotations</a></li>
+<li class="chapter" data-level="6.4" data-path="create-gmt-file-from-ensembl.html"><a href="create-gmt-file-from-ensembl.html#format-results-into-gmt-file"><i class="fa fa-check"></i><b>6.4</b> Format results into GMT file</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CBW pathways Workshops - example R notebooks</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="run-gsea-from-within-r" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Run GSEA from within R<a href="run-gsea-from-within-r.html#run-gsea-from-within-r" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This notebook is based largely on the <a href="https://baderlab.github.io/Cytoscape_workflows/EnrichmentMapPipeline/Protocol2_createEM.html">original notebook</a> published with EnrichmentMap Protocol<span class="citation">(<a href="#ref-em2019" role="doc-biblioref">Reimand et al. 2019</a>)</span></p>
+<p>There is no package to run the original algorithm of GSEA<span class="citation">(<a href="#ref-gsea2005" role="doc-biblioref">Subramanian et al. 2005</a>)</span> in R. There are many packages that have been published to imitate the process but none are recognized by The GSEA team.<br />
+<img src="images/gsea_r_package_message.png" alt="GSEA R package message" /></p>
+<div id="load-in-required-libraries" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Load in required libraries<a href="run-gsea-from-within-r.html#load-in-required-libraries" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="run-gsea-from-within-r.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install required R and bioconductor packages</span></span>
+<span id="cb23-2"><a href="run-gsea-from-within-r.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;RCurl&quot;</span>)}, </span>
+<span id="cb23-3"><a href="run-gsea-from-within-r.html#cb23-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) {  <span class="fu">install.packages</span>(<span class="st">&quot;RCurl&quot;</span>)}, </span>
+<span id="cb23-4"><a href="run-gsea-from-within-r.html#cb23-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;RCurl&quot;</span>))</span></code></pre></div>
+</div>
+<div id="configurable-parameters" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Configurable Parameters<a href="run-gsea-from-within-r.html#configurable-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In order to run GSEA automatically through the notebook you will need to download the gsea jar from <a href="http://software.broadinstitute.org/gsea/downloads.jsp">here</a>. Specify the exact path to the gsea jar in the parameters in order to automatically compute enrichments using GSEA.</p>
+<p>If you are running this notebook using the <a href="https://hub.docker.com/r/risserlin/workshop_base_image">baderlab workshop docker image</a> then the image comes pre-installed with the gsea jar that you can use to run gsea directly in the docker.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="run-gsea-from-within-r.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#path to GSEA jar </span></span>
+<span id="cb24-2"><a href="run-gsea-from-within-r.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># In order to run GSEA automatically you need to speciry the path to the gsea jar file.</span></span>
+<span id="cb24-3"><a href="run-gsea-from-within-r.html#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># the gsea_jar aneeds to be the full path to the GSEA 4.3.2 directory that you</span></span>
+<span id="cb24-4"><a href="run-gsea-from-within-r.html#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># downloaded from GSEA. for example (/Users/johnsmith/GSEA_4.3.2/gsea-cli.sh)</span></span>
+<span id="cb24-5"><a href="run-gsea-from-within-r.html#cb24-5" aria-hidden="true" tabindex="-1"></a>gsea_jar <span class="ot">&lt;-</span> params<span class="sc">$</span>gsea_jar</span>
+<span id="cb24-6"><a href="run-gsea-from-within-r.html#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="run-gsea-from-within-r.html#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">#navigate to the directory where you put the downloaded protocol files.</span></span>
+<span id="cb24-8"><a href="run-gsea-from-within-r.html#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="run-gsea-from-within-r.html#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co">#directory where all the data files are found.  For example -   ./data/ </span></span>
+<span id="cb24-10"><a href="run-gsea-from-within-r.html#cb24-10" aria-hidden="true" tabindex="-1"></a>working_dir <span class="ot">&lt;-</span> params<span class="sc">$</span>working_dir</span>
+<span id="cb24-11"><a href="run-gsea-from-within-r.html#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="run-gsea-from-within-r.html#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co">#The name to give the analysis in GSEA - for example Mesen_vs_Immuno</span></span>
+<span id="cb24-13"><a href="run-gsea-from-within-r.html#cb24-13" aria-hidden="true" tabindex="-1"></a>analysis_name <span class="ot">&lt;-</span> params<span class="sc">$</span>analysis_name</span>
+<span id="cb24-14"><a href="run-gsea-from-within-r.html#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-15"><a href="run-gsea-from-within-r.html#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="co">#rank file to use in GSEA analysis.  </span></span>
+<span id="cb24-16"><a href="run-gsea-from-within-r.html#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="co">#For example - MesenchymalvsImmunoreactive_edger_ranks.rnk</span></span>
+<span id="cb24-17"><a href="run-gsea-from-within-r.html#cb24-17" aria-hidden="true" tabindex="-1"></a>rnk_file <span class="ot">&lt;-</span> params<span class="sc">$</span>rnk_file</span>
+<span id="cb24-18"><a href="run-gsea-from-within-r.html#cb24-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-19"><a href="run-gsea-from-within-r.html#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="co">#run_gsea - true/false</span></span>
+<span id="cb24-20"><a href="run-gsea-from-within-r.html#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="co"># This parameter is for the compilation of the notebook.  </span></span>
+<span id="cb24-21"><a href="run-gsea-from-within-r.html#cb24-21" aria-hidden="true" tabindex="-1"></a>run_gsea <span class="ot">&lt;-</span> params<span class="sc">$</span>run_gsea</span>
+<span id="cb24-22"><a href="run-gsea-from-within-r.html#cb24-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-23"><a href="run-gsea-from-within-r.html#cb24-23" aria-hidden="true" tabindex="-1"></a><span class="co">#specify if you are using docker.</span></span>
+<span id="cb24-24"><a href="run-gsea-from-within-r.html#cb24-24" aria-hidden="true" tabindex="-1"></a>is_docker <span class="ot">&lt;-</span> params<span class="sc">$</span>is_docker</span></code></pre></div>
+</div>
+<div id="download-the-latest-pathway-definition-file" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Download the latest pathway definition file<a href="run-gsea-from-within-r.html#download-the-latest-pathway-definition-file" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Only Human, Mouse and Rat gene set files are currently available on the baderlab downloads site. If you are working with a species other than human (and it is either rat or mouse) change the gmt_url below to correct species. Check <a href="http://download.baderlab.org/EM_Genesets/current_release/">here</a> to see all available species.</p>
+<hr />
+</div>
+<div id="run-gsea" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Run GSEA<a href="run-gsea-from-within-r.html#run-gsea" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>(GSEA)[<a href="http://software.broadinstitute.org/gsea/index.jsp" class="uri">http://software.broadinstitute.org/gsea/index.jsp</a>] is a stand alone java program with many customizable options. It can be easily run through its integrated user interface. To make this a seemless pipeline we can run GSEA from the command line with a set of options. Any of the supplied options can be customized and there are many additional options that can be specified. For more details see (here)[<a href="http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Running_GSEA_from" class="uri">http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Running_GSEA_from</a>]</p>
+<p>In the below command the following options have been specified:</p>
+<ul>
+<li>rnk - path to the rank file</li>
+<li>gmx - path to the gene set definition (gmt) file</li>
+<li>collapse - true/false indicates whether the expression/rnk file needs to be collapsed from probes to gene symbols</li>
+<li>nperm - number of permutations</li>
+<li>scoring_scheme -</li>
+<li>rpt_label - name of the directory with output</li>
+<li>rnd_seed - random seed to use</li>
+<li>set_max - maximum size for individual gene sets. In GSEA interface this is set to 500 but we prefer to use a more stringent setting of 200.</li>
+<li>set_min - minimum size for individual gene sets</li>
+<li>zip_report - true/false to zip output directory</li>
+<li>out - directory where to place the result directory.</li>
+</ul>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="run-gsea-from-within-r.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(run_gsea){</span>
+<span id="cb25-2"><a href="run-gsea-from-within-r.html#cb25-2" aria-hidden="true" tabindex="-1"></a>  command <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;&quot;</span>,gsea_jar,  </span>
+<span id="cb25-3"><a href="run-gsea-from-within-r.html#cb25-3" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;GSEAPreRanked -gmx&quot;</span>, dest_gmt_file, </span>
+<span id="cb25-4"><a href="run-gsea-from-within-r.html#cb25-4" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;-rnk&quot;</span> ,<span class="fu">file.path</span>(working_dir,rnk_file), </span>
+<span id="cb25-5"><a href="run-gsea-from-within-r.html#cb25-5" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;-collapse false -nperm 1000 -scoring_scheme weighted&quot;</span>, </span>
+<span id="cb25-6"><a href="run-gsea-from-within-r.html#cb25-6" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;-rpt_label &quot;</span>,analysis_name,</span>
+<span id="cb25-7"><a href="run-gsea-from-within-r.html#cb25-7" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;  -plot_top_x 20 -rnd_seed 12345  -set_max 200&quot;</span>,  </span>
+<span id="cb25-8"><a href="run-gsea-from-within-r.html#cb25-8" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot; -set_min 15 -zip_report false &quot;</span>,</span>
+<span id="cb25-9"><a href="run-gsea-from-within-r.html#cb25-9" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot; -out&quot;</span> ,working_dir, </span>
+<span id="cb25-10"><a href="run-gsea-from-within-r.html#cb25-10" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot; &gt; gsea_output.txt&quot;</span>,<span class="at">sep=</span><span class="st">&quot; &quot;</span>)</span>
+<span id="cb25-11"><a href="run-gsea-from-within-r.html#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">system</span>(command)</span>
+<span id="cb25-12"><a href="run-gsea-from-within-r.html#cb25-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-em2019" class="csl-entry">
+Reimand, Jüri, Ruth Isserlin, Veronique Voisin, Mike Kucera, Christian Tannus-Lopes, Asha Rostamianfar, Lina Wadi, et al. 2019. <span>“Pathway Enrichment Analysis and Visualization of Omics Data Using g: Profiler, GSEA, Cytoscape and EnrichmentMap.”</span> <em>Nature Protocols</em> 14 (2): 482–517.
+</div>
+<div id="ref-gsea2005" class="csl-entry">
+Subramanian, Aravind, Pablo Tamayo, Vamsi K Mootha, Sayan Mukherjee, Benjamin L Ebert, Michael A Gillette, Amanda Paulovich, et al. 2005. <span>“Gene Set Enrichment Analysis: A Knowledge-Based Approach for Interpreting Genome-Wide Expression Profiles.”</span> <em>Proceedings of the National Academy of Sciences</em> 102 (43): 15545–50.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="run-gprofiler-from-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="create-gmt-file-from-ensembl.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/04-Run_gsea_in_R.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["cbw_workshop_notebooks.pdf", "cbw_workshop_notebooks.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

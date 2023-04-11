@@ -253,12 +253,12 @@ custom_gmt <- upload_GMT_file(gmtfile=dest_gmt_file)
 ```
 
 ```
-## Your custom annotations ID is gp__a6ma_oV5h_onA
+## Your custom annotations ID is gp__15KB_4Xzp_hzo
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 ```
 
 ```
-## Just use: gost(my_genes, organism = 'gp__a6ma_oV5h_onA')
+## Just use: gost(my_genes, organism = 'gp__15KB_4Xzp_hzo')
 ```
 
 For this query we are specifying - 
@@ -267,7 +267,7 @@ For this query we are specifying -
   * significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.
   * ordered_query - set to TRUE because for this set of genes they are ordered in order of their significance
   * correction_method - set to fdr.  by default g:Profiler uses g:Scs
-  * organism - set to the custom_gmt ID ( for this run it is - gp__a6ma_oV5h_onA) that we received when we uploaded our genetset file.
+  * organism - set to the custom_gmt ID ( for this run it is - gp__15KB_4Xzp_hzo) that we received when we uploaded our genetset file.
 
 
 
