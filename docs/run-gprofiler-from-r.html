@@ -23,7 +23,7 @@
 <meta name="author" content="Ruth Isserlin" />
 
 
-<meta name="date" content="2023-04-11" />
+<meta name="date" content="2023-04-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -394,16 +394,16 @@ div.csl-indent {
 <h2><span class="header-section-number">4.4</span> Upload the gmt file to gprofiler<a href="run-gprofiler-from-r.html#upload-the-gmt-file-to-gprofiler" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In order to use your own genesets with g:Profiler you need to upload the the file to their server first. The function will return an ID that you need to specify in the organism parameter of the g:Profiler gost function call.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="run-gprofiler-from-r.html#cb14-1" aria-hidden="true" tabindex="-1"></a>custom_gmt <span class="ot">&lt;-</span> <span class="fu">upload_GMT_file</span>(<span class="at">gmtfile=</span>dest_gmt_file)</span></code></pre></div>
-<pre><code>## Your custom annotations ID is gp__iEME_UW9n_N4s
+<pre><code>## Your custom annotations ID is gp__dgyD_Tshe_DSk
 ## You can use this ID as an &#39;organism&#39; name in all the related enrichment tests against this custom source.</code></pre>
-<pre><code>## Just use: gost(my_genes, organism = &#39;gp__iEME_UW9n_N4s&#39;)</code></pre>
+<pre><code>## Just use: gost(my_genes, organism = &#39;gp__dgyD_Tshe_DSk&#39;)</code></pre>
 <p>For this query we are specifying -</p>
 <ul>
 <li>query - the set of genes of interest, as loaded in from the Supplementary_Table1_Cancer_drivers.txt file.</li>
 <li>significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.</li>
 <li>ordered_query - set to TRUE because for this set of genes they are ordered in order of their significance</li>
 <li>correction_method - set to fdr. by default g:Profiler uses g:Scs</li>
-<li>organism - set to the custom_gmt ID ( for this run it is - gp__iEME_UW9n_N4s) that we received when we uploaded our genetset file.</li>
+<li>organism - set to the custom_gmt ID ( for this run it is - gp__dgyD_Tshe_DSk) that we received when we uploaded our genetset file.</li>
 </ul>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="run-gprofiler-from-r.html#cb17-1" aria-hidden="true" tabindex="-1"></a>gprofiler_results_custom <span class="ot">&lt;-</span> <span class="fu">gost</span>(<span class="at">query =</span> query_set ,</span>
 <span id="cb17-2"><a href="run-gprofiler-from-r.html#cb17-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">significant=</span><span class="cn">FALSE</span>,</span>

@@ -6,7 +6,6 @@ params:
   gsea_jar: /home/rstudio/GSEA_4.3.2/gsea-cli.sh
   gsea_directory: ''
   run_gsea: false
-  is_docker: true
 ---
 # Run GSEA from within R
 
@@ -29,42 +28,81 @@ tryCatch(expr = { library("RCurl")},
 
 
 ## Configurable Parameters
+
 In order to run GSEA automatically through the notebook you will need to download the gsea jar from [here](http://software.broadinstitute.org/gsea/downloads.jsp).  Specify the exact path to the gsea jar in the parameters in order to automatically compute enrichments using GSEA.
 
-If you are running this notebook using the [baderlab workshop docker image](https://hub.docker.com/r/risserlin/workshop_base_image) then the image comes pre-installed with the gsea jar that you can use to run gsea directly in the docker.  
+If you are running this notebook using the [baderlab workshop docker image](https://hub.docker.com/r/risserlin/workshop_base_image) then the image comes pre-installed with the gsea jar that you can use to run gsea directly in the docker.  The path to the GSEA jar in the docker is - /home/rstudio/GSEA_4.3.2/gsea-cli.sh
+
+In order to run GSEA automatically you need to speciry the path to the gsea jar file.
+The gsea_jar needs to be the full path to the GSEA 4.3.2 directory that you downloaded from GSEA. for example  /Users/johnsmith/GSEA_4.3.2/gsea-cli.sh
+
+For each variable defined there is an example of how you can set the variable using parameters so you can run re-use your notebook with varying parameters and run completely from the command line.  For more info see [here](https://bookdown.org/yihui/rmarkdown/params-knit.html)
 
 
 ```r
 #path to GSEA jar 
-# In order to run GSEA automatically you need to speciry the path to the gsea jar file.
-# the gsea_jar aneeds to be the full path to the GSEA 4.3.2 directory that you
-# downloaded from GSEA. for example (/Users/johnsmith/GSEA_4.3.2/gsea-cli.sh)
-gsea_jar <- params$gsea_jar
+#gsea_jar <- params$gsea_jar --> if you want to define parameters for the notebook and run as script you can pass this in as a parameter and set it like this.
+gsea_jar <- "/home/rstudio/GSEA_4.3.2/gsea-cli.sh"
+```
 
-#navigate to the directory where you put the downloaded protocol files.
+Set the working directory as the directory to the directory where you downloaded all protocol files.  For example /User/JohnSmith/EMProtocolFiles/data
 
+
+```r
 #directory where all the data files are found.  For example -   ./data/ 
-working_dir <- params$working_dir
+#working_dir <- params$working_dir --> if you want to define parameters for the notebook and run as script you can pass this in as a parameter and set it like this.
+working_dir <- "./data/"
 
 #The name to give the analysis in GSEA - for example Mesen_vs_Immuno
-analysis_name <- params$analysis_name
+# analysis_name <- params$analysis_name --> if you want to define parameters for the notebook and run as script you can pass this in as a parameter and set it like this.
+analysis_name <- "Mesen_vs_Immuno"
 
 #rank file to use in GSEA analysis.  
 #For example - MesenchymalvsImmunoreactive_edger_ranks.rnk
-rnk_file <- params$rnk_file
+#rnk_file <- params$rnk_file --> if you want to define parameters for the notebook and run as script you can pass this in as a parameter and set it like this.
+rnk_file <- "MesenchymalvsImmunoreactive_edger_ranks.rnk"
 
 #run_gsea - true/false
 # This parameter is for the compilation of the notebook.  
-run_gsea <- params$run_gsea
-
-#specify if you are using docker.
-is_docker <- params$is_docker
+#run_gsea <- params$run_gsea --> if you want to define parameters for the notebook and run as script you can pass this in as a parameter and set it like this.
+run_gsea <- FALSE
 ```
 
+
+
+
 ## Download the latest pathway definition file
-Only Human, Mouse and Rat gene set files are currently available on the baderlab downloads site.  If you are working with a species other than human (and it is either rat or mouse) change the gmt_url below to correct species. Check [here](http://download.baderlab.org/EM_Genesets/current_release/) to see all available species. 
+
+Only Human, Mouse, Rat, and Woodchuck gene set files are currently available on the baderlab downloads site.  If you are working with a species other than human (and it is either rat,mouse or woodchuck) change the gmt_url below to the correct species. Check [here](http://download.baderlab.org/EM_Genesets/current_release/) to see all available species.
+
+To create your own GMT file using Ensembl see [Create GMT file from Ensembl]
 
 
+```r
+gmt_url = "http://download.baderlab.org/EM_Genesets/current_release/Human/symbol/"
+
+#list all the files on the server
+filenames = getURL(gmt_url)
+tc = textConnection(filenames)
+contents = readLines(tc)
+close(tc)
+
+#get the gmt that has all the pathways and does not include terms inferred from electronic annotations(IEA)
+#start with gmt file that has pathways only
+rx = gregexpr("(?<=<a href=\")(.*.GOBP_AllPathways_no_GO_iea.*.)(.gmt)(?=\">)",
+  contents, perl = TRUE)
+gmt_file = unlist(regmatches(contents, rx))
+
+dest_gmt_file <- file.path(working_dir,gmt_file )
+
+#check if this gmt file already exists
+if(!file.exists(dest_gmt_file)){
+  download.file(
+    paste(gmt_url,gmt_file,sep=""),
+    destfile=dest_gmt_file
+  )
+}
+```
 
 ***
 ## Run GSEA

@@ -23,7 +23,7 @@
 <meta name="author" content="Ruth Isserlin" />
 
 
-<meta name="date" content="2023-04-11" />
+<meta name="date" content="2023-04-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -225,44 +225,44 @@ div.csl-indent {
 </ul>
 <p>If you are working in a different species you will need to generate your own gmt file. The best way to do this is through ensembl. Ensembl doesn’t have annotations for all the pathway databases listed above but it has annotations for most species from GO.</p>
 <p>The parameters are set in the params option on this notebook but you can also manually set them here.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="create-gmt-file-from-ensembl.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for example - working_dir &lt;- &quot;./genereated_data&quot;</span></span>
-<span id="cb26-2"><a href="create-gmt-file-from-ensembl.html#cb26-2" aria-hidden="true" tabindex="-1"></a>working_dir <span class="ot">&lt;-</span> params<span class="sc">$</span>working_dir</span>
-<span id="cb26-3"><a href="create-gmt-file-from-ensembl.html#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="create-gmt-file-from-ensembl.html#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># for example - species &lt;- &quot;horse&quot;</span></span>
-<span id="cb26-5"><a href="create-gmt-file-from-ensembl.html#cb26-5" aria-hidden="true" tabindex="-1"></a>species <span class="ot">&lt;-</span> params<span class="sc">$</span>species</span>
-<span id="cb26-6"><a href="create-gmt-file-from-ensembl.html#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-7"><a href="create-gmt-file-from-ensembl.html#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># for example - ensembl_dataset &lt;- &quot;ecaballus_gene_ensembl&quot;</span></span>
-<span id="cb26-8"><a href="create-gmt-file-from-ensembl.html#cb26-8" aria-hidden="true" tabindex="-1"></a>ensembl_dataset <span class="ot">&lt;-</span> params<span class="sc">$</span>ensembl_dataset</span></code></pre></div>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="create-gmt-file-from-ensembl.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#use library</span></span>
-<span id="cb27-2"><a href="create-gmt-file-from-ensembl.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co">#make sure biocManager is installed</span></span>
-<span id="cb27-3"><a href="create-gmt-file-from-ensembl.html#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;BiocManager&quot;</span>)}, </span>
-<span id="cb27-4"><a href="create-gmt-file-from-ensembl.html#cb27-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { </span>
-<span id="cb27-5"><a href="create-gmt-file-from-ensembl.html#cb27-5" aria-hidden="true" tabindex="-1"></a>           <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)}, </span>
-<span id="cb27-6"><a href="create-gmt-file-from-ensembl.html#cb27-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;BiocManager&quot;</span>))</span>
-<span id="cb27-7"><a href="create-gmt-file-from-ensembl.html#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-8"><a href="create-gmt-file-from-ensembl.html#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-9"><a href="create-gmt-file-from-ensembl.html#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;biomaRt&quot;</span>)}, </span>
-<span id="cb27-10"><a href="create-gmt-file-from-ensembl.html#cb27-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { </span>
-<span id="cb27-11"><a href="create-gmt-file-from-ensembl.html#cb27-11" aria-hidden="true" tabindex="-1"></a>           BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;biomaRt&quot;</span>)}, </span>
-<span id="cb27-12"><a href="create-gmt-file-from-ensembl.html#cb27-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;biomaRt&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="create-gmt-file-from-ensembl.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for example - working_dir &lt;- &quot;./genereated_data&quot;</span></span>
+<span id="cb28-2"><a href="create-gmt-file-from-ensembl.html#cb28-2" aria-hidden="true" tabindex="-1"></a>working_dir <span class="ot">&lt;-</span> params<span class="sc">$</span>working_dir</span>
+<span id="cb28-3"><a href="create-gmt-file-from-ensembl.html#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="create-gmt-file-from-ensembl.html#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># for example - species &lt;- &quot;horse&quot;</span></span>
+<span id="cb28-5"><a href="create-gmt-file-from-ensembl.html#cb28-5" aria-hidden="true" tabindex="-1"></a>species <span class="ot">&lt;-</span> params<span class="sc">$</span>species</span>
+<span id="cb28-6"><a href="create-gmt-file-from-ensembl.html#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="create-gmt-file-from-ensembl.html#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co"># for example - ensembl_dataset &lt;- &quot;ecaballus_gene_ensembl&quot;</span></span>
+<span id="cb28-8"><a href="create-gmt-file-from-ensembl.html#cb28-8" aria-hidden="true" tabindex="-1"></a>ensembl_dataset <span class="ot">&lt;-</span> params<span class="sc">$</span>ensembl_dataset</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="create-gmt-file-from-ensembl.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#use library</span></span>
+<span id="cb29-2"><a href="create-gmt-file-from-ensembl.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co">#make sure biocManager is installed</span></span>
+<span id="cb29-3"><a href="create-gmt-file-from-ensembl.html#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;BiocManager&quot;</span>)}, </span>
+<span id="cb29-4"><a href="create-gmt-file-from-ensembl.html#cb29-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { </span>
+<span id="cb29-5"><a href="create-gmt-file-from-ensembl.html#cb29-5" aria-hidden="true" tabindex="-1"></a>           <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)}, </span>
+<span id="cb29-6"><a href="create-gmt-file-from-ensembl.html#cb29-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;BiocManager&quot;</span>))</span>
+<span id="cb29-7"><a href="create-gmt-file-from-ensembl.html#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="create-gmt-file-from-ensembl.html#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="create-gmt-file-from-ensembl.html#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;biomaRt&quot;</span>)}, </span>
+<span id="cb29-10"><a href="create-gmt-file-from-ensembl.html#cb29-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { </span>
+<span id="cb29-11"><a href="create-gmt-file-from-ensembl.html#cb29-11" aria-hidden="true" tabindex="-1"></a>           BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;biomaRt&quot;</span>)}, </span>
+<span id="cb29-12"><a href="create-gmt-file-from-ensembl.html#cb29-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;biomaRt&quot;</span>))</span></code></pre></div>
 <div id="load-libraries" class="section level2 hasAnchor" number="6.1">
 <h2><span class="header-section-number">6.1</span> Load Libraries<a href="create-gmt-file-from-ensembl.html#load-libraries" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Create or set a directory to store all the generatd results</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="create-gmt-file-from-ensembl.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(params<span class="sc">$</span>working_dir)){</span>
-<span id="cb28-2"><a href="create-gmt-file-from-ensembl.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dir.create</span>(params<span class="sc">$</span>working_dir)</span>
-<span id="cb28-3"><a href="create-gmt-file-from-ensembl.html#cb28-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="create-gmt-file-from-ensembl.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(params<span class="sc">$</span>working_dir)){</span>
+<span id="cb30-2"><a href="create-gmt-file-from-ensembl.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dir.create</span>(params<span class="sc">$</span>working_dir)</span>
+<span id="cb30-3"><a href="create-gmt-file-from-ensembl.html#cb30-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="set-up-biomart-connection" class="section level2 hasAnchor" number="6.2">
 <h2><span class="header-section-number">6.2</span> Set up Biomart connection<a href="create-gmt-file-from-ensembl.html#set-up-biomart-connection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Connect to Biomart</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="create-gmt-file-from-ensembl.html#cb29-1" aria-hidden="true" tabindex="-1"></a>ensembl <span class="ot">&lt;-</span> <span class="fu">useMart</span>(<span class="st">&quot;ensembl&quot;</span>,<span class="at">host =</span> <span class="st">&quot;https://asia.ensembl.org&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="create-gmt-file-from-ensembl.html#cb31-1" aria-hidden="true" tabindex="-1"></a>ensembl <span class="ot">&lt;-</span> <span class="fu">useMart</span>(<span class="st">&quot;ensembl&quot;</span>)</span></code></pre></div>
 <p>Figure out which dataset you want to use - for some species there might be a few datasets to choose from. Not all of the datasets have common namesa associated with them. For example, if you search for ‘yeast’ nothing will be returned but if you look for Saccharomyces or cerevisiae you will be able to find it.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="create-gmt-file-from-ensembl.html#cb30-1" aria-hidden="true" tabindex="-1"></a>all_datasets <span class="ot">&lt;-</span> <span class="fu">listDatasets</span>(ensembl)</span>
-<span id="cb30-2"><a href="create-gmt-file-from-ensembl.html#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="create-gmt-file-from-ensembl.html#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co">#get all the datasets that match our species definition</span></span>
-<span id="cb30-4"><a href="create-gmt-file-from-ensembl.html#cb30-4" aria-hidden="true" tabindex="-1"></a>all_datasets[<span class="fu">grep</span>(all_datasets<span class="sc">$</span>description,</span>
-<span id="cb30-5"><a href="create-gmt-file-from-ensembl.html#cb30-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pattern=</span>species,</span>
-<span id="cb30-6"><a href="create-gmt-file-from-ensembl.html#cb30-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ignore.case =</span> <span class="cn">TRUE</span>),]</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="create-gmt-file-from-ensembl.html#cb32-1" aria-hidden="true" tabindex="-1"></a>all_datasets <span class="ot">&lt;-</span> <span class="fu">listDatasets</span>(ensembl)</span>
+<span id="cb32-2"><a href="create-gmt-file-from-ensembl.html#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="create-gmt-file-from-ensembl.html#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co">#get all the datasets that match our species definition</span></span>
+<span id="cb32-4"><a href="create-gmt-file-from-ensembl.html#cb32-4" aria-hidden="true" tabindex="-1"></a>all_datasets[<span class="fu">grep</span>(all_datasets<span class="sc">$</span>description,</span>
+<span id="cb32-5"><a href="create-gmt-file-from-ensembl.html#cb32-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pattern=</span>species,</span>
+<span id="cb32-6"><a href="create-gmt-file-from-ensembl.html#cb32-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ignore.case =</span> <span class="cn">TRUE</span>),]</span></code></pre></div>
 <pre><code>##                         dataset                                 description
 ## 60       ecaballus_gene_ensembl                     Horse genes (EquCab3.0)
 ## 76          hcomes_gene_ensembl  Tiger tail seahorse genes (H_comes_QL1_v1)
@@ -272,41 +272,41 @@ div.csl-indent {
 ## 76  H_comes_QL1_v1
 ## 164  mRhiFer1_v1.p</code></pre>
 <p>If you know the ensembl dataset that you want to use you can specify it in the parameters above or grab from the above table the dataset of the species that you are interested in.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="create-gmt-file-from-ensembl.html#cb32-1" aria-hidden="true" tabindex="-1"></a>ensembl <span class="ot">=</span> <span class="fu">useDataset</span>(ensembl_dataset,<span class="at">mart=</span>ensembl)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="create-gmt-file-from-ensembl.html#cb34-1" aria-hidden="true" tabindex="-1"></a>ensembl <span class="ot">=</span> <span class="fu">useDataset</span>(ensembl_dataset,<span class="at">mart=</span>ensembl)</span></code></pre></div>
 </div>
 <div id="get-species-go-annotations" class="section level2 hasAnchor" number="6.3">
 <h2><span class="header-section-number">6.3</span> Get species GO annotations<a href="create-gmt-file-from-ensembl.html#get-species-go-annotations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Get the GO annotations for our species</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="create-gmt-file-from-ensembl.html#cb33-1" aria-hidden="true" tabindex="-1"></a>go_annotation <span class="ot">&lt;-</span> <span class="fu">getBM</span>(<span class="at">attributes =</span> <span class="fu">c</span>(<span class="st">&quot;external_gene_name&quot;</span>,</span>
-<span id="cb33-2"><a href="create-gmt-file-from-ensembl.html#cb33-2" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">&quot;ensembl_gene_id&quot;</span>,</span>
-<span id="cb33-3"><a href="create-gmt-file-from-ensembl.html#cb33-3" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">&quot;ensembl_transcript_id&quot;</span>,</span>
-<span id="cb33-4"><a href="create-gmt-file-from-ensembl.html#cb33-4" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">&quot;go_id&quot;</span>, </span>
-<span id="cb33-5"><a href="create-gmt-file-from-ensembl.html#cb33-5" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">&quot;name_1006&quot;</span>, </span>
-<span id="cb33-6"><a href="create-gmt-file-from-ensembl.html#cb33-6" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">&quot;namespace_1003&quot;</span>,</span>
-<span id="cb33-7"><a href="create-gmt-file-from-ensembl.html#cb33-7" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">&quot;go_linkage_type&quot;</span>), </span>
-<span id="cb33-8"><a href="create-gmt-file-from-ensembl.html#cb33-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">filters=</span><span class="fu">list</span>(<span class="at">biotype=</span><span class="st">&#39;protein_coding&#39;</span>), <span class="at">mart=</span>ensembl);</span>
-<span id="cb33-9"><a href="create-gmt-file-from-ensembl.html#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-10"><a href="create-gmt-file-from-ensembl.html#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="co">#get just the go biological process subset</span></span>
-<span id="cb33-11"><a href="create-gmt-file-from-ensembl.html#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="do">#####</span></span>
-<span id="cb33-12"><a href="create-gmt-file-from-ensembl.html#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Get rid of this line if you want to include all of go and not just biological process</span></span>
-<span id="cb33-13"><a href="create-gmt-file-from-ensembl.html#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="do">#####</span></span>
-<span id="cb33-14"><a href="create-gmt-file-from-ensembl.html#cb33-14" aria-hidden="true" tabindex="-1"></a>go_annotation_bp <span class="ot">&lt;-</span> go_annotation[<span class="fu">which</span>(</span>
-<span id="cb33-15"><a href="create-gmt-file-from-ensembl.html#cb33-15" aria-hidden="true" tabindex="-1"></a>  go_annotation<span class="sc">$</span>namespace_1003 <span class="sc">==</span> <span class="st">&quot;biological_process&quot;</span>),]</span>
-<span id="cb33-16"><a href="create-gmt-file-from-ensembl.html#cb33-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-17"><a href="create-gmt-file-from-ensembl.html#cb33-17" aria-hidden="true" tabindex="-1"></a><span class="co">#compute the unique pathway sets</span></span>
-<span id="cb33-18"><a href="create-gmt-file-from-ensembl.html#cb33-18" aria-hidden="true" tabindex="-1"></a>go_pathway_sets <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(go_annotation_bp[,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>],</span>
-<span id="cb33-19"><a href="create-gmt-file-from-ensembl.html#cb33-19" aria-hidden="true" tabindex="-1"></a>                             <span class="at">by =</span> <span class="fu">list</span>(go_annotation_bp<span class="sc">$</span>go_id),</span>
-<span id="cb33-20"><a href="create-gmt-file-from-ensembl.html#cb33-20" aria-hidden="true" tabindex="-1"></a>                             <span class="at">FUN =</span> <span class="cf">function</span>(x){<span class="fu">list</span>(<span class="fu">unique</span>(x))})</span>
-<span id="cb33-21"><a href="create-gmt-file-from-ensembl.html#cb33-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-22"><a href="create-gmt-file-from-ensembl.html#cb33-22" aria-hidden="true" tabindex="-1"></a><span class="co">#unlist the go descriptions</span></span>
-<span id="cb33-23"><a href="create-gmt-file-from-ensembl.html#cb33-23" aria-hidden="true" tabindex="-1"></a>go_pathway_sets<span class="sc">$</span>name_1006 <span class="ot">&lt;-</span> <span class="fu">apply</span>(go_pathway_sets,<span class="dv">1</span>,<span class="at">FUN=</span><span class="cf">function</span>(x){</span>
-<span id="cb33-24"><a href="create-gmt-file-from-ensembl.html#cb33-24" aria-hidden="true" tabindex="-1"></a>   <span class="fu">paste</span>(<span class="fu">gsub</span>(<span class="fu">unlist</span>(x<span class="sc">$</span>name_1006),<span class="at">pattern=</span> <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">&quot;</span>,</span>
-<span id="cb33-25"><a href="create-gmt-file-from-ensembl.html#cb33-25" aria-hidden="true" tabindex="-1"></a>              <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>),<span class="at">collapse =</span> <span class="st">&quot;&quot;</span>)})</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="create-gmt-file-from-ensembl.html#cb35-1" aria-hidden="true" tabindex="-1"></a>go_annotation <span class="ot">&lt;-</span> <span class="fu">getBM</span>(<span class="at">attributes =</span> <span class="fu">c</span>(<span class="st">&quot;external_gene_name&quot;</span>,</span>
+<span id="cb35-2"><a href="create-gmt-file-from-ensembl.html#cb35-2" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">&quot;ensembl_gene_id&quot;</span>,</span>
+<span id="cb35-3"><a href="create-gmt-file-from-ensembl.html#cb35-3" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">&quot;ensembl_transcript_id&quot;</span>,</span>
+<span id="cb35-4"><a href="create-gmt-file-from-ensembl.html#cb35-4" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">&quot;go_id&quot;</span>, </span>
+<span id="cb35-5"><a href="create-gmt-file-from-ensembl.html#cb35-5" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">&quot;name_1006&quot;</span>, </span>
+<span id="cb35-6"><a href="create-gmt-file-from-ensembl.html#cb35-6" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">&quot;namespace_1003&quot;</span>,</span>
+<span id="cb35-7"><a href="create-gmt-file-from-ensembl.html#cb35-7" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">&quot;go_linkage_type&quot;</span>), </span>
+<span id="cb35-8"><a href="create-gmt-file-from-ensembl.html#cb35-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">filters=</span><span class="fu">list</span>(<span class="at">biotype=</span><span class="st">&#39;protein_coding&#39;</span>), <span class="at">mart=</span>ensembl);</span>
+<span id="cb35-9"><a href="create-gmt-file-from-ensembl.html#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="create-gmt-file-from-ensembl.html#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="co">#get just the go biological process subset</span></span>
+<span id="cb35-11"><a href="create-gmt-file-from-ensembl.html#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="do">#####</span></span>
+<span id="cb35-12"><a href="create-gmt-file-from-ensembl.html#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Get rid of this line if you want to include all of go and not just biological process</span></span>
+<span id="cb35-13"><a href="create-gmt-file-from-ensembl.html#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="do">#####</span></span>
+<span id="cb35-14"><a href="create-gmt-file-from-ensembl.html#cb35-14" aria-hidden="true" tabindex="-1"></a>go_annotation_bp <span class="ot">&lt;-</span> go_annotation[<span class="fu">which</span>(</span>
+<span id="cb35-15"><a href="create-gmt-file-from-ensembl.html#cb35-15" aria-hidden="true" tabindex="-1"></a>  go_annotation<span class="sc">$</span>namespace_1003 <span class="sc">==</span> <span class="st">&quot;biological_process&quot;</span>),]</span>
+<span id="cb35-16"><a href="create-gmt-file-from-ensembl.html#cb35-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-17"><a href="create-gmt-file-from-ensembl.html#cb35-17" aria-hidden="true" tabindex="-1"></a><span class="co">#compute the unique pathway sets</span></span>
+<span id="cb35-18"><a href="create-gmt-file-from-ensembl.html#cb35-18" aria-hidden="true" tabindex="-1"></a>go_pathway_sets <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(go_annotation_bp[,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>],</span>
+<span id="cb35-19"><a href="create-gmt-file-from-ensembl.html#cb35-19" aria-hidden="true" tabindex="-1"></a>                             <span class="at">by =</span> <span class="fu">list</span>(go_annotation_bp<span class="sc">$</span>go_id),</span>
+<span id="cb35-20"><a href="create-gmt-file-from-ensembl.html#cb35-20" aria-hidden="true" tabindex="-1"></a>                             <span class="at">FUN =</span> <span class="cf">function</span>(x){<span class="fu">list</span>(<span class="fu">unique</span>(x))})</span>
+<span id="cb35-21"><a href="create-gmt-file-from-ensembl.html#cb35-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-22"><a href="create-gmt-file-from-ensembl.html#cb35-22" aria-hidden="true" tabindex="-1"></a><span class="co">#unlist the go descriptions</span></span>
+<span id="cb35-23"><a href="create-gmt-file-from-ensembl.html#cb35-23" aria-hidden="true" tabindex="-1"></a>go_pathway_sets<span class="sc">$</span>name_1006 <span class="ot">&lt;-</span> <span class="fu">apply</span>(go_pathway_sets,<span class="dv">1</span>,<span class="at">FUN=</span><span class="cf">function</span>(x){</span>
+<span id="cb35-24"><a href="create-gmt-file-from-ensembl.html#cb35-24" aria-hidden="true" tabindex="-1"></a>   <span class="fu">paste</span>(<span class="fu">gsub</span>(<span class="fu">unlist</span>(x<span class="sc">$</span>name_1006),<span class="at">pattern=</span> <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">&quot;</span>,</span>
+<span id="cb35-25"><a href="create-gmt-file-from-ensembl.html#cb35-25" aria-hidden="true" tabindex="-1"></a>              <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>),<span class="at">collapse =</span> <span class="st">&quot;&quot;</span>)})</span></code></pre></div>
 <p>There are two identifiers that you can choose from in the above table
 * external_symbols
 * ensembl_ids</p>
 <p>Each of these is stored as a list in the dataframe. In order to convert it to the right format for the gmt file we need to convert the list to string of tab delimited strings. (unfortunately there is no streaightforward way to write out a dataframe’s column of lists.)</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="create-gmt-file-from-ensembl.html#cb34-1" aria-hidden="true" tabindex="-1"></a>go_pathway_sets[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="st">&quot;external_gene_name&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="create-gmt-file-from-ensembl.html#cb36-1" aria-hidden="true" tabindex="-1"></a>go_pathway_sets[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="st">&quot;external_gene_name&quot;</span>]</span></code></pre></div>
 <pre><code>## [[1]]
 ## [1] &quot;MEF2A&quot;    &quot;SLC25A36&quot; &quot;OPA1&quot;     &quot;MGME1&quot;    &quot;SLC25A33&quot; &quot;TYMP&quot;     &quot;AKT3&quot;    
 ## [8] &quot;PIF1&quot;    
@@ -316,7 +316,7 @@ div.csl-indent {
 ## 
 ## [[3]]
 ## [1] &quot;ERCC6&quot; &quot;ERCC8&quot; &quot;LIG4&quot;  &quot;APLF&quot;  &quot;APTX&quot;  &quot;XRCC1&quot; &quot;SIRT1&quot; &quot;XNDC1&quot;</code></pre>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="create-gmt-file-from-ensembl.html#cb36-1" aria-hidden="true" tabindex="-1"></a>go_pathway_sets[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="st">&quot;ensembl_gene_id&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="create-gmt-file-from-ensembl.html#cb38-1" aria-hidden="true" tabindex="-1"></a>go_pathway_sets[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="st">&quot;ensembl_gene_id&quot;</span>]</span></code></pre></div>
 <pre><code>## [[1]]
 ## [1] &quot;ENSECAG00000011593&quot; &quot;ENSECAG00000010094&quot; &quot;ENSECAG00000024248&quot;
 ## [4] &quot;ENSECAG00000012675&quot; &quot;ENSECAG00000016862&quot; &quot;ENSECAG00000001072&quot;
@@ -333,17 +333,17 @@ div.csl-indent {
 <div id="format-results-into-gmt-file" class="section level2 hasAnchor" number="6.4">
 <h2><span class="header-section-number">6.4</span> Format results into GMT file<a href="create-gmt-file-from-ensembl.html#format-results-into-gmt-file" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Convert column of lists to a tab delimited string of gene names</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="create-gmt-file-from-ensembl.html#cb38-1" aria-hidden="true" tabindex="-1"></a>go_pathway_sets<span class="sc">$</span>collapsed_genenames <span class="ot">&lt;-</span> <span class="fu">apply</span>(go_pathway_sets,<span class="dv">1</span>,</span>
-<span id="cb38-2"><a href="create-gmt-file-from-ensembl.html#cb38-2" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">FUN=</span><span class="cf">function</span>(x){</span>
-<span id="cb38-3"><a href="create-gmt-file-from-ensembl.html#cb38-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">paste</span>(<span class="fu">gsub</span>(<span class="fu">unlist</span>(x<span class="sc">$</span>external_gene_name),<span class="at">pattern=</span> <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">&quot;</span>,</span>
-<span id="cb38-4"><a href="create-gmt-file-from-ensembl.html#cb38-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>),<span class="at">collapse =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span>
-<span id="cb38-5"><a href="create-gmt-file-from-ensembl.html#cb38-5" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="create-gmt-file-from-ensembl.html#cb40-1" aria-hidden="true" tabindex="-1"></a>go_pathway_sets<span class="sc">$</span>collapsed_genenames <span class="ot">&lt;-</span> <span class="fu">apply</span>(go_pathway_sets,<span class="dv">1</span>,</span>
+<span id="cb40-2"><a href="create-gmt-file-from-ensembl.html#cb40-2" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">FUN=</span><span class="cf">function</span>(x){</span>
+<span id="cb40-3"><a href="create-gmt-file-from-ensembl.html#cb40-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">paste</span>(<span class="fu">gsub</span>(<span class="fu">unlist</span>(x<span class="sc">$</span>external_gene_name),<span class="at">pattern=</span> <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">&quot;</span>,</span>
+<span id="cb40-4"><a href="create-gmt-file-from-ensembl.html#cb40-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>),<span class="at">collapse =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span>
+<span id="cb40-5"><a href="create-gmt-file-from-ensembl.html#cb40-5" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
 <p>Convert column of lists to a tab delimited string of gene names</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="create-gmt-file-from-ensembl.html#cb39-1" aria-hidden="true" tabindex="-1"></a>go_pathway_sets<span class="sc">$</span>collapsed_ensemblids <span class="ot">&lt;-</span> <span class="fu">apply</span>(go_pathway_sets,<span class="dv">1</span>,</span>
-<span id="cb39-2"><a href="create-gmt-file-from-ensembl.html#cb39-2" aria-hidden="true" tabindex="-1"></a>                                              <span class="at">FUN=</span><span class="cf">function</span>(x){</span>
-<span id="cb39-3"><a href="create-gmt-file-from-ensembl.html#cb39-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">paste</span>(<span class="fu">gsub</span>(<span class="fu">unlist</span>(x<span class="sc">$</span>ensembl_gene_id),<span class="at">pattern=</span> <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">&quot;</span>,</span>
-<span id="cb39-4"><a href="create-gmt-file-from-ensembl.html#cb39-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>),<span class="at">collapse =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span>
-<span id="cb39-5"><a href="create-gmt-file-from-ensembl.html#cb39-5" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="create-gmt-file-from-ensembl.html#cb41-1" aria-hidden="true" tabindex="-1"></a>go_pathway_sets<span class="sc">$</span>collapsed_ensemblids <span class="ot">&lt;-</span> <span class="fu">apply</span>(go_pathway_sets,<span class="dv">1</span>,</span>
+<span id="cb41-2"><a href="create-gmt-file-from-ensembl.html#cb41-2" aria-hidden="true" tabindex="-1"></a>                                              <span class="at">FUN=</span><span class="cf">function</span>(x){</span>
+<span id="cb41-3"><a href="create-gmt-file-from-ensembl.html#cb41-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">paste</span>(<span class="fu">gsub</span>(<span class="fu">unlist</span>(x<span class="sc">$</span>ensembl_gene_id),<span class="at">pattern=</span> <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">&quot;</span>,</span>
+<span id="cb41-4"><a href="create-gmt-file-from-ensembl.html#cb41-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>),<span class="at">collapse =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span>
+<span id="cb41-5"><a href="create-gmt-file-from-ensembl.html#cb41-5" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
 <p>The format of the GMT file is described <a href="here">https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:<em>Gene_Matrix_Transposed_file_format</em>.28.2A.gmt.29</a> and consists of rows with the following</p>
 <ul>
 <li>Name</li>
@@ -351,25 +351,25 @@ div.csl-indent {
 <li>tab delimited list of genes a part of this geneset</li>
 </ul>
 <p>Write out the gmt file with genenames</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="create-gmt-file-from-ensembl.html#cb40-1" aria-hidden="true" tabindex="-1"></a>gmt_file_genenames <span class="ot">&lt;-</span> go_pathway_sets[,<span class="fu">c</span>(<span class="st">&quot;Group.1&quot;</span>,<span class="st">&quot;name_1006&quot;</span>,</span>
-<span id="cb40-2"><a href="create-gmt-file-from-ensembl.html#cb40-2" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">&quot;collapsed_genenames&quot;</span>)]</span>
-<span id="cb40-3"><a href="create-gmt-file-from-ensembl.html#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(gmt_file_genenames)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;name&quot;</span>,<span class="st">&quot;description&quot;</span>) </span>
-<span id="cb40-4"><a href="create-gmt-file-from-ensembl.html#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-5"><a href="create-gmt-file-from-ensembl.html#cb40-5" aria-hidden="true" tabindex="-1"></a>gmt_genenames_filename <span class="ot">&lt;-</span> <span class="fu">file.path</span>(params<span class="sc">$</span>working_dir, <span class="fu">paste</span>(species,ensembl_dataset,<span class="st">&quot;GO_genesets_GN.gmt&quot;</span>,<span class="at">sep =</span> <span class="st">&quot;_&quot;</span>))</span>
-<span id="cb40-6"><a href="create-gmt-file-from-ensembl.html#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-7"><a href="create-gmt-file-from-ensembl.html#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(<span class="at">x =</span> gmt_file_genenames,<span class="at">file =</span> gmt_genenames_filename,</span>
-<span id="cb40-8"><a href="create-gmt-file-from-ensembl.html#cb40-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">quote =</span> <span class="cn">FALSE</span>,<span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,<span class="at">row.names =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb40-9"><a href="create-gmt-file-from-ensembl.html#cb40-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">col.names=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="create-gmt-file-from-ensembl.html#cb42-1" aria-hidden="true" tabindex="-1"></a>gmt_file_genenames <span class="ot">&lt;-</span> go_pathway_sets[,<span class="fu">c</span>(<span class="st">&quot;Group.1&quot;</span>,<span class="st">&quot;name_1006&quot;</span>,</span>
+<span id="cb42-2"><a href="create-gmt-file-from-ensembl.html#cb42-2" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">&quot;collapsed_genenames&quot;</span>)]</span>
+<span id="cb42-3"><a href="create-gmt-file-from-ensembl.html#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(gmt_file_genenames)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;name&quot;</span>,<span class="st">&quot;description&quot;</span>) </span>
+<span id="cb42-4"><a href="create-gmt-file-from-ensembl.html#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="create-gmt-file-from-ensembl.html#cb42-5" aria-hidden="true" tabindex="-1"></a>gmt_genenames_filename <span class="ot">&lt;-</span> <span class="fu">file.path</span>(params<span class="sc">$</span>working_dir, <span class="fu">paste</span>(species,ensembl_dataset,<span class="st">&quot;GO_genesets_GN.gmt&quot;</span>,<span class="at">sep =</span> <span class="st">&quot;_&quot;</span>))</span>
+<span id="cb42-6"><a href="create-gmt-file-from-ensembl.html#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="create-gmt-file-from-ensembl.html#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(<span class="at">x =</span> gmt_file_genenames,<span class="at">file =</span> gmt_genenames_filename,</span>
+<span id="cb42-8"><a href="create-gmt-file-from-ensembl.html#cb42-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">quote =</span> <span class="cn">FALSE</span>,<span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,<span class="at">row.names =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb42-9"><a href="create-gmt-file-from-ensembl.html#cb42-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">col.names=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Write out the gmt file with ensembl ids</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="create-gmt-file-from-ensembl.html#cb41-1" aria-hidden="true" tabindex="-1"></a>gmt_file_ensemblids <span class="ot">&lt;-</span> go_pathway_sets[,<span class="fu">c</span>(<span class="st">&quot;Group.1&quot;</span>,<span class="st">&quot;name_1006&quot;</span>,</span>
-<span id="cb41-2"><a href="create-gmt-file-from-ensembl.html#cb41-2" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">&quot;collapsed_ensemblids&quot;</span>)]</span>
-<span id="cb41-3"><a href="create-gmt-file-from-ensembl.html#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(gmt_file_ensemblids)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;name&quot;</span>,<span class="st">&quot;description&quot;</span>) </span>
-<span id="cb41-4"><a href="create-gmt-file-from-ensembl.html#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-5"><a href="create-gmt-file-from-ensembl.html#cb41-5" aria-hidden="true" tabindex="-1"></a>gmt_ensemblids_filename <span class="ot">&lt;-</span> <span class="fu">file.path</span>(params<span class="sc">$</span>working_dir, <span class="fu">paste</span>(species,ensembl_dataset,<span class="st">&quot;GO_genesets_esemblids.gmt&quot;</span>,<span class="at">sep =</span> <span class="st">&quot;_&quot;</span>))</span>
-<span id="cb41-6"><a href="create-gmt-file-from-ensembl.html#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-7"><a href="create-gmt-file-from-ensembl.html#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(<span class="at">x =</span> gmt_file_ensemblids,<span class="at">file =</span> gmt_ensemblids_filename,</span>
-<span id="cb41-8"><a href="create-gmt-file-from-ensembl.html#cb41-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">quote =</span> <span class="cn">FALSE</span>,<span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,<span class="at">row.names =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb41-9"><a href="create-gmt-file-from-ensembl.html#cb41-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">col.names=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="create-gmt-file-from-ensembl.html#cb43-1" aria-hidden="true" tabindex="-1"></a>gmt_file_ensemblids <span class="ot">&lt;-</span> go_pathway_sets[,<span class="fu">c</span>(<span class="st">&quot;Group.1&quot;</span>,<span class="st">&quot;name_1006&quot;</span>,</span>
+<span id="cb43-2"><a href="create-gmt-file-from-ensembl.html#cb43-2" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">&quot;collapsed_ensemblids&quot;</span>)]</span>
+<span id="cb43-3"><a href="create-gmt-file-from-ensembl.html#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(gmt_file_ensemblids)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;name&quot;</span>,<span class="st">&quot;description&quot;</span>) </span>
+<span id="cb43-4"><a href="create-gmt-file-from-ensembl.html#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="create-gmt-file-from-ensembl.html#cb43-5" aria-hidden="true" tabindex="-1"></a>gmt_ensemblids_filename <span class="ot">&lt;-</span> <span class="fu">file.path</span>(params<span class="sc">$</span>working_dir, <span class="fu">paste</span>(species,ensembl_dataset,<span class="st">&quot;GO_genesets_esemblids.gmt&quot;</span>,<span class="at">sep =</span> <span class="st">&quot;_&quot;</span>))</span>
+<span id="cb43-6"><a href="create-gmt-file-from-ensembl.html#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="create-gmt-file-from-ensembl.html#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(<span class="at">x =</span> gmt_file_ensemblids,<span class="at">file =</span> gmt_ensemblids_filename,</span>
+<span id="cb43-8"><a href="create-gmt-file-from-ensembl.html#cb43-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">quote =</span> <span class="cn">FALSE</span>,<span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,<span class="at">row.names =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb43-9"><a href="create-gmt-file-from-ensembl.html#cb43-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">col.names=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div class="csl-entry">

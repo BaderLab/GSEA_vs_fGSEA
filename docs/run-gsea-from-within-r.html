@@ -23,7 +23,7 @@
 <meta name="author" content="Ruth Isserlin" />
 
 
-<meta name="date" content="2023-04-11" />
+<meta name="date" content="2023-04-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -228,35 +228,59 @@ div.csl-indent {
 <div id="configurable-parameters" class="section level2 hasAnchor" number="5.2">
 <h2><span class="header-section-number">5.2</span> Configurable Parameters<a href="run-gsea-from-within-r.html#configurable-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In order to run GSEA automatically through the notebook you will need to download the gsea jar from <a href="http://software.broadinstitute.org/gsea/downloads.jsp">here</a>. Specify the exact path to the gsea jar in the parameters in order to automatically compute enrichments using GSEA.</p>
-<p>If you are running this notebook using the <a href="https://hub.docker.com/r/risserlin/workshop_base_image">baderlab workshop docker image</a> then the image comes pre-installed with the gsea jar that you can use to run gsea directly in the docker.</p>
+<p>If you are running this notebook using the <a href="https://hub.docker.com/r/risserlin/workshop_base_image">baderlab workshop docker image</a> then the image comes pre-installed with the gsea jar that you can use to run gsea directly in the docker. The path to the GSEA jar in the docker is - /home/rstudio/GSEA_4.3.2/gsea-cli.sh</p>
+<p>In order to run GSEA automatically you need to speciry the path to the gsea jar file.
+The gsea_jar needs to be the full path to the GSEA 4.3.2 directory that you downloaded from GSEA. for example /Users/johnsmith/GSEA_4.3.2/gsea-cli.sh</p>
+<p>For each variable defined there is an example of how you can set the variable using parameters so you can run re-use your notebook with varying parameters and run completely from the command line. For more info see <a href="https://bookdown.org/yihui/rmarkdown/params-knit.html">here</a></p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="run-gsea-from-within-r.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#path to GSEA jar </span></span>
-<span id="cb24-2"><a href="run-gsea-from-within-r.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># In order to run GSEA automatically you need to speciry the path to the gsea jar file.</span></span>
-<span id="cb24-3"><a href="run-gsea-from-within-r.html#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># the gsea_jar aneeds to be the full path to the GSEA 4.3.2 directory that you</span></span>
-<span id="cb24-4"><a href="run-gsea-from-within-r.html#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># downloaded from GSEA. for example (/Users/johnsmith/GSEA_4.3.2/gsea-cli.sh)</span></span>
-<span id="cb24-5"><a href="run-gsea-from-within-r.html#cb24-5" aria-hidden="true" tabindex="-1"></a>gsea_jar <span class="ot">&lt;-</span> params<span class="sc">$</span>gsea_jar</span>
-<span id="cb24-6"><a href="run-gsea-from-within-r.html#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-7"><a href="run-gsea-from-within-r.html#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">#navigate to the directory where you put the downloaded protocol files.</span></span>
-<span id="cb24-8"><a href="run-gsea-from-within-r.html#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-9"><a href="run-gsea-from-within-r.html#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co">#directory where all the data files are found.  For example -   ./data/ </span></span>
-<span id="cb24-10"><a href="run-gsea-from-within-r.html#cb24-10" aria-hidden="true" tabindex="-1"></a>working_dir <span class="ot">&lt;-</span> params<span class="sc">$</span>working_dir</span>
-<span id="cb24-11"><a href="run-gsea-from-within-r.html#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-12"><a href="run-gsea-from-within-r.html#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co">#The name to give the analysis in GSEA - for example Mesen_vs_Immuno</span></span>
-<span id="cb24-13"><a href="run-gsea-from-within-r.html#cb24-13" aria-hidden="true" tabindex="-1"></a>analysis_name <span class="ot">&lt;-</span> params<span class="sc">$</span>analysis_name</span>
-<span id="cb24-14"><a href="run-gsea-from-within-r.html#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-15"><a href="run-gsea-from-within-r.html#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="co">#rank file to use in GSEA analysis.  </span></span>
-<span id="cb24-16"><a href="run-gsea-from-within-r.html#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="co">#For example - MesenchymalvsImmunoreactive_edger_ranks.rnk</span></span>
-<span id="cb24-17"><a href="run-gsea-from-within-r.html#cb24-17" aria-hidden="true" tabindex="-1"></a>rnk_file <span class="ot">&lt;-</span> params<span class="sc">$</span>rnk_file</span>
-<span id="cb24-18"><a href="run-gsea-from-within-r.html#cb24-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-19"><a href="run-gsea-from-within-r.html#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="co">#run_gsea - true/false</span></span>
-<span id="cb24-20"><a href="run-gsea-from-within-r.html#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="co"># This parameter is for the compilation of the notebook.  </span></span>
-<span id="cb24-21"><a href="run-gsea-from-within-r.html#cb24-21" aria-hidden="true" tabindex="-1"></a>run_gsea <span class="ot">&lt;-</span> params<span class="sc">$</span>run_gsea</span>
-<span id="cb24-22"><a href="run-gsea-from-within-r.html#cb24-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-23"><a href="run-gsea-from-within-r.html#cb24-23" aria-hidden="true" tabindex="-1"></a><span class="co">#specify if you are using docker.</span></span>
-<span id="cb24-24"><a href="run-gsea-from-within-r.html#cb24-24" aria-hidden="true" tabindex="-1"></a>is_docker <span class="ot">&lt;-</span> params<span class="sc">$</span>is_docker</span></code></pre></div>
+<span id="cb24-2"><a href="run-gsea-from-within-r.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">#gsea_jar &lt;- params$gsea_jar --&gt; if you want to define parameters for the notebook and run as script you can pass this in as a parameter and set it like this.</span></span>
+<span id="cb24-3"><a href="run-gsea-from-within-r.html#cb24-3" aria-hidden="true" tabindex="-1"></a>gsea_jar <span class="ot">&lt;-</span> <span class="st">&quot;/home/rstudio/GSEA_4.3.2/gsea-cli.sh&quot;</span></span></code></pre></div>
+<p>Set the working directory as the directory to the directory where you downloaded all protocol files. For example /User/JohnSmith/EMProtocolFiles/data</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="run-gsea-from-within-r.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#directory where all the data files are found.  For example -   ./data/ </span></span>
+<span id="cb25-2"><a href="run-gsea-from-within-r.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co">#working_dir &lt;- params$working_dir --&gt; if you want to define parameters for the notebook and run as script you can pass this in as a parameter and set it like this.</span></span>
+<span id="cb25-3"><a href="run-gsea-from-within-r.html#cb25-3" aria-hidden="true" tabindex="-1"></a>working_dir <span class="ot">&lt;-</span> <span class="st">&quot;./data/&quot;</span></span>
+<span id="cb25-4"><a href="run-gsea-from-within-r.html#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="run-gsea-from-within-r.html#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co">#The name to give the analysis in GSEA - for example Mesen_vs_Immuno</span></span>
+<span id="cb25-6"><a href="run-gsea-from-within-r.html#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># analysis_name &lt;- params$analysis_name --&gt; if you want to define parameters for the notebook and run as script you can pass this in as a parameter and set it like this.</span></span>
+<span id="cb25-7"><a href="run-gsea-from-within-r.html#cb25-7" aria-hidden="true" tabindex="-1"></a>analysis_name <span class="ot">&lt;-</span> <span class="st">&quot;Mesen_vs_Immuno&quot;</span></span>
+<span id="cb25-8"><a href="run-gsea-from-within-r.html#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="run-gsea-from-within-r.html#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co">#rank file to use in GSEA analysis.  </span></span>
+<span id="cb25-10"><a href="run-gsea-from-within-r.html#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co">#For example - MesenchymalvsImmunoreactive_edger_ranks.rnk</span></span>
+<span id="cb25-11"><a href="run-gsea-from-within-r.html#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co">#rnk_file &lt;- params$rnk_file --&gt; if you want to define parameters for the notebook and run as script you can pass this in as a parameter and set it like this.</span></span>
+<span id="cb25-12"><a href="run-gsea-from-within-r.html#cb25-12" aria-hidden="true" tabindex="-1"></a>rnk_file <span class="ot">&lt;-</span> <span class="st">&quot;MesenchymalvsImmunoreactive_edger_ranks.rnk&quot;</span></span>
+<span id="cb25-13"><a href="run-gsea-from-within-r.html#cb25-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-14"><a href="run-gsea-from-within-r.html#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="co">#run_gsea - true/false</span></span>
+<span id="cb25-15"><a href="run-gsea-from-within-r.html#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="co"># This parameter is for the compilation of the notebook.  </span></span>
+<span id="cb25-16"><a href="run-gsea-from-within-r.html#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="co">#run_gsea &lt;- params$run_gsea --&gt; if you want to define parameters for the notebook and run as script you can pass this in as a parameter and set it like this.</span></span>
+<span id="cb25-17"><a href="run-gsea-from-within-r.html#cb25-17" aria-hidden="true" tabindex="-1"></a>run_gsea <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span></code></pre></div>
 </div>
 <div id="download-the-latest-pathway-definition-file" class="section level2 hasAnchor" number="5.3">
 <h2><span class="header-section-number">5.3</span> Download the latest pathway definition file<a href="run-gsea-from-within-r.html#download-the-latest-pathway-definition-file" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Only Human, Mouse and Rat gene set files are currently available on the baderlab downloads site. If you are working with a species other than human (and it is either rat or mouse) change the gmt_url below to correct species. Check <a href="http://download.baderlab.org/EM_Genesets/current_release/">here</a> to see all available species.</p>
+<p>Only Human, Mouse, Rat, and Woodchuck gene set files are currently available on the baderlab downloads site. If you are working with a species other than human (and it is either rat,mouse or woodchuck) change the gmt_url below to the correct species. Check <a href="http://download.baderlab.org/EM_Genesets/current_release/">here</a> to see all available species.</p>
+<p>To create your own GMT file using Ensembl see <a href="create-gmt-file-from-ensembl.html#create-gmt-file-from-ensembl">Create GMT file from Ensembl</a></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="run-gsea-from-within-r.html#cb26-1" aria-hidden="true" tabindex="-1"></a>gmt_url <span class="ot">=</span> <span class="st">&quot;http://download.baderlab.org/EM_Genesets/current_release/Human/symbol/&quot;</span></span>
+<span id="cb26-2"><a href="run-gsea-from-within-r.html#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="run-gsea-from-within-r.html#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co">#list all the files on the server</span></span>
+<span id="cb26-4"><a href="run-gsea-from-within-r.html#cb26-4" aria-hidden="true" tabindex="-1"></a>filenames <span class="ot">=</span> <span class="fu">getURL</span>(gmt_url)</span>
+<span id="cb26-5"><a href="run-gsea-from-within-r.html#cb26-5" aria-hidden="true" tabindex="-1"></a>tc <span class="ot">=</span> <span class="fu">textConnection</span>(filenames)</span>
+<span id="cb26-6"><a href="run-gsea-from-within-r.html#cb26-6" aria-hidden="true" tabindex="-1"></a>contents <span class="ot">=</span> <span class="fu">readLines</span>(tc)</span>
+<span id="cb26-7"><a href="run-gsea-from-within-r.html#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="fu">close</span>(tc)</span>
+<span id="cb26-8"><a href="run-gsea-from-within-r.html#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="run-gsea-from-within-r.html#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co">#get the gmt that has all the pathways and does not include terms inferred from electronic annotations(IEA)</span></span>
+<span id="cb26-10"><a href="run-gsea-from-within-r.html#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co">#start with gmt file that has pathways only</span></span>
+<span id="cb26-11"><a href="run-gsea-from-within-r.html#cb26-11" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">=</span> <span class="fu">gregexpr</span>(<span class="st">&quot;(?&lt;=&lt;a href=</span><span class="sc">\&quot;</span><span class="st">)(.*.GOBP_AllPathways_no_GO_iea.*.)(.gmt)(?=</span><span class="sc">\&quot;</span><span class="st">&gt;)&quot;</span>,</span>
+<span id="cb26-12"><a href="run-gsea-from-within-r.html#cb26-12" aria-hidden="true" tabindex="-1"></a>  contents, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb26-13"><a href="run-gsea-from-within-r.html#cb26-13" aria-hidden="true" tabindex="-1"></a>gmt_file <span class="ot">=</span> <span class="fu">unlist</span>(<span class="fu">regmatches</span>(contents, rx))</span>
+<span id="cb26-14"><a href="run-gsea-from-within-r.html#cb26-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-15"><a href="run-gsea-from-within-r.html#cb26-15" aria-hidden="true" tabindex="-1"></a>dest_gmt_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(working_dir,gmt_file )</span>
+<span id="cb26-16"><a href="run-gsea-from-within-r.html#cb26-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-17"><a href="run-gsea-from-within-r.html#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="co">#check if this gmt file already exists</span></span>
+<span id="cb26-18"><a href="run-gsea-from-within-r.html#cb26-18" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">file.exists</span>(dest_gmt_file)){</span>
+<span id="cb26-19"><a href="run-gsea-from-within-r.html#cb26-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(</span>
+<span id="cb26-20"><a href="run-gsea-from-within-r.html#cb26-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(gmt_url,gmt_file,<span class="at">sep=</span><span class="st">&quot;&quot;</span>),</span>
+<span id="cb26-21"><a href="run-gsea-from-within-r.html#cb26-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">destfile=</span>dest_gmt_file</span>
+<span id="cb26-22"><a href="run-gsea-from-within-r.html#cb26-22" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb26-23"><a href="run-gsea-from-within-r.html#cb26-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <hr />
 </div>
 <div id="run-gsea" class="section level2 hasAnchor" number="5.4">
@@ -276,18 +300,18 @@ div.csl-indent {
 <li>zip_report - true/false to zip output directory</li>
 <li>out - directory where to place the result directory.</li>
 </ul>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="run-gsea-from-within-r.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(run_gsea){</span>
-<span id="cb25-2"><a href="run-gsea-from-within-r.html#cb25-2" aria-hidden="true" tabindex="-1"></a>  command <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;&quot;</span>,gsea_jar,  </span>
-<span id="cb25-3"><a href="run-gsea-from-within-r.html#cb25-3" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;GSEAPreRanked -gmx&quot;</span>, dest_gmt_file, </span>
-<span id="cb25-4"><a href="run-gsea-from-within-r.html#cb25-4" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;-rnk&quot;</span> ,<span class="fu">file.path</span>(working_dir,rnk_file), </span>
-<span id="cb25-5"><a href="run-gsea-from-within-r.html#cb25-5" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;-collapse false -nperm 1000 -scoring_scheme weighted&quot;</span>, </span>
-<span id="cb25-6"><a href="run-gsea-from-within-r.html#cb25-6" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;-rpt_label &quot;</span>,analysis_name,</span>
-<span id="cb25-7"><a href="run-gsea-from-within-r.html#cb25-7" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;  -plot_top_x 20 -rnd_seed 12345  -set_max 200&quot;</span>,  </span>
-<span id="cb25-8"><a href="run-gsea-from-within-r.html#cb25-8" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot; -set_min 15 -zip_report false &quot;</span>,</span>
-<span id="cb25-9"><a href="run-gsea-from-within-r.html#cb25-9" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot; -out&quot;</span> ,working_dir, </span>
-<span id="cb25-10"><a href="run-gsea-from-within-r.html#cb25-10" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot; &gt; gsea_output.txt&quot;</span>,<span class="at">sep=</span><span class="st">&quot; &quot;</span>)</span>
-<span id="cb25-11"><a href="run-gsea-from-within-r.html#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">system</span>(command)</span>
-<span id="cb25-12"><a href="run-gsea-from-within-r.html#cb25-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="run-gsea-from-within-r.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(run_gsea){</span>
+<span id="cb27-2"><a href="run-gsea-from-within-r.html#cb27-2" aria-hidden="true" tabindex="-1"></a>  command <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;&quot;</span>,gsea_jar,  </span>
+<span id="cb27-3"><a href="run-gsea-from-within-r.html#cb27-3" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;GSEAPreRanked -gmx&quot;</span>, dest_gmt_file, </span>
+<span id="cb27-4"><a href="run-gsea-from-within-r.html#cb27-4" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;-rnk&quot;</span> ,<span class="fu">file.path</span>(working_dir,rnk_file), </span>
+<span id="cb27-5"><a href="run-gsea-from-within-r.html#cb27-5" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;-collapse false -nperm 1000 -scoring_scheme weighted&quot;</span>, </span>
+<span id="cb27-6"><a href="run-gsea-from-within-r.html#cb27-6" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;-rpt_label &quot;</span>,analysis_name,</span>
+<span id="cb27-7"><a href="run-gsea-from-within-r.html#cb27-7" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;  -plot_top_x 20 -rnd_seed 12345  -set_max 200&quot;</span>,  </span>
+<span id="cb27-8"><a href="run-gsea-from-within-r.html#cb27-8" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot; -set_min 15 -zip_report false &quot;</span>,</span>
+<span id="cb27-9"><a href="run-gsea-from-within-r.html#cb27-9" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot; -out&quot;</span> ,working_dir, </span>
+<span id="cb27-10"><a href="run-gsea-from-within-r.html#cb27-10" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot; &gt; gsea_output.txt&quot;</span>,<span class="at">sep=</span><span class="st">&quot; &quot;</span>)</span>
+<span id="cb27-11"><a href="run-gsea-from-within-r.html#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">system</span>(command)</span>
+<span id="cb27-12"><a href="run-gsea-from-within-r.html#cb27-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 
 </div>
 </div>

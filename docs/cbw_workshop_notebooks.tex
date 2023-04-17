@@ -145,7 +145,7 @@
 
 \title{CBW pathways Workshops - example R notebooks}
 \author{Ruth Isserlin}
-\date{2023-04-11}
+\date{2023-04-14}
 
 \begin{document}
 \maketitle
@@ -575,12 +575,12 @@ In order to use your own genesets with g:Profiler you need to upload the the fil
 \end{Shaded}
 
 \begin{verbatim}
-## Your custom annotations ID is gp__15KB_4Xzp_hzo
+## Your custom annotations ID is gp__4jKc_cgF5_T7M
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 \end{verbatim}
 
 \begin{verbatim}
-## Just use: gost(my_genes, organism = 'gp__15KB_4Xzp_hzo')
+## Just use: gost(my_genes, organism = 'gp__4jKc_cgF5_T7M')
 \end{verbatim}
 
 For this query we are specifying -
@@ -596,7 +596,7 @@ For this query we are specifying -
 \item
   correction\_method - set to fdr. by default g:Profiler uses g:Scs
 \item
-  organism - set to the custom\_gmt ID ( for this run it is - gp\_\_15KB\_4Xzp\_hzo) that we received when we uploaded our genetset file.
+  organism - set to the custom\_gmt ID ( for this run it is - gp\_\_4jKc\_cgF5\_T7M) that we received when we uploaded our genetset file.
 \end{itemize}
 
 \begin{Shaded}
@@ -756,41 +756,79 @@ There is no package to run the original algorithm of GSEA(\protect\hyperlink{ref
 
 In order to run GSEA automatically through the notebook you will need to download the gsea jar from \href{http://software.broadinstitute.org/gsea/downloads.jsp}{here}. Specify the exact path to the gsea jar in the parameters in order to automatically compute enrichments using GSEA.
 
-If you are running this notebook using the \href{https://hub.docker.com/r/risserlin/workshop_base_image}{baderlab workshop docker image} then the image comes pre-installed with the gsea jar that you can use to run gsea directly in the docker.
+If you are running this notebook using the \href{https://hub.docker.com/r/risserlin/workshop_base_image}{baderlab workshop docker image} then the image comes pre-installed with the gsea jar that you can use to run gsea directly in the docker. The path to the GSEA jar in the docker is - /home/rstudio/GSEA\_4.3.2/gsea-cli.sh
+
+In order to run GSEA automatically you need to speciry the path to the gsea jar file.
+The gsea\_jar needs to be the full path to the GSEA 4.3.2 directory that you downloaded from GSEA. for example /Users/johnsmith/GSEA\_4.3.2/gsea-cli.sh
+
+For each variable defined there is an example of how you can set the variable using parameters so you can run re-use your notebook with varying parameters and run completely from the command line. For more info see \href{https://bookdown.org/yihui/rmarkdown/params-knit.html}{here}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#path to GSEA jar }
-\CommentTok{\# In order to run GSEA automatically you need to speciry the path to the gsea jar file.}
-\CommentTok{\# the gsea\_jar aneeds to be the full path to the GSEA 4.3.2 directory that you}
-\CommentTok{\# downloaded from GSEA. for example (/Users/johnsmith/GSEA\_4.3.2/gsea{-}cli.sh)}
-\NormalTok{gsea\_jar }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{gsea\_jar}
+\CommentTok{\#gsea\_jar \textless{}{-} params$gsea\_jar {-}{-}\textgreater{} if you want to define parameters for the notebook and run as script you can pass this in as a parameter and set it like this.}
+\NormalTok{gsea\_jar }\OtherTok{\textless{}{-}} \StringTok{"/home/rstudio/GSEA\_4.3.2/gsea{-}cli.sh"}
+\end{Highlighting}
+\end{Shaded}
 
-\CommentTok{\#navigate to the directory where you put the downloaded protocol files.}
+Set the working directory as the directory to the directory where you downloaded all protocol files. For example /User/JohnSmith/EMProtocolFiles/data
 
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\#directory where all the data files are found.  For example {-}   ./data/ }
-\NormalTok{working\_dir }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{working\_dir}
+\CommentTok{\#working\_dir \textless{}{-} params$working\_dir {-}{-}\textgreater{} if you want to define parameters for the notebook and run as script you can pass this in as a parameter and set it like this.}
+\NormalTok{working\_dir }\OtherTok{\textless{}{-}} \StringTok{"./data/"}
 
 \CommentTok{\#The name to give the analysis in GSEA {-} for example Mesen\_vs\_Immuno}
-\NormalTok{analysis\_name }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{analysis\_name}
+\CommentTok{\# analysis\_name \textless{}{-} params$analysis\_name {-}{-}\textgreater{} if you want to define parameters for the notebook and run as script you can pass this in as a parameter and set it like this.}
+\NormalTok{analysis\_name }\OtherTok{\textless{}{-}} \StringTok{"Mesen\_vs\_Immuno"}
 
 \CommentTok{\#rank file to use in GSEA analysis.  }
 \CommentTok{\#For example {-} MesenchymalvsImmunoreactive\_edger\_ranks.rnk}
-\NormalTok{rnk\_file }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{rnk\_file}
+\CommentTok{\#rnk\_file \textless{}{-} params$rnk\_file {-}{-}\textgreater{} if you want to define parameters for the notebook and run as script you can pass this in as a parameter and set it like this.}
+\NormalTok{rnk\_file }\OtherTok{\textless{}{-}} \StringTok{"MesenchymalvsImmunoreactive\_edger\_ranks.rnk"}
 
 \CommentTok{\#run\_gsea {-} true/false}
 \CommentTok{\# This parameter is for the compilation of the notebook.  }
-\NormalTok{run\_gsea }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{run\_gsea}
-
-\CommentTok{\#specify if you are using docker.}
-\NormalTok{is\_docker }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{is\_docker}
+\CommentTok{\#run\_gsea \textless{}{-} params$run\_gsea {-}{-}\textgreater{} if you want to define parameters for the notebook and run as script you can pass this in as a parameter and set it like this.}
+\NormalTok{run\_gsea }\OtherTok{\textless{}{-}} \ConstantTok{FALSE}
 \end{Highlighting}
 \end{Shaded}
 
 \hypertarget{download-the-latest-pathway-definition-file}{%
 \section{Download the latest pathway definition file}\label{download-the-latest-pathway-definition-file}}
 
-Only Human, Mouse and Rat gene set files are currently available on the baderlab downloads site. If you are working with a species other than human (and it is either rat or mouse) change the gmt\_url below to correct species. Check \href{http://download.baderlab.org/EM_Genesets/current_release/}{here} to see all available species.
+Only Human, Mouse, Rat, and Woodchuck gene set files are currently available on the baderlab downloads site. If you are working with a species other than human (and it is either rat,mouse or woodchuck) change the gmt\_url below to the correct species. Check \href{http://download.baderlab.org/EM_Genesets/current_release/}{here} to see all available species.
+
+To create your own GMT file using Ensembl see \protect\hyperlink{create-gmt-file-from-ensembl}{Create GMT file from Ensembl}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gmt\_url }\OtherTok{=} \StringTok{"http://download.baderlab.org/EM\_Genesets/current\_release/Human/symbol/"}
+
+\CommentTok{\#list all the files on the server}
+\NormalTok{filenames }\OtherTok{=} \FunctionTok{getURL}\NormalTok{(gmt\_url)}
+\NormalTok{tc }\OtherTok{=} \FunctionTok{textConnection}\NormalTok{(filenames)}
+\NormalTok{contents }\OtherTok{=} \FunctionTok{readLines}\NormalTok{(tc)}
+\FunctionTok{close}\NormalTok{(tc)}
+
+\CommentTok{\#get the gmt that has all the pathways and does not include terms inferred from electronic annotations(IEA)}
+\CommentTok{\#start with gmt file that has pathways only}
+\NormalTok{rx }\OtherTok{=} \FunctionTok{gregexpr}\NormalTok{(}\StringTok{"(?\textless{}=\textless{}a href=}\SpecialCharTok{\textbackslash{}"}\StringTok{)(.*.GOBP\_AllPathways\_no\_GO\_iea.*.)(.gmt)(?=}\SpecialCharTok{\textbackslash{}"}\StringTok{\textgreater{})"}\NormalTok{,}
+\NormalTok{  contents, }\AttributeTok{perl =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{gmt\_file }\OtherTok{=} \FunctionTok{unlist}\NormalTok{(}\FunctionTok{regmatches}\NormalTok{(contents, rx))}
+
+\NormalTok{dest\_gmt\_file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(working\_dir,gmt\_file )}
+
+\CommentTok{\#check if this gmt file already exists}
+\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{file.exists}\NormalTok{(dest\_gmt\_file))\{}
+  \FunctionTok{download.file}\NormalTok{(}
+    \FunctionTok{paste}\NormalTok{(gmt\_url,gmt\_file,}\AttributeTok{sep=}\StringTok{""}\NormalTok{),}
+    \AttributeTok{destfile=}\NormalTok{dest\_gmt\_file}
+\NormalTok{  )}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -917,7 +955,7 @@ Connect to Biomart
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ensembl }\OtherTok{\textless{}{-}} \FunctionTok{useMart}\NormalTok{(}\StringTok{"ensembl"}\NormalTok{,}\AttributeTok{host =} \StringTok{"https://asia.ensembl.org"}\NormalTok{)}
+\NormalTok{ensembl }\OtherTok{\textless{}{-}} \FunctionTok{useMart}\NormalTok{(}\StringTok{"ensembl"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
