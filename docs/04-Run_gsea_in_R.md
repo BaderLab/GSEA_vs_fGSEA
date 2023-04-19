@@ -21,7 +21,8 @@ There is no package to run the original algorithm of GSEA[@gsea2005] in R.  Ther
 ```r
 #install required R and bioconductor packages
 tryCatch(expr = { library("RCurl")}, 
-         error = function(e) {  install.packages("RCurl")}, 
+         error = function(e) {  
+           install.packages("RCurl")}, 
          finally = library("RCurl"))
 ```
 
@@ -36,12 +37,14 @@ If you are running this notebook using the [baderlab workshop docker image](http
 In order to run GSEA automatically you need to speciry the path to the gsea jar file.
 The gsea_jar needs to be the full path to the GSEA 4.3.2 directory that you downloaded from GSEA. for example  /Users/johnsmith/GSEA_4.3.2/gsea-cli.sh
 
-For each variable defined there is an example of how you can set the variable using parameters so you can run re-use your notebook with varying parameters and run completely from the command line.  For more info see [here](https://bookdown.org/yihui/rmarkdown/params-knit.html)
+For each variable defined below there is an example of how you can set the variable using parameters so you can re-use your notebook with varying values and run completely from the command line.  For more info on how to set this up see [here](https://bookdown.org/yihui/rmarkdown/params-knit.html)
 
 
 ```r
 #path to GSEA jar 
-#gsea_jar <- params$gsea_jar --> if you want to define parameters for the notebook and run as script you can pass this in as a parameter and set it like this.
+#gsea_jar <- params$gsea_jar --> if you want to define parameters 
+#for the notebook and run as script you can pass this in as a parameter and 
+# set it like this.
 gsea_jar <- "/home/rstudio/GSEA_4.3.2/gsea-cli.sh"
 ```
 
@@ -50,21 +53,29 @@ Set the working directory as the directory to the directory where you downloaded
 
 ```r
 #directory where all the data files are found.  For example -   ./data/ 
-#working_dir <- params$working_dir --> if you want to define parameters for the notebook and run as script you can pass this in as a parameter and set it like this.
+#working_dir <- params$working_dir --> if you want to define parameters 
+#for the notebook and run as script you can pass this in as a parameter and 
+# set it like this.
 working_dir <- "./data/"
 
 #The name to give the analysis in GSEA - for example Mesen_vs_Immuno
-# analysis_name <- params$analysis_name --> if you want to define parameters for the notebook and run as script you can pass this in as a parameter and set it like this.
+# analysis_name <- params$analysis_name --> if you want to define parameters 
+#for the notebook and run as script you can pass this in as a parameter and 
+# set it like this.
 analysis_name <- "Mesen_vs_Immuno"
 
 #rank file to use in GSEA analysis.  
 #For example - MesenchymalvsImmunoreactive_edger_ranks.rnk
-#rnk_file <- params$rnk_file --> if you want to define parameters for the notebook and run as script you can pass this in as a parameter and set it like this.
+#rnk_file <- params$rnk_file --> if you want to define parameters 
+#for the notebook and run as script you can pass this in as a parameter and 
+# set it like this.
 rnk_file <- "MesenchymalvsImmunoreactive_edger_ranks.rnk"
 
 #run_gsea - true/false
 # This parameter is for the compilation of the notebook.  
-#run_gsea <- params$run_gsea --> if you want to define parameters for the notebook and run as script you can pass this in as a parameter and set it like this.
+#run_gsea <- params$run_gsea --> if you want to define parameters 
+#for the notebook and run as script you can pass this in as a parameter and 
+# set it like this.
 run_gsea <- FALSE
 ```
 
@@ -87,8 +98,9 @@ tc = textConnection(filenames)
 contents = readLines(tc)
 close(tc)
 
-#get the gmt that has all the pathways and does not include terms inferred from electronic annotations(IEA)
-#start with gmt file that has pathways only
+#get the gmt that has all the pathways and does not include terms 
+# inferred from electronic annotations(IEA)
+#start with gmt file that has pathways only and GO Biological Process only.
 rx = gregexpr("(?<=<a href=\")(.*.GOBP_AllPathways_no_GO_iea.*.)(.gmt)(?=\">)",
   contents, perl = TRUE)
 gmt_file = unlist(regmatches(contents, rx))

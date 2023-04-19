@@ -33,9 +33,9 @@ min_gs_size <- params$min_gs_size
 #min intersection between your genelist and the geneset - for example 3
 min_intersection <- params$min_intersection
 
-# organism parameter used for g:profiler.  First letter of first word in species name followed by 
-# the second word
-# for example - hsapiens
+# organism parameter used for g:profiler.  
+# First letter of first word in species name followed by 
+# the second word for example - hsapiens
 organism <- params$organism
 ```
 
@@ -163,15 +163,17 @@ Download the gmt file used for this analysis from g:profiler
 
 ```r
 #the link to the gmt file is static no matter what version
-gprofiler_gmt_url <- "https://biit.cs.ut.ee/gprofiler//static/gprofiler_full_hsapiens.name.gmt"
+gprofiler_gmt_url <- 
+  "https://biit.cs.ut.ee/gprofiler//static/gprofiler_full_hsapiens.name.gmt"
 
-#get version info gprofiler as the gmt file is always associated with a specific version of g:profiler
+#get version info gprofiler as the gmt file is always associated with 
+# a specific version of g:profiler
 gprofiler_version <- get_version_info(organism=organism)
 
 gprofiler_gmt_filename <- file.path(working_dir,
-                                            paste("gprofiler_full", organism,
-                                                  gprofiler_version$gprofiler_version,sep="_",
-                                                  ".name.gmt"))
+                                  paste("gprofiler_full", organism,
+                                    gprofiler_version$gprofiler_version,sep="_",
+                                    ".name.gmt"))
 
 download.file(url = gprofiler_gmt_url, destfile = gprofiler_gmt_filename)
 
@@ -192,8 +194,12 @@ getGenesetGenes <- function(query_genes, subset_genesets){
   genes <- lapply(subset_genesets,FUN=function(x){intersect(x,query_genes)})
   
   # For each of the genes collapse to the comma separate text
-  genes_collapsed <- unlist(lapply(genes,FUN=function(x){paste(x,collapse = ",")}))
-  genes_collapsed_df <- data.frame(term_id = names(genes), genes = genes_collapsed,stringsAsFactors = FALSE)
+  genes_collapsed <- unlist(lapply(genes,FUN=function(x){
+                                                paste(x,collapse = ",")}))
+  
+  genes_collapsed_df <- data.frame(term_id = names(genes), 
+                            genes = genes_collapsed,stringsAsFactors = FALSE)
+  
   return(genes_collapsed_df)
 }
 ```
@@ -221,7 +227,9 @@ if(nrow(enrichment_results) >0){
           enrichment_results <- cbind(enrichment_results,1)
           
           # Add the genes to the genesets
-          subset_genesets <- genesets_gprofiler$genesets[which(genesets_gprofiler$geneset.names %in% enrichment_results$term_id)]
+          subset_genesets <- genesets_gprofiler$genesets[
+            which(genesets_gprofiler$geneset.names 
+                  %in% enrichment_results$term_id)]
           
           genes <- getGenesetGenes(query_set, subset_genesets)
           
@@ -232,8 +240,11 @@ if(nrow(enrichment_results) >0){
 }
 
 #output the enrichment map file
-write.table(enrichment_results, file = file.path(working_dir, "gprofiler_GEM_using_gprof_gmt.txt"),
-                                                 row.names = FALSE, col.names = TRUE,quote = FALSE)
+write.table(enrichment_results, file = file.path(working_dir, 
+                                      "gprofiler_GEM_using_gprof_gmt.txt"),
+            row.names = FALSE, 
+            col.names = TRUE,
+            quote = FALSE)
 ```
 
 
@@ -253,12 +264,12 @@ custom_gmt <- upload_GMT_file(gmtfile=dest_gmt_file)
 ```
 
 ```
-## Your custom annotations ID is gp__4jKc_cgF5_T7M
+## Your custom annotations ID is gp__REwh_XG2d_iyI
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 ```
 
 ```
-## Just use: gost(my_genes, organism = 'gp__4jKc_cgF5_T7M')
+## Just use: gost(my_genes, organism = 'gp__REwh_XG2d_iyI')
 ```
 
 For this query we are specifying - 
@@ -267,7 +278,7 @@ For this query we are specifying -
   * significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.
   * ordered_query - set to TRUE because for this set of genes they are ordered in order of their significance
   * correction_method - set to fdr.  by default g:Profiler uses g:Scs
-  * organism - set to the custom_gmt ID ( for this run it is - gp__4jKc_cgF5_T7M) that we received when we uploaded our genetset file.
+  * organism - set to the custom_gmt ID ( for this run it is - gp__REwh_XG2d_iyI) that we received when we uploaded our genetset file.
 
 
 
