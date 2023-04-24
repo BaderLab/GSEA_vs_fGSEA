@@ -653,26 +653,26 @@ div.csl-indent {
 <p>In order to use your own genesets with g:Profiler you need to upload the the file to their server first. The function will return an ID that you need to specify in the organism parameter of the g:Profiler gost function call.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="run-gprofiler-from-r.html#cb24-1" aria-hidden="true" tabindex="-1"></a>custom_gmt_max250 <span class="ot">&lt;-</span> <span class="fu">upload_GMT_file</span>(</span>
 <span id="cb24-2"><a href="run-gprofiler-from-r.html#cb24-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">gmtfile=</span>genesets_baderlab_genesets_max250_filename)</span></code></pre></div>
-<pre><code>## Your custom annotations ID is gp__4AJ7_dg29_q84
+<pre><code>## Your custom annotations ID is gp__pE4I_SrXI_90c
 ## You can use this ID as an &#39;organism&#39; name in all the related enrichment tests against this custom source.</code></pre>
-<pre><code>## Just use: gost(my_genes, organism = &#39;gp__4AJ7_dg29_q84&#39;)</code></pre>
+<pre><code>## Just use: gost(my_genes, organism = &#39;gp__pE4I_SrXI_90c&#39;)</code></pre>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="run-gprofiler-from-r.html#cb27-1" aria-hidden="true" tabindex="-1"></a>custom_gmt_max1000 <span class="ot">&lt;-</span> <span class="fu">upload_GMT_file</span>(</span>
 <span id="cb27-2"><a href="run-gprofiler-from-r.html#cb27-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">gmtfile=</span>genesets_baderlab_genesets_max1000_filename)</span></code></pre></div>
-<pre><code>## Your custom annotations ID is gp__HhBd_JP5P_ink
+<pre><code>## Your custom annotations ID is gp__8TkB_Eywu_oRc
 ## You can use this ID as an &#39;organism&#39; name in all the related enrichment tests against this custom source.</code></pre>
-<pre><code>## Just use: gost(my_genes, organism = &#39;gp__HhBd_JP5P_ink&#39;)</code></pre>
+<pre><code>## Just use: gost(my_genes, organism = &#39;gp__8TkB_Eywu_oRc&#39;)</code></pre>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="run-gprofiler-from-r.html#cb30-1" aria-hidden="true" tabindex="-1"></a>custom_gmt_max10000 <span class="ot">&lt;-</span> <span class="fu">upload_GMT_file</span>(</span>
 <span id="cb30-2"><a href="run-gprofiler-from-r.html#cb30-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">gmtfile=</span>genesets_baderlab_genesets_max10000_filename)</span></code></pre></div>
-<pre><code>## Your custom annotations ID is gp__VdEE_hBOa_dzk
+<pre><code>## Your custom annotations ID is gp__PjYA_017b_4Qg
 ## You can use this ID as an &#39;organism&#39; name in all the related enrichment tests against this custom source.</code></pre>
-<pre><code>## Just use: gost(my_genes, organism = &#39;gp__VdEE_hBOa_dzk&#39;)</code></pre>
+<pre><code>## Just use: gost(my_genes, organism = &#39;gp__PjYA_017b_4Qg&#39;)</code></pre>
 <p>For this query we are specifying -</p>
 <ul>
 <li>query - the set of genes of interest, as loaded in from the Supplementary_Table1_Cancer_drivers.txt file.</li>
 <li>significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.</li>
 <li>ordered_query - set to TRUE because for this set of genes they are ordered in order of their significance</li>
 <li>correction_method - set to fdr. by default g:Profiler uses g:Scs</li>
-<li>organism - set to the custom_gmt ID ( for this run it is - gp__4AJ7_dg29_q84) that we received when we uploaded our genetset file.</li>
+<li>organism - set to the custom_gmt ID ( for this run it is - gp__pE4I_SrXI_90c) that we received when we uploaded our genetset file.</li>
 </ul>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="run-gprofiler-from-r.html#cb33-1" aria-hidden="true" tabindex="-1"></a>gprofiler_results_custom_max250 <span class="ot">&lt;-</span> <span class="fu">gost</span>(<span class="at">query =</span> query_set ,</span>
 <span id="cb33-2"><a href="run-gprofiler-from-r.html#cb33-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">significant=</span><span class="cn">FALSE</span>,</span>
@@ -842,8 +842,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
+"link": "https://github.com/risserlin/CBW_pathways_workshop_R_notebooks/edit/main/03-Run_gprofiler_in_R.Rmd",
+"text": "Suggest an edit"
 },
 "history": {
 "link": null,
@@ -853,7 +853,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["cbw_workshop_notebooks.pdf", "cbw_workshop_notebooks.epub"],
+"download": ["cbw_workshop_notebooks.pdf", "https://github.com/risserlin/CBW_pathways_workshop_R_notebooks/raw/main/03-Run_gprofiler_in_R.Rmd"],
 "search": {
 "engine": "fuse",
 "options": null
