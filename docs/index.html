@@ -23,7 +23,7 @@
 <meta name="author" content="Ruth Isserlin" />
 
 
-<meta name="date" content="2023-04-17" />
+<meta name="date" content="2023-04-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -172,12 +172,17 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="4" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html"><i class="fa fa-check"></i><b>4</b> Run g:profiler from R</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#run-gprofiler-with-supplied-genesets"><i class="fa fa-check"></i><b>4.1</b> Run g:profiler with supplied genesets</a></li>
-<li class="chapter" data-level="4.2" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#create-an-output-file-of-the-results---generic-enrichment-map-file-from-gprofiler-gmt"><i class="fa fa-check"></i><b>4.2</b> Create an output file of the results - Generic enrichment Map file from g:profiler gmt</a></li>
-<li class="chapter" data-level="4.3" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#run-gprofiler-with-your-own-genesets"><i class="fa fa-check"></i><b>4.3</b> Run g:profiler with your own genesets</a></li>
-<li class="chapter" data-level="4.4" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#upload-the-gmt-file-to-gprofiler"><i class="fa fa-check"></i><b>4.4</b> Upload the gmt file to gprofiler</a></li>
-<li class="chapter" data-level="4.5" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#create-enrichment-results-files"><i class="fa fa-check"></i><b>4.5</b> Create enrichment Results files</a></li>
-<li class="chapter" data-level="4.6" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#create-an-output-file-of-the-results---generic-enrichment-map-file-from-baderlab-gmt"><i class="fa fa-check"></i><b>4.6</b> Create an output file of the results - Generic enrichment Map file from Baderlab gmt</a></li>
+<li class="chapter" data-level="4.1" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#initialize-variables-and-libraries"><i class="fa fa-check"></i><b>4.1</b> Initialize variables and libraries</a></li>
+<li class="chapter" data-level="4.2" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#load-in-query-set"><i class="fa fa-check"></i><b>4.2</b> Load in Query set</a></li>
+<li class="chapter" data-level="4.3" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#run-gprofiler-with-supplied-genesets"><i class="fa fa-check"></i><b>4.3</b> Run g:profiler with supplied genesets</a></li>
+<li class="chapter" data-level="4.4" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#download-and-load-gprofiler-geneset-file"><i class="fa fa-check"></i><b>4.4</b> Download and load g:profiler geneset file</a></li>
+<li class="chapter" data-level="4.5" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#filter-results-by-geneset-size"><i class="fa fa-check"></i><b>4.5</b> Filter results by geneset size</a></li>
+<li class="chapter" data-level="4.6" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#create-an-output-file-of-the-results---generic-enrichment-map-file-from-gprofiler-gmt"><i class="fa fa-check"></i><b>4.6</b> Create an output file of the results - Generic enrichment Map file from g:profiler gmt</a></li>
+<li class="chapter" data-level="4.7" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#run-gprofiler-with-your-own-genesets-example-using-baderlab-genesets"><i class="fa fa-check"></i><b>4.7</b> Run g:profiler with your own genesets (example using BaderLab genesets)</a></li>
+<li class="chapter" data-level="4.8" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#download-and-load-bader-lab-geneset-file"><i class="fa fa-check"></i><b>4.8</b> Download and load Bader lab geneset file</a></li>
+<li class="chapter" data-level="4.9" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#filter-bader-lab-geneset-file"><i class="fa fa-check"></i><b>4.9</b> Filter Bader lab geneset file</a></li>
+<li class="chapter" data-level="4.10" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#upload-the-gmt-files-to-gprofiler"><i class="fa fa-check"></i><b>4.10</b> Upload the gmt files to gprofiler</a></li>
+<li class="chapter" data-level="4.11" data-path="run-gprofiler-from-r.html"><a href="run-gprofiler-from-r.html#create-an-output-file-of-the-results---generic-enrichment-map-file-from-baderlab-gmt"><i class="fa fa-check"></i><b>4.11</b> Create an output file of the results - Generic enrichment Map file from Baderlab gmt</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html"><i class="fa fa-check"></i><b>5</b> Run GSEA from within R</a>
 <ul>
@@ -216,7 +221,7 @@ div.csl-indent {
 <div id="header">
 <h1 class="title">CBW pathways Workshops - example R notebooks</h1>
 <p class="author"><em>Ruth Isserlin</em></p>
-<p class="date"><em>2023-04-17</em></p>
+<p class="date"><em>2023-04-24</em></p>
 </div>
 <div id="index" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Index<a href="index.html#index" class="anchor-section" aria-label="Anchor link to header"></a></h1>
