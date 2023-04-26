@@ -7,9 +7,9 @@ bookdown::gitbook:
       text: "Suggest an edit"
     toc:
       before: |
-        <li><a href="./">Workshop R Notebooks</a></li>
+        <li><a href="https://bioinformatics.ca/workshops/current-workshops/"><img src="./images/bioinfologo.png" width="280"></a><a href="./">CBW Workshop R Notebooks</a></li>
       after: |
-        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+        <li><a href="https://baderlab.org" target="blank"><img src="./images/baderlablogo.png" width="280">Bader Lab</a></li>
     download: ["pdf", "rmd"]
 bookdown::pdf_book:
   includes:

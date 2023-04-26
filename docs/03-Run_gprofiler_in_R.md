@@ -558,12 +558,12 @@ custom_gmt_max250 <- upload_GMT_file(
 ```
 
 ```
-## Your custom annotations ID is gp__TNgK_bIFO_4Qc
+## Your custom annotations ID is gp__RBhF_ElIY_R28
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 ```
 
 ```
-## Just use: gost(my_genes, organism = 'gp__TNgK_bIFO_4Qc')
+## Just use: gost(my_genes, organism = 'gp__RBhF_ElIY_R28')
 ```
 
 ```r
@@ -572,12 +572,12 @@ custom_gmt_max1000 <- upload_GMT_file(
 ```
 
 ```
-## Your custom annotations ID is gp__cCiV_yMp7_YZM
+## Your custom annotations ID is gp__Te0O_xWNH_aK8
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 ```
 
 ```
-## Just use: gost(my_genes, organism = 'gp__cCiV_yMp7_YZM')
+## Just use: gost(my_genes, organism = 'gp__Te0O_xWNH_aK8')
 ```
 
 ```r
@@ -586,12 +586,12 @@ custom_gmt_max10000 <- upload_GMT_file(
 ```
 
 ```
-## Your custom annotations ID is gp__E1TE_fvvE_9P0
+## Your custom annotations ID is gp__4ZB8_XKvw_Zug
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 ```
 
 ```
-## Just use: gost(my_genes, organism = 'gp__E1TE_fvvE_9P0')
+## Just use: gost(my_genes, organism = 'gp__4ZB8_XKvw_Zug')
 ```
 
 For this query we are specifying - 
@@ -600,7 +600,7 @@ For this query we are specifying -
   * significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.
   * ordered_query - set to TRUE because for this set of genes they are ordered in order of their significance
   * correction_method - set to fdr.  by default g:Profiler uses g:Scs
-  * organism - set to the custom_gmt ID ( for this run it is - gp__TNgK_bIFO_4Qc) that we received when we uploaded our genetset file.
+  * organism - set to the custom_gmt ID ( for this run it is - gp__RBhF_ElIY_R28) that we received when we uploaded our genetset file.
 
 
 
