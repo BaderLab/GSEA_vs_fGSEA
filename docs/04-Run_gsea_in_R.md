@@ -2,6 +2,7 @@
 params:
   analysis_name: Mesen_vs_Immuno
   working_dir: ./data/
+  output_dir: ./generated_data/gsea/
   rnk_file: MesenchymalvsImmunoreactive_edger_ranks.rnk
   gsea_jar: /home/rstudio/GSEA_4.3.2/gsea-cli.sh
   gsea_directory: ''
@@ -56,6 +57,9 @@ Set the working directory as the directory to the directory where you downloaded
 #directory where all the data files are found.  For example -   ./data/ 
 working_dir <- "./data/"
 
+#directory where all the data files are found.  For example -   ./generated_data/gsea/
+output_dir <- "./generated_data/gsea/"
+
 #The name to give the analysis in GSEA - for example Mesen_vs_Immuno
 analysis_name <- "Mesen_vs_Immuno"
 
@@ -94,7 +98,7 @@ rx = gregexpr("(?<=<a href=\")(.*.GOBP_AllPathways_no_GO_iea.*.)(.gmt)(?=\">)",
   contents, perl = TRUE)
 gmt_file = unlist(regmatches(contents, rx))
 
-dest_gmt_file <- file.path(working_dir,gmt_file )
+dest_gmt_file <- file.path(output_dir,gmt_file )
 
 #check if this gmt file already exists
 if(!file.exists(dest_gmt_file)){
@@ -134,7 +138,7 @@ if(run_gsea){
                    "-rpt_label ",analysis_name,
                    "  -plot_top_x 20 -rnd_seed 12345  -set_max 200",  
                    " -set_min 15 -zip_report false ",
-                   " -out" ,working_dir, 
+                   " -out" ,output_dir, 
                    " > gsea_output.txt",sep=" ")
   system(command)
 }

@@ -114,8 +114,8 @@ For this query we are specifying -
 ```r
 gprofiler_results <- gost(query = query_set ,
                           significant=FALSE,
-                          ordered_query = TRUE,
-                          exclude_iea=FALSE,
+                          ordered_query = FALSE,
+                          exclude_iea=TRUE,
                           correction_method = "fdr",
                           organism = organism,
                           source = c("REAC","WP","GO:BP"))
@@ -132,35 +132,29 @@ enrichment_results[1:5,]
 
 ```
 ##     query significant      p_value term_size query_size intersection_size
-## 1 query_1        TRUE 9.272751e-39      5493        121               103
-## 2 query_1        TRUE 1.694623e-36      5836        121               103
-## 3 query_1        TRUE 1.276992e-35      5662        121               101
-## 4 query_1        TRUE 4.128404e-35      2976        121                79
-## 5 query_1        TRUE 1.198524e-34      3131        121                80
+## 1 query_1        TRUE 5.648621e-33      4862        118               101
+## 2 query_1        TRUE 1.995252e-30      4959        118                99
+## 3 query_1        TRUE 1.995252e-30      5093        118               100
+## 4 query_1        TRUE 5.612481e-29      5440        118               101
+## 5 query_1        TRUE 6.150483e-29      5908        118               104
 ##   precision     recall    term_id source
-## 1 0.8512397 0.01875114 GO:0031323  GO:BP
-## 2 0.8512397 0.01764907 GO:0080090  GO:BP
-## 3 0.8347107 0.01783822 GO:0051171  GO:BP
-## 4 0.6528926 0.02654570 GO:0031325  GO:BP
-## 5 0.6611570 0.02555094 GO:0051173  GO:BP
-##                                                    term_name
-## 1                   regulation of cellular metabolic process
-## 2                    regulation of primary metabolic process
-## 3          regulation of nitrogen compound metabolic process
-## 4          positive regulation of cellular metabolic process
-## 5 positive regulation of nitrogen compound metabolic process
-##   effective_domain_size source_order
-## 1                 21110         7510
-## 2                 21110        18790
-## 3                 21110        14316
-## 4                 21110         7512
-## 5                 21110        14318
-##                                          parents
-## 1             GO:0019222, GO:0044237, GO:0050794
-## 2                         GO:0019222, GO:0044238
-## 3                         GO:0006807, GO:0019222
-## 4 GO:0009893, GO:0031323, GO:0044237, GO:0048522
-## 5             GO:0006807, GO:0009893, GO:0051171
+## 1 0.8559322 0.02077334 GO:0031323  GO:BP
+## 2 0.8389831 0.01996370 GO:0051171  GO:BP
+## 3 0.8474576 0.01963479 GO:0080090  GO:BP
+## 4 0.8559322 0.01856618 GO:0060255  GO:BP
+## 5 0.8813559 0.01760325 GO:0019222  GO:BP
+##                                           term_name effective_domain_size
+## 1          regulation of cellular metabolic process                 16324
+## 2 regulation of nitrogen compound metabolic process                 16324
+## 3           regulation of primary metabolic process                 16324
+## 4     regulation of macromolecule metabolic process                 16324
+## 5                   regulation of metabolic process                 16324
+##   source_order                            parents
+## 1         7510 GO:0019222, GO:0044237, GO:0050794
+## 2        14316             GO:0006807, GO:0019222
+## 3        18790             GO:0019222, GO:0044238
+## 4        15305             GO:0019222, GO:0043170
+## 5         5900             GO:0008152, GO:0050789
 ```
 
 ## Download and load g:profiler geneset file
@@ -357,25 +351,25 @@ Output each of the above filtered files
 #output the enrichment map file
 write.table(enrichment_results_mxgssize_10000_min_3_GEMfile, 
             file = file.path(working_dir, 
-                "gProfiler_hsapiens_lab2_results_GEM_maxterm10000.txt"),
+                "gProfiler_hsapiens_lab2_results_GEM_termmin3_max10000.gem.txt"),
             row.names = FALSE, 
-            col.names = TRUE,
+            col.names = TRUE, sep="\t",
             quote = FALSE)
 
 #output the enrichment map file
 write.table(enrichment_results_mxgssize_1000_min_3_GEMfile, 
             file = file.path(working_dir, 
-                "gProfiler_hsapiens_lab2_results_GEM_maxterm1000.txt"),
+                "gProfiler_hsapiens_lab2_results_GEM_termmin3_max1000.gem.txt"),
             row.names = FALSE, 
-            col.names = TRUE,
+            col.names = TRUE, sep="\t",
             quote = FALSE)
 
 #output the enrichment map file
 write.table(enrichment_results_mxgssize_250_min_3_GEMfile, 
             file = file.path(working_dir, 
-                "gProfiler_hsapiens_lab2_results_GEM_maxterm250.txt"),
+                "gProfiler_hsapiens_lab2_results_GEM_termmin3_max250.gem.txt"),
             row.names = FALSE, 
-            col.names = TRUE,
+            col.names = TRUE, sep="\t",
             quote = FALSE)
 ```
 
@@ -558,12 +552,12 @@ custom_gmt_max250 <- upload_GMT_file(
 ```
 
 ```
-## Your custom annotations ID is gp__RBhF_ElIY_R28
+## Your custom annotations ID is gp__bRRE_1ju9_WT8
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 ```
 
 ```
-## Just use: gost(my_genes, organism = 'gp__RBhF_ElIY_R28')
+## Just use: gost(my_genes, organism = 'gp__bRRE_1ju9_WT8')
 ```
 
 ```r
@@ -572,12 +566,12 @@ custom_gmt_max1000 <- upload_GMT_file(
 ```
 
 ```
-## Your custom annotations ID is gp__Te0O_xWNH_aK8
+## Your custom annotations ID is gp__hyan_MFAU_UGg
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 ```
 
 ```
-## Just use: gost(my_genes, organism = 'gp__Te0O_xWNH_aK8')
+## Just use: gost(my_genes, organism = 'gp__hyan_MFAU_UGg')
 ```
 
 ```r
@@ -586,29 +580,29 @@ custom_gmt_max10000 <- upload_GMT_file(
 ```
 
 ```
-## Your custom annotations ID is gp__4ZB8_XKvw_Zug
+## Your custom annotations ID is gp__Dxfi_EsOu_cGo
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 ```
 
 ```
-## Just use: gost(my_genes, organism = 'gp__4ZB8_XKvw_Zug')
+## Just use: gost(my_genes, organism = 'gp__Dxfi_EsOu_cGo')
 ```
 
 For this query we are specifying - 
 
   * query - the set of genes of interest, as loaded in from the Supplementary_Table1_Cancer_drivers.txt file.
   * significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.
-  * ordered_query - set to TRUE because for this set of genes they are ordered in order of their significance
+  * ordered_query - set to FALSE (but you can try setting it to true as well because for this set of genes they are ordered in order of their significance)
   * correction_method - set to fdr.  by default g:Profiler uses g:Scs
-  * organism - set to the custom_gmt ID ( for this run it is - gp__RBhF_ElIY_R28) that we received when we uploaded our genetset file.
+  * organism - set to the custom_gmt ID ( for this run it is - gp__bRRE_1ju9_WT8) that we received when we uploaded our genetset file.
 
 
 
 ```r
 gprofiler_results_custom_max250 <- gost(query = query_set ,
                                      significant=FALSE,
-                                 ordered_query = TRUE,
-                                    exclude_iea=FALSE,
+                                 ordered_query = FALSE,
+                                  exclude_iea=TRUE,
                                      correction_method = "fdr",
                                  organism = custom_gmt_max250
                                      )
@@ -621,8 +615,8 @@ gprofiler_results_custom_max250 <- gost(query = query_set ,
 ```r
 gprofiler_results_custom_max1000 <- gost(query = query_set ,
                                      significant=FALSE,
-                                 ordered_query = TRUE,
-                                    exclude_iea=FALSE,
+                                      ordered_query = FALSE,
+                                      exclude_iea=TRUE,
                                      correction_method = "fdr",
                                  organism = custom_gmt_max1000
                                      )
@@ -635,8 +629,8 @@ gprofiler_results_custom_max1000 <- gost(query = query_set ,
 ```r
 gprofiler_results_custom_max10000 <- gost(query = query_set ,
                                      significant=FALSE,
-                                 ordered_query = TRUE,
-                                    exclude_iea=FALSE,
+                                      ordered_query = FALSE,
+                                      exclude_iea=TRUE,
                                      correction_method = "fdr",
                                  organism = custom_gmt_max10000
                                      )
@@ -660,41 +654,41 @@ enrichment_results_customgmt_max250[1:5,]
 
 ```
 ##     query significant      p_value term_size query_size intersection_size
-## 1 query_1        TRUE 1.385009e-22        64         78                17
-## 2 query_1        TRUE 1.988040e-20        68         78                16
-## 3 query_1        TRUE 6.846277e-15        54        101                13
-## 4 query_1        TRUE 3.849668e-14        97        107                15
-## 5 query_1        TRUE 1.546752e-13       159        108                17
+## 1 query_1        TRUE 6.652189e-20        64        109                17
+## 2 query_1        TRUE 1.061927e-19        68        109                17
+## 3 query_1        TRUE 1.928429e-14        54        109                13
+## 4 query_1        TRUE 5.142650e-14        97        109                15
+## 5 query_1        TRUE 1.820231e-13       159        109                17
 ##   precision    recall
-## 1 0.2179487 0.2656250
-## 2 0.2051282 0.2352941
-## 3 0.1287129 0.2407407
-## 4 0.1401869 0.1546392
-## 5 0.1574074 0.1069182
+## 1 0.1559633 0.2656250
+## 2 0.1559633 0.2500000
+## 3 0.1192661 0.2407407
+## 4 0.1376147 0.1546392
+## 5 0.1559633 0.1069182
 ##                                                                                   term_id
 ## 1         HEAD AND NECK SQUAMOUS CELL CARCINOMA%WIKIPATHWAYS_20220510%WP4674%HOMO SAPIENS
 ## 2               GLIOBLASTOMA SIGNALING PATHWAYS%WIKIPATHWAYS_20220510%WP2261%HOMO SAPIENS
 ## 3 PATHWAYS AFFECTED IN ADENOID CYSTIC CARCINOMA%WIKIPATHWAYS_20220510%WP3651%HOMO SAPIENS
 ## 4                                     CELL CYCLE%WIKIPATHWAYS_20220510%WP179%HOMO SAPIENS
 ## 5                          REGULATION OF CELL CYCLE G1/S PHASE TRANSITION%GOBP%GO:1902806
-##                                                         source
-## 1 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
-## 2 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
-## 3 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
-## 4 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
-## 5 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
+##                                                       source
+## 1 Human_GOBP_AllPathways_no_GO_iea_May_01_2023_symbol_max250
+## 2 Human_GOBP_AllPathways_no_GO_iea_May_01_2023_symbol_max250
+## 3 Human_GOBP_AllPathways_no_GO_iea_May_01_2023_symbol_max250
+## 4 Human_GOBP_AllPathways_no_GO_iea_May_01_2023_symbol_max250
+## 5 Human_GOBP_AllPathways_no_GO_iea_May_01_2023_symbol_max250
 ##                                        term_name effective_domain_size
-## 1          Head and neck squamous cell carcinoma                 17047
-## 2                Glioblastoma signaling pathways                 17047
-## 3  Pathways affected in adenoid cystic carcinoma                 17047
-## 4                                     Cell cycle                 17047
-## 5 regulation of cell cycle G1/S phase transition                 17047
+## 1          Head and neck squamous cell carcinoma                 17046
+## 2                Glioblastoma signaling pathways                 17046
+## 3  Pathways affected in adenoid cystic carcinoma                 17046
+## 4                                     Cell cycle                 17046
+## 5 regulation of cell cycle G1/S phase transition                 17046
 ##   source_order parents
-## 1         5002    NULL
-## 2         5554    NULL
-## 3         4968    NULL
-## 4         4934    NULL
-## 5        19009    NULL
+## 1         5010    NULL
+## 2         5562    NULL
+## 3         4976    NULL
+## 4         4942    NULL
+## 5        19018    NULL
 ```
 
 Filter the table to include just the columns that are required for the generic enrichment map file results [GEM](https://enrichmentmap.readthedocs.io/en/latest/FileFormats.html#generic-results-files). Restrict the results to just the ones that have at least min_gs_size and less than max_gs_size terms and  min_intersection size include only the term_id, term_name, p_value (and p_value again because the p_value is actually the corrected p-value.  The output file does not contain the nominal p_value.  For down stream analysis though it is expected to have both a p-value and a q-value so just duplicate the q-value as both p-value and q-value)
@@ -736,9 +730,9 @@ enrichment_results_customgmt_GEM_max250 <- createGEMformat(
 #output the enrichment map file
 write.table(enrichment_results_customgmt_GEM_max250, 
                   file = file.path(
-                    working_dir, "gProfiler_hspaiens_Baderlab_max250.txt"),
+                    working_dir, "gProfiler_hsapiens_Baderlab_max250.gem.txt"),
                   row.names = FALSE, 
-                  col.names = TRUE,
+                  col.names = TRUE, sep="\t",
                   quote = FALSE)
        
 enrichment_results_customgmt_GEM_max1000 <- createGEMformat(
@@ -749,9 +743,9 @@ enrichment_results_customgmt_GEM_max1000 <- createGEMformat(
 #output the enrichment map file
 write.table(enrichment_results_customgmt_GEM_max1000, 
                   file = file.path(
-                    working_dir, "gProfiler_hspaiens_Baderlab_max1000.txt"),
+                    working_dir, "gProfiler_hsapiens_Baderlab_max1000.gem.txt"),
                   row.names = FALSE, 
-                  col.names = TRUE,
+                  col.names = TRUE, sep="\t",
                   quote = FALSE)
 
 enrichment_results_customgmt_GEM_max10000 <- createGEMformat(
@@ -762,9 +756,9 @@ enrichment_results_customgmt_GEM_max10000 <- createGEMformat(
 #output the enrichment map file
 write.table(enrichment_results_customgmt_GEM_max10000, 
                   file = file.path(
-                    working_dir, "gProfiler_hspaiens_Baderlab_max1000.txt"),
+                    working_dir, "gProfiler_hsapiens_Baderlab_max10000.gem.txt"),
                   row.names = FALSE, 
-                  col.names = TRUE,
+                  col.names = TRUE, sep="\t",
                   quote = FALSE)
 ```
 

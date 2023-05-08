@@ -41,8 +41,14 @@ tryCatch(expr = { library("BiocManager")},
          error = function(e) { 
            install.packages("BiocManager")}, 
          finally = library("BiocManager"))
+```
 
+```
+## Bioconductor version '3.16' is out-of-date; the current release version '3.17'
+##   is available with R version '4.3'; see https://bioconductor.org/install
+```
 
+```r
 tryCatch(expr = { library("biomaRt")}, 
          error = function(e) { 
            BiocManager::install("biomaRt")}, 
@@ -63,7 +69,7 @@ if(!dir.exists(params$working_dir)){
 Connect to Biomart
 
 ```r
-ensembl <- useMart("ensembl")
+ensembl <- useMart("ensembl", host="https://asia.ensembl.org")
 ```
 
 
