@@ -23,7 +23,7 @@
 <meta name="author" content="Ruth Isserlin" />
 
 
-<meta name="date" content="2023-05-08" />
+<meta name="date" content="2023-05-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -272,7 +272,14 @@ div.csl-indent {
 <span id="cb3-20"><a href="run-gprofiler-from-r.html#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co"># organism parameter used for g:profiler.  </span></span>
 <span id="cb3-21"><a href="run-gprofiler-from-r.html#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># First letter of first word in species name followed by </span></span>
 <span id="cb3-22"><a href="run-gprofiler-from-r.html#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co"># the second word for example - hsapiens</span></span>
-<span id="cb3-23"><a href="run-gprofiler-from-r.html#cb3-23" aria-hidden="true" tabindex="-1"></a>organism <span class="ot">&lt;-</span> <span class="st">&quot;hsapiens&quot;</span></span></code></pre></div>
+<span id="cb3-23"><a href="run-gprofiler-from-r.html#cb3-23" aria-hidden="true" tabindex="-1"></a>organism <span class="ot">&lt;-</span> <span class="st">&quot;hsapiens&quot;</span></span>
+<span id="cb3-24"><a href="run-gprofiler-from-r.html#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="run-gprofiler-from-r.html#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co">#set the gmt file you want to use if you don&#39;t want to use the latest gmt file.</span></span>
+<span id="cb3-26"><a href="run-gprofiler-from-r.html#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co"># For example, if you set dest_gmt_file ==&quot;&quot; the below script will automatically</span></span>
+<span id="cb3-27"><a href="run-gprofiler-from-r.html#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co"># download the latest gmt file from baderlab webstie.  If it is set then it</span></span>
+<span id="cb3-28"><a href="run-gprofiler-from-r.html#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co"># will use the file specified.  </span></span>
+<span id="cb3-29"><a href="run-gprofiler-from-r.html#cb3-29" aria-hidden="true" tabindex="-1"></a>dest_gmt_file <span class="ot">=</span> <span class="fu">file.path</span>(working_dir, </span>
+<span id="cb3-30"><a href="run-gprofiler-from-r.html#cb3-30" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol.gmt&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="run-gprofiler-from-r.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#use library</span></span>
 <span id="cb4-2"><a href="run-gprofiler-from-r.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;gprofiler2&quot;</span>)}, </span>
 <span id="cb4-3"><a href="run-gprofiler-from-r.html#cb4-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { </span>
@@ -524,29 +531,32 @@ div.csl-indent {
 <div id="download-and-load-bader-lab-geneset-file" class="section level2 hasAnchor" number="4.8">
 <h2><span class="header-section-number">4.8</span> Download and load Bader lab geneset file<a href="run-gprofiler-from-r.html#download-and-load-bader-lab-geneset-file" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Download the latest <a href="https://download.baderlab.org/EM_Genesets/current_release/Human/">Bader lab genesets</a></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="run-gprofiler-from-r.html#cb21-1" aria-hidden="true" tabindex="-1"></a>gmt_url <span class="ot">=</span> <span class="st">&quot;http://download.baderlab.org/EM_Genesets/current_release/Human/symbol/&quot;</span></span>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="run-gprofiler-from-r.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(dest_gmt_file <span class="sc">==</span> <span class="st">&quot;&quot;</span>){</span>
 <span id="cb21-2"><a href="run-gprofiler-from-r.html#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="run-gprofiler-from-r.html#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#list all the files on the server</span></span>
-<span id="cb21-4"><a href="run-gprofiler-from-r.html#cb21-4" aria-hidden="true" tabindex="-1"></a>filenames <span class="ot">=</span> RCurl<span class="sc">::</span><span class="fu">getURL</span>(gmt_url)</span>
-<span id="cb21-5"><a href="run-gprofiler-from-r.html#cb21-5" aria-hidden="true" tabindex="-1"></a>tc <span class="ot">=</span> <span class="fu">textConnection</span>(filenames)</span>
-<span id="cb21-6"><a href="run-gprofiler-from-r.html#cb21-6" aria-hidden="true" tabindex="-1"></a>contents <span class="ot">=</span> <span class="fu">readLines</span>(tc)</span>
-<span id="cb21-7"><a href="run-gprofiler-from-r.html#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="fu">close</span>(tc)</span>
-<span id="cb21-8"><a href="run-gprofiler-from-r.html#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-9"><a href="run-gprofiler-from-r.html#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co">#get the gmt that has all the pathways and does not include </span></span>
-<span id="cb21-10"><a href="run-gprofiler-from-r.html#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co"># terms inferred from electronic annotations(IEA)</span></span>
-<span id="cb21-11"><a href="run-gprofiler-from-r.html#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co">#start with gmt file that has pathways only</span></span>
-<span id="cb21-12"><a href="run-gprofiler-from-r.html#cb21-12" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">=</span> <span class="fu">gregexpr</span>(<span class="st">&quot;(?&lt;=&lt;a href=</span><span class="sc">\&quot;</span><span class="st">)(.*.GOBP_AllPathways_no_GO_iea.*.)(.gmt)(?=</span><span class="sc">\&quot;</span><span class="st">&gt;)&quot;</span>,</span>
-<span id="cb21-13"><a href="run-gprofiler-from-r.html#cb21-13" aria-hidden="true" tabindex="-1"></a>  contents, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb21-14"><a href="run-gprofiler-from-r.html#cb21-14" aria-hidden="true" tabindex="-1"></a>gmt_file <span class="ot">=</span> <span class="fu">unlist</span>(<span class="fu">regmatches</span>(contents, rx))</span>
-<span id="cb21-15"><a href="run-gprofiler-from-r.html#cb21-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-16"><a href="run-gprofiler-from-r.html#cb21-16" aria-hidden="true" tabindex="-1"></a>dest_gmt_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(working_dir,gmt_file)</span>
-<span id="cb21-17"><a href="run-gprofiler-from-r.html#cb21-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-18"><a href="run-gprofiler-from-r.html#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">file.exists</span>(dest_gmt_file)){</span>
-<span id="cb21-19"><a href="run-gprofiler-from-r.html#cb21-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(</span>
-<span id="cb21-20"><a href="run-gprofiler-from-r.html#cb21-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(gmt_url,gmt_file,<span class="at">sep=</span><span class="st">&quot;&quot;</span>),</span>
-<span id="cb21-21"><a href="run-gprofiler-from-r.html#cb21-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">destfile=</span>dest_gmt_file</span>
-<span id="cb21-22"><a href="run-gprofiler-from-r.html#cb21-22" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb21-23"><a href="run-gprofiler-from-r.html#cb21-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<span id="cb21-3"><a href="run-gprofiler-from-r.html#cb21-3" aria-hidden="true" tabindex="-1"></a>  gmt_url <span class="ot">=</span> <span class="st">&quot;http://download.baderlab.org/EM_Genesets/current_release/Human/symbol/&quot;</span></span>
+<span id="cb21-4"><a href="run-gprofiler-from-r.html#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="run-gprofiler-from-r.html#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">#list all the files on the server</span></span>
+<span id="cb21-6"><a href="run-gprofiler-from-r.html#cb21-6" aria-hidden="true" tabindex="-1"></a>  filenames <span class="ot">=</span> RCurl<span class="sc">::</span><span class="fu">getURL</span>(gmt_url)</span>
+<span id="cb21-7"><a href="run-gprofiler-from-r.html#cb21-7" aria-hidden="true" tabindex="-1"></a>  tc <span class="ot">=</span> <span class="fu">textConnection</span>(filenames)</span>
+<span id="cb21-8"><a href="run-gprofiler-from-r.html#cb21-8" aria-hidden="true" tabindex="-1"></a>  contents <span class="ot">=</span> <span class="fu">readLines</span>(tc)</span>
+<span id="cb21-9"><a href="run-gprofiler-from-r.html#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">close</span>(tc)</span>
+<span id="cb21-10"><a href="run-gprofiler-from-r.html#cb21-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-11"><a href="run-gprofiler-from-r.html#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">#get the gmt that has all the pathways and does not include </span></span>
+<span id="cb21-12"><a href="run-gprofiler-from-r.html#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># terms inferred from electronic annotations(IEA)</span></span>
+<span id="cb21-13"><a href="run-gprofiler-from-r.html#cb21-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">#start with gmt file that has pathways only</span></span>
+<span id="cb21-14"><a href="run-gprofiler-from-r.html#cb21-14" aria-hidden="true" tabindex="-1"></a>  rx <span class="ot">=</span> <span class="fu">gregexpr</span>(<span class="st">&quot;(?&lt;=&lt;a href=</span><span class="sc">\&quot;</span><span class="st">)(.*.GOBP_AllPathways_no_GO_iea.*.)(.gmt)(?=</span><span class="sc">\&quot;</span><span class="st">&gt;)&quot;</span>,</span>
+<span id="cb21-15"><a href="run-gprofiler-from-r.html#cb21-15" aria-hidden="true" tabindex="-1"></a>    contents, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb21-16"><a href="run-gprofiler-from-r.html#cb21-16" aria-hidden="true" tabindex="-1"></a>  gmt_file <span class="ot">=</span> <span class="fu">unlist</span>(<span class="fu">regmatches</span>(contents, rx))</span>
+<span id="cb21-17"><a href="run-gprofiler-from-r.html#cb21-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-18"><a href="run-gprofiler-from-r.html#cb21-18" aria-hidden="true" tabindex="-1"></a>  dest_gmt_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(working_dir,gmt_file)</span>
+<span id="cb21-19"><a href="run-gprofiler-from-r.html#cb21-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-20"><a href="run-gprofiler-from-r.html#cb21-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">file.exists</span>(dest_gmt_file)){</span>
+<span id="cb21-21"><a href="run-gprofiler-from-r.html#cb21-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">download.file</span>(</span>
+<span id="cb21-22"><a href="run-gprofiler-from-r.html#cb21-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(gmt_url,gmt_file,<span class="at">sep=</span><span class="st">&quot;&quot;</span>),</span>
+<span id="cb21-23"><a href="run-gprofiler-from-r.html#cb21-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">destfile=</span>dest_gmt_file</span>
+<span id="cb21-24"><a href="run-gprofiler-from-r.html#cb21-24" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb21-25"><a href="run-gprofiler-from-r.html#cb21-25" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb21-26"><a href="run-gprofiler-from-r.html#cb21-26" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>In order to use our results down stream in the Enrichment map we need to generate results files that we can pass to Enrichment Map.</p>
 <p>Load in the GMT file</p>
 </div>
@@ -670,26 +680,26 @@ div.csl-indent {
 <p>In order to use your own genesets with g:Profiler you need to upload the the file to their server first. The function will return an ID that you need to specify in the organism parameter of the g:Profiler gost function call.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="run-gprofiler-from-r.html#cb24-1" aria-hidden="true" tabindex="-1"></a>custom_gmt_max250 <span class="ot">&lt;-</span> <span class="fu">upload_GMT_file</span>(</span>
 <span id="cb24-2"><a href="run-gprofiler-from-r.html#cb24-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">gmtfile=</span>genesets_baderlab_genesets_max250_filename)</span></code></pre></div>
-<pre><code>## Your custom annotations ID is gp__wGsp_TmW2_jLU
+<pre><code>## Your custom annotations ID is gp__EbjI_jjsm_zjM
 ## You can use this ID as an &#39;organism&#39; name in all the related enrichment tests against this custom source.</code></pre>
-<pre><code>## Just use: gost(my_genes, organism = &#39;gp__wGsp_TmW2_jLU&#39;)</code></pre>
+<pre><code>## Just use: gost(my_genes, organism = &#39;gp__EbjI_jjsm_zjM&#39;)</code></pre>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="run-gprofiler-from-r.html#cb27-1" aria-hidden="true" tabindex="-1"></a>custom_gmt_max1000 <span class="ot">&lt;-</span> <span class="fu">upload_GMT_file</span>(</span>
 <span id="cb27-2"><a href="run-gprofiler-from-r.html#cb27-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">gmtfile=</span>genesets_baderlab_genesets_max1000_filename)</span></code></pre></div>
-<pre><code>## Your custom annotations ID is gp__NZa5_NOlO_Vjk
+<pre><code>## Your custom annotations ID is gp__aVbs_2msh_ycg
 ## You can use this ID as an &#39;organism&#39; name in all the related enrichment tests against this custom source.</code></pre>
-<pre><code>## Just use: gost(my_genes, organism = &#39;gp__NZa5_NOlO_Vjk&#39;)</code></pre>
+<pre><code>## Just use: gost(my_genes, organism = &#39;gp__aVbs_2msh_ycg&#39;)</code></pre>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="run-gprofiler-from-r.html#cb30-1" aria-hidden="true" tabindex="-1"></a>custom_gmt_max10000 <span class="ot">&lt;-</span> <span class="fu">upload_GMT_file</span>(</span>
 <span id="cb30-2"><a href="run-gprofiler-from-r.html#cb30-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">gmtfile=</span>genesets_baderlab_genesets_max10000_filename)</span></code></pre></div>
-<pre><code>## Your custom annotations ID is gp__kbkE_E7Wj_Ek0
+<pre><code>## Your custom annotations ID is gp__ZH9e_VFW0_rvM
 ## You can use this ID as an &#39;organism&#39; name in all the related enrichment tests against this custom source.</code></pre>
-<pre><code>## Just use: gost(my_genes, organism = &#39;gp__kbkE_E7Wj_Ek0&#39;)</code></pre>
+<pre><code>## Just use: gost(my_genes, organism = &#39;gp__ZH9e_VFW0_rvM&#39;)</code></pre>
 <p>For this query we are specifying -</p>
 <ul>
 <li>query - the set of genes of interest, as loaded in from the Supplementary_Table1_Cancer_drivers.txt file.</li>
 <li>significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.</li>
 <li>ordered_query - set to FALSE (but you can try setting it to true as well because for this set of genes they are ordered in order of their significance)</li>
 <li>correction_method - set to fdr. by default g:Profiler uses g:Scs</li>
-<li>organism - set to the custom_gmt ID ( for this run it is - gp__wGsp_TmW2_jLU) that we received when we uploaded our genetset file.</li>
+<li>organism - set to the custom_gmt ID ( for this run it is - gp__EbjI_jjsm_zjM) that we received when we uploaded our genetset file.</li>
 </ul>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="run-gprofiler-from-r.html#cb33-1" aria-hidden="true" tabindex="-1"></a>gprofiler_results_custom_max250 <span class="ot">&lt;-</span> <span class="fu">gost</span>(<span class="at">query =</span> query_set ,</span>
 <span id="cb33-2"><a href="run-gprofiler-from-r.html#cb33-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">significant=</span><span class="cn">FALSE</span>,</span>
@@ -723,11 +733,11 @@ div.csl-indent {
 <span id="cb39-6"><a href="run-gprofiler-from-r.html#cb39-6" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb39-7"><a href="run-gprofiler-from-r.html#cb39-7" aria-hidden="true" tabindex="-1"></a>enrichment_results_customgmt_max250[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,]</span></code></pre></div>
 <pre><code>##     query significant      p_value term_size query_size intersection_size
-## 1 query_1        TRUE 6.652189e-20        64        109                17
-## 2 query_1        TRUE 1.061927e-19        68        109                17
-## 3 query_1        TRUE 1.928429e-14        54        109                13
-## 4 query_1        TRUE 5.142650e-14        97        109                15
-## 5 query_1        TRUE 1.820231e-13       159        109                17
+## 1 query_1        TRUE 6.644186e-20        64        109                17
+## 2 query_1        TRUE 1.060650e-19        68        109                17
+## 3 query_1        TRUE 1.926559e-14        54        109                13
+## 4 query_1        TRUE 5.137122e-14        97        109                15
+## 5 query_1        TRUE 1.818094e-13       159        109                17
 ##   precision    recall
 ## 1 0.1559633 0.2656250
 ## 2 0.1559633 0.2500000
@@ -740,24 +750,24 @@ div.csl-indent {
 ## 3 PATHWAYS AFFECTED IN ADENOID CYSTIC CARCINOMA%WIKIPATHWAYS_20220510%WP3651%HOMO SAPIENS
 ## 4                                     CELL CYCLE%WIKIPATHWAYS_20220510%WP179%HOMO SAPIENS
 ## 5                          REGULATION OF CELL CYCLE G1/S PHASE TRANSITION%GOBP%GO:1902806
-##                                                       source
-## 1 Human_GOBP_AllPathways_no_GO_iea_May_01_2023_symbol_max250
-## 2 Human_GOBP_AllPathways_no_GO_iea_May_01_2023_symbol_max250
-## 3 Human_GOBP_AllPathways_no_GO_iea_May_01_2023_symbol_max250
-## 4 Human_GOBP_AllPathways_no_GO_iea_May_01_2023_symbol_max250
-## 5 Human_GOBP_AllPathways_no_GO_iea_May_01_2023_symbol_max250
+##                                                         source
+## 1 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
+## 2 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
+## 3 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
+## 4 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
+## 5 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
 ##                                        term_name effective_domain_size
-## 1          Head and neck squamous cell carcinoma                 17046
-## 2                Glioblastoma signaling pathways                 17046
-## 3  Pathways affected in adenoid cystic carcinoma                 17046
-## 4                                     Cell cycle                 17046
-## 5 regulation of cell cycle G1/S phase transition                 17046
+## 1          Head and neck squamous cell carcinoma                 17047
+## 2                Glioblastoma signaling pathways                 17047
+## 3  Pathways affected in adenoid cystic carcinoma                 17047
+## 4                                     Cell cycle                 17047
+## 5 regulation of cell cycle G1/S phase transition                 17047
 ##   source_order parents
-## 1         5010    NULL
-## 2         5562    NULL
-## 3         4976    NULL
-## 4         4942    NULL
-## 5        19018    NULL</code></pre>
+## 1         5002    NULL
+## 2         5554    NULL
+## 3         4968    NULL
+## 4         4934    NULL
+## 5        19009    NULL</code></pre>
 <p>Filter the table to include just the columns that are required for the generic enrichment map file results <a href="https://enrichmentmap.readthedocs.io/en/latest/FileFormats.html#generic-results-files">GEM</a>. Restrict the results to just the ones that have at least min_gs_size and less than max_gs_size terms and min_intersection size include only the term_id, term_name, p_value (and p_value again because the p_value is actually the corrected p-value. The output file does not contain the nominal p_value. For down stream analysis though it is expected to have both a p-value and a q-value so just duplicate the q-value as both p-value and q-value)</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="run-gprofiler-from-r.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filer by params defined above</span></span>
 <span id="cb41-2"><a href="run-gprofiler-from-r.html#cb41-2" aria-hidden="true" tabindex="-1"></a>enrichment_results_customgmt_max250 <span class="ot">&lt;-</span> <span class="fu">subset</span>(enrichment_results_customgmt_max250,</span>

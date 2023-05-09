@@ -71,6 +71,14 @@ rnk_file <- "MesenchymalvsImmunoreactive_edger_ranks.rnk"
 # This parameter is for the compilation of the notebook.  
 run_gsea <- FALSE
 
+#set the gmt file you want to use if you don't want to use the latest gmt file.
+# For example, if you set dest_gmt_file =="" the below script will automatically
+# download the latest gmt file from baderlab webstie.  If it is set then it
+# will use the file specified.  
+dest_gmt_file = file.path(output_dir, 
+                          "Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol.gmt")
+
+
 ```
 
 
@@ -83,31 +91,33 @@ Only Human, Mouse, Rat, and Woodchuck gene set files are currently available on 
 To create your own GMT file using Ensembl see [Create GMT file from Ensembl]
 
 ```{r download baderlab gmt file, echo=TRUE, message=FALSE, warning=FALSE}
-gmt_url = "http://download.baderlab.org/EM_Genesets/current_release/Human/symbol/"
 
-#list all the files on the server
-filenames = getURL(gmt_url)
-tc = textConnection(filenames)
-contents = readLines(tc)
-close(tc)
-
-#get the gmt that has all the pathways and does not include terms 
-# inferred from electronic annotations(IEA)
-#start with gmt file that has pathways only and GO Biological Process only.
-rx = gregexpr("(?<=<a href=\")(.*.GOBP_AllPathways_no_GO_iea.*.)(.gmt)(?=\">)",
-  contents, perl = TRUE)
-gmt_file = unlist(regmatches(contents, rx))
-
-dest_gmt_file <- file.path(output_dir,gmt_file )
-
-#check if this gmt file already exists
-if(!file.exists(dest_gmt_file)){
-  download.file(
-    paste(gmt_url,gmt_file,sep=""),
-    destfile=dest_gmt_file
-  )
+if(dest_gmt_file == ""){
+  gmt_url = "http://download.baderlab.org/EM_Genesets/current_release/Human/symbol/"
+  
+  #list all the files on the server
+  filenames = getURL(gmt_url)
+  tc = textConnection(filenames)
+  contents = readLines(tc)
+  close(tc)
+  
+  #get the gmt that has all the pathways and does not include terms 
+  # inferred from electronic annotations(IEA)
+  #start with gmt file that has pathways only and GO Biological Process only.
+  rx = gregexpr("(?<=<a href=\")(.*.GOBP_AllPathways_no_GO_iea.*.)(.gmt)(?=\">)",
+    contents, perl = TRUE)
+  gmt_file = unlist(regmatches(contents, rx))
+  
+  dest_gmt_file <- file.path(output_dir,gmt_file )
+  
+  #check if this gmt file already exists
+  if(!file.exists(dest_gmt_file)){
+    download.file(
+      paste(gmt_url,gmt_file,sep=""),
+      destfile=dest_gmt_file
+    )
+  }
 }
-
 
 ```
 

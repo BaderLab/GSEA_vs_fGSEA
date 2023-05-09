@@ -145,7 +145,7 @@
 
 \title{CBW pathways Workshops - example R notebooks}
 \author{Ruth Isserlin}
-\date{2023-05-08}
+\date{2023-05-09}
 
 \begin{document}
 \maketitle
@@ -342,6 +342,13 @@ For more details see - \href{https://bookdown.org/yihui/rmarkdown/params-declare
 \CommentTok{\# First letter of first word in species name followed by }
 \CommentTok{\# the second word for example {-} hsapiens}
 \NormalTok{organism }\OtherTok{\textless{}{-}} \StringTok{"hsapiens"}
+
+\CommentTok{\#set the gmt file you want to use if you don\textquotesingle{}t want to use the latest gmt file.}
+\CommentTok{\# For example, if you set dest\_gmt\_file =="" the below script will automatically}
+\CommentTok{\# download the latest gmt file from baderlab webstie.  If it is set then it}
+\CommentTok{\# will use the file specified.  }
+\NormalTok{dest\_gmt\_file }\OtherTok{=} \FunctionTok{file.path}\NormalTok{(working\_dir, }
+                  \StringTok{"Human\_GOBP\_AllPathways\_no\_GO\_iea\_April\_02\_2023\_symbol.gmt"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -719,28 +726,31 @@ Download the latest \href{https://download.baderlab.org/EM_Genesets/current_rele
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gmt\_url }\OtherTok{=} \StringTok{"http://download.baderlab.org/EM\_Genesets/current\_release/Human/symbol/"}
+\ControlFlowTok{if}\NormalTok{(dest\_gmt\_file }\SpecialCharTok{==} \StringTok{""}\NormalTok{)\{}
 
-\CommentTok{\#list all the files on the server}
-\NormalTok{filenames }\OtherTok{=}\NormalTok{ RCurl}\SpecialCharTok{::}\FunctionTok{getURL}\NormalTok{(gmt\_url)}
-\NormalTok{tc }\OtherTok{=} \FunctionTok{textConnection}\NormalTok{(filenames)}
-\NormalTok{contents }\OtherTok{=} \FunctionTok{readLines}\NormalTok{(tc)}
-\FunctionTok{close}\NormalTok{(tc)}
+\NormalTok{  gmt\_url }\OtherTok{=} \StringTok{"http://download.baderlab.org/EM\_Genesets/current\_release/Human/symbol/"}
 
-\CommentTok{\#get the gmt that has all the pathways and does not include }
-\CommentTok{\# terms inferred from electronic annotations(IEA)}
-\CommentTok{\#start with gmt file that has pathways only}
-\NormalTok{rx }\OtherTok{=} \FunctionTok{gregexpr}\NormalTok{(}\StringTok{"(?\textless{}=\textless{}a href=}\SpecialCharTok{\textbackslash{}"}\StringTok{)(.*.GOBP\_AllPathways\_no\_GO\_iea.*.)(.gmt)(?=}\SpecialCharTok{\textbackslash{}"}\StringTok{\textgreater{})"}\NormalTok{,}
-\NormalTok{  contents, }\AttributeTok{perl =} \ConstantTok{TRUE}\NormalTok{)}
-\NormalTok{gmt\_file }\OtherTok{=} \FunctionTok{unlist}\NormalTok{(}\FunctionTok{regmatches}\NormalTok{(contents, rx))}
-
-\NormalTok{dest\_gmt\_file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(working\_dir,gmt\_file)}
-
-\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{file.exists}\NormalTok{(dest\_gmt\_file))\{}
-  \FunctionTok{download.file}\NormalTok{(}
-    \FunctionTok{paste}\NormalTok{(gmt\_url,gmt\_file,}\AttributeTok{sep=}\StringTok{""}\NormalTok{),}
-    \AttributeTok{destfile=}\NormalTok{dest\_gmt\_file}
-\NormalTok{  )}
+  \CommentTok{\#list all the files on the server}
+\NormalTok{  filenames }\OtherTok{=}\NormalTok{ RCurl}\SpecialCharTok{::}\FunctionTok{getURL}\NormalTok{(gmt\_url)}
+\NormalTok{  tc }\OtherTok{=} \FunctionTok{textConnection}\NormalTok{(filenames)}
+\NormalTok{  contents }\OtherTok{=} \FunctionTok{readLines}\NormalTok{(tc)}
+  \FunctionTok{close}\NormalTok{(tc)}
+  
+  \CommentTok{\#get the gmt that has all the pathways and does not include }
+  \CommentTok{\# terms inferred from electronic annotations(IEA)}
+  \CommentTok{\#start with gmt file that has pathways only}
+\NormalTok{  rx }\OtherTok{=} \FunctionTok{gregexpr}\NormalTok{(}\StringTok{"(?\textless{}=\textless{}a href=}\SpecialCharTok{\textbackslash{}"}\StringTok{)(.*.GOBP\_AllPathways\_no\_GO\_iea.*.)(.gmt)(?=}\SpecialCharTok{\textbackslash{}"}\StringTok{\textgreater{})"}\NormalTok{,}
+\NormalTok{    contents, }\AttributeTok{perl =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  gmt\_file }\OtherTok{=} \FunctionTok{unlist}\NormalTok{(}\FunctionTok{regmatches}\NormalTok{(contents, rx))}
+  
+\NormalTok{  dest\_gmt\_file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(working\_dir,gmt\_file)}
+  
+  \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{file.exists}\NormalTok{(dest\_gmt\_file))\{}
+    \FunctionTok{download.file}\NormalTok{(}
+      \FunctionTok{paste}\NormalTok{(gmt\_url,gmt\_file,}\AttributeTok{sep=}\StringTok{""}\NormalTok{),}
+      \AttributeTok{destfile=}\NormalTok{dest\_gmt\_file}
+\NormalTok{    )}
+\NormalTok{  \}}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -896,12 +906,12 @@ In order to use your own genesets with g:Profiler you need to upload the the fil
 \end{Shaded}
 
 \begin{verbatim}
-## Your custom annotations ID is gp__bRRE_1ju9_WT8
+## Your custom annotations ID is gp__KTax_QY78_54M
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 \end{verbatim}
 
 \begin{verbatim}
-## Just use: gost(my_genes, organism = 'gp__bRRE_1ju9_WT8')
+## Just use: gost(my_genes, organism = 'gp__KTax_QY78_54M')
 \end{verbatim}
 
 \begin{Shaded}
@@ -912,12 +922,12 @@ In order to use your own genesets with g:Profiler you need to upload the the fil
 \end{Shaded}
 
 \begin{verbatim}
-## Your custom annotations ID is gp__hyan_MFAU_UGg
+## Your custom annotations ID is gp__iRNc_aEFj_53s
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 \end{verbatim}
 
 \begin{verbatim}
-## Just use: gost(my_genes, organism = 'gp__hyan_MFAU_UGg')
+## Just use: gost(my_genes, organism = 'gp__iRNc_aEFj_53s')
 \end{verbatim}
 
 \begin{Shaded}
@@ -928,12 +938,12 @@ In order to use your own genesets with g:Profiler you need to upload the the fil
 \end{Shaded}
 
 \begin{verbatim}
-## Your custom annotations ID is gp__Dxfi_EsOu_cGo
+## Your custom annotations ID is gp__mRD2_ZMVl_xU8
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 \end{verbatim}
 
 \begin{verbatim}
-## Just use: gost(my_genes, organism = 'gp__Dxfi_EsOu_cGo')
+## Just use: gost(my_genes, organism = 'gp__mRD2_ZMVl_xU8')
 \end{verbatim}
 
 For this query we are specifying -
@@ -949,7 +959,7 @@ For this query we are specifying -
 \item
   correction\_method - set to fdr. by default g:Profiler uses g:Scs
 \item
-  organism - set to the custom\_gmt ID ( for this run it is - gp\_\_bRRE\_1ju9\_WT8) that we received when we uploaded our genetset file.
+  organism - set to the custom\_gmt ID ( for this run it is - gp\_\_KTax\_QY78\_54M) that we received when we uploaded our genetset file.
 \end{itemize}
 
 \begin{Shaded}
@@ -1014,11 +1024,11 @@ For this query we are specifying -
 
 \begin{verbatim}
 ##     query significant      p_value term_size query_size intersection_size
-## 1 query_1        TRUE 6.652189e-20        64        109                17
-## 2 query_1        TRUE 1.061927e-19        68        109                17
-## 3 query_1        TRUE 1.928429e-14        54        109                13
-## 4 query_1        TRUE 5.142650e-14        97        109                15
-## 5 query_1        TRUE 1.820231e-13       159        109                17
+## 1 query_1        TRUE 6.644186e-20        64        109                17
+## 2 query_1        TRUE 1.060650e-19        68        109                17
+## 3 query_1        TRUE 1.926559e-14        54        109                13
+## 4 query_1        TRUE 5.137122e-14        97        109                15
+## 5 query_1        TRUE 1.818094e-13       159        109                17
 ##   precision    recall
 ## 1 0.1559633 0.2656250
 ## 2 0.1559633 0.2500000
@@ -1031,24 +1041,24 @@ For this query we are specifying -
 ## 3 PATHWAYS AFFECTED IN ADENOID CYSTIC CARCINOMA%WIKIPATHWAYS_20220510%WP3651%HOMO SAPIENS
 ## 4                                     CELL CYCLE%WIKIPATHWAYS_20220510%WP179%HOMO SAPIENS
 ## 5                          REGULATION OF CELL CYCLE G1/S PHASE TRANSITION%GOBP%GO:1902806
-##                                                       source
-## 1 Human_GOBP_AllPathways_no_GO_iea_May_01_2023_symbol_max250
-## 2 Human_GOBP_AllPathways_no_GO_iea_May_01_2023_symbol_max250
-## 3 Human_GOBP_AllPathways_no_GO_iea_May_01_2023_symbol_max250
-## 4 Human_GOBP_AllPathways_no_GO_iea_May_01_2023_symbol_max250
-## 5 Human_GOBP_AllPathways_no_GO_iea_May_01_2023_symbol_max250
+##                                                         source
+## 1 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
+## 2 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
+## 3 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
+## 4 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
+## 5 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
 ##                                        term_name effective_domain_size
-## 1          Head and neck squamous cell carcinoma                 17046
-## 2                Glioblastoma signaling pathways                 17046
-## 3  Pathways affected in adenoid cystic carcinoma                 17046
-## 4                                     Cell cycle                 17046
-## 5 regulation of cell cycle G1/S phase transition                 17046
+## 1          Head and neck squamous cell carcinoma                 17047
+## 2                Glioblastoma signaling pathways                 17047
+## 3  Pathways affected in adenoid cystic carcinoma                 17047
+## 4                                     Cell cycle                 17047
+## 5 regulation of cell cycle G1/S phase transition                 17047
 ##   source_order parents
-## 1         5010    NULL
-## 2         5562    NULL
-## 3         4976    NULL
-## 4         4942    NULL
-## 5        19018    NULL
+## 1         5002    NULL
+## 2         5554    NULL
+## 3         4968    NULL
+## 4         4934    NULL
+## 5        19009    NULL
 \end{verbatim}
 
 Filter the table to include just the columns that are required for the generic enrichment map file results \href{https://enrichmentmap.readthedocs.io/en/latest/FileFormats.html\#generic-results-files}{GEM}. Restrict the results to just the ones that have at least min\_gs\_size and less than max\_gs\_size terms and min\_intersection size include only the term\_id, term\_name, p\_value (and p\_value again because the p\_value is actually the corrected p-value. The output file does not contain the nominal p\_value. For down stream analysis though it is expected to have both a p-value and a q-value so just duplicate the q-value as both p-value and q-value)
@@ -1192,6 +1202,13 @@ Set the working directory as the directory to the directory where you downloaded
 \CommentTok{\#run\_gsea {-} true/false}
 \CommentTok{\# This parameter is for the compilation of the notebook.  }
 \NormalTok{run\_gsea }\OtherTok{\textless{}{-}} \ConstantTok{FALSE}
+
+\CommentTok{\#set the gmt file you want to use if you don\textquotesingle{}t want to use the latest gmt file.}
+\CommentTok{\# For example, if you set dest\_gmt\_file =="" the below script will automatically}
+\CommentTok{\# download the latest gmt file from baderlab webstie.  If it is set then it}
+\CommentTok{\# will use the file specified.  }
+\NormalTok{dest\_gmt\_file }\OtherTok{=} \FunctionTok{file.path}\NormalTok{(output\_dir, }
+                          \StringTok{"Human\_GOBP\_AllPathways\_no\_GO\_iea\_April\_02\_2023\_symbol.gmt"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1204,29 +1221,31 @@ To create your own GMT file using Ensembl see \protect\hyperlink{create-gmt-file
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gmt\_url }\OtherTok{=} \StringTok{"http://download.baderlab.org/EM\_Genesets/current\_release/Human/symbol/"}
-
-\CommentTok{\#list all the files on the server}
-\NormalTok{filenames }\OtherTok{=} \FunctionTok{getURL}\NormalTok{(gmt\_url)}
-\NormalTok{tc }\OtherTok{=} \FunctionTok{textConnection}\NormalTok{(filenames)}
-\NormalTok{contents }\OtherTok{=} \FunctionTok{readLines}\NormalTok{(tc)}
-\FunctionTok{close}\NormalTok{(tc)}
-
-\CommentTok{\#get the gmt that has all the pathways and does not include terms }
-\CommentTok{\# inferred from electronic annotations(IEA)}
-\CommentTok{\#start with gmt file that has pathways only and GO Biological Process only.}
-\NormalTok{rx }\OtherTok{=} \FunctionTok{gregexpr}\NormalTok{(}\StringTok{"(?\textless{}=\textless{}a href=}\SpecialCharTok{\textbackslash{}"}\StringTok{)(.*.GOBP\_AllPathways\_no\_GO\_iea.*.)(.gmt)(?=}\SpecialCharTok{\textbackslash{}"}\StringTok{\textgreater{})"}\NormalTok{,}
-\NormalTok{  contents, }\AttributeTok{perl =} \ConstantTok{TRUE}\NormalTok{)}
-\NormalTok{gmt\_file }\OtherTok{=} \FunctionTok{unlist}\NormalTok{(}\FunctionTok{regmatches}\NormalTok{(contents, rx))}
-
-\NormalTok{dest\_gmt\_file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(output\_dir,gmt\_file )}
-
-\CommentTok{\#check if this gmt file already exists}
-\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{file.exists}\NormalTok{(dest\_gmt\_file))\{}
-  \FunctionTok{download.file}\NormalTok{(}
-    \FunctionTok{paste}\NormalTok{(gmt\_url,gmt\_file,}\AttributeTok{sep=}\StringTok{""}\NormalTok{),}
-    \AttributeTok{destfile=}\NormalTok{dest\_gmt\_file}
-\NormalTok{  )}
+\ControlFlowTok{if}\NormalTok{(dest\_gmt\_file }\SpecialCharTok{==} \StringTok{""}\NormalTok{)\{}
+\NormalTok{  gmt\_url }\OtherTok{=} \StringTok{"http://download.baderlab.org/EM\_Genesets/current\_release/Human/symbol/"}
+  
+  \CommentTok{\#list all the files on the server}
+\NormalTok{  filenames }\OtherTok{=} \FunctionTok{getURL}\NormalTok{(gmt\_url)}
+\NormalTok{  tc }\OtherTok{=} \FunctionTok{textConnection}\NormalTok{(filenames)}
+\NormalTok{  contents }\OtherTok{=} \FunctionTok{readLines}\NormalTok{(tc)}
+  \FunctionTok{close}\NormalTok{(tc)}
+  
+  \CommentTok{\#get the gmt that has all the pathways and does not include terms }
+  \CommentTok{\# inferred from electronic annotations(IEA)}
+  \CommentTok{\#start with gmt file that has pathways only and GO Biological Process only.}
+\NormalTok{  rx }\OtherTok{=} \FunctionTok{gregexpr}\NormalTok{(}\StringTok{"(?\textless{}=\textless{}a href=}\SpecialCharTok{\textbackslash{}"}\StringTok{)(.*.GOBP\_AllPathways\_no\_GO\_iea.*.)(.gmt)(?=}\SpecialCharTok{\textbackslash{}"}\StringTok{\textgreater{})"}\NormalTok{,}
+\NormalTok{    contents, }\AttributeTok{perl =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  gmt\_file }\OtherTok{=} \FunctionTok{unlist}\NormalTok{(}\FunctionTok{regmatches}\NormalTok{(contents, rx))}
+  
+\NormalTok{  dest\_gmt\_file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(output\_dir,gmt\_file )}
+  
+  \CommentTok{\#check if this gmt file already exists}
+  \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{file.exists}\NormalTok{(dest\_gmt\_file))\{}
+    \FunctionTok{download.file}\NormalTok{(}
+      \FunctionTok{paste}\NormalTok{(gmt\_url,gmt\_file,}\AttributeTok{sep=}\StringTok{""}\NormalTok{),}
+      \AttributeTok{destfile=}\NormalTok{dest\_gmt\_file}
+\NormalTok{    )}
+\NormalTok{  \}}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -1364,7 +1383,7 @@ Connect to Biomart
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ensembl }\OtherTok{\textless{}{-}} \FunctionTok{useMart}\NormalTok{(}\StringTok{"ensembl"}\NormalTok{, }\AttributeTok{host=}\StringTok{"https://asia.ensembl.org"}\NormalTok{)}
+\NormalTok{ensembl }\OtherTok{\textless{}{-}} \FunctionTok{useEnsembl}\NormalTok{(}\AttributeTok{biomart =} \StringTok{"genes"}\NormalTok{,}\AttributeTok{host =} \StringTok{"asia.ensembl.org"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1618,10 +1637,12 @@ Write out the gmt file with ensembl ids
 \CommentTok{\#q{-}value to filter all the genesets.  For example {-}   0.05}
 \NormalTok{qvalue\_gprofiler\_threshold }\OtherTok{\textless{}{-}} \FloatTok{0.001}
 
-\CommentTok{\#similarity threshold to filter all the genesets connections/edges.  For example {-}   0.375}
+\CommentTok{\#similarity threshold to filter all the genesets connections/edges.  }
+\CommentTok{\# For example {-}   0.375}
 \NormalTok{similarity\_threshold }\OtherTok{\textless{}{-}} \StringTok{"0.35"}
 
-\CommentTok{\#similarity metric to filter all the genesets connections/edges (can be OVERLAP, JACCARD, or COMBINED.   For example {-}   Combined}
+\CommentTok{\#similarity metric to filter all the genesets connections/edges }
+\CommentTok{\# (can be OVERLAP, JACCARD, or COMBINED.   For example {-}   Combined}
 \NormalTok{similarity\_metric }\OtherTok{=} \StringTok{"JACCARD"}
 \end{Highlighting}
 \end{Shaded}
@@ -1704,7 +1725,9 @@ If you are running R from within a docker you need to first upload your datafile
 \NormalTok{  upload\_em\_file }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(localPath) \{}
 \NormalTok{    bname }\OtherTok{\textless{}{-}} \FunctionTok{basename}\NormalTok{(localPath)}
 \NormalTok{    r }\OtherTok{\textless{}{-}} \FunctionTok{POST}\NormalTok{(}
-      \AttributeTok{url =} \FunctionTok{paste}\NormalTok{(}\StringTok{\textquotesingle{}http://host.docker.internal:1234/enrichmentmap/textfileupload?fileName=\textquotesingle{}}\NormalTok{, bname, }\AttributeTok{sep=}\StringTok{""}\NormalTok{),}
+      \AttributeTok{url =} 
+\FunctionTok{paste}\NormalTok{(}\StringTok{\textquotesingle{}http://host.docker.internal:1234/enrichmentmap/textfileupload?fileName=\textquotesingle{}}\NormalTok{, }
+\NormalTok{                  bname, }\AttributeTok{sep=}\StringTok{""}\NormalTok{),}
       \AttributeTok{config =} \FunctionTok{list}\NormalTok{(),}
       \AttributeTok{body =} \FunctionTok{list}\NormalTok{(}\AttributeTok{file =} \FunctionTok{upload\_file}\NormalTok{(localPath)),}
       \AttributeTok{encode =} \StringTok{"multipart"}\NormalTok{,}
@@ -1713,7 +1736,8 @@ If you are running R from within a docker you need to first upload your datafile
     \FunctionTok{content}\NormalTok{(r,}\StringTok{"parsed"}\NormalTok{)}\SpecialCharTok{$}\NormalTok{path}
 \NormalTok{  \}}
   
-  \CommentTok{\# "upload" the files to the host machine and replace each path with the host machine path}
+  \CommentTok{\# "upload" the files to the host machine and replace each path with the }
+  \CommentTok{\# host machine path}
 \NormalTok{   gmt\_gprofiler\_file }\OtherTok{\textless{}{-}} \FunctionTok{upload\_em\_file}\NormalTok{(gmt\_gprofiler\_file)}
 \NormalTok{  gprofiler\_results\_filename1 }\OtherTok{\textless{}{-}} \FunctionTok{upload\_em\_file}\NormalTok{(gprofiler\_results\_filename1)}
 \NormalTok{  gprofiler\_results\_filename2 }\OtherTok{\textless{}{-}} \FunctionTok{upload\_em\_file}\NormalTok{(gprofiler\_results\_filename2)}
@@ -1747,8 +1771,8 @@ If you are running R from within a docker you need to first upload your datafile
 \NormalTok{response }\OtherTok{\textless{}{-}} \FunctionTok{commandsGET}\NormalTok{(em\_command,}\AttributeTok{base.url =}\NormalTok{ current\_base)}
 
 \NormalTok{current\_network\_suid }\OtherTok{\textless{}{-}} \DecValTok{0}
-\CommentTok{\#enrichment map command will return the suid of newly created network unless it Failed.  }
-\CommentTok{\#If it failed it will contain the word failed}
+\CommentTok{\#enrichment map command will return the suid of newly created network }
+\CommentTok{\# unless it Failed.  If it failed it will contain the word failed}
 \ControlFlowTok{if}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\AttributeTok{pattern=}\StringTok{"Failed"}\NormalTok{, response))\{}
   \FunctionTok{paste}\NormalTok{(response)}
 \NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
@@ -1760,10 +1784,12 @@ If you are running R from within a docker you need to first upload your datafile
 \ControlFlowTok{if}\NormalTok{(current\_network\_name }\SpecialCharTok{\%in\%}\NormalTok{ current\_names)\{}
   \CommentTok{\#if the name already exists in the network names then put the SUID in front}
   \CommentTok{\# of the name (this does not work if you put the suid at the end of the name)}
-\NormalTok{  current\_network\_name }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(current\_network\_suid,current\_network\_name,  }\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{)}
+\NormalTok{  current\_network\_name }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(current\_network\_suid,}
+\NormalTok{                                current\_network\_name,  }\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{)}
 \NormalTok{\}}
 \NormalTok{response }\OtherTok{\textless{}{-}} \FunctionTok{renameNetwork}\NormalTok{(}\AttributeTok{title=}\NormalTok{current\_network\_name, }
-                       \AttributeTok{network =} \FunctionTok{as.numeric}\NormalTok{(current\_network\_suid),}\AttributeTok{base.url =}\NormalTok{ current\_base)}
+                       \AttributeTok{network =} \FunctionTok{as.numeric}\NormalTok{(current\_network\_suid),}
+                       \AttributeTok{base.url =}\NormalTok{ current\_base)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1781,11 +1807,13 @@ If you are running R from within a docker you need to first upload your datafile
   \FunctionTok{fitContent}\NormalTok{()}
 
   \ControlFlowTok{if}\NormalTok{(}\FunctionTok{file.exists}\NormalTok{(output\_network\_file))\{}
-    \CommentTok{\#cytoscape hangs waiting for user response if file already exists.  Remove it first}
+    \CommentTok{\#cytoscape hangs waiting for user response if file already exists.  }
+    \CommentTok{\# Remove it first}
 \NormalTok{    response }\OtherTok{\textless{}{-}} \FunctionTok{file.remove}\NormalTok{(output\_network\_file)}
 \NormalTok{  \} }
 
-\NormalTok{  response }\OtherTok{\textless{}{-}} \FunctionTok{exportImage}\NormalTok{(output\_network\_file, }\AttributeTok{type =} \StringTok{"png"}\NormalTok{,}\AttributeTok{base.url =}\NormalTok{ current\_base)}
+\NormalTok{  response }\OtherTok{\textless{}{-}} \FunctionTok{exportImage}\NormalTok{(output\_network\_file, }\AttributeTok{type =} \StringTok{"png"}\NormalTok{,}
+                          \AttributeTok{base.url =}\NormalTok{ current\_base)}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -1859,10 +1887,12 @@ Change the files and create all the different networks we generated in class in 
 \CommentTok{\#q{-}value to filter all the genesets.  For example {-}   0.05}
 \NormalTok{qvalue\_gsea\_threshold }\OtherTok{\textless{}{-}} \FloatTok{0.05}
 
-\CommentTok{\#similarity threshold to filter all the genesets connections/edges.  For example {-}   0.375}
+\CommentTok{\#similarity threshold to filter all the genesets connections/edges.  }
+\CommentTok{\# For example {-}   0.375}
 \NormalTok{similarity\_threshold }\OtherTok{\textless{}{-}} \StringTok{"0.375"}
 
-\CommentTok{\#similarity metric to filter all the genesets connections/edges (can be OVERLAP, JACCARD, or COMBINED.   For example {-}   Combined}
+\CommentTok{\#similarity metric to filter all the genesets connections/edges }
+\CommentTok{\# (can be OVERLAP, JACCARD, or COMBINED.   For example {-}   Combined}
 \NormalTok{similarity\_metric }\OtherTok{=} \StringTok{"COMBINED"}
 \end{Highlighting}
 \end{Shaded}
@@ -1980,7 +2010,9 @@ If you are running R from within a docker you need to first upload your datafile
 \NormalTok{  upload\_em\_file }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(localPath) \{}
 \NormalTok{    bname }\OtherTok{\textless{}{-}} \FunctionTok{basename}\NormalTok{(localPath)}
 \NormalTok{    r }\OtherTok{\textless{}{-}} \FunctionTok{POST}\NormalTok{(}
-      \AttributeTok{url =} \FunctionTok{paste}\NormalTok{(}\StringTok{\textquotesingle{}http://host.docker.internal:1234/enrichmentmap/textfileupload?fileName=\textquotesingle{}}\NormalTok{, bname, }\AttributeTok{sep=}\StringTok{""}\NormalTok{),}
+      \AttributeTok{url =} 
+\FunctionTok{paste}\NormalTok{(}\StringTok{\textquotesingle{}http://host.docker.internal:1234/enrichmentmap/textfileupload?fileName=\textquotesingle{}}\NormalTok{, }
+\NormalTok{                  bname, }\AttributeTok{sep=}\StringTok{""}\NormalTok{),}
       \AttributeTok{config =} \FunctionTok{list}\NormalTok{(),}
       \AttributeTok{body =} \FunctionTok{list}\NormalTok{(}\AttributeTok{file =} \FunctionTok{upload\_file}\NormalTok{(localPath)),}
       \AttributeTok{encode =} \StringTok{"multipart"}\NormalTok{,}
@@ -1989,7 +2021,8 @@ If you are running R from within a docker you need to first upload your datafile
     \FunctionTok{content}\NormalTok{(r,}\StringTok{"parsed"}\NormalTok{)}\SpecialCharTok{$}\NormalTok{path}
 \NormalTok{  \}}
   
-  \CommentTok{\# "upload" the files to the host machine and replace each path with the host machine path}
+  \CommentTok{\# "upload" the files to the host machine and replace each path }
+  \CommentTok{\# with the host machine path}
 \NormalTok{  expression\_file\_fullpath }\OtherTok{\textless{}{-}} \FunctionTok{upload\_em\_file}\NormalTok{(expression\_file\_fullpath)}
 \NormalTok{  gmt\_gsea\_file }\OtherTok{\textless{}{-}} \FunctionTok{upload\_em\_file}\NormalTok{(gmt\_gsea\_file)}
 \NormalTok{  gsea\_ranks\_file }\OtherTok{\textless{}{-}} \FunctionTok{upload\_em\_file}\NormalTok{(gsea\_ranks\_file)}
@@ -2007,10 +2040,13 @@ If you are running R from within a docker you need to first upload your datafile
 \begin{Highlighting}[]
 \DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
 \CommentTok{\#create EM}
-\NormalTok{current\_network\_name }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(cur\_model\_name,pvalue\_gsea\_threshold,qvalue\_gsea\_threshold,}\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{)}
+\NormalTok{current\_network\_name }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(cur\_model\_name,pvalue\_gsea\_threshold,}
+\NormalTok{                              qvalue\_gsea\_threshold,}\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{)}
 
-\NormalTok{em\_command }\OtherTok{=} \FunctionTok{paste}\NormalTok{(}\StringTok{\textquotesingle{}enrichmentmap build analysisType="gsea" gmtFile=\textquotesingle{}}\NormalTok{,gmt\_gsea\_file,}
-                   \StringTok{\textquotesingle{}pvalue=\textquotesingle{}}\NormalTok{,pvalue\_gsea\_threshold, }\StringTok{\textquotesingle{}qvalue=\textquotesingle{}}\NormalTok{,qvalue\_gsea\_threshold,}
+\NormalTok{em\_command }\OtherTok{=} \FunctionTok{paste}\NormalTok{(}\StringTok{\textquotesingle{}enrichmentmap build analysisType="gsea" gmtFile=\textquotesingle{}}\NormalTok{,}
+\NormalTok{                                                              gmt\_gsea\_file,}
+                   \StringTok{\textquotesingle{}pvalue=\textquotesingle{}}\NormalTok{,pvalue\_gsea\_threshold, }
+                   \StringTok{\textquotesingle{}qvalue=\textquotesingle{}}\NormalTok{,qvalue\_gsea\_threshold,}
                    \StringTok{\textquotesingle{}similaritycutoff=\textquotesingle{}}\NormalTok{,similarity\_threshold,}
                    \StringTok{\textquotesingle{}coefficients=\textquotesingle{}}\NormalTok{,similarity\_metric,}
                    \StringTok{\textquotesingle{}ranksDataset1=\textquotesingle{}}\NormalTok{, gsea\_ranks\_file,}
@@ -2024,8 +2060,8 @@ If you are running R from within a docker you need to first upload your datafile
 \NormalTok{response }\OtherTok{\textless{}{-}} \FunctionTok{commandsGET}\NormalTok{(em\_command,}\AttributeTok{base.url =}\NormalTok{ current\_base)}
 
 \NormalTok{current\_network\_suid }\OtherTok{\textless{}{-}} \DecValTok{0}
-\CommentTok{\#enrichment map command will return the suid of newly created network unless it Failed.  }
-\CommentTok{\#If it failed it will contain the word failed}
+\CommentTok{\#enrichment map command will return the suid of newly created network }
+\CommentTok{\# unless it Failed.  If it failed it will contain the word failed}
 \ControlFlowTok{if}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\AttributeTok{pattern=}\StringTok{"Failed"}\NormalTok{, response))\{}
   \FunctionTok{paste}\NormalTok{(response)}
 \NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
@@ -2037,10 +2073,12 @@ If you are running R from within a docker you need to first upload your datafile
 \ControlFlowTok{if}\NormalTok{(current\_network\_name }\SpecialCharTok{\%in\%}\NormalTok{ current\_names)\{}
   \CommentTok{\#if the name already exists in the network names then put the SUID in front}
   \CommentTok{\# of the name (this does not work if you put the suid at the end of the name)}
-\NormalTok{  current\_network\_name }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(current\_network\_suid,current\_network\_name,  }\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{)}
+\NormalTok{  current\_network\_name }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(current\_network\_suid,}
+\NormalTok{                                current\_network\_name,}\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{)}
 \NormalTok{\}}
 \NormalTok{response }\OtherTok{\textless{}{-}} \FunctionTok{renameNetwork}\NormalTok{(}\AttributeTok{title=}\NormalTok{current\_network\_name, }
-                       \AttributeTok{network =} \FunctionTok{as.numeric}\NormalTok{(current\_network\_suid),}\AttributeTok{base.url =}\NormalTok{ current\_base)}
+                       \AttributeTok{network =} \FunctionTok{as.numeric}\NormalTok{(current\_network\_suid),}
+                       \AttributeTok{base.url =}\NormalTok{ current\_base)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2050,7 +2088,8 @@ If you are running R from within a docker you need to first upload your datafile
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#you can only output the file if it isn\textquotesingle{}t on docker}
-\CommentTok{\#on docker is put it into the user\textquotesingle{}s home directory with docker has not access to}
+\CommentTok{\#on docker is put it into the user\textquotesingle{}s home directory with docker }
+\CommentTok{\# has not access to}
 \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\NormalTok{is\_docker)\{}
 \NormalTok{  output\_network\_file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\FunctionTok{getwd}\NormalTok{(),}\StringTok{"initial\_screenshot\_network.png"}\NormalTok{)}
 \NormalTok{  output\_network\_file\_current }\OtherTok{\textless{}{-}}\NormalTok{ output\_network\_file}
@@ -2058,11 +2097,13 @@ If you are running R from within a docker you need to first upload your datafile
   \FunctionTok{fitContent}\NormalTok{()}
 
   \ControlFlowTok{if}\NormalTok{(}\FunctionTok{file.exists}\NormalTok{(output\_network\_file))\{}
-    \CommentTok{\#cytoscape hangs waiting for user response if file already exists.  Remove it first}
+    \CommentTok{\#cytoscape hangs waiting for user response if file already exists.}
+    \CommentTok{\# Remove it first}
 \NormalTok{    response }\OtherTok{\textless{}{-}} \FunctionTok{file.remove}\NormalTok{(output\_network\_file)}
 \NormalTok{  \} }
 
-\NormalTok{  response }\OtherTok{\textless{}{-}} \FunctionTok{exportImage}\NormalTok{(output\_network\_file, }\AttributeTok{type =} \StringTok{"png"}\NormalTok{,}\AttributeTok{base.url =}\NormalTok{ current\_base)}
+\NormalTok{  response }\OtherTok{\textless{}{-}} \FunctionTok{exportImage}\NormalTok{(output\_network\_file, }\AttributeTok{type =} \StringTok{"png"}\NormalTok{,}
+                          \AttributeTok{base.url =}\NormalTok{ current\_base)}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}

@@ -47,6 +47,13 @@ min_intersection <- 3
 # First letter of first word in species name followed by 
 # the second word for example - hsapiens
 organism <- "hsapiens"
+
+#set the gmt file you want to use if you don't want to use the latest gmt file.
+# For example, if you set dest_gmt_file =="" the below script will automatically
+# download the latest gmt file from baderlab webstie.  If it is set then it
+# will use the file specified.  
+dest_gmt_file = file.path(working_dir, 
+                  "Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol.gmt")
 ```
 
 
@@ -384,28 +391,31 @@ Download the latest [Bader lab genesets](https://download.baderlab.org/EM_Genese
 
 
 ```r
-gmt_url = "http://download.baderlab.org/EM_Genesets/current_release/Human/symbol/"
+if(dest_gmt_file == ""){
 
-#list all the files on the server
-filenames = RCurl::getURL(gmt_url)
-tc = textConnection(filenames)
-contents = readLines(tc)
-close(tc)
+  gmt_url = "http://download.baderlab.org/EM_Genesets/current_release/Human/symbol/"
 
-#get the gmt that has all the pathways and does not include 
-# terms inferred from electronic annotations(IEA)
-#start with gmt file that has pathways only
-rx = gregexpr("(?<=<a href=\")(.*.GOBP_AllPathways_no_GO_iea.*.)(.gmt)(?=\">)",
-  contents, perl = TRUE)
-gmt_file = unlist(regmatches(contents, rx))
-
-dest_gmt_file <- file.path(working_dir,gmt_file)
-
-if(!file.exists(dest_gmt_file)){
-  download.file(
-    paste(gmt_url,gmt_file,sep=""),
-    destfile=dest_gmt_file
-  )
+  #list all the files on the server
+  filenames = RCurl::getURL(gmt_url)
+  tc = textConnection(filenames)
+  contents = readLines(tc)
+  close(tc)
+  
+  #get the gmt that has all the pathways and does not include 
+  # terms inferred from electronic annotations(IEA)
+  #start with gmt file that has pathways only
+  rx = gregexpr("(?<=<a href=\")(.*.GOBP_AllPathways_no_GO_iea.*.)(.gmt)(?=\">)",
+    contents, perl = TRUE)
+  gmt_file = unlist(regmatches(contents, rx))
+  
+  dest_gmt_file <- file.path(working_dir,gmt_file)
+  
+  if(!file.exists(dest_gmt_file)){
+    download.file(
+      paste(gmt_url,gmt_file,sep=""),
+      destfile=dest_gmt_file
+    )
+  }
 }
 ```
 
@@ -552,12 +562,12 @@ custom_gmt_max250 <- upload_GMT_file(
 ```
 
 ```
-## Your custom annotations ID is gp__bRRE_1ju9_WT8
+## Your custom annotations ID is gp__KTax_QY78_54M
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 ```
 
 ```
-## Just use: gost(my_genes, organism = 'gp__bRRE_1ju9_WT8')
+## Just use: gost(my_genes, organism = 'gp__KTax_QY78_54M')
 ```
 
 ```r
@@ -566,12 +576,12 @@ custom_gmt_max1000 <- upload_GMT_file(
 ```
 
 ```
-## Your custom annotations ID is gp__hyan_MFAU_UGg
+## Your custom annotations ID is gp__iRNc_aEFj_53s
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 ```
 
 ```
-## Just use: gost(my_genes, organism = 'gp__hyan_MFAU_UGg')
+## Just use: gost(my_genes, organism = 'gp__iRNc_aEFj_53s')
 ```
 
 ```r
@@ -580,12 +590,12 @@ custom_gmt_max10000 <- upload_GMT_file(
 ```
 
 ```
-## Your custom annotations ID is gp__Dxfi_EsOu_cGo
+## Your custom annotations ID is gp__mRD2_ZMVl_xU8
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 ```
 
 ```
-## Just use: gost(my_genes, organism = 'gp__Dxfi_EsOu_cGo')
+## Just use: gost(my_genes, organism = 'gp__mRD2_ZMVl_xU8')
 ```
 
 For this query we are specifying - 
@@ -594,7 +604,7 @@ For this query we are specifying -
   * significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.
   * ordered_query - set to FALSE (but you can try setting it to true as well because for this set of genes they are ordered in order of their significance)
   * correction_method - set to fdr.  by default g:Profiler uses g:Scs
-  * organism - set to the custom_gmt ID ( for this run it is - gp__bRRE_1ju9_WT8) that we received when we uploaded our genetset file.
+  * organism - set to the custom_gmt ID ( for this run it is - gp__KTax_QY78_54M) that we received when we uploaded our genetset file.
 
 
 
@@ -654,11 +664,11 @@ enrichment_results_customgmt_max250[1:5,]
 
 ```
 ##     query significant      p_value term_size query_size intersection_size
-## 1 query_1        TRUE 6.652189e-20        64        109                17
-## 2 query_1        TRUE 1.061927e-19        68        109                17
-## 3 query_1        TRUE 1.928429e-14        54        109                13
-## 4 query_1        TRUE 5.142650e-14        97        109                15
-## 5 query_1        TRUE 1.820231e-13       159        109                17
+## 1 query_1        TRUE 6.644186e-20        64        109                17
+## 2 query_1        TRUE 1.060650e-19        68        109                17
+## 3 query_1        TRUE 1.926559e-14        54        109                13
+## 4 query_1        TRUE 5.137122e-14        97        109                15
+## 5 query_1        TRUE 1.818094e-13       159        109                17
 ##   precision    recall
 ## 1 0.1559633 0.2656250
 ## 2 0.1559633 0.2500000
@@ -671,24 +681,24 @@ enrichment_results_customgmt_max250[1:5,]
 ## 3 PATHWAYS AFFECTED IN ADENOID CYSTIC CARCINOMA%WIKIPATHWAYS_20220510%WP3651%HOMO SAPIENS
 ## 4                                     CELL CYCLE%WIKIPATHWAYS_20220510%WP179%HOMO SAPIENS
 ## 5                          REGULATION OF CELL CYCLE G1/S PHASE TRANSITION%GOBP%GO:1902806
-##                                                       source
-## 1 Human_GOBP_AllPathways_no_GO_iea_May_01_2023_symbol_max250
-## 2 Human_GOBP_AllPathways_no_GO_iea_May_01_2023_symbol_max250
-## 3 Human_GOBP_AllPathways_no_GO_iea_May_01_2023_symbol_max250
-## 4 Human_GOBP_AllPathways_no_GO_iea_May_01_2023_symbol_max250
-## 5 Human_GOBP_AllPathways_no_GO_iea_May_01_2023_symbol_max250
+##                                                         source
+## 1 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
+## 2 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
+## 3 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
+## 4 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
+## 5 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
 ##                                        term_name effective_domain_size
-## 1          Head and neck squamous cell carcinoma                 17046
-## 2                Glioblastoma signaling pathways                 17046
-## 3  Pathways affected in adenoid cystic carcinoma                 17046
-## 4                                     Cell cycle                 17046
-## 5 regulation of cell cycle G1/S phase transition                 17046
+## 1          Head and neck squamous cell carcinoma                 17047
+## 2                Glioblastoma signaling pathways                 17047
+## 3  Pathways affected in adenoid cystic carcinoma                 17047
+## 4                                     Cell cycle                 17047
+## 5 regulation of cell cycle G1/S phase transition                 17047
 ##   source_order parents
-## 1         5010    NULL
-## 2         5562    NULL
-## 3         4976    NULL
-## 4         4942    NULL
-## 5        19018    NULL
+## 1         5002    NULL
+## 2         5554    NULL
+## 3         4968    NULL
+## 4         4934    NULL
+## 5        19009    NULL
 ```
 
 Filter the table to include just the columns that are required for the generic enrichment map file results [GEM](https://enrichmentmap.readthedocs.io/en/latest/FileFormats.html#generic-results-files). Restrict the results to just the ones that have at least min_gs_size and less than max_gs_size terms and  min_intersection size include only the term_id, term_name, p_value (and p_value again because the p_value is actually the corrected p-value.  The output file does not contain the nominal p_value.  For down stream analysis though it is expected to have both a p-value and a q-value so just duplicate the q-value as both p-value and q-value)

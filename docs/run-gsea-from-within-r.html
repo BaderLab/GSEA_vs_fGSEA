@@ -23,7 +23,7 @@
 <meta name="author" content="Ruth Isserlin" />
 
 
-<meta name="date" content="2023-05-08" />
+<meta name="date" content="2023-05-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -282,36 +282,45 @@ The gsea_jar needs to be the full path to the GSEA 4.3.2 directory that you down
 <span id="cb45-13"><a href="run-gsea-from-within-r.html#cb45-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb45-14"><a href="run-gsea-from-within-r.html#cb45-14" aria-hidden="true" tabindex="-1"></a><span class="co">#run_gsea - true/false</span></span>
 <span id="cb45-15"><a href="run-gsea-from-within-r.html#cb45-15" aria-hidden="true" tabindex="-1"></a><span class="co"># This parameter is for the compilation of the notebook.  </span></span>
-<span id="cb45-16"><a href="run-gsea-from-within-r.html#cb45-16" aria-hidden="true" tabindex="-1"></a>run_gsea <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span></code></pre></div>
+<span id="cb45-16"><a href="run-gsea-from-within-r.html#cb45-16" aria-hidden="true" tabindex="-1"></a>run_gsea <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
+<span id="cb45-17"><a href="run-gsea-from-within-r.html#cb45-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-18"><a href="run-gsea-from-within-r.html#cb45-18" aria-hidden="true" tabindex="-1"></a><span class="co">#set the gmt file you want to use if you don&#39;t want to use the latest gmt file.</span></span>
+<span id="cb45-19"><a href="run-gsea-from-within-r.html#cb45-19" aria-hidden="true" tabindex="-1"></a><span class="co"># For example, if you set dest_gmt_file ==&quot;&quot; the below script will automatically</span></span>
+<span id="cb45-20"><a href="run-gsea-from-within-r.html#cb45-20" aria-hidden="true" tabindex="-1"></a><span class="co"># download the latest gmt file from baderlab webstie.  If it is set then it</span></span>
+<span id="cb45-21"><a href="run-gsea-from-within-r.html#cb45-21" aria-hidden="true" tabindex="-1"></a><span class="co"># will use the file specified.  </span></span>
+<span id="cb45-22"><a href="run-gsea-from-within-r.html#cb45-22" aria-hidden="true" tabindex="-1"></a>dest_gmt_file <span class="ot">=</span> <span class="fu">file.path</span>(output_dir, </span>
+<span id="cb45-23"><a href="run-gsea-from-within-r.html#cb45-23" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol.gmt&quot;</span>)</span></code></pre></div>
 </div>
 <div id="download-the-latest-pathway-definition-file" class="section level2 hasAnchor" number="5.3">
 <h2><span class="header-section-number">5.3</span> Download the latest pathway definition file<a href="run-gsea-from-within-r.html#download-the-latest-pathway-definition-file" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Only Human, Mouse, Rat, and Woodchuck gene set files are currently available on the baderlab downloads site. If you are working with a species other than human (and it is either rat,mouse or woodchuck) change the gmt_url below to the correct species. Check <a href="http://download.baderlab.org/EM_Genesets/current_release/">here</a> to see all available species.</p>
 <p>To create your own GMT file using Ensembl see <a href="create-gmt-file-from-ensembl.html#create-gmt-file-from-ensembl">Create GMT file from Ensembl</a></p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="run-gsea-from-within-r.html#cb46-1" aria-hidden="true" tabindex="-1"></a>gmt_url <span class="ot">=</span> <span class="st">&quot;http://download.baderlab.org/EM_Genesets/current_release/Human/symbol/&quot;</span></span>
-<span id="cb46-2"><a href="run-gsea-from-within-r.html#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-3"><a href="run-gsea-from-within-r.html#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="co">#list all the files on the server</span></span>
-<span id="cb46-4"><a href="run-gsea-from-within-r.html#cb46-4" aria-hidden="true" tabindex="-1"></a>filenames <span class="ot">=</span> <span class="fu">getURL</span>(gmt_url)</span>
-<span id="cb46-5"><a href="run-gsea-from-within-r.html#cb46-5" aria-hidden="true" tabindex="-1"></a>tc <span class="ot">=</span> <span class="fu">textConnection</span>(filenames)</span>
-<span id="cb46-6"><a href="run-gsea-from-within-r.html#cb46-6" aria-hidden="true" tabindex="-1"></a>contents <span class="ot">=</span> <span class="fu">readLines</span>(tc)</span>
-<span id="cb46-7"><a href="run-gsea-from-within-r.html#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="fu">close</span>(tc)</span>
-<span id="cb46-8"><a href="run-gsea-from-within-r.html#cb46-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-9"><a href="run-gsea-from-within-r.html#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="co">#get the gmt that has all the pathways and does not include terms </span></span>
-<span id="cb46-10"><a href="run-gsea-from-within-r.html#cb46-10" aria-hidden="true" tabindex="-1"></a><span class="co"># inferred from electronic annotations(IEA)</span></span>
-<span id="cb46-11"><a href="run-gsea-from-within-r.html#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="co">#start with gmt file that has pathways only and GO Biological Process only.</span></span>
-<span id="cb46-12"><a href="run-gsea-from-within-r.html#cb46-12" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">=</span> <span class="fu">gregexpr</span>(<span class="st">&quot;(?&lt;=&lt;a href=</span><span class="sc">\&quot;</span><span class="st">)(.*.GOBP_AllPathways_no_GO_iea.*.)(.gmt)(?=</span><span class="sc">\&quot;</span><span class="st">&gt;)&quot;</span>,</span>
-<span id="cb46-13"><a href="run-gsea-from-within-r.html#cb46-13" aria-hidden="true" tabindex="-1"></a>  contents, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb46-14"><a href="run-gsea-from-within-r.html#cb46-14" aria-hidden="true" tabindex="-1"></a>gmt_file <span class="ot">=</span> <span class="fu">unlist</span>(<span class="fu">regmatches</span>(contents, rx))</span>
-<span id="cb46-15"><a href="run-gsea-from-within-r.html#cb46-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-16"><a href="run-gsea-from-within-r.html#cb46-16" aria-hidden="true" tabindex="-1"></a>dest_gmt_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(output_dir,gmt_file )</span>
-<span id="cb46-17"><a href="run-gsea-from-within-r.html#cb46-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-18"><a href="run-gsea-from-within-r.html#cb46-18" aria-hidden="true" tabindex="-1"></a><span class="co">#check if this gmt file already exists</span></span>
-<span id="cb46-19"><a href="run-gsea-from-within-r.html#cb46-19" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">file.exists</span>(dest_gmt_file)){</span>
-<span id="cb46-20"><a href="run-gsea-from-within-r.html#cb46-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(</span>
-<span id="cb46-21"><a href="run-gsea-from-within-r.html#cb46-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(gmt_url,gmt_file,<span class="at">sep=</span><span class="st">&quot;&quot;</span>),</span>
-<span id="cb46-22"><a href="run-gsea-from-within-r.html#cb46-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">destfile=</span>dest_gmt_file</span>
-<span id="cb46-23"><a href="run-gsea-from-within-r.html#cb46-23" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb46-24"><a href="run-gsea-from-within-r.html#cb46-24" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="run-gsea-from-within-r.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(dest_gmt_file <span class="sc">==</span> <span class="st">&quot;&quot;</span>){</span>
+<span id="cb46-2"><a href="run-gsea-from-within-r.html#cb46-2" aria-hidden="true" tabindex="-1"></a>  gmt_url <span class="ot">=</span> <span class="st">&quot;http://download.baderlab.org/EM_Genesets/current_release/Human/symbol/&quot;</span></span>
+<span id="cb46-3"><a href="run-gsea-from-within-r.html#cb46-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb46-4"><a href="run-gsea-from-within-r.html#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#list all the files on the server</span></span>
+<span id="cb46-5"><a href="run-gsea-from-within-r.html#cb46-5" aria-hidden="true" tabindex="-1"></a>  filenames <span class="ot">=</span> <span class="fu">getURL</span>(gmt_url)</span>
+<span id="cb46-6"><a href="run-gsea-from-within-r.html#cb46-6" aria-hidden="true" tabindex="-1"></a>  tc <span class="ot">=</span> <span class="fu">textConnection</span>(filenames)</span>
+<span id="cb46-7"><a href="run-gsea-from-within-r.html#cb46-7" aria-hidden="true" tabindex="-1"></a>  contents <span class="ot">=</span> <span class="fu">readLines</span>(tc)</span>
+<span id="cb46-8"><a href="run-gsea-from-within-r.html#cb46-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">close</span>(tc)</span>
+<span id="cb46-9"><a href="run-gsea-from-within-r.html#cb46-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb46-10"><a href="run-gsea-from-within-r.html#cb46-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#get the gmt that has all the pathways and does not include terms </span></span>
+<span id="cb46-11"><a href="run-gsea-from-within-r.html#cb46-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># inferred from electronic annotations(IEA)</span></span>
+<span id="cb46-12"><a href="run-gsea-from-within-r.html#cb46-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">#start with gmt file that has pathways only and GO Biological Process only.</span></span>
+<span id="cb46-13"><a href="run-gsea-from-within-r.html#cb46-13" aria-hidden="true" tabindex="-1"></a>  rx <span class="ot">=</span> <span class="fu">gregexpr</span>(<span class="st">&quot;(?&lt;=&lt;a href=</span><span class="sc">\&quot;</span><span class="st">)(.*.GOBP_AllPathways_no_GO_iea.*.)(.gmt)(?=</span><span class="sc">\&quot;</span><span class="st">&gt;)&quot;</span>,</span>
+<span id="cb46-14"><a href="run-gsea-from-within-r.html#cb46-14" aria-hidden="true" tabindex="-1"></a>    contents, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb46-15"><a href="run-gsea-from-within-r.html#cb46-15" aria-hidden="true" tabindex="-1"></a>  gmt_file <span class="ot">=</span> <span class="fu">unlist</span>(<span class="fu">regmatches</span>(contents, rx))</span>
+<span id="cb46-16"><a href="run-gsea-from-within-r.html#cb46-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb46-17"><a href="run-gsea-from-within-r.html#cb46-17" aria-hidden="true" tabindex="-1"></a>  dest_gmt_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(output_dir,gmt_file )</span>
+<span id="cb46-18"><a href="run-gsea-from-within-r.html#cb46-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb46-19"><a href="run-gsea-from-within-r.html#cb46-19" aria-hidden="true" tabindex="-1"></a>  <span class="co">#check if this gmt file already exists</span></span>
+<span id="cb46-20"><a href="run-gsea-from-within-r.html#cb46-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">file.exists</span>(dest_gmt_file)){</span>
+<span id="cb46-21"><a href="run-gsea-from-within-r.html#cb46-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">download.file</span>(</span>
+<span id="cb46-22"><a href="run-gsea-from-within-r.html#cb46-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(gmt_url,gmt_file,<span class="at">sep=</span><span class="st">&quot;&quot;</span>),</span>
+<span id="cb46-23"><a href="run-gsea-from-within-r.html#cb46-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">destfile=</span>dest_gmt_file</span>
+<span id="cb46-24"><a href="run-gsea-from-within-r.html#cb46-24" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb46-25"><a href="run-gsea-from-within-r.html#cb46-25" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb46-26"><a href="run-gsea-from-within-r.html#cb46-26" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <hr />
 </div>
 <div id="run-gsea" class="section level2 hasAnchor" number="5.4">

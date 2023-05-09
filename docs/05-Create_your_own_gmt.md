@@ -69,7 +69,7 @@ if(!dir.exists(params$working_dir)){
 Connect to Biomart
 
 ```r
-ensembl <- useMart("ensembl", host="https://asia.ensembl.org")
+ensembl <- useEnsembl(biomart = "genes",host = "asia.ensembl.org")
 ```
 
 

@@ -59,10 +59,12 @@ pvalue_gsea_threshold <- 1.0
 #q-value to filter all the genesets.  For example -   0.05
 qvalue_gsea_threshold <- 0.05
 
-#similarity threshold to filter all the genesets connections/edges.  For example -   0.375
+#similarity threshold to filter all the genesets connections/edges.  
+# For example -   0.375
 similarity_threshold <- "0.375"
 
-#similarity metric to filter all the genesets connections/edges (can be OVERLAP, JACCARD, or COMBINED.   For example -   Combined
+#similarity metric to filter all the genesets connections/edges 
+# (can be OVERLAP, JACCARD, or COMBINED.   For example -   Combined
 similarity_metric = "COMBINED"
 ```
 
@@ -165,7 +167,9 @@ if(is_docker) {
   upload_em_file <- function(localPath) {
     bname <- basename(localPath)
     r <- POST(
-      url = paste('http://host.docker.internal:1234/enrichmentmap/textfileupload?fileName=', bname, sep=""),
+      url = 
+paste('http://host.docker.internal:1234/enrichmentmap/textfileupload?fileName=', 
+                  bname, sep=""),
       config = list(),
       body = list(file = upload_file(localPath)),
       encode = "multipart",
@@ -174,7 +178,8 @@ if(is_docker) {
     content(r,"parsed")$path
   }
   
-  # "upload" the files to the host machine and replace each path with the host machine path
+  # "upload" the files to the host machine and replace each path 
+  # with the host machine path
   expression_file_fullpath <- upload_em_file(expression_file_fullpath)
   gmt_gsea_file <- upload_em_file(gmt_gsea_file)
   gsea_ranks_file <- upload_em_file(gsea_ranks_file)
@@ -187,10 +192,13 @@ if(is_docker) {
 ```r
 #######################################
 #create EM
-current_network_name <- paste(cur_model_name,pvalue_gsea_threshold,qvalue_gsea_threshold,sep="_")
+current_network_name <- paste(cur_model_name,pvalue_gsea_threshold,
+                              qvalue_gsea_threshold,sep="_")
 
-em_command = paste('enrichmentmap build analysisType="gsea" gmtFile=',gmt_gsea_file,
-                   'pvalue=',pvalue_gsea_threshold, 'qvalue=',qvalue_gsea_threshold,
+em_command = paste('enrichmentmap build analysisType="gsea" gmtFile=',
+                                                              gmt_gsea_file,
+                   'pvalue=',pvalue_gsea_threshold, 
+                   'qvalue=',qvalue_gsea_threshold,
                    'similaritycutoff=',similarity_threshold,
                    'coefficients=',similarity_metric,
                    'ranksDataset1=', gsea_ranks_file,
@@ -204,8 +212,8 @@ em_command = paste('enrichmentmap build analysisType="gsea" gmtFile=',gmt_gsea_f
 response <- commandsGET(em_command,base.url = current_base)
 
 current_network_suid <- 0
-#enrichment map command will return the suid of newly created network unless it Failed.  
-#If it failed it will contain the word failed
+#enrichment map command will return the suid of newly created network 
+# unless it Failed.  If it failed it will contain the word failed
 if(grepl(pattern="Failed", response)){
   paste(response)
 } else {
@@ -217,17 +225,20 @@ current_names <- getNetworkList(base.url = current_base)
 if(current_network_name %in% current_names){
   #if the name already exists in the network names then put the SUID in front
   # of the name (this does not work if you put the suid at the end of the name)
-  current_network_name <- paste(current_network_suid,current_network_name,  sep="_")
+  current_network_name <- paste(current_network_suid,
+                                current_network_name,sep="_")
 }
 response <- renameNetwork(title=current_network_name, 
-                       network = as.numeric(current_network_suid),base.url = current_base)
+                       network = as.numeric(current_network_suid),
+                       base.url = current_base)
 ```
 
 ## Get a screen shot of the initial network.
 
 ```r
 #you can only output the file if it isn't on docker
-#on docker is put it into the user's home directory with docker has not access to
+#on docker is put it into the user's home directory with docker 
+# has not access to
 if(!is_docker){
   output_network_file <- file.path(getwd(),"initial_screenshot_network.png")
   output_network_file_current <- output_network_file
@@ -235,10 +246,12 @@ if(!is_docker){
   fitContent()
 
   if(file.exists(output_network_file)){
-    #cytoscape hangs waiting for user response if file already exists.  Remove it first
+    #cytoscape hangs waiting for user response if file already exists.
+    # Remove it first
     response <- file.remove(output_network_file)
   } 
 
-  response <- exportImage(output_network_file, type = "png",base.url = current_base)
+  response <- exportImage(output_network_file, type = "png",
+                          base.url = current_base)
 }
 ```

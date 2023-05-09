@@ -47,6 +47,12 @@ min_intersection <- 3
 # the second word for example - hsapiens
 organism <- "hsapiens"
 
+#set the gmt file you want to use if you don't want to use the latest gmt file.
+# For example, if you set dest_gmt_file =="" the below script will automatically
+# download the latest gmt file from baderlab webstie.  If it is set then it
+# will use the file specified.  
+dest_gmt_file = file.path(working_dir, 
+                  "Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol.gmt")
 ```
 
 
@@ -345,30 +351,33 @@ write.table(enrichment_results_mxgssize_250_min_3_GEMfile,
 Download the latest [Bader lab genesets](https://download.baderlab.org/EM_Genesets/current_release/Human/)
 
 ```{r download baderlab gmt file, message=FALSE, warning=FALSE}
-gmt_url = "http://download.baderlab.org/EM_Genesets/current_release/Human/symbol/"
 
-#list all the files on the server
-filenames = RCurl::getURL(gmt_url)
-tc = textConnection(filenames)
-contents = readLines(tc)
-close(tc)
+if(dest_gmt_file == ""){
 
-#get the gmt that has all the pathways and does not include 
-# terms inferred from electronic annotations(IEA)
-#start with gmt file that has pathways only
-rx = gregexpr("(?<=<a href=\")(.*.GOBP_AllPathways_no_GO_iea.*.)(.gmt)(?=\">)",
-  contents, perl = TRUE)
-gmt_file = unlist(regmatches(contents, rx))
+  gmt_url = "http://download.baderlab.org/EM_Genesets/current_release/Human/symbol/"
 
-dest_gmt_file <- file.path(working_dir,gmt_file)
-
-if(!file.exists(dest_gmt_file)){
-  download.file(
-    paste(gmt_url,gmt_file,sep=""),
-    destfile=dest_gmt_file
-  )
+  #list all the files on the server
+  filenames = RCurl::getURL(gmt_url)
+  tc = textConnection(filenames)
+  contents = readLines(tc)
+  close(tc)
+  
+  #get the gmt that has all the pathways and does not include 
+  # terms inferred from electronic annotations(IEA)
+  #start with gmt file that has pathways only
+  rx = gregexpr("(?<=<a href=\")(.*.GOBP_AllPathways_no_GO_iea.*.)(.gmt)(?=\">)",
+    contents, perl = TRUE)
+  gmt_file = unlist(regmatches(contents, rx))
+  
+  dest_gmt_file <- file.path(working_dir,gmt_file)
+  
+  if(!file.exists(dest_gmt_file)){
+    download.file(
+      paste(gmt_url,gmt_file,sep=""),
+      destfile=dest_gmt_file
+    )
+  }
 }
-
 
 ```
 

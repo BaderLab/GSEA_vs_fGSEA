@@ -23,7 +23,7 @@
 <meta name="author" content="Ruth Isserlin" />
 
 
-<meta name="date" content="2023-05-08" />
+<meta name="date" content="2023-05-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -282,7 +282,7 @@ div.csl-indent {
 <div id="set-up-biomart-connection" class="section level2 hasAnchor" number="6.2">
 <h2><span class="header-section-number">6.2</span> Set up Biomart connection<a href="create-gmt-file-from-ensembl.html#set-up-biomart-connection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Connect to Biomart</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="create-gmt-file-from-ensembl.html#cb53-1" aria-hidden="true" tabindex="-1"></a>ensembl <span class="ot">&lt;-</span> <span class="fu">useMart</span>(<span class="st">&quot;ensembl&quot;</span>, <span class="at">host=</span><span class="st">&quot;https://asia.ensembl.org&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="create-gmt-file-from-ensembl.html#cb53-1" aria-hidden="true" tabindex="-1"></a>ensembl <span class="ot">&lt;-</span> <span class="fu">useEnsembl</span>(<span class="at">biomart =</span> <span class="st">&quot;genes&quot;</span>,<span class="at">host =</span> <span class="st">&quot;asia.ensembl.org&quot;</span>)</span></code></pre></div>
 <p>Figure out which dataset you want to use - for some species there might be a few datasets to choose from. Not all of the datasets have common namesa associated with them. For example, if you search for ‘yeast’ nothing will be returned but if you look for Saccharomyces or cerevisiae you will be able to find it.</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="create-gmt-file-from-ensembl.html#cb54-1" aria-hidden="true" tabindex="-1"></a>all_datasets <span class="ot">&lt;-</span> <span class="fu">listDatasets</span>(ensembl)</span>
 <span id="cb54-2"><a href="create-gmt-file-from-ensembl.html#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
