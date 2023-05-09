@@ -562,12 +562,12 @@ custom_gmt_max250 <- upload_GMT_file(
 ```
 
 ```
-## Your custom annotations ID is gp__KTax_QY78_54M
+## Your custom annotations ID is gp__rI2c_22en_31E
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 ```
 
 ```
-## Just use: gost(my_genes, organism = 'gp__KTax_QY78_54M')
+## Just use: gost(my_genes, organism = 'gp__rI2c_22en_31E')
 ```
 
 ```r
@@ -576,12 +576,12 @@ custom_gmt_max1000 <- upload_GMT_file(
 ```
 
 ```
-## Your custom annotations ID is gp__iRNc_aEFj_53s
+## Your custom annotations ID is gp__KHlc_ij8a_LaY
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 ```
 
 ```
-## Just use: gost(my_genes, organism = 'gp__iRNc_aEFj_53s')
+## Just use: gost(my_genes, organism = 'gp__KHlc_ij8a_LaY')
 ```
 
 ```r
@@ -590,12 +590,12 @@ custom_gmt_max10000 <- upload_GMT_file(
 ```
 
 ```
-## Your custom annotations ID is gp__mRD2_ZMVl_xU8
+## Your custom annotations ID is gp__EYBu_kti7_IZw
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 ```
 
 ```
-## Just use: gost(my_genes, organism = 'gp__mRD2_ZMVl_xU8')
+## Just use: gost(my_genes, organism = 'gp__EYBu_kti7_IZw')
 ```
 
 For this query we are specifying - 
@@ -604,7 +604,7 @@ For this query we are specifying -
   * significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.
   * ordered_query - set to FALSE (but you can try setting it to true as well because for this set of genes they are ordered in order of their significance)
   * correction_method - set to fdr.  by default g:Profiler uses g:Scs
-  * organism - set to the custom_gmt ID ( for this run it is - gp__KTax_QY78_54M) that we received when we uploaded our genetset file.
+  * organism - set to the custom_gmt ID ( for this run it is - gp__rI2c_22en_31E) that we received when we uploaded our genetset file.
 
 
 
