@@ -10,14 +10,7 @@ tryCatch(expr = { library("BiocManager")},
          error = function(e) { 
            install.packages("BiocManager")}, 
          finally = library("BiocManager"))
-```
 
-```
-## Bioconductor version '3.16' is out-of-date; the current release version '3.17'
-##   is available with R version '4.3'; see https://bioconductor.org/install
-```
-
-```r
 tryCatch(expr = { library("ggplot2")}, 
          error = function(e) { install.packages("ggplot2")}, 
          finally = library("ggplot2"))
@@ -153,7 +146,7 @@ cytoscapeVersionInfo (base.url = current_base)
 
 ```
 ##       apiVersion cytoscapeVersion 
-##             "v1"         "3.10.0"
+##             "v1"         "3.10.1"
 ```
 ***
 ## Create an Enrichment map

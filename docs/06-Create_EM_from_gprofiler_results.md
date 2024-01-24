@@ -10,14 +10,7 @@ tryCatch(expr = { library("BiocManager")},
          error = function(e) { 
            install.packages("BiocManager")}, 
          finally = library("BiocManager"))
-```
 
-```
-## Bioconductor version '3.16' is out-of-date; the current release version '3.17'
-##   is available with R version '4.3'; see https://bioconductor.org/install
-```
-
-```r
 tryCatch(expr = { library("ggplot2")}, 
          error = function(e) { install.packages("ggplot2")}, 
          finally = library("ggplot2"))
@@ -79,8 +72,13 @@ We have multiple g:profiler results.
 
 
 ```r
- gmt_gprofiler_file<-file.path(getwd(),output_dir,
-                "gprofiler_full_hsapiens_e109_eg56_p17_1d3191d_.name.gmt")
+#get the newest gprofiler gmt file
+gprof_files <- file.info(list.files(file.path(getwd(),output_dir),
+                                    pattern = "gprofiler_full",
+                                    full.names = TRUE) )
+gmt_gprofiler_file <- rownames(gprof_files)[which.max(gprof_files$mtime)]
+#gmt_gprofiler_file<-file.path(getwd(),output_dir,
+#                "gprofiler_full_hsapiens_e109_eg56_p17_1d3191d_.name.gmt")
 
 gprofiler_results_filename1 <-file.path(getwd(),output_dir,
                 "gProfiler_hsapiens_lab2_results_GEM_termmin3_max250.gem.txt")
@@ -121,7 +119,7 @@ cytoscapeVersionInfo (base.url = current_base)
 
 ```
 ##       apiVersion cytoscapeVersion 
-##             "v1"         "3.10.0"
+##             "v1"         "3.10.1"
 ```
 ***
 ## Create an Enrichment map

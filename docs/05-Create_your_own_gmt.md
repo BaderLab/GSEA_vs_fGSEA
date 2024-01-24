@@ -1,8 +1,8 @@
 ---
 params:
   working_dir: ./generated_data/
-  species: horse
-  ensembl_dataset: ecaballus_gene_ensembl
+  species: felis
+  ensembl_dataset: fcatus_gene_ensembl
 ---
 
 # Create GMT file from Ensembl
@@ -41,14 +41,8 @@ tryCatch(expr = { library("BiocManager")},
          error = function(e) { 
            install.packages("BiocManager")}, 
          finally = library("BiocManager"))
-```
 
-```
-## Bioconductor version '3.16' is out-of-date; the current release version '3.17'
-##   is available with R version '4.3'; see https://bioconductor.org/install
-```
 
-```r
 tryCatch(expr = { library("biomaRt")}, 
          error = function(e) { 
            BiocManager::install("biomaRt")}, 
@@ -69,7 +63,8 @@ if(!dir.exists(params$working_dir)){
 Connect to Biomart
 
 ```r
-ensembl <- useEnsembl(biomart = "genes",host = "asia.ensembl.org")
+ensembl <- useEnsembl(biomart = "genes", host = "asia.ensembl.org")
+#ensembl <- useEnsembl("ensembl")
 ```
 
 
@@ -86,14 +81,8 @@ all_datasets[grep(all_datasets$description,
 ```
 
 ```
-##                         dataset                                 description
-## 60       ecaballus_gene_ensembl                     Horse genes (EquCab3.0)
-## 76          hcomes_gene_ensembl  Tiger tail seahorse genes (H_comes_QL1_v1)
-## 164 rferrumequinum_gene_ensembl Greater horseshoe bat genes (mRhiFer1_v1.p)
-##            version
-## 60       EquCab3.0
-## 76  H_comes_QL1_v1
-## 164  mRhiFer1_v1.p
+##                dataset                 description         version
+## 68 fcatus_gene_ensembl Cat genes (Felis_catus_9.0) Felis_catus_9.0
 ```
 
 If you know the ensembl dataset that you want to use you can specify it in the parameters above or grab from the above table the dataset of the species that you are interested in. 
@@ -147,14 +136,14 @@ go_pathway_sets[1:3,"external_gene_name"]
 
 ```
 ## [[1]]
-## [1] "MEF2A"    "SLC25A36" "OPA1"     "MGME1"    "SLC25A33" "TYMP"     "AKT3"    
-## [8] "PIF1"    
+## [1] "MGME1"    "MPV17"    "AKT3"     "SLC25A36" "MEF2A"    "SLC25A33" "OPA1"    
 ## 
 ## [[2]]
-## [1] "GNRH1" "GNRH2" "LIN9" 
+## [1] ""      "MMP23"
 ## 
 ## [[3]]
-## [1] "ERCC6" "ERCC8" "LIG4"  "APLF"  "APTX"  "XRCC1" "SIRT1" "XNDC1"
+##  [1] "TNP1"  "XNDC1" "SIRT1" "TDP1"  "APLF"  "ERCC6" "XRCC1" "APTX"  "LIG4" 
+## [10] "ERCC8"
 ```
 
 ```r
@@ -163,17 +152,18 @@ go_pathway_sets[1:3,"ensembl_gene_id"]
 
 ```
 ## [[1]]
-## [1] "ENSECAG00000011593" "ENSECAG00000010094" "ENSECAG00000024248"
-## [4] "ENSECAG00000012675" "ENSECAG00000016862" "ENSECAG00000001072"
-## [7] "ENSECAG00000019722" "ENSECAG00000005316"
+## [1] "ENSFCAG00000023195" "ENSFCAG00000015150" "ENSFCAG00000003700"
+## [4] "ENSFCAG00000035204" "ENSFCAG00000022495" "ENSFCAG00000022044"
+## [7] "ENSFCAG00000000695"
 ## 
 ## [[2]]
-## [1] "ENSECAG00000010664" "ENSECAG00000039220" "ENSECAG00000014325"
+## [1] "ENSFCAG00000034109" "ENSFCAG00000008341"
 ## 
 ## [[3]]
-## [1] "ENSECAG00000014160" "ENSECAG00000018335" "ENSECAG00000003257"
-## [4] "ENSECAG00000013246" "ENSECAG00000012674" "ENSECAG00000014127"
-## [7] "ENSECAG00000013909" "ENSECAG00000042118"
+##  [1] "ENSFCAG00000036860" "ENSFCAG00000044053" "ENSFCAG00000012373"
+##  [4] "ENSFCAG00000005982" "ENSFCAG00000022636" "ENSFCAG00000031322"
+##  [7] "ENSFCAG00000005222" "ENSFCAG00000008728" "ENSFCAG00000031985"
+## [10] "ENSFCAG00000026531"
 ```
 
 ## Format results into GMT file
@@ -213,6 +203,10 @@ gmt_file_genenames <- go_pathway_sets[,c("Group.1","name_1006",
                                          "collapsed_genenames")]
 colnames(gmt_file_genenames)[1:2] <- c("name","description") 
 
+gmt_file_genenames$name <- paste(gmt_file_genenames$description, gmt_file_genenames$name,sep="_")
+gmt_file_genenames$name <- gsub(gmt_file_genenames$name,pattern = " ",replacement = "_")
+gmt_file_genenames$name <- gsub(gmt_file_genenames$name,pattern = ":",replacement = "_")
+
 gmt_genenames_filename <- file.path(params$working_dir, paste(species,ensembl_dataset,"GO_genesets_GN.gmt",sep = "_"))
 
 write.table(x = gmt_file_genenames,file = gmt_genenames_filename,
@@ -226,6 +220,11 @@ Write out the gmt file with ensembl ids
 gmt_file_ensemblids <- go_pathway_sets[,c("Group.1","name_1006",
                                           "collapsed_ensemblids")]
 colnames(gmt_file_ensemblids)[1:2] <- c("name","description") 
+
+gmt_file_ensemblids$name <- paste(gmt_file_ensemblids$description, gmt_file_ensemblids$name,sep="_")
+gmt_file_ensemblids$name <- gsub(gmt_file_ensemblids$name,pattern = " ",replacement = "_")
+gmt_file_ensemblids$name <- gsub(gmt_file_ensemblids$name,pattern = ":",replacement = "_")
+
 
 gmt_ensemblids_filename <- file.path(params$working_dir, paste(species,ensembl_dataset,"GO_genesets_esemblids.gmt",sep = "_"))
 

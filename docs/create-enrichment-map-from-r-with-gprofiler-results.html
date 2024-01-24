@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 7 Create Enrichment map from R with g:Profiler results | CBW pathways Workshops - example R notebooks</title>
+  <title>Chapter 8 Create Enrichment map from R with g:Profiler results | Translate gmt file from human to another species</title>
   <meta name="description" content="These are example R Notebooks to run g:profiler and GSEA and visualize results in Cytoscape with Enrichment map directly from R" />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 7 Create Enrichment map from R with g:Profiler results | CBW pathways Workshops - example R notebooks" />
+  <meta property="og:title" content="Chapter 8 Create Enrichment map from R with g:Profiler results | Translate gmt file from human to another species" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/images/cover.png" />
   <meta property="og:description" content="These are example R Notebooks to run g:profiler and GSEA and visualize results in Cytoscape with Enrichment map directly from R" />
   <meta name="github-repo" content="risserlin/CBW_pathways_workshop_R_notebooks" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 7 Create Enrichment map from R with g:Profiler results | CBW pathways Workshops - example R notebooks" />
+  <meta name="twitter:title" content="Chapter 8 Create Enrichment map from R with g:Profiler results | Translate gmt file from human to another species" />
   
   <meta name="twitter:description" content="These are example R Notebooks to run g:profiler and GSEA and visualize results in Cytoscape with Enrichment map directly from R" />
   <meta name="twitter:image" content="/images/cover.png" />
@@ -23,14 +23,14 @@
 <meta name="author" content="Ruth Isserlin" />
 
 
-<meta name="date" content="2023-05-09" />
+<meta name="date" content="2024-01-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="create-gmt-file-from-ensembl.html"/>
+<link rel="prev" href="translate-human-gmt-file-to-another-species-using-ensembl.html"/>
 <link rel="next" href="create-enrichment-map-from-r-with-gsea-results.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -90,11 +90,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #c4a000; } /* Attribute */
+code span.at { color: #204a87; } /* Attribute */
 code span.bn { color: #0000cf; } /* BaseN */
 code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4e9a06; } /* Char */
-code span.cn { color: #000000; } /* Constant */
+code span.cn { color: #8f5902; } /* Constant */
 code span.co { color: #8f5902; font-style: italic; } /* Comment */
 code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
 code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
@@ -103,14 +103,14 @@ code span.dv { color: #0000cf; } /* DecVal */
 code span.er { color: #a40000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #0000cf; } /* Float */
-code span.fu { color: #000000; } /* Function */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
 code span.im { } /* Import */
 code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
 code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
 code span.ot { color: #8f5902; } /* Other */
 code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code span.sc { color: #000000; } /* SpecialChar */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
 code span.ss { color: #4e9a06; } /* SpecialString */
 code span.st { color: #4e9a06; } /* String */
 code span.va { color: #000000; } /* Variable */
@@ -118,6 +118,10 @@ code span.vs { color: #4e9a06; } /* VerbatimString */
 code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -197,30 +201,38 @@ div.csl-indent {
 <li class="chapter" data-level="6.3" data-path="create-gmt-file-from-ensembl.html"><a href="create-gmt-file-from-ensembl.html#get-species-go-annotations"><i class="fa fa-check"></i><b>6.3</b> Get species GO annotations</a></li>
 <li class="chapter" data-level="6.4" data-path="create-gmt-file-from-ensembl.html"><a href="create-gmt-file-from-ensembl.html#format-results-into-gmt-file"><i class="fa fa-check"></i><b>6.4</b> Format results into GMT file</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html"><i class="fa fa-check"></i><b>7</b> Create Enrichment map from R with g:Profiler results</a>
+<li class="chapter" data-level="7" data-path="translate-human-gmt-file-to-another-species-using-ensembl.html"><a href="translate-human-gmt-file-to-another-species-using-ensembl.html"><i class="fa fa-check"></i><b>7</b> Translate human gmt file to another species using ensembl</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#initialize-variables-and-libraries-1"><i class="fa fa-check"></i><b>7.1</b> Initialize variables and libraries</a></li>
-<li class="chapter" data-level="7.2" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#configurable-parameters-1"><i class="fa fa-check"></i><b>7.2</b> Configurable Parameters</a></li>
-<li class="chapter" data-level="7.3" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#specify-data-files"><i class="fa fa-check"></i><b>7.3</b> Specify Data files</a></li>
-<li class="chapter" data-level="7.4" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#launch-cytoscape"><i class="fa fa-check"></i><b>7.4</b> Launch Cytoscape</a></li>
-<li class="chapter" data-level="7.5" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#make-sure-you-can-connect-to-cytoscape"><i class="fa fa-check"></i><b>7.5</b> Make sure you can connect to Cytoscape</a></li>
-<li class="chapter" data-level="7.6" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#create-an-enrichment-map"><i class="fa fa-check"></i><b>7.6</b> Create an Enrichment map</a></li>
-<li class="chapter" data-level="7.7" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#create-an-enrichment-map---run-em-command"><i class="fa fa-check"></i><b>7.7</b> Create an Enrichment map - run EM command</a></li>
-<li class="chapter" data-level="7.8" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#get-a-screen-shot-of-the-initial-network."><i class="fa fa-check"></i><b>7.8</b> Get a screen shot of the initial network.</a></li>
+<li class="chapter" data-level="7.1" data-path="translate-human-gmt-file-to-another-species-using-ensembl.html"><a href="translate-human-gmt-file-to-another-species-using-ensembl.html#load-in-required-libraries-1"><i class="fa fa-check"></i><b>7.1</b> Load in required libraries</a></li>
+<li class="chapter" data-level="7.2" data-path="translate-human-gmt-file-to-another-species-using-ensembl.html"><a href="translate-human-gmt-file-to-another-species-using-ensembl.html#download-the-latest-pathway-definition-file-1"><i class="fa fa-check"></i><b>7.2</b> Download the latest pathway definition file</a></li>
+<li class="chapter" data-level="7.3" data-path="translate-human-gmt-file-to-another-species-using-ensembl.html"><a href="translate-human-gmt-file-to-another-species-using-ensembl.html#set-up-biomart-connection-1"><i class="fa fa-check"></i><b>7.3</b> Set up Biomart connection</a></li>
+<li class="chapter" data-level="7.4" data-path="translate-human-gmt-file-to-another-species-using-ensembl.html"><a href="translate-human-gmt-file-to-another-species-using-ensembl.html#convert-the-species-genes-from-human"><i class="fa fa-check"></i><b>7.4</b> Convert the species genes from human</a></li>
+<li class="chapter" data-level="7.5" data-path="translate-human-gmt-file-to-another-species-using-ensembl.html"><a href="translate-human-gmt-file-to-another-species-using-ensembl.html#format-results-into-gmt-file-1"><i class="fa fa-check"></i><b>7.5</b> Format results into GMT file</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html"><i class="fa fa-check"></i><b>8</b> Create Enrichment map from R with GSEA results</a>
+<li class="chapter" data-level="8" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html"><i class="fa fa-check"></i><b>8</b> Create Enrichment map from R with g:Profiler results</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#initialize-variables-and-libraries-2"><i class="fa fa-check"></i><b>8.1</b> Initialize variables and libraries</a></li>
-<li class="chapter" data-level="8.2" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#configurable-parameters-2"><i class="fa fa-check"></i><b>8.2</b> Configurable Parameters</a></li>
-<li class="chapter" data-level="8.3" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#specify-data-files-1"><i class="fa fa-check"></i><b>8.3</b> Specify Data files</a></li>
-<li class="chapter" data-level="8.4" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#optional-file-specification"><i class="fa fa-check"></i><b>8.4</b> Optional File specification</a></li>
-<li class="chapter" data-level="8.5" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#launch-cytoscape-1"><i class="fa fa-check"></i><b>8.5</b> Launch Cytoscape</a></li>
-<li class="chapter" data-level="8.6" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#make-sure-you-can-connect-to-cytoscape-1"><i class="fa fa-check"></i><b>8.6</b> Make sure you can connect to Cytoscape</a></li>
-<li class="chapter" data-level="8.7" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#create-an-enrichment-map-1"><i class="fa fa-check"></i><b>8.7</b> Create an Enrichment map</a></li>
-<li class="chapter" data-level="8.8" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#create-an-enrichment-map---run-em-command-1"><i class="fa fa-check"></i><b>8.8</b> Create an Enrichment map - run EM command</a></li>
-<li class="chapter" data-level="8.9" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#get-a-screen-shot-of-the-initial-network.-1"><i class="fa fa-check"></i><b>8.9</b> Get a screen shot of the initial network.</a></li>
+<li class="chapter" data-level="8.1" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#initialize-variables-and-libraries-1"><i class="fa fa-check"></i><b>8.1</b> Initialize variables and libraries</a></li>
+<li class="chapter" data-level="8.2" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#configurable-parameters-1"><i class="fa fa-check"></i><b>8.2</b> Configurable Parameters</a></li>
+<li class="chapter" data-level="8.3" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#specify-data-files"><i class="fa fa-check"></i><b>8.3</b> Specify Data files</a></li>
+<li class="chapter" data-level="8.4" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#launch-cytoscape"><i class="fa fa-check"></i><b>8.4</b> Launch Cytoscape</a></li>
+<li class="chapter" data-level="8.5" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#make-sure-you-can-connect-to-cytoscape"><i class="fa fa-check"></i><b>8.5</b> Make sure you can connect to Cytoscape</a></li>
+<li class="chapter" data-level="8.6" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#create-an-enrichment-map"><i class="fa fa-check"></i><b>8.6</b> Create an Enrichment map</a></li>
+<li class="chapter" data-level="8.7" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#create-an-enrichment-map---run-em-command"><i class="fa fa-check"></i><b>8.7</b> Create an Enrichment map - run EM command</a></li>
+<li class="chapter" data-level="8.8" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#get-a-screen-shot-of-the-initial-network."><i class="fa fa-check"></i><b>8.8</b> Get a screen shot of the initial network.</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>9</b> References</a></li>
+<li class="chapter" data-level="9" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html"><i class="fa fa-check"></i><b>9</b> Create Enrichment map from R with GSEA results</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#initialize-variables-and-libraries-2"><i class="fa fa-check"></i><b>9.1</b> Initialize variables and libraries</a></li>
+<li class="chapter" data-level="9.2" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#configurable-parameters-2"><i class="fa fa-check"></i><b>9.2</b> Configurable Parameters</a></li>
+<li class="chapter" data-level="9.3" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#specify-data-files-1"><i class="fa fa-check"></i><b>9.3</b> Specify Data files</a></li>
+<li class="chapter" data-level="9.4" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#optional-file-specification"><i class="fa fa-check"></i><b>9.4</b> Optional File specification</a></li>
+<li class="chapter" data-level="9.5" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#launch-cytoscape-1"><i class="fa fa-check"></i><b>9.5</b> Launch Cytoscape</a></li>
+<li class="chapter" data-level="9.6" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#make-sure-you-can-connect-to-cytoscape-1"><i class="fa fa-check"></i><b>9.6</b> Make sure you can connect to Cytoscape</a></li>
+<li class="chapter" data-level="9.7" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#create-an-enrichment-map-1"><i class="fa fa-check"></i><b>9.7</b> Create an Enrichment map</a></li>
+<li class="chapter" data-level="9.8" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#create-an-enrichment-map---run-em-command-1"><i class="fa fa-check"></i><b>9.8</b> Create an Enrichment map - run EM command</a></li>
+<li class="chapter" data-level="9.9" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#get-a-screen-shot-of-the-initial-network.-1"><i class="fa fa-check"></i><b>9.9</b> Get a screen shot of the initial network.</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>10</b> References</a></li>
 <li class="divider"></li>
 <li><a href="https://baderlab.org" target="blank"><img src="./images/baderlablogo.png" width="280">Bader Lab</a></li>
 
@@ -233,7 +245,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CBW pathways Workshops - example R notebooks</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Translate gmt file from human to another species</a>
           </h1>
         </div>
 
@@ -241,192 +253,196 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="create-enrichment-map-from-r-with-gprofiler-results" class="section level1 hasAnchor" number="7">
-<h1><span class="header-section-number">Chapter 7</span> Create Enrichment map from R with g:Profiler results<a href="create-enrichment-map-from-r-with-gprofiler-results.html#create-enrichment-map-from-r-with-gprofiler-results" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="initialize-variables-and-libraries-1" class="section level2 hasAnchor" number="7.1">
-<h2><span class="header-section-number">7.1</span> Initialize variables and libraries<a href="create-enrichment-map-from-r-with-gprofiler-results.html#initialize-variables-and-libraries-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co">#use library</span></span>
-<span id="cb66-2"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="co">#make sure biocManager is installed</span></span>
-<span id="cb66-3"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;BiocManager&quot;</span>)}, </span>
-<span id="cb66-4"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb66-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { </span>
-<span id="cb66-5"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb66-5" aria-hidden="true" tabindex="-1"></a>           <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)}, </span>
-<span id="cb66-6"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb66-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;BiocManager&quot;</span>))</span></code></pre></div>
-<pre><code>## Bioconductor version &#39;3.16&#39; is out-of-date; the current release version &#39;3.17&#39;
-##   is available with R version &#39;4.3&#39;; see https://bioconductor.org/install</code></pre>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>)}, </span>
-<span id="cb68-2"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb68-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { <span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)}, </span>
-<span id="cb68-3"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb68-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>))</span>
-<span id="cb68-4"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb68-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb68-5"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb68-5" aria-hidden="true" tabindex="-1"></a><span class="co">#use easy cyRest library to communicate with cytoscape.</span></span>
-<span id="cb68-6"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb68-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;RCy3&quot;</span>)}, </span>
-<span id="cb68-7"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb68-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;RCy3&quot;</span>)}, </span>
-<span id="cb68-8"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb68-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;RCy3&quot;</span>))</span>
-<span id="cb68-9"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb68-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb68-10"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb68-10" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;httr&quot;</span>)}, </span>
-<span id="cb68-11"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb68-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;httr&quot;</span>)}, </span>
-<span id="cb68-12"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb68-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;httr&quot;</span>))</span></code></pre></div>
+<div id="create-enrichment-map-from-r-with-gprofiler-results" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Create Enrichment map from R with g:Profiler results<a href="create-enrichment-map-from-r-with-gprofiler-results.html#create-enrichment-map-from-r-with-gprofiler-results" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="initialize-variables-and-libraries-1" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Initialize variables and libraries<a href="create-enrichment-map-from-r-with-gprofiler-results.html#initialize-variables-and-libraries-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-1" tabindex="-1"></a><span class="co">#use library</span></span>
+<span id="cb77-2"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-2" tabindex="-1"></a><span class="co">#make sure biocManager is installed</span></span>
+<span id="cb77-3"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-3" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;BiocManager&quot;</span>)}, </span>
+<span id="cb77-4"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-4" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { </span>
+<span id="cb77-5"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-5" tabindex="-1"></a>           <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)}, </span>
+<span id="cb77-6"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-6" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;BiocManager&quot;</span>))</span>
+<span id="cb77-7"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-7" tabindex="-1"></a></span>
+<span id="cb77-8"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-8" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>)}, </span>
+<span id="cb77-9"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-9" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { <span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)}, </span>
+<span id="cb77-10"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-10" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>))</span>
+<span id="cb77-11"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-11" tabindex="-1"></a></span>
+<span id="cb77-12"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-12" tabindex="-1"></a><span class="co">#use easy cyRest library to communicate with cytoscape.</span></span>
+<span id="cb77-13"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-13" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;RCy3&quot;</span>)}, </span>
+<span id="cb77-14"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-14" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;RCy3&quot;</span>)}, </span>
+<span id="cb77-15"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-15" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;RCy3&quot;</span>))</span>
+<span id="cb77-16"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-16" tabindex="-1"></a></span>
+<span id="cb77-17"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-17" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;httr&quot;</span>)}, </span>
+<span id="cb77-18"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-18" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;httr&quot;</span>)}, </span>
+<span id="cb77-19"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-19" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;httr&quot;</span>))</span></code></pre></div>
 </div>
-<div id="configurable-parameters-1" class="section level2 hasAnchor" number="7.2">
-<h2><span class="header-section-number">7.2</span> Configurable Parameters<a href="create-enrichment-map-from-r-with-gprofiler-results.html#configurable-parameters-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># is_docker - true/false depending on if you are running R from docker</span></span>
-<span id="cb69-2"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-2" aria-hidden="true" tabindex="-1"></a>is_docker <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
-<span id="cb69-3"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-4"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="co">#directory where all the original input data file are</span></span>
-<span id="cb69-5"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-5" aria-hidden="true" tabindex="-1"></a><span class="co"># for example ./data/</span></span>
-<span id="cb69-6"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-6" aria-hidden="true" tabindex="-1"></a>working_dir <span class="ot">&lt;-</span> <span class="st">&quot;./data/&quot;</span></span>
-<span id="cb69-7"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-8"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-9"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-9" aria-hidden="true" tabindex="-1"></a><span class="co">#directory where all the generated data files are found.</span></span>
-<span id="cb69-10"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-10" aria-hidden="true" tabindex="-1"></a><span class="co"># For example - ./generated_data/</span></span>
-<span id="cb69-11"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-11" aria-hidden="true" tabindex="-1"></a><span class="co"># If you are using all the notebooks from this set the generated data will be</span></span>
-<span id="cb69-12"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-12" aria-hidden="true" tabindex="-1"></a><span class="co"># put in the ./generated_data folder.  You have to specify if it is gsea or </span></span>
-<span id="cb69-13"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-13" aria-hidden="true" tabindex="-1"></a><span class="co"># gprofiler</span></span>
-<span id="cb69-14"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-14" aria-hidden="true" tabindex="-1"></a>output_dir <span class="ot">&lt;-</span> <span class="st">&quot;./generated_data/g_profiler&quot;</span></span>
-<span id="cb69-15"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-16"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-17"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-17" aria-hidden="true" tabindex="-1"></a><span class="co">#defined threshold for gprofiler enrichments </span></span>
-<span id="cb69-18"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-18" aria-hidden="true" tabindex="-1"></a><span class="co">#p-value to filter all the genesets.  For example -   1.0</span></span>
-<span id="cb69-19"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-19" aria-hidden="true" tabindex="-1"></a>pvalue_gprofiler_threshold <span class="ot">&lt;-</span> <span class="fl">1.0</span></span>
-<span id="cb69-20"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-21"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-21" aria-hidden="true" tabindex="-1"></a><span class="co">#q-value to filter all the genesets.  For example -   0.05</span></span>
-<span id="cb69-22"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-22" aria-hidden="true" tabindex="-1"></a>qvalue_gprofiler_threshold <span class="ot">&lt;-</span> <span class="fl">0.001</span></span>
-<span id="cb69-23"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-24"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-24" aria-hidden="true" tabindex="-1"></a><span class="co">#similarity threshold to filter all the genesets connections/edges.  </span></span>
-<span id="cb69-25"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-25" aria-hidden="true" tabindex="-1"></a><span class="co"># For example -   0.375</span></span>
-<span id="cb69-26"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-26" aria-hidden="true" tabindex="-1"></a>similarity_threshold <span class="ot">&lt;-</span> <span class="st">&quot;0.35&quot;</span></span>
-<span id="cb69-27"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-28"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-28" aria-hidden="true" tabindex="-1"></a><span class="co">#similarity metric to filter all the genesets connections/edges </span></span>
-<span id="cb69-29"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-29" aria-hidden="true" tabindex="-1"></a><span class="co"># (can be OVERLAP, JACCARD, or COMBINED.   For example -   Combined</span></span>
-<span id="cb69-30"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb69-30" aria-hidden="true" tabindex="-1"></a>similarity_metric <span class="ot">=</span> <span class="st">&quot;JACCARD&quot;</span></span></code></pre></div>
+<div id="configurable-parameters-1" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Configurable Parameters<a href="create-enrichment-map-from-r-with-gprofiler-results.html#configurable-parameters-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-1" tabindex="-1"></a><span class="co"># is_docker - true/false depending on if you are running R from docker</span></span>
+<span id="cb78-2"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-2" tabindex="-1"></a>is_docker <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb78-3"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-3" tabindex="-1"></a></span>
+<span id="cb78-4"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-4" tabindex="-1"></a><span class="co">#directory where all the original input data file are</span></span>
+<span id="cb78-5"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-5" tabindex="-1"></a><span class="co"># for example ./data/</span></span>
+<span id="cb78-6"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-6" tabindex="-1"></a>working_dir <span class="ot">&lt;-</span> <span class="st">&quot;./data/&quot;</span></span>
+<span id="cb78-7"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-7" tabindex="-1"></a></span>
+<span id="cb78-8"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-8" tabindex="-1"></a></span>
+<span id="cb78-9"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-9" tabindex="-1"></a><span class="co">#directory where all the generated data files are found.</span></span>
+<span id="cb78-10"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-10" tabindex="-1"></a><span class="co"># For example - ./generated_data/</span></span>
+<span id="cb78-11"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-11" tabindex="-1"></a><span class="co"># If you are using all the notebooks from this set the generated data will be</span></span>
+<span id="cb78-12"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-12" tabindex="-1"></a><span class="co"># put in the ./generated_data folder.  You have to specify if it is gsea or </span></span>
+<span id="cb78-13"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-13" tabindex="-1"></a><span class="co"># gprofiler</span></span>
+<span id="cb78-14"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-14" tabindex="-1"></a>output_dir <span class="ot">&lt;-</span> <span class="st">&quot;./generated_data/g_profiler&quot;</span></span>
+<span id="cb78-15"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-15" tabindex="-1"></a></span>
+<span id="cb78-16"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-16" tabindex="-1"></a></span>
+<span id="cb78-17"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-17" tabindex="-1"></a><span class="co">#defined threshold for gprofiler enrichments </span></span>
+<span id="cb78-18"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-18" tabindex="-1"></a><span class="co">#p-value to filter all the genesets.  For example -   1.0</span></span>
+<span id="cb78-19"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-19" tabindex="-1"></a>pvalue_gprofiler_threshold <span class="ot">&lt;-</span> <span class="fl">1.0</span></span>
+<span id="cb78-20"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-20" tabindex="-1"></a></span>
+<span id="cb78-21"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-21" tabindex="-1"></a><span class="co">#q-value to filter all the genesets.  For example -   0.05</span></span>
+<span id="cb78-22"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-22" tabindex="-1"></a>qvalue_gprofiler_threshold <span class="ot">&lt;-</span> <span class="fl">0.001</span></span>
+<span id="cb78-23"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-23" tabindex="-1"></a></span>
+<span id="cb78-24"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-24" tabindex="-1"></a><span class="co">#similarity threshold to filter all the genesets connections/edges.  </span></span>
+<span id="cb78-25"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-25" tabindex="-1"></a><span class="co"># For example -   0.375</span></span>
+<span id="cb78-26"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-26" tabindex="-1"></a>similarity_threshold <span class="ot">&lt;-</span> <span class="st">&quot;0.35&quot;</span></span>
+<span id="cb78-27"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-27" tabindex="-1"></a></span>
+<span id="cb78-28"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-28" tabindex="-1"></a><span class="co">#similarity metric to filter all the genesets connections/edges </span></span>
+<span id="cb78-29"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-29" tabindex="-1"></a><span class="co"># (can be OVERLAP, JACCARD, or COMBINED.   For example -   Combined</span></span>
+<span id="cb78-30"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb78-30" tabindex="-1"></a>similarity_metric <span class="ot">=</span> <span class="st">&quot;JACCARD&quot;</span></span></code></pre></div>
 </div>
-<div id="specify-data-files" class="section level2 hasAnchor" number="7.3">
-<h2><span class="header-section-number">7.3</span> Specify Data files<a href="create-enrichment-map-from-r-with-gprofiler-results.html#specify-data-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="specify-data-files" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Specify Data files<a href="create-enrichment-map-from-r-with-gprofiler-results.html#specify-data-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Depending on whether you are creating your enrichment map from g:Profiler or GSEA results the sets of files might be a little different. Minimally, you will need to specify:
 * gmt file
 * enrichment results file</p>
 <p>We have multiple g:profiler results.<br />
 * varied geneset size limit ( 250, 1000 or 10,000)
 * varied geneset sources - baderlab genesets or g:profiler sets.</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb70-1" aria-hidden="true" tabindex="-1"></a> gmt_gprofiler_file<span class="ot">&lt;-</span><span class="fu">file.path</span>(<span class="fu">getwd</span>(),output_dir,</span>
-<span id="cb70-2"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb70-2" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;gprofiler_full_hsapiens_e109_eg56_p17_1d3191d_.name.gmt&quot;</span>)</span>
-<span id="cb70-3"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb70-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb70-4"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb70-4" aria-hidden="true" tabindex="-1"></a>gprofiler_results_filename1 <span class="ot">&lt;-</span><span class="fu">file.path</span>(<span class="fu">getwd</span>(),output_dir,</span>
-<span id="cb70-5"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb70-5" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;gProfiler_hsapiens_lab2_results_GEM_termmin3_max250.gem.txt&quot;</span>)</span>
-<span id="cb70-6"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb70-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb70-7"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb70-7" aria-hidden="true" tabindex="-1"></a>gprofiler_results_filename2 <span class="ot">&lt;-</span><span class="fu">file.path</span>(<span class="fu">getwd</span>(),output_dir,</span>
-<span id="cb70-8"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb70-8" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;gProfiler_hsapiens_lab2_results_GEM_termmin3_max10000.gem.txt&quot;</span>)</span>
-<span id="cb70-9"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb70-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb70-10"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb70-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb70-11"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb70-11" aria-hidden="true" tabindex="-1"></a>current_network_name <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;gprofiler_max250&quot;</span>,pvalue_gprofiler_threshold,</span>
-<span id="cb70-12"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb70-12" aria-hidden="true" tabindex="-1"></a>                              qvalue_gprofiler_threshold,<span class="at">sep=</span><span class="st">&quot;_&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb79-1" tabindex="-1"></a><span class="co">#get the newest gprofiler gmt file</span></span>
+<span id="cb79-2"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb79-2" tabindex="-1"></a>gprof_files <span class="ot">&lt;-</span> <span class="fu">file.info</span>(<span class="fu">list.files</span>(<span class="fu">file.path</span>(<span class="fu">getwd</span>(),output_dir),</span>
+<span id="cb79-3"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb79-3" tabindex="-1"></a>                                    <span class="at">pattern =</span> <span class="st">&quot;gprofiler_full&quot;</span>,</span>
+<span id="cb79-4"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb79-4" tabindex="-1"></a>                                    <span class="at">full.names =</span> <span class="cn">TRUE</span>) )</span>
+<span id="cb79-5"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb79-5" tabindex="-1"></a>gmt_gprofiler_file <span class="ot">&lt;-</span> <span class="fu">rownames</span>(gprof_files)[<span class="fu">which.max</span>(gprof_files<span class="sc">$</span>mtime)]</span>
+<span id="cb79-6"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb79-6" tabindex="-1"></a><span class="co">#gmt_gprofiler_file&lt;-file.path(getwd(),output_dir,</span></span>
+<span id="cb79-7"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb79-7" tabindex="-1"></a><span class="co">#                &quot;gprofiler_full_hsapiens_e109_eg56_p17_1d3191d_.name.gmt&quot;)</span></span>
+<span id="cb79-8"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb79-8" tabindex="-1"></a></span>
+<span id="cb79-9"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb79-9" tabindex="-1"></a>gprofiler_results_filename1 <span class="ot">&lt;-</span><span class="fu">file.path</span>(<span class="fu">getwd</span>(),output_dir,</span>
+<span id="cb79-10"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb79-10" tabindex="-1"></a>                <span class="st">&quot;gProfiler_hsapiens_lab2_results_GEM_termmin3_max250.gem.txt&quot;</span>)</span>
+<span id="cb79-11"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb79-11" tabindex="-1"></a></span>
+<span id="cb79-12"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb79-12" tabindex="-1"></a>gprofiler_results_filename2 <span class="ot">&lt;-</span><span class="fu">file.path</span>(<span class="fu">getwd</span>(),output_dir,</span>
+<span id="cb79-13"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb79-13" tabindex="-1"></a>                <span class="st">&quot;gProfiler_hsapiens_lab2_results_GEM_termmin3_max10000.gem.txt&quot;</span>)</span>
+<span id="cb79-14"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb79-14" tabindex="-1"></a></span>
+<span id="cb79-15"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb79-15" tabindex="-1"></a></span>
+<span id="cb79-16"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb79-16" tabindex="-1"></a>current_network_name <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;gprofiler_max250&quot;</span>,pvalue_gprofiler_threshold,</span>
+<span id="cb79-17"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb79-17" tabindex="-1"></a>                              qvalue_gprofiler_threshold,<span class="at">sep=</span><span class="st">&quot;_&quot;</span>)</span></code></pre></div>
 </div>
-<div id="launch-cytoscape" class="section level2 hasAnchor" number="7.4">
-<h2><span class="header-section-number">7.4</span> Launch Cytoscape<a href="create-enrichment-map-from-r-with-gprofiler-results.html#launch-cytoscape" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="launch-cytoscape" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Launch Cytoscape<a href="create-enrichment-map-from-r-with-gprofiler-results.html#launch-cytoscape" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Launch Cytoscape (by default cytoscape will automatically enable rest so as long as cytoscape 3.3 or higher is open R should be able to communicate with it). Make sure if you get an message asking you if you want communicate with other apps that you select “Allow”.</p>
 </div>
-<div id="make-sure-you-can-connect-to-cytoscape" class="section level2 hasAnchor" number="7.5">
-<h2><span class="header-section-number">7.5</span> Make sure you can connect to Cytoscape<a href="create-enrichment-map-from-r-with-gprofiler-results.html#make-sure-you-can-connect-to-cytoscape" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(is_docker){</span>
-<span id="cb71-2"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb71-2" aria-hidden="true" tabindex="-1"></a>  current_base <span class="ot">=</span> <span class="st">&quot;host.docker.internal:1234/v1&quot;</span></span>
-<span id="cb71-3"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb71-3" aria-hidden="true" tabindex="-1"></a>  .defaultBaseUrl <span class="ot">&lt;-</span> <span class="st">&quot;http://host.docker.internal:1234/v1&quot;</span></span>
-<span id="cb71-4"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb71-4" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span>{</span>
-<span id="cb71-5"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb71-5" aria-hidden="true" tabindex="-1"></a>  current_base <span class="ot">=</span> <span class="st">&quot;localhost:1234/v1&quot;</span></span>
-<span id="cb71-6"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb71-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb71-7"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb71-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-8"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb71-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cytoscapePing</span> (<span class="at">base.url =</span> current_base)</span></code></pre></div>
+<div id="make-sure-you-can-connect-to-cytoscape" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">8.5</span> Make sure you can connect to Cytoscape<a href="create-enrichment-map-from-r-with-gprofiler-results.html#make-sure-you-can-connect-to-cytoscape" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb80-1" tabindex="-1"></a><span class="cf">if</span>(is_docker){</span>
+<span id="cb80-2"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb80-2" tabindex="-1"></a>  current_base <span class="ot">=</span> <span class="st">&quot;host.docker.internal:1234/v1&quot;</span></span>
+<span id="cb80-3"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb80-3" tabindex="-1"></a>  .defaultBaseUrl <span class="ot">&lt;-</span> <span class="st">&quot;http://host.docker.internal:1234/v1&quot;</span></span>
+<span id="cb80-4"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb80-4" tabindex="-1"></a>} <span class="cf">else</span>{</span>
+<span id="cb80-5"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb80-5" tabindex="-1"></a>  current_base <span class="ot">=</span> <span class="st">&quot;localhost:1234/v1&quot;</span></span>
+<span id="cb80-6"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb80-6" tabindex="-1"></a>}</span>
+<span id="cb80-7"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb80-7" tabindex="-1"></a></span>
+<span id="cb80-8"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb80-8" tabindex="-1"></a><span class="fu">cytoscapePing</span> (<span class="at">base.url =</span> current_base)</span></code></pre></div>
 <pre><code>## You are connected to Cytoscape!</code></pre>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cytoscapeVersionInfo</span> (<span class="at">base.url =</span> current_base)</span></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb82-1" tabindex="-1"></a><span class="fu">cytoscapeVersionInfo</span> (<span class="at">base.url =</span> current_base)</span></code></pre></div>
 <pre><code>##       apiVersion cytoscapeVersion 
-##             &quot;v1&quot;         &quot;3.10.0&quot;</code></pre>
+##             &quot;v1&quot;         &quot;3.10.1&quot;</code></pre>
 <hr />
 </div>
-<div id="create-an-enrichment-map" class="section level2 hasAnchor" number="7.6">
-<h2><span class="header-section-number">7.6</span> Create an Enrichment map<a href="create-enrichment-map-from-r-with-gprofiler-results.html#create-an-enrichment-map" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="create-an-enrichment-map" class="section level2 hasAnchor" number="8.6">
+<h2><span class="header-section-number">8.6</span> Create an Enrichment map<a href="create-enrichment-map-from-r-with-gprofiler-results.html#create-an-enrichment-map" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>If you are running R from within a docker you need to first upload your datafiles to Cytoscape before you can create your enrichment map</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co">#if using docker we need to replace all the the paths to the host path</span></span>
-<span id="cb75-2"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(is_docker) {</span>
-<span id="cb75-3"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-3" aria-hidden="true" tabindex="-1"></a>  upload_em_file <span class="ot">&lt;-</span> <span class="cf">function</span>(localPath) {</span>
-<span id="cb75-4"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-4" aria-hidden="true" tabindex="-1"></a>    bname <span class="ot">&lt;-</span> <span class="fu">basename</span>(localPath)</span>
-<span id="cb75-5"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-5" aria-hidden="true" tabindex="-1"></a>    r <span class="ot">&lt;-</span> <span class="fu">POST</span>(</span>
-<span id="cb75-6"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">url =</span> </span>
-<span id="cb75-7"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-7" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">&#39;http://host.docker.internal:1234/enrichmentmap/textfileupload?fileName=&#39;</span>, </span>
-<span id="cb75-8"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-8" aria-hidden="true" tabindex="-1"></a>                  bname, <span class="at">sep=</span><span class="st">&quot;&quot;</span>),</span>
-<span id="cb75-9"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">config =</span> <span class="fu">list</span>(),</span>
-<span id="cb75-10"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">body =</span> <span class="fu">list</span>(<span class="at">file =</span> <span class="fu">upload_file</span>(localPath)),</span>
-<span id="cb75-11"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">encode =</span> <span class="st">&quot;multipart&quot;</span>,</span>
-<span id="cb75-12"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">handle =</span> <span class="cn">NULL</span></span>
-<span id="cb75-13"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-13" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb75-14"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">content</span>(r,<span class="st">&quot;parsed&quot;</span>)<span class="sc">$</span>path</span>
-<span id="cb75-15"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-15" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb75-16"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb75-17"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># &quot;upload&quot; the files to the host machine and replace each path with the </span></span>
-<span id="cb75-18"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># host machine path</span></span>
-<span id="cb75-19"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-19" aria-hidden="true" tabindex="-1"></a>   gmt_gprofiler_file <span class="ot">&lt;-</span> <span class="fu">upload_em_file</span>(gmt_gprofiler_file)</span>
-<span id="cb75-20"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-20" aria-hidden="true" tabindex="-1"></a>  gprofiler_results_filename1 <span class="ot">&lt;-</span> <span class="fu">upload_em_file</span>(gprofiler_results_filename1)</span>
-<span id="cb75-21"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-21" aria-hidden="true" tabindex="-1"></a>  gprofiler_results_filename2 <span class="ot">&lt;-</span> <span class="fu">upload_em_file</span>(gprofiler_results_filename2)</span>
-<span id="cb75-22"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb75-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-1" tabindex="-1"></a><span class="co">#if using docker we need to replace all the the paths to the host path</span></span>
+<span id="cb84-2"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-2" tabindex="-1"></a><span class="cf">if</span>(is_docker) {</span>
+<span id="cb84-3"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-3" tabindex="-1"></a>  upload_em_file <span class="ot">&lt;-</span> <span class="cf">function</span>(localPath) {</span>
+<span id="cb84-4"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-4" tabindex="-1"></a>    bname <span class="ot">&lt;-</span> <span class="fu">basename</span>(localPath)</span>
+<span id="cb84-5"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-5" tabindex="-1"></a>    r <span class="ot">&lt;-</span> <span class="fu">POST</span>(</span>
+<span id="cb84-6"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-6" tabindex="-1"></a>      <span class="at">url =</span> </span>
+<span id="cb84-7"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-7" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">&#39;http://host.docker.internal:1234/enrichmentmap/textfileupload?fileName=&#39;</span>, </span>
+<span id="cb84-8"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-8" tabindex="-1"></a>                  bname, <span class="at">sep=</span><span class="st">&quot;&quot;</span>),</span>
+<span id="cb84-9"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-9" tabindex="-1"></a>      <span class="at">config =</span> <span class="fu">list</span>(),</span>
+<span id="cb84-10"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-10" tabindex="-1"></a>      <span class="at">body =</span> <span class="fu">list</span>(<span class="at">file =</span> <span class="fu">upload_file</span>(localPath)),</span>
+<span id="cb84-11"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-11" tabindex="-1"></a>      <span class="at">encode =</span> <span class="st">&quot;multipart&quot;</span>,</span>
+<span id="cb84-12"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-12" tabindex="-1"></a>      <span class="at">handle =</span> <span class="cn">NULL</span></span>
+<span id="cb84-13"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-13" tabindex="-1"></a>    )</span>
+<span id="cb84-14"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-14" tabindex="-1"></a>    <span class="fu">content</span>(r,<span class="st">&quot;parsed&quot;</span>)<span class="sc">$</span>path</span>
+<span id="cb84-15"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-15" tabindex="-1"></a>  }</span>
+<span id="cb84-16"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-16" tabindex="-1"></a>  </span>
+<span id="cb84-17"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-17" tabindex="-1"></a>  <span class="co"># &quot;upload&quot; the files to the host machine and replace each path with the </span></span>
+<span id="cb84-18"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-18" tabindex="-1"></a>  <span class="co"># host machine path</span></span>
+<span id="cb84-19"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-19" tabindex="-1"></a>   gmt_gprofiler_file <span class="ot">&lt;-</span> <span class="fu">upload_em_file</span>(gmt_gprofiler_file)</span>
+<span id="cb84-20"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-20" tabindex="-1"></a>  gprofiler_results_filename1 <span class="ot">&lt;-</span> <span class="fu">upload_em_file</span>(gprofiler_results_filename1)</span>
+<span id="cb84-21"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-21" tabindex="-1"></a>  gprofiler_results_filename2 <span class="ot">&lt;-</span> <span class="fu">upload_em_file</span>(gprofiler_results_filename2)</span>
+<span id="cb84-22"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb84-22" tabindex="-1"></a>}</span></code></pre></div>
 <hr />
 </div>
-<div id="create-an-enrichment-map---run-em-command" class="section level2 hasAnchor" number="7.7">
-<h2><span class="header-section-number">7.7</span> Create an Enrichment map - run EM command<a href="create-enrichment-map-from-r-with-gprofiler-results.html#create-an-enrichment-map---run-em-command" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="do">#######################################</span></span>
-<span id="cb76-2"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="co">#create EM</span></span>
-<span id="cb76-3"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-4"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-4" aria-hidden="true" tabindex="-1"></a>em_command <span class="ot">=</span> <span class="fu">paste</span>(<span class="st">&#39;enrichmentmap build analysisType=&quot;generic&quot; gmtFile=&#39;</span>,</span>
-<span id="cb76-5"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-5" aria-hidden="true" tabindex="-1"></a>                   gmt_gprofiler_file,</span>
-<span id="cb76-6"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-6" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&#39;pvalue=&#39;</span>,pvalue_gprofiler_threshold, </span>
-<span id="cb76-7"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-7" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&#39;qvalue=&#39;</span>,qvalue_gprofiler_threshold,</span>
-<span id="cb76-8"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-8" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&#39;similaritycutoff=&#39;</span>,similarity_threshold,</span>
-<span id="cb76-9"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-9" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&#39;coefficients=&#39;</span>,similarity_metric,</span>
-<span id="cb76-10"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-10" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&#39;enrichmentsDataset1=&#39;</span>,gprofiler_results_filename1, </span>
-<span id="cb76-11"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-11" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&#39;enrichmentsDataset2=&#39;</span>,gprofiler_results_filename2,</span>
-<span id="cb76-12"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-12" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&#39;gmtFile=&#39;</span>,gmt_gprofiler_file,</span>
-<span id="cb76-13"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-13" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&#39;filterByExpressions=false&#39;</span>,</span>
-<span id="cb76-14"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-14" aria-hidden="true" tabindex="-1"></a>                   <span class="at">sep=</span><span class="st">&quot; &quot;</span>)</span>
-<span id="cb76-15"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-16"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-16" aria-hidden="true" tabindex="-1"></a><span class="co">#enrichment map command will return the suid of newly created network.</span></span>
-<span id="cb76-17"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-17" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">commandsGET</span>(em_command,<span class="at">base.url =</span> current_base)</span>
-<span id="cb76-18"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-19"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-19" aria-hidden="true" tabindex="-1"></a>current_network_suid <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb76-20"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-20" aria-hidden="true" tabindex="-1"></a><span class="co">#enrichment map command will return the suid of newly created network </span></span>
-<span id="cb76-21"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-21" aria-hidden="true" tabindex="-1"></a><span class="co"># unless it Failed.  If it failed it will contain the word failed</span></span>
-<span id="cb76-22"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-22" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">grepl</span>(<span class="at">pattern=</span><span class="st">&quot;Failed&quot;</span>, response)){</span>
-<span id="cb76-23"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste</span>(response)</span>
-<span id="cb76-24"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-24" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb76-25"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-25" aria-hidden="true" tabindex="-1"></a>  current_network_suid <span class="ot">&lt;-</span> response</span>
-<span id="cb76-26"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-26" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb76-27"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-28"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-28" aria-hidden="true" tabindex="-1"></a><span class="co">#check to see if the network name is unique</span></span>
-<span id="cb76-29"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-29" aria-hidden="true" tabindex="-1"></a>current_names <span class="ot">&lt;-</span> <span class="fu">getNetworkList</span>(<span class="at">base.url =</span> current_base)</span>
-<span id="cb76-30"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-30" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(current_network_name <span class="sc">%in%</span> current_names){</span>
-<span id="cb76-31"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-31" aria-hidden="true" tabindex="-1"></a>  <span class="co">#if the name already exists in the network names then put the SUID in front</span></span>
-<span id="cb76-32"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># of the name (this does not work if you put the suid at the end of the name)</span></span>
-<span id="cb76-33"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-33" aria-hidden="true" tabindex="-1"></a>  current_network_name <span class="ot">&lt;-</span> <span class="fu">paste</span>(current_network_suid,</span>
-<span id="cb76-34"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-34" aria-hidden="true" tabindex="-1"></a>                                current_network_name,  <span class="at">sep=</span><span class="st">&quot;_&quot;</span>)</span>
-<span id="cb76-35"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-35" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb76-36"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-36" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">renameNetwork</span>(<span class="at">title=</span>current_network_name, </span>
-<span id="cb76-37"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-37" aria-hidden="true" tabindex="-1"></a>                       <span class="at">network =</span> <span class="fu">as.numeric</span>(current_network_suid),</span>
-<span id="cb76-38"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb76-38" aria-hidden="true" tabindex="-1"></a>                       <span class="at">base.url =</span> current_base)</span></code></pre></div>
+<div id="create-an-enrichment-map---run-em-command" class="section level2 hasAnchor" number="8.7">
+<h2><span class="header-section-number">8.7</span> Create an Enrichment map - run EM command<a href="create-enrichment-map-from-r-with-gprofiler-results.html#create-an-enrichment-map---run-em-command" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-1" tabindex="-1"></a><span class="do">#######################################</span></span>
+<span id="cb85-2"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-2" tabindex="-1"></a><span class="co">#create EM</span></span>
+<span id="cb85-3"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-3" tabindex="-1"></a></span>
+<span id="cb85-4"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-4" tabindex="-1"></a>em_command <span class="ot">=</span> <span class="fu">paste</span>(<span class="st">&#39;enrichmentmap build analysisType=&quot;generic&quot; gmtFile=&#39;</span>,</span>
+<span id="cb85-5"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-5" tabindex="-1"></a>                   gmt_gprofiler_file,</span>
+<span id="cb85-6"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-6" tabindex="-1"></a>                   <span class="st">&#39;pvalue=&#39;</span>,pvalue_gprofiler_threshold, </span>
+<span id="cb85-7"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-7" tabindex="-1"></a>                   <span class="st">&#39;qvalue=&#39;</span>,qvalue_gprofiler_threshold,</span>
+<span id="cb85-8"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-8" tabindex="-1"></a>                   <span class="st">&#39;similaritycutoff=&#39;</span>,similarity_threshold,</span>
+<span id="cb85-9"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-9" tabindex="-1"></a>                   <span class="st">&#39;coefficients=&#39;</span>,similarity_metric,</span>
+<span id="cb85-10"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-10" tabindex="-1"></a>                   <span class="st">&#39;enrichmentsDataset1=&#39;</span>,gprofiler_results_filename1, </span>
+<span id="cb85-11"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-11" tabindex="-1"></a>                   <span class="st">&#39;enrichmentsDataset2=&#39;</span>,gprofiler_results_filename2,</span>
+<span id="cb85-12"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-12" tabindex="-1"></a>                   <span class="st">&#39;gmtFile=&#39;</span>,gmt_gprofiler_file,</span>
+<span id="cb85-13"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-13" tabindex="-1"></a>                   <span class="st">&#39;filterByExpressions=false&#39;</span>,</span>
+<span id="cb85-14"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-14" tabindex="-1"></a>                   <span class="at">sep=</span><span class="st">&quot; &quot;</span>)</span>
+<span id="cb85-15"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-15" tabindex="-1"></a></span>
+<span id="cb85-16"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-16" tabindex="-1"></a><span class="co">#enrichment map command will return the suid of newly created network.</span></span>
+<span id="cb85-17"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-17" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">commandsGET</span>(em_command,<span class="at">base.url =</span> current_base)</span>
+<span id="cb85-18"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-18" tabindex="-1"></a></span>
+<span id="cb85-19"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-19" tabindex="-1"></a>current_network_suid <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb85-20"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-20" tabindex="-1"></a><span class="co">#enrichment map command will return the suid of newly created network </span></span>
+<span id="cb85-21"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-21" tabindex="-1"></a><span class="co"># unless it Failed.  If it failed it will contain the word failed</span></span>
+<span id="cb85-22"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-22" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">grepl</span>(<span class="at">pattern=</span><span class="st">&quot;Failed&quot;</span>, response)){</span>
+<span id="cb85-23"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-23" tabindex="-1"></a>  <span class="fu">paste</span>(response)</span>
+<span id="cb85-24"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-24" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb85-25"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-25" tabindex="-1"></a>  current_network_suid <span class="ot">&lt;-</span> response</span>
+<span id="cb85-26"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-26" tabindex="-1"></a>}</span>
+<span id="cb85-27"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-27" tabindex="-1"></a></span>
+<span id="cb85-28"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-28" tabindex="-1"></a><span class="co">#check to see if the network name is unique</span></span>
+<span id="cb85-29"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-29" tabindex="-1"></a>current_names <span class="ot">&lt;-</span> <span class="fu">getNetworkList</span>(<span class="at">base.url =</span> current_base)</span>
+<span id="cb85-30"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-30" tabindex="-1"></a><span class="cf">if</span>(current_network_name <span class="sc">%in%</span> current_names){</span>
+<span id="cb85-31"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-31" tabindex="-1"></a>  <span class="co">#if the name already exists in the network names then put the SUID in front</span></span>
+<span id="cb85-32"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-32" tabindex="-1"></a>  <span class="co"># of the name (this does not work if you put the suid at the end of the name)</span></span>
+<span id="cb85-33"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-33" tabindex="-1"></a>  current_network_name <span class="ot">&lt;-</span> <span class="fu">paste</span>(current_network_suid,</span>
+<span id="cb85-34"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-34" tabindex="-1"></a>                                current_network_name,  <span class="at">sep=</span><span class="st">&quot;_&quot;</span>)</span>
+<span id="cb85-35"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-35" tabindex="-1"></a>}</span>
+<span id="cb85-36"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-36" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">renameNetwork</span>(<span class="at">title=</span>current_network_name, </span>
+<span id="cb85-37"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-37" tabindex="-1"></a>                       <span class="at">network =</span> <span class="fu">as.numeric</span>(current_network_suid),</span>
+<span id="cb85-38"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb85-38" tabindex="-1"></a>                       <span class="at">base.url =</span> current_base)</span></code></pre></div>
 </div>
-<div id="get-a-screen-shot-of-the-initial-network." class="section level2 hasAnchor" number="7.8">
-<h2><span class="header-section-number">7.8</span> Get a screen shot of the initial network.<a href="create-enrichment-map-from-r-with-gprofiler-results.html#get-a-screen-shot-of-the-initial-network." class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co">#you can only output the file if it isn&#39;t on docker</span></span>
-<span id="cb77-2"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="co">#on docker is put it into the user&#39;s home directory with docker has not access to</span></span>
-<span id="cb77-3"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span>is_docker){</span>
-<span id="cb77-4"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-4" aria-hidden="true" tabindex="-1"></a>  output_network_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">getwd</span>(),<span class="st">&quot;initial_screenshot_network.png&quot;</span>)</span>
-<span id="cb77-5"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-5" aria-hidden="true" tabindex="-1"></a>  output_network_file_current <span class="ot">&lt;-</span> output_network_file</span>
-<span id="cb77-6"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-7"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fitContent</span>()</span>
-<span id="cb77-8"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-9"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">file.exists</span>(output_network_file)){</span>
-<span id="cb77-10"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">#cytoscape hangs waiting for user response if file already exists.  </span></span>
-<span id="cb77-11"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove it first</span></span>
-<span id="cb77-12"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-12" aria-hidden="true" tabindex="-1"></a>    response <span class="ot">&lt;-</span> <span class="fu">file.remove</span>(output_network_file)</span>
-<span id="cb77-13"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-13" aria-hidden="true" tabindex="-1"></a>  } </span>
-<span id="cb77-14"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-15"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-15" aria-hidden="true" tabindex="-1"></a>  response <span class="ot">&lt;-</span> <span class="fu">exportImage</span>(output_network_file, <span class="at">type =</span> <span class="st">&quot;png&quot;</span>,</span>
-<span id="cb77-16"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-16" aria-hidden="true" tabindex="-1"></a>                          <span class="at">base.url =</span> current_base)</span>
-<span id="cb77-17"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb77-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div id="get-a-screen-shot-of-the-initial-network." class="section level2 hasAnchor" number="8.8">
+<h2><span class="header-section-number">8.8</span> Get a screen shot of the initial network.<a href="create-enrichment-map-from-r-with-gprofiler-results.html#get-a-screen-shot-of-the-initial-network." class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb86-1" tabindex="-1"></a><span class="co">#you can only output the file if it isn&#39;t on docker</span></span>
+<span id="cb86-2"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb86-2" tabindex="-1"></a><span class="co">#on docker is put it into the user&#39;s home directory with docker has not access to</span></span>
+<span id="cb86-3"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb86-3" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span>is_docker){</span>
+<span id="cb86-4"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb86-4" tabindex="-1"></a>  output_network_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">getwd</span>(),<span class="st">&quot;initial_screenshot_network.png&quot;</span>)</span>
+<span id="cb86-5"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb86-5" tabindex="-1"></a>  output_network_file_current <span class="ot">&lt;-</span> output_network_file</span>
+<span id="cb86-6"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb86-6" tabindex="-1"></a></span>
+<span id="cb86-7"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb86-7" tabindex="-1"></a>  <span class="fu">fitContent</span>()</span>
+<span id="cb86-8"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb86-8" tabindex="-1"></a></span>
+<span id="cb86-9"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb86-9" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">file.exists</span>(output_network_file)){</span>
+<span id="cb86-10"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb86-10" tabindex="-1"></a>    <span class="co">#cytoscape hangs waiting for user response if file already exists.  </span></span>
+<span id="cb86-11"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb86-11" tabindex="-1"></a>    <span class="co"># Remove it first</span></span>
+<span id="cb86-12"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb86-12" tabindex="-1"></a>    response <span class="ot">&lt;-</span> <span class="fu">file.remove</span>(output_network_file)</span>
+<span id="cb86-13"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb86-13" tabindex="-1"></a>  } </span>
+<span id="cb86-14"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb86-14" tabindex="-1"></a></span>
+<span id="cb86-15"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb86-15" tabindex="-1"></a>  response <span class="ot">&lt;-</span> <span class="fu">exportImage</span>(output_network_file, <span class="at">type =</span> <span class="st">&quot;png&quot;</span>,</span>
+<span id="cb86-16"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb86-16" tabindex="-1"></a>                          <span class="at">base.url =</span> current_base)</span>
+<span id="cb86-17"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#cb86-17" tabindex="-1"></a>}</span></code></pre></div>
 <p>Change the files and create all the different networks we generated in class in Cytoscape.</p>
 
 </div>
@@ -436,7 +452,7 @@ div.csl-indent {
           </div>
         </div>
       </div>
-<a href="create-gmt-file-from-ensembl.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="translate-human-gmt-file-to-another-species-using-ensembl.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="create-enrichment-map-from-r-with-gsea-results.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

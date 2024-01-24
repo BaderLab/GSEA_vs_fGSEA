@@ -5,16 +5,19 @@
 \documentclass[
 ]{book}
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -44,13 +47,13 @@
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
 \newcommand{\BuiltInTok}[1]{#1}
 \newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
@@ -58,7 +61,7 @@
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
 \newcommand{\ExtensionTok}[1]{#1}
 \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\ImportTok}[1]{#1}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
@@ -67,7 +70,7 @@
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
 \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
@@ -136,16 +139,16 @@
 \fi
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
+\urlstyle{same}
 \hypersetup{
-  pdftitle={CBW pathways Workshops - example R notebooks},
+  pdftitle={Translate gmt file from human to another species},
   pdfauthor={Ruth Isserlin},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
-\title{CBW pathways Workshops - example R notebooks}
+\title{Translate gmt file from human to another species}
 \author{Ruth Isserlin}
-\date{2023-05-09}
+\date{2024-01-24}
 
 \begin{document}
 \maketitle
@@ -455,29 +458,29 @@ For this query we are specifying -
 
 \begin{verbatim}
 ##     query significant      p_value term_size query_size intersection_size
-## 1 query_1        TRUE 5.648621e-33      4862        118               101
-## 2 query_1        TRUE 1.995252e-30      4959        118                99
-## 3 query_1        TRUE 1.995252e-30      5093        118               100
-## 4 query_1        TRUE 5.612481e-29      5440        118               101
-## 5 query_1        TRUE 6.150483e-29      5908        118               104
+## 1 query_1        TRUE 2.891865e-32      4828        117               100
+## 2 query_1        TRUE 2.891865e-32      4690        117                99
+## 3 query_1        TRUE 7.118295e-32      5174        117               102
+## 4 query_1        TRUE 9.756118e-31      5190        117               101
+## 5 query_1        TRUE 1.240868e-29      5640        117               103
 ##   precision     recall    term_id source
-## 1 0.8559322 0.02077334 GO:0031323  GO:BP
-## 2 0.8389831 0.01996370 GO:0051171  GO:BP
-## 3 0.8474576 0.01963479 GO:0080090  GO:BP
-## 4 0.8559322 0.01856618 GO:0060255  GO:BP
-## 5 0.8813559 0.01760325 GO:0019222  GO:BP
+## 1 0.8547009 0.02071251 GO:0080090  GO:BP
+## 2 0.8461538 0.02110874 GO:0051171  GO:BP
+## 3 0.8717949 0.01971395 GO:0031323  GO:BP
+## 4 0.8632479 0.01946050 GO:0060255  GO:BP
+## 5 0.8803419 0.01826241 GO:0019222  GO:BP
 ##                                           term_name effective_domain_size
-## 1          regulation of cellular metabolic process                 16324
-## 2 regulation of nitrogen compound metabolic process                 16324
-## 3           regulation of primary metabolic process                 16324
-## 4     regulation of macromolecule metabolic process                 16324
-## 5                   regulation of metabolic process                 16324
+## 1           regulation of primary metabolic process                 15992
+## 2 regulation of nitrogen compound metabolic process                 15992
+## 3          regulation of cellular metabolic process                 15992
+## 4     regulation of macromolecule metabolic process                 15992
+## 5                   regulation of metabolic process                 15992
 ##   source_order                            parents
-## 1         7510 GO:0019222, GO:0044237, GO:0050794
-## 2        14316             GO:0006807, GO:0019222
-## 3        18790             GO:0019222, GO:0044238
-## 4        15305             GO:0019222, GO:0043170
-## 5         5900             GO:0008152, GO:0050789
+## 1        18641             GO:0019222, GO:0044238
+## 2        14228             GO:0006807, GO:0019222
+## 3         7461 GO:0019222, GO:0044237, GO:0050794
+## 4        15204             GO:0019222, GO:0043170
+## 5         5855             GO:0008152, GO:0050789
 \end{verbatim}
 
 \hypertarget{download-and-load-gprofiler-geneset-file}{%
@@ -906,12 +909,12 @@ In order to use your own genesets with g:Profiler you need to upload the the fil
 \end{Shaded}
 
 \begin{verbatim}
-## Your custom annotations ID is gp__rI2c_22en_31E
+## Your custom annotations ID is gp__9EwJ_1Vuj_avo
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 \end{verbatim}
 
 \begin{verbatim}
-## Just use: gost(my_genes, organism = 'gp__rI2c_22en_31E')
+## Just use: gost(my_genes, organism = 'gp__9EwJ_1Vuj_avo')
 \end{verbatim}
 
 \begin{Shaded}
@@ -922,12 +925,12 @@ In order to use your own genesets with g:Profiler you need to upload the the fil
 \end{Shaded}
 
 \begin{verbatim}
-## Your custom annotations ID is gp__KHlc_ij8a_LaY
+## Your custom annotations ID is gp__rAPS_AQbx_byM
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 \end{verbatim}
 
 \begin{verbatim}
-## Just use: gost(my_genes, organism = 'gp__KHlc_ij8a_LaY')
+## Just use: gost(my_genes, organism = 'gp__rAPS_AQbx_byM')
 \end{verbatim}
 
 \begin{Shaded}
@@ -938,12 +941,12 @@ In order to use your own genesets with g:Profiler you need to upload the the fil
 \end{Shaded}
 
 \begin{verbatim}
-## Your custom annotations ID is gp__EYBu_kti7_IZw
+## Your custom annotations ID is gp__ZbCQ_zXIE_Clk
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 \end{verbatim}
 
 \begin{verbatim}
-## Just use: gost(my_genes, organism = 'gp__EYBu_kti7_IZw')
+## Just use: gost(my_genes, organism = 'gp__ZbCQ_zXIE_Clk')
 \end{verbatim}
 
 For this query we are specifying -
@@ -959,7 +962,7 @@ For this query we are specifying -
 \item
   correction\_method - set to fdr. by default g:Profiler uses g:Scs
 \item
-  organism - set to the custom\_gmt ID ( for this run it is - gp\_\_rI2c\_22en\_31E) that we received when we uploaded our genetset file.
+  organism - set to the custom\_gmt ID ( for this run it is - gp\_\_9EwJ\_1Vuj\_avo) that we received when we uploaded our genetset file.
 \end{itemize}
 
 \begin{Shaded}
@@ -1346,16 +1349,8 @@ The parameters are set in the params option on this notebook but you can also ma
          \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }
            \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)\}, }
          \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{verbatim}
-## Bioconductor version '3.16' is out-of-date; the current release version '3.17'
-##   is available with R version '4.3'; see https://bioconductor.org/install
-\end{verbatim}
 
-\begin{Shaded}
-\begin{Highlighting}[]
 \FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"biomaRt"}\NormalTok{)\}, }
          \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }
 \NormalTok{           BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\StringTok{"biomaRt"}\NormalTok{)\}, }
@@ -1383,7 +1378,8 @@ Connect to Biomart
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ensembl }\OtherTok{\textless{}{-}} \FunctionTok{useEnsembl}\NormalTok{(}\AttributeTok{biomart =} \StringTok{"genes"}\NormalTok{,}\AttributeTok{host =} \StringTok{"asia.ensembl.org"}\NormalTok{)}
+\NormalTok{ensembl }\OtherTok{\textless{}{-}} \FunctionTok{useEnsembl}\NormalTok{(}\AttributeTok{biomart =} \StringTok{"genes"}\NormalTok{, }\AttributeTok{host =} \StringTok{"asia.ensembl.org"}\NormalTok{)}
+\CommentTok{\#ensembl \textless{}{-} useEnsembl("ensembl")}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1401,14 +1397,8 @@ Figure out which dataset you want to use - for some species there might be a few
 \end{Shaded}
 
 \begin{verbatim}
-##                         dataset                                 description
-## 60       ecaballus_gene_ensembl                     Horse genes (EquCab3.0)
-## 76          hcomes_gene_ensembl  Tiger tail seahorse genes (H_comes_QL1_v1)
-## 164 rferrumequinum_gene_ensembl Greater horseshoe bat genes (mRhiFer1_v1.p)
-##            version
-## 60       EquCab3.0
-## 76  H_comes_QL1_v1
-## 164  mRhiFer1_v1.p
+##                dataset                 description         version
+## 68 fcatus_gene_ensembl Cat genes (Felis_catus_9.0) Felis_catus_9.0
 \end{verbatim}
 
 If you know the ensembl dataset that you want to use you can specify it in the parameters above or grab from the above table the dataset of the species that you are interested in.
@@ -1468,14 +1458,14 @@ Each of these is stored as a list in the dataframe. In order to convert it to th
 
 \begin{verbatim}
 ## [[1]]
-## [1] "MEF2A"    "SLC25A36" "OPA1"     "MGME1"    "SLC25A33" "TYMP"     "AKT3"    
-## [8] "PIF1"    
+## [1] "MGME1"    "MPV17"    "AKT3"     "SLC25A36" "MEF2A"    "SLC25A33" "OPA1"    
 ## 
 ## [[2]]
-## [1] "GNRH1" "GNRH2" "LIN9" 
+## [1] ""      "MMP23"
 ## 
 ## [[3]]
-## [1] "ERCC6" "ERCC8" "LIG4"  "APLF"  "APTX"  "XRCC1" "SIRT1" "XNDC1"
+##  [1] "TNP1"  "XNDC1" "SIRT1" "TDP1"  "APLF"  "ERCC6" "XRCC1" "APTX"  "LIG4" 
+## [10] "ERCC8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1486,17 +1476,18 @@ Each of these is stored as a list in the dataframe. In order to convert it to th
 
 \begin{verbatim}
 ## [[1]]
-## [1] "ENSECAG00000011593" "ENSECAG00000010094" "ENSECAG00000024248"
-## [4] "ENSECAG00000012675" "ENSECAG00000016862" "ENSECAG00000001072"
-## [7] "ENSECAG00000019722" "ENSECAG00000005316"
+## [1] "ENSFCAG00000023195" "ENSFCAG00000015150" "ENSFCAG00000003700"
+## [4] "ENSFCAG00000035204" "ENSFCAG00000022495" "ENSFCAG00000022044"
+## [7] "ENSFCAG00000000695"
 ## 
 ## [[2]]
-## [1] "ENSECAG00000010664" "ENSECAG00000039220" "ENSECAG00000014325"
+## [1] "ENSFCAG00000034109" "ENSFCAG00000008341"
 ## 
 ## [[3]]
-## [1] "ENSECAG00000014160" "ENSECAG00000018335" "ENSECAG00000003257"
-## [4] "ENSECAG00000013246" "ENSECAG00000012674" "ENSECAG00000014127"
-## [7] "ENSECAG00000013909" "ENSECAG00000042118"
+##  [1] "ENSFCAG00000036860" "ENSFCAG00000044053" "ENSFCAG00000012373"
+##  [4] "ENSFCAG00000005982" "ENSFCAG00000022636" "ENSFCAG00000031322"
+##  [7] "ENSFCAG00000005222" "ENSFCAG00000008728" "ENSFCAG00000031985"
+## [10] "ENSFCAG00000026531"
 \end{verbatim}
 
 \hypertarget{format-results-into-gmt-file}{%
@@ -1546,6 +1537,10 @@ Write out the gmt file with genenames
                                          \StringTok{"collapsed\_genenames"}\NormalTok{)]}
 \FunctionTok{colnames}\NormalTok{(gmt\_file\_genenames)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{,}\StringTok{"description"}\NormalTok{) }
 
+\NormalTok{gmt\_file\_genenames}\SpecialCharTok{$}\NormalTok{name }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(gmt\_file\_genenames}\SpecialCharTok{$}\NormalTok{description, gmt\_file\_genenames}\SpecialCharTok{$}\NormalTok{name,}\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{)}
+\NormalTok{gmt\_file\_genenames}\SpecialCharTok{$}\NormalTok{name }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(gmt\_file\_genenames}\SpecialCharTok{$}\NormalTok{name,}\AttributeTok{pattern =} \StringTok{" "}\NormalTok{,}\AttributeTok{replacement =} \StringTok{"\_"}\NormalTok{)}
+\NormalTok{gmt\_file\_genenames}\SpecialCharTok{$}\NormalTok{name }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(gmt\_file\_genenames}\SpecialCharTok{$}\NormalTok{name,}\AttributeTok{pattern =} \StringTok{":"}\NormalTok{,}\AttributeTok{replacement =} \StringTok{"\_"}\NormalTok{)}
+
 \NormalTok{gmt\_genenames\_filename }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{working\_dir, }\FunctionTok{paste}\NormalTok{(species,ensembl\_dataset,}\StringTok{"GO\_genesets\_GN.gmt"}\NormalTok{,}\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{))}
 
 \FunctionTok{write.table}\NormalTok{(}\AttributeTok{x =}\NormalTok{ gmt\_file\_genenames,}\AttributeTok{file =}\NormalTok{ gmt\_genenames\_filename,}
@@ -1562,9 +1557,219 @@ Write out the gmt file with ensembl ids
                                           \StringTok{"collapsed\_ensemblids"}\NormalTok{)]}
 \FunctionTok{colnames}\NormalTok{(gmt\_file\_ensemblids)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{,}\StringTok{"description"}\NormalTok{) }
 
+\NormalTok{gmt\_file\_ensemblids}\SpecialCharTok{$}\NormalTok{name }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(gmt\_file\_ensemblids}\SpecialCharTok{$}\NormalTok{description, gmt\_file\_ensemblids}\SpecialCharTok{$}\NormalTok{name,}\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{)}
+\NormalTok{gmt\_file\_ensemblids}\SpecialCharTok{$}\NormalTok{name }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(gmt\_file\_ensemblids}\SpecialCharTok{$}\NormalTok{name,}\AttributeTok{pattern =} \StringTok{" "}\NormalTok{,}\AttributeTok{replacement =} \StringTok{"\_"}\NormalTok{)}
+\NormalTok{gmt\_file\_ensemblids}\SpecialCharTok{$}\NormalTok{name }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(gmt\_file\_ensemblids}\SpecialCharTok{$}\NormalTok{name,}\AttributeTok{pattern =} \StringTok{":"}\NormalTok{,}\AttributeTok{replacement =} \StringTok{"\_"}\NormalTok{)}
+
+
 \NormalTok{gmt\_ensemblids\_filename }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{working\_dir, }\FunctionTok{paste}\NormalTok{(species,ensembl\_dataset,}\StringTok{"GO\_genesets\_esemblids.gmt"}\NormalTok{,}\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{))}
 
 \FunctionTok{write.table}\NormalTok{(}\AttributeTok{x =}\NormalTok{ gmt\_file\_ensemblids,}\AttributeTok{file =}\NormalTok{ gmt\_ensemblids\_filename,}
+            \AttributeTok{quote =} \ConstantTok{FALSE}\NormalTok{,}\AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}\AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{,}
+            \AttributeTok{col.names=}\ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{translate-human-gmt-file-to-another-species-using-ensembl}{%
+\chapter{Translate human gmt file to another species using ensembl}\label{translate-human-gmt-file-to-another-species-using-ensembl}}
+
+for species where there is a not an existing effort to characterize genes through GO, a much richer gmt file will come from mapping the gmt file from a well defined species preferrably the species your experiment is trying to model (for example, if you are modelling a human disease in mouse using a human gmt might return much richer results but species specific changes might be lost )
+
+\hypertarget{load-in-required-libraries-1}{%
+\section{Load in required libraries}\label{load-in-required-libraries-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#install required R and bioconductor packages}
+\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"RCurl"}\NormalTok{)\}, }
+         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{  }
+           \FunctionTok{install.packages}\NormalTok{(}\StringTok{"RCurl"}\NormalTok{)\}, }
+         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"RCurl"}\NormalTok{))}
+
+\CommentTok{\#use library}
+\CommentTok{\#make sure biocManager is installed}
+\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)\}, }
+         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }
+           \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)\}, }
+         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{))}
+
+
+\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"biomaRt"}\NormalTok{)\}, }
+         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }
+\NormalTok{           BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\StringTok{"biomaRt"}\NormalTok{)\}, }
+         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"biomaRt"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{download-the-latest-pathway-definition-file-1}{%
+\section{Download the latest pathway definition file}\label{download-the-latest-pathway-definition-file-1}}
+
+Only Human, Mouse, Rat, and Woodchuck gene set files are currently available on the baderlab downloads site. If you are working with a species other than human (and it is either rat,mouse or woodchuck) change the gmt\_url below to the correct species. Check \href{http://download.baderlab.org/EM_Genesets/current_release/}{here} to see all available species.
+
+To create your own GMT file using Ensembl see \protect\hyperlink{create-gmt-file-from-ensembl}{Create GMT file from Ensembl}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dest\_gmt\_file }\OtherTok{\textless{}{-}} \StringTok{""} \CommentTok{\#params$dest\_gmt\_file }
+
+\ControlFlowTok{if}\NormalTok{(dest\_gmt\_file }\SpecialCharTok{==} \StringTok{""}\NormalTok{)\{}
+\NormalTok{  gmt\_url }\OtherTok{=} \StringTok{"http://download.baderlab.org/EM\_Genesets/current\_release/Human/symbol/"}
+  
+  \CommentTok{\#list all the files on the server}
+\NormalTok{  filenames }\OtherTok{=} \FunctionTok{getURL}\NormalTok{(gmt\_url)}
+\NormalTok{  tc }\OtherTok{=} \FunctionTok{textConnection}\NormalTok{(filenames)}
+\NormalTok{  contents }\OtherTok{=} \FunctionTok{readLines}\NormalTok{(tc)}
+  \FunctionTok{close}\NormalTok{(tc)}
+  
+  \CommentTok{\#get the gmt that has all the pathways and does not include terms }
+  \CommentTok{\# inferred from electronic annotations(IEA)}
+  \CommentTok{\#start with gmt file that has pathways only and GO Biological Process only.}
+\NormalTok{  rx }\OtherTok{=} \FunctionTok{gregexpr}\NormalTok{(}\StringTok{"(?\textless{}=\textless{}a href=}\SpecialCharTok{\textbackslash{}"}\StringTok{)(.*.GOBP\_AllPathways\_no\_GO\_iea.*.)(.gmt)(?=}\SpecialCharTok{\textbackslash{}"}\StringTok{\textgreater{})"}\NormalTok{,}
+\NormalTok{    contents, }\AttributeTok{perl =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  gmt\_file }\OtherTok{=} \FunctionTok{unlist}\NormalTok{(}\FunctionTok{regmatches}\NormalTok{(contents, rx))}
+  
+\NormalTok{  dest\_gmt\_file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{working\_dir,gmt\_file )}
+  
+  \CommentTok{\#check if this gmt file already exists}
+  \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{file.exists}\NormalTok{(dest\_gmt\_file))\{}
+    \FunctionTok{download.file}\NormalTok{(}
+      \FunctionTok{paste}\NormalTok{(gmt\_url,gmt\_file,}\AttributeTok{sep=}\StringTok{""}\NormalTok{),}
+      \AttributeTok{destfile=}\NormalTok{dest\_gmt\_file}
+\NormalTok{    )}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Load in the originaing gmt file
+
+\hypertarget{set-up-biomart-connection-1}{%
+\section{Set up Biomart connection}\label{set-up-biomart-connection-1}}
+
+Connect to Biomart
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ensembl }\OtherTok{\textless{}{-}} \FunctionTok{useEnsembl}\NormalTok{(}\AttributeTok{biomart =} \StringTok{"genes"}\NormalTok{ , }\AttributeTok{host =} \StringTok{"asia.ensembl.org"}\NormalTok{)}
+\CommentTok{\#ensembl \textless{}{-} useEnsembl("ensembl")}
+\end{Highlighting}
+\end{Shaded}
+
+Figure out which dataset you want to use - for some species there might be a few datasets to choose from. Not all of the datasets have common namesa associated with them. For example, if you search for `yeast' nothing will be returned but if you look for Saccharomyces or cerevisiae you will be able to find it.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{all\_datasets }\OtherTok{\textless{}{-}} \FunctionTok{listDatasets}\NormalTok{(ensembl, }\AttributeTok{verbose=}\ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Attempting web service request:
+## asia.ensembl.org:80/biomart/martservice?redirect=no&type=datasets&requestid=biomaRt&mart=ENSEMBL_MART_ENSEMBL
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#get all the datasets that match our species definition}
+\NormalTok{all\_datasets[}\FunctionTok{grep}\NormalTok{(all\_datasets}\SpecialCharTok{$}\NormalTok{description,}
+                  \AttributeTok{pattern=}\FunctionTok{paste}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{new\_species,}\AttributeTok{sep=}\StringTok{""}\NormalTok{),}
+                  \AttributeTok{ignore.case =} \ConstantTok{TRUE}\NormalTok{),]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                dataset                 description         version
+## 68 fcatus_gene_ensembl Cat genes (Felis_catus_9.0) Felis_catus_9.0
+\end{verbatim}
+
+Based on the above table define the dataset
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#get all the datasets that match our species definition}
+\NormalTok{base\_dataset }\OtherTok{\textless{}{-}}\NormalTok{ all\_datasets}\SpecialCharTok{$}\NormalTok{dataset[}\FunctionTok{grep}\NormalTok{(all\_datasets}\SpecialCharTok{$}\NormalTok{description,}
+                  \AttributeTok{pattern=}\FunctionTok{paste}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{new\_species,}\AttributeTok{sep=}\StringTok{""}\NormalTok{),}
+                  \AttributeTok{ignore.case =} \ConstantTok{TRUE}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+If you know the ensembl dataset that you want to use you can specify it in the parameters above or grab from the above table the dataset of the species that you are interested in.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ensembl }\OtherTok{=} \FunctionTok{useDataset}\NormalTok{(base\_dataset,}\AttributeTok{mart=}\NormalTok{ensembl)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{convert-the-species-genes-from-human}{%
+\section{Convert the species genes from human}\label{convert-the-species-genes-from-human}}
+
+Get the homologs in the species of interest of the human genes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{homologs }\OtherTok{\textless{}{-}} \FunctionTok{getBM}\NormalTok{(}\AttributeTok{attributes =} \FunctionTok{c}\NormalTok{(}\StringTok{"external\_gene\_name"}\NormalTok{,}
+                                      \StringTok{"ensembl\_gene\_id"}\NormalTok{,}
+                                      \StringTok{"hsapiens\_homolog\_ensembl\_gene"}\NormalTok{, }
+                                      \StringTok{"hsapiens\_homolog\_associated\_gene\_name"} 
+\NormalTok{                                      ), }
+                       \AttributeTok{filters=}\FunctionTok{list}\NormalTok{(}\AttributeTok{biotype=}\StringTok{\textquotesingle{}protein\_coding\textquotesingle{}}\NormalTok{), }\AttributeTok{mart=}\NormalTok{ensembl);}
+\CommentTok{\# get rid of rows that have an empty gene name for new species or for human}
+\NormalTok{homologs }\OtherTok{\textless{}{-}}\NormalTok{ homologs[}\FunctionTok{which}\NormalTok{((homologs}\SpecialCharTok{$}\NormalTok{external\_gene\_name }\SpecialCharTok{!=} \StringTok{""}\NormalTok{) }\SpecialCharTok{\&}\NormalTok{ (homologs}\SpecialCharTok{$}\NormalTok{hsapiens\_homolog\_associated\_gene\_name }\SpecialCharTok{!=} \StringTok{""}\NormalTok{)),]}
+\end{Highlighting}
+\end{Shaded}
+
+Convert the human gmt file into the species of interest
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{names}\NormalTok{(originating\_gmt}\SpecialCharTok{$}\NormalTok{genesets) }\OtherTok{\textless{}{-}}\NormalTok{ originating\_gmt}\SpecialCharTok{$}\NormalTok{geneset.names}
+
+\NormalTok{temp\_genesets }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(originating\_gmt}\SpecialCharTok{$}\NormalTok{genesets,}\AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{homologs}\SpecialCharTok{$}\NormalTok{external\_gene\_name[}\FunctionTok{which}\NormalTok{(homologs}\SpecialCharTok{$}\NormalTok{hsapiens\_homolog\_associated\_gene\_name }\SpecialCharTok{\%in\%} \FunctionTok{unlist}\NormalTok{(x))]\})}
+
+\NormalTok{translated\_genessets }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\AttributeTok{geneset\_names=}\NormalTok{originating\_gmt}\SpecialCharTok{$}\NormalTok{geneset.names, }
+                             \AttributeTok{genesets =}\NormalTok{ temp\_genesets,}
+                             \AttributeTok{geneset.descriptions=}\NormalTok{originating\_gmt}\SpecialCharTok{$}\NormalTok{geneset.descriptions)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{format-results-into-gmt-file-1}{%
+\section{Format results into GMT file}\label{format-results-into-gmt-file-1}}
+
+Convert lists to a tab delimited string of gene names
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{translated\_genessets}\SpecialCharTok{$}\NormalTok{collapsed\_genenames  }\OtherTok{\textless{}{-}} \FunctionTok{unlist}\NormalTok{(}\FunctionTok{lapply}\NormalTok{(translated\_genessets}\SpecialCharTok{$}\NormalTok{genesets,}
+                                             \AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{}
+   \FunctionTok{paste}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(x),}\AttributeTok{collapse =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
+\NormalTok{\}))}
+\end{Highlighting}
+\end{Shaded}
+
+The format of the GMT file is described \href{here}{https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data\_formats\#GMT:\emph{Gene\_Matrix\_Transposed\_file\_format}.28.2A.gmt.29} and consists of rows with the following
+
+\begin{itemize}
+\tightlist
+\item
+  Name
+\item
+  Description
+\item
+  tab delimited list of genes a part of this geneset
+\end{itemize}
+
+Write out the gmt file with genenames
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gmt\_file\_genenames }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{name=}\NormalTok{translated\_genessets}\SpecialCharTok{$}\NormalTok{geneset\_names,}
+                                 \AttributeTok{description=}\NormalTok{translated\_genessets}\SpecialCharTok{$}\NormalTok{geneset.descriptions,}
+                                 \AttributeTok{genes =}\NormalTok{ translated\_genessets}\SpecialCharTok{$}\NormalTok{collapsed\_genenames)}
+
+\NormalTok{gmt\_genenames\_filename }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{working\_dir, }\FunctionTok{paste}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{new\_species,}\StringTok{"convertedfrom"}\NormalTok{,}\FunctionTok{basename}\NormalTok{(dest\_gmt\_file),}\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{))}
+
+\FunctionTok{write.table}\NormalTok{(}\AttributeTok{x =}\NormalTok{ gmt\_file\_genenames,}\AttributeTok{file =}\NormalTok{ gmt\_genenames\_filename,}
             \AttributeTok{quote =} \ConstantTok{FALSE}\NormalTok{,}\AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}\AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{,}
             \AttributeTok{col.names=}\ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
@@ -1584,16 +1789,7 @@ Write out the gmt file with ensembl ids
          \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }
            \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)\}, }
          \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{verbatim}
-## Bioconductor version '3.16' is out-of-date; the current release version '3.17'
-##   is available with R version '4.3'; see https://bioconductor.org/install
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)\}, }
          \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)\}, }
          \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{))}
@@ -1660,8 +1856,13 @@ We have multiple g:profiler results.\\
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ gmt\_gprofiler\_file}\OtherTok{\textless{}{-}}\FunctionTok{file.path}\NormalTok{(}\FunctionTok{getwd}\NormalTok{(),output\_dir,}
-                \StringTok{"gprofiler\_full\_hsapiens\_e109\_eg56\_p17\_1d3191d\_.name.gmt"}\NormalTok{)}
+\CommentTok{\#get the newest gprofiler gmt file}
+\NormalTok{gprof\_files }\OtherTok{\textless{}{-}} \FunctionTok{file.info}\NormalTok{(}\FunctionTok{list.files}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(}\FunctionTok{getwd}\NormalTok{(),output\_dir),}
+                                    \AttributeTok{pattern =} \StringTok{"gprofiler\_full"}\NormalTok{,}
+                                    \AttributeTok{full.names =} \ConstantTok{TRUE}\NormalTok{) )}
+\NormalTok{gmt\_gprofiler\_file }\OtherTok{\textless{}{-}} \FunctionTok{rownames}\NormalTok{(gprof\_files)[}\FunctionTok{which.max}\NormalTok{(gprof\_files}\SpecialCharTok{$}\NormalTok{mtime)]}
+\CommentTok{\#gmt\_gprofiler\_file\textless{}{-}file.path(getwd(),output\_dir,}
+\CommentTok{\#                "gprofiler\_full\_hsapiens\_e109\_eg56\_p17\_1d3191d\_.name.gmt")}
 
 \NormalTok{gprofiler\_results\_filename1 }\OtherTok{\textless{}{-}}\FunctionTok{file.path}\NormalTok{(}\FunctionTok{getwd}\NormalTok{(),output\_dir,}
                 \StringTok{"gProfiler\_hsapiens\_lab2\_results\_GEM\_termmin3\_max250.gem.txt"}\NormalTok{)}
@@ -1708,7 +1909,7 @@ Launch Cytoscape (by default cytoscape will automatically enable rest so as long
 
 \begin{verbatim}
 ##       apiVersion cytoscapeVersion 
-##             "v1"         "3.10.0"
+##             "v1"         "3.10.1"
 \end{verbatim}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
@@ -1834,16 +2035,7 @@ Change the files and create all the different networks we generated in class in 
          \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }
            \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)\}, }
          \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{verbatim}
-## Bioconductor version '3.16' is out-of-date; the current release version '3.17'
-##   is available with R version '4.3'; see https://bioconductor.org/install
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)\}, }
          \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)\}, }
          \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{))}
@@ -1993,7 +2185,7 @@ Launch Cytoscape (by default cytoscape will automatically enable rest so as long
 
 \begin{verbatim}
 ##       apiVersion cytoscapeVersion 
-##             "v1"         "3.10.0"
+##             "v1"         "3.10.1"
 \end{verbatim}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
@@ -2126,7 +2318,7 @@ Subramanian, Aravind, Pablo Tamayo, Vamsi K Mootha, Sayan Mukherjee, Benjamin L 
 Xie, Yihui. 2015. \emph{Dynamic Documents with {R} and Knitr}. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC. \url{http://yihui.name/knitr/}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-bookdown}{}}%
----------. 2023. \emph{Bookdown: Authoring Books and Technical Documents with r Markdown}. \url{https://CRAN.R-project.org/package=bookdown}.
+---------. 2023. \emph{Bookdown: Authoring Books and Technical Documents with r Markdown}. \url{https://github.com/rstudio/bookdown}.
 
 \end{CSLReferences}
 

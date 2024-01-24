@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 9 References | CBW pathways Workshops - example R notebooks</title>
+  <title>Chapter 10 References | Translate gmt file from human to another species</title>
   <meta name="description" content="These are example R Notebooks to run g:profiler and GSEA and visualize results in Cytoscape with Enrichment map directly from R" />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 9 References | CBW pathways Workshops - example R notebooks" />
+  <meta property="og:title" content="Chapter 10 References | Translate gmt file from human to another species" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/images/cover.png" />
   <meta property="og:description" content="These are example R Notebooks to run g:profiler and GSEA and visualize results in Cytoscape with Enrichment map directly from R" />
   <meta name="github-repo" content="risserlin/CBW_pathways_workshop_R_notebooks" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 9 References | CBW pathways Workshops - example R notebooks" />
+  <meta name="twitter:title" content="Chapter 10 References | Translate gmt file from human to another species" />
   
   <meta name="twitter:description" content="These are example R Notebooks to run g:profiler and GSEA and visualize results in Cytoscape with Enrichment map directly from R" />
   <meta name="twitter:image" content="/images/cover.png" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Ruth Isserlin" />
 
 
-<meta name="date" content="2023-05-09" />
+<meta name="date" content="2024-01-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -90,11 +90,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #c4a000; } /* Attribute */
+code span.at { color: #204a87; } /* Attribute */
 code span.bn { color: #0000cf; } /* BaseN */
 code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4e9a06; } /* Char */
-code span.cn { color: #000000; } /* Constant */
+code span.cn { color: #8f5902; } /* Constant */
 code span.co { color: #8f5902; font-style: italic; } /* Comment */
 code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
 code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
@@ -103,14 +103,14 @@ code span.dv { color: #0000cf; } /* DecVal */
 code span.er { color: #a40000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #0000cf; } /* Float */
-code span.fu { color: #000000; } /* Function */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
 code span.im { } /* Import */
 code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
 code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
 code span.ot { color: #8f5902; } /* Other */
 code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code span.sc { color: #000000; } /* SpecialChar */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
 code span.ss { color: #4e9a06; } /* SpecialString */
 code span.st { color: #4e9a06; } /* String */
 code span.va { color: #000000; } /* Variable */
@@ -118,6 +118,10 @@ code span.vs { color: #4e9a06; } /* VerbatimString */
 code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -197,30 +201,38 @@ div.csl-indent {
 <li class="chapter" data-level="6.3" data-path="create-gmt-file-from-ensembl.html"><a href="create-gmt-file-from-ensembl.html#get-species-go-annotations"><i class="fa fa-check"></i><b>6.3</b> Get species GO annotations</a></li>
 <li class="chapter" data-level="6.4" data-path="create-gmt-file-from-ensembl.html"><a href="create-gmt-file-from-ensembl.html#format-results-into-gmt-file"><i class="fa fa-check"></i><b>6.4</b> Format results into GMT file</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html"><i class="fa fa-check"></i><b>7</b> Create Enrichment map from R with g:Profiler results</a>
+<li class="chapter" data-level="7" data-path="translate-human-gmt-file-to-another-species-using-ensembl.html"><a href="translate-human-gmt-file-to-another-species-using-ensembl.html"><i class="fa fa-check"></i><b>7</b> Translate human gmt file to another species using ensembl</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#initialize-variables-and-libraries-1"><i class="fa fa-check"></i><b>7.1</b> Initialize variables and libraries</a></li>
-<li class="chapter" data-level="7.2" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#configurable-parameters-1"><i class="fa fa-check"></i><b>7.2</b> Configurable Parameters</a></li>
-<li class="chapter" data-level="7.3" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#specify-data-files"><i class="fa fa-check"></i><b>7.3</b> Specify Data files</a></li>
-<li class="chapter" data-level="7.4" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#launch-cytoscape"><i class="fa fa-check"></i><b>7.4</b> Launch Cytoscape</a></li>
-<li class="chapter" data-level="7.5" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#make-sure-you-can-connect-to-cytoscape"><i class="fa fa-check"></i><b>7.5</b> Make sure you can connect to Cytoscape</a></li>
-<li class="chapter" data-level="7.6" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#create-an-enrichment-map"><i class="fa fa-check"></i><b>7.6</b> Create an Enrichment map</a></li>
-<li class="chapter" data-level="7.7" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#create-an-enrichment-map---run-em-command"><i class="fa fa-check"></i><b>7.7</b> Create an Enrichment map - run EM command</a></li>
-<li class="chapter" data-level="7.8" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#get-a-screen-shot-of-the-initial-network."><i class="fa fa-check"></i><b>7.8</b> Get a screen shot of the initial network.</a></li>
+<li class="chapter" data-level="7.1" data-path="translate-human-gmt-file-to-another-species-using-ensembl.html"><a href="translate-human-gmt-file-to-another-species-using-ensembl.html#load-in-required-libraries-1"><i class="fa fa-check"></i><b>7.1</b> Load in required libraries</a></li>
+<li class="chapter" data-level="7.2" data-path="translate-human-gmt-file-to-another-species-using-ensembl.html"><a href="translate-human-gmt-file-to-another-species-using-ensembl.html#download-the-latest-pathway-definition-file-1"><i class="fa fa-check"></i><b>7.2</b> Download the latest pathway definition file</a></li>
+<li class="chapter" data-level="7.3" data-path="translate-human-gmt-file-to-another-species-using-ensembl.html"><a href="translate-human-gmt-file-to-another-species-using-ensembl.html#set-up-biomart-connection-1"><i class="fa fa-check"></i><b>7.3</b> Set up Biomart connection</a></li>
+<li class="chapter" data-level="7.4" data-path="translate-human-gmt-file-to-another-species-using-ensembl.html"><a href="translate-human-gmt-file-to-another-species-using-ensembl.html#convert-the-species-genes-from-human"><i class="fa fa-check"></i><b>7.4</b> Convert the species genes from human</a></li>
+<li class="chapter" data-level="7.5" data-path="translate-human-gmt-file-to-another-species-using-ensembl.html"><a href="translate-human-gmt-file-to-another-species-using-ensembl.html#format-results-into-gmt-file-1"><i class="fa fa-check"></i><b>7.5</b> Format results into GMT file</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html"><i class="fa fa-check"></i><b>8</b> Create Enrichment map from R with GSEA results</a>
+<li class="chapter" data-level="8" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html"><i class="fa fa-check"></i><b>8</b> Create Enrichment map from R with g:Profiler results</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#initialize-variables-and-libraries-2"><i class="fa fa-check"></i><b>8.1</b> Initialize variables and libraries</a></li>
-<li class="chapter" data-level="8.2" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#configurable-parameters-2"><i class="fa fa-check"></i><b>8.2</b> Configurable Parameters</a></li>
-<li class="chapter" data-level="8.3" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#specify-data-files-1"><i class="fa fa-check"></i><b>8.3</b> Specify Data files</a></li>
-<li class="chapter" data-level="8.4" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#optional-file-specification"><i class="fa fa-check"></i><b>8.4</b> Optional File specification</a></li>
-<li class="chapter" data-level="8.5" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#launch-cytoscape-1"><i class="fa fa-check"></i><b>8.5</b> Launch Cytoscape</a></li>
-<li class="chapter" data-level="8.6" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#make-sure-you-can-connect-to-cytoscape-1"><i class="fa fa-check"></i><b>8.6</b> Make sure you can connect to Cytoscape</a></li>
-<li class="chapter" data-level="8.7" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#create-an-enrichment-map-1"><i class="fa fa-check"></i><b>8.7</b> Create an Enrichment map</a></li>
-<li class="chapter" data-level="8.8" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#create-an-enrichment-map---run-em-command-1"><i class="fa fa-check"></i><b>8.8</b> Create an Enrichment map - run EM command</a></li>
-<li class="chapter" data-level="8.9" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#get-a-screen-shot-of-the-initial-network.-1"><i class="fa fa-check"></i><b>8.9</b> Get a screen shot of the initial network.</a></li>
+<li class="chapter" data-level="8.1" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#initialize-variables-and-libraries-1"><i class="fa fa-check"></i><b>8.1</b> Initialize variables and libraries</a></li>
+<li class="chapter" data-level="8.2" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#configurable-parameters-1"><i class="fa fa-check"></i><b>8.2</b> Configurable Parameters</a></li>
+<li class="chapter" data-level="8.3" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#specify-data-files"><i class="fa fa-check"></i><b>8.3</b> Specify Data files</a></li>
+<li class="chapter" data-level="8.4" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#launch-cytoscape"><i class="fa fa-check"></i><b>8.4</b> Launch Cytoscape</a></li>
+<li class="chapter" data-level="8.5" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#make-sure-you-can-connect-to-cytoscape"><i class="fa fa-check"></i><b>8.5</b> Make sure you can connect to Cytoscape</a></li>
+<li class="chapter" data-level="8.6" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#create-an-enrichment-map"><i class="fa fa-check"></i><b>8.6</b> Create an Enrichment map</a></li>
+<li class="chapter" data-level="8.7" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#create-an-enrichment-map---run-em-command"><i class="fa fa-check"></i><b>8.7</b> Create an Enrichment map - run EM command</a></li>
+<li class="chapter" data-level="8.8" data-path="create-enrichment-map-from-r-with-gprofiler-results.html"><a href="create-enrichment-map-from-r-with-gprofiler-results.html#get-a-screen-shot-of-the-initial-network."><i class="fa fa-check"></i><b>8.8</b> Get a screen shot of the initial network.</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>9</b> References</a></li>
+<li class="chapter" data-level="9" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html"><i class="fa fa-check"></i><b>9</b> Create Enrichment map from R with GSEA results</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#initialize-variables-and-libraries-2"><i class="fa fa-check"></i><b>9.1</b> Initialize variables and libraries</a></li>
+<li class="chapter" data-level="9.2" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#configurable-parameters-2"><i class="fa fa-check"></i><b>9.2</b> Configurable Parameters</a></li>
+<li class="chapter" data-level="9.3" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#specify-data-files-1"><i class="fa fa-check"></i><b>9.3</b> Specify Data files</a></li>
+<li class="chapter" data-level="9.4" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#optional-file-specification"><i class="fa fa-check"></i><b>9.4</b> Optional File specification</a></li>
+<li class="chapter" data-level="9.5" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#launch-cytoscape-1"><i class="fa fa-check"></i><b>9.5</b> Launch Cytoscape</a></li>
+<li class="chapter" data-level="9.6" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#make-sure-you-can-connect-to-cytoscape-1"><i class="fa fa-check"></i><b>9.6</b> Make sure you can connect to Cytoscape</a></li>
+<li class="chapter" data-level="9.7" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#create-an-enrichment-map-1"><i class="fa fa-check"></i><b>9.7</b> Create an Enrichment map</a></li>
+<li class="chapter" data-level="9.8" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#create-an-enrichment-map---run-em-command-1"><i class="fa fa-check"></i><b>9.8</b> Create an Enrichment map - run EM command</a></li>
+<li class="chapter" data-level="9.9" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#get-a-screen-shot-of-the-initial-network.-1"><i class="fa fa-check"></i><b>9.9</b> Get a screen shot of the initial network.</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>10</b> References</a></li>
 <li class="divider"></li>
 <li><a href="https://baderlab.org" target="blank"><img src="./images/baderlablogo.png" width="280">Bader Lab</a></li>
 
@@ -233,7 +245,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CBW pathways Workshops - example R notebooks</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Translate gmt file from human to another species</a>
           </h1>
         </div>
 
@@ -241,8 +253,8 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1 hasAnchor" number="9">
-<h1><span class="header-section-number">Chapter 9</span> References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="references" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">Chapter 10</span> References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div class="csl-entry">
@@ -258,7 +270,7 @@ Subramanian, Aravind, Pablo Tamayo, Vamsi K Mootha, Sayan Mukherjee, Benjamin L 
 Xie, Yihui. 2015. <em>Dynamic Documents with <span>R</span> and Knitr</em>. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC. <a href="http://yihui.name/knitr/">http://yihui.name/knitr/</a>.
 </div>
 <div class="csl-entry">
-———. 2023. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown">https://CRAN.R-project.org/package=bookdown</a>.
+———. 2023. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. <a href="https://github.com/rstudio/bookdown">https://github.com/rstudio/bookdown</a>.
 </div>
 </div>
 </div>
