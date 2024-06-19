@@ -21,7 +21,7 @@ If you are working in a different species you will need to generate your own gmt
 
 The parameters are set in the params option on this notebook but you can also manually set them here.
 
-```r
+``` r
 # for example - working_dir <- "./genereated_data"
 working_dir <- params$working_dir
 
@@ -34,7 +34,7 @@ ensembl_dataset <- params$ensembl_dataset
 
 
 
-```r
+``` r
 #use library
 #make sure biocManager is installed
 tryCatch(expr = { library("BiocManager")}, 
@@ -52,7 +52,7 @@ tryCatch(expr = { library("biomaRt")},
 
 Create or set a directory to store all the generatd results
 
-```r
+``` r
 if(!dir.exists(params$working_dir)){
   dir.create(params$working_dir)
 }
@@ -62,7 +62,7 @@ if(!dir.exists(params$working_dir)){
 
 Connect to Biomart
 
-```r
+``` r
 ensembl <- useEnsembl(biomart = "genes", host = "asia.ensembl.org")
 #ensembl <- useEnsembl("ensembl")
 ```
@@ -71,7 +71,7 @@ ensembl <- useEnsembl(biomart = "genes", host = "asia.ensembl.org")
 Figure out which dataset you want to use - for some species there might be a few datasets to choose from.  Not all of the datasets have common namesa associated with them.  For example, if you search for 'yeast' nothing will be returned but if you look for Saccharomyces or cerevisiae  you will be able to find it.
 
 
-```r
+``` r
 all_datasets <- listDatasets(ensembl)
 
 #get all the datasets that match our species definition
@@ -88,7 +88,7 @@ all_datasets[grep(all_datasets$description,
 If you know the ensembl dataset that you want to use you can specify it in the parameters above or grab from the above table the dataset of the species that you are interested in. 
 
 
-```r
+``` r
 ensembl = useDataset(ensembl_dataset,mart=ensembl)
 ```
 
@@ -96,7 +96,7 @@ ensembl = useDataset(ensembl_dataset,mart=ensembl)
 
 Get the GO annotations for our species
 
-```r
+``` r
 go_annotation <- getBM(attributes = c("external_gene_name",
                                       "ensembl_gene_id",
                                       "ensembl_transcript_id",
@@ -130,7 +130,7 @@ There are two identifiers that you can choose from in the above table
  
  Each of these is stored as a list in the dataframe.  In order to convert it to the right format for the gmt file we need to convert the list to string of tab delimited strings.  (unfortunately there is no streaightforward way to write out a dataframe's column of lists.)
 
-```r
+``` r
 go_pathway_sets[1:3,"external_gene_name"]
 ```
 
@@ -146,7 +146,7 @@ go_pathway_sets[1:3,"external_gene_name"]
 ## [10] "ERCC8"
 ```
 
-```r
+``` r
 go_pathway_sets[1:3,"ensembl_gene_id"]
 ```
 
@@ -170,7 +170,7 @@ go_pathway_sets[1:3,"ensembl_gene_id"]
 
 Convert column of lists to a tab delimited string of gene names
 
-```r
+``` r
 go_pathway_sets$collapsed_genenames <- apply(go_pathway_sets,1,
                                              FUN=function(x){
    paste(gsub(unlist(x$external_gene_name),pattern= "\"",
@@ -181,7 +181,7 @@ go_pathway_sets$collapsed_genenames <- apply(go_pathway_sets,1,
 
 Convert column of lists to a tab delimited string of gene names
 
-```r
+``` r
 go_pathway_sets$collapsed_ensemblids <- apply(go_pathway_sets,1,
                                               FUN=function(x){
    paste(gsub(unlist(x$ensembl_gene_id),pattern= "\"",
@@ -198,7 +198,7 @@ The format of the GMT file is described [https://software.broadinstitute.org/can
 Write out the gmt file with genenames
 
 
-```r
+``` r
 gmt_file_genenames <- go_pathway_sets[,c("Group.1","name_1006",
                                          "collapsed_genenames")]
 colnames(gmt_file_genenames)[1:2] <- c("name","description") 
@@ -216,7 +216,7 @@ write.table(x = gmt_file_genenames,file = gmt_genenames_filename,
 
 Write out the gmt file with ensembl ids
 
-```r
+``` r
 gmt_file_ensemblids <- go_pathway_sets[,c("Group.1","name_1006",
                                           "collapsed_ensemblids")]
 colnames(gmt_file_ensemblids)[1:2] <- c("name","description") 

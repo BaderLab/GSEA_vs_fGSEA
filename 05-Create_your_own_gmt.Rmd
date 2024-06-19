@@ -1,8 +1,8 @@
 ---
 params:
   working_dir: ./generated_data/
-  species: horse
-  ensembl_dataset: ecaballus_gene_ensembl
+  species: felis
+  ensembl_dataset: fcatus_gene_ensembl
 ---
 
 # Create GMT file from Ensembl
@@ -61,7 +61,8 @@ if(!dir.exists(params$working_dir)){
 
 Connect to Biomart
 ```{r connect to biomart}
-ensembl <- useEnsembl(biomart = "genes",host = "asia.ensembl.org")
+ensembl <- useEnsembl(biomart = "genes", host = "asia.ensembl.org")
+#ensembl <- useEnsembl("ensembl")
 ```
 
 
@@ -160,6 +161,10 @@ gmt_file_genenames <- go_pathway_sets[,c("Group.1","name_1006",
                                          "collapsed_genenames")]
 colnames(gmt_file_genenames)[1:2] <- c("name","description") 
 
+gmt_file_genenames$name <- paste(gmt_file_genenames$description, gmt_file_genenames$name,sep="_")
+gmt_file_genenames$name <- gsub(gmt_file_genenames$name,pattern = " ",replacement = "_")
+gmt_file_genenames$name <- gsub(gmt_file_genenames$name,pattern = ":",replacement = "_")
+
 gmt_genenames_filename <- file.path(params$working_dir, paste(species,ensembl_dataset,"GO_genesets_GN.gmt",sep = "_"))
 
 write.table(x = gmt_file_genenames,file = gmt_genenames_filename,
@@ -173,6 +178,11 @@ Write out the gmt file with ensembl ids
 gmt_file_ensemblids <- go_pathway_sets[,c("Group.1","name_1006",
                                           "collapsed_ensemblids")]
 colnames(gmt_file_ensemblids)[1:2] <- c("name","description") 
+
+gmt_file_ensemblids$name <- paste(gmt_file_ensemblids$description, gmt_file_ensemblids$name,sep="_")
+gmt_file_ensemblids$name <- gsub(gmt_file_ensemblids$name,pattern = " ",replacement = "_")
+gmt_file_ensemblids$name <- gsub(gmt_file_ensemblids$name,pattern = ":",replacement = "_")
+
 
 gmt_ensemblids_filename <- file.path(params$working_dir, paste(species,ensembl_dataset,"GO_genesets_esemblids.gmt",sep = "_"))
 

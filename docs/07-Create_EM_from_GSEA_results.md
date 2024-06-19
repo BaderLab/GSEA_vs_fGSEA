@@ -1,9 +1,21 @@
+---
+params:
+  analysis_name: Basal_vs_Classical
+  working_dir: ./data/
+  output_dir: ./generated_data/gsea/
+  rnk_file: TCGA-PAAD_GDC_Subtype_Moffitt_BasalvsClassical_ranks.rnk
+  expression_file: TCGA-PAAD_GDC_BasalvsClassical_normalized_rnaseq.txt
+  cls_file: TCGA-PAAD_Subtype_Moffitt_BasalvsClassical_RNAseq_classes.cls
+  pvalue_thresh: 1.0
+  qvalue_thresh: 0.05
+---
+
 # Create Enrichment map from R with GSEA results
 
 ## Initialize variables and libraries
 
 
-```r
+``` r
 #use library
 #make sure biocManager is installed
 tryCatch(expr = { library("BiocManager")}, 
@@ -28,13 +40,13 @@ tryCatch(expr = { library("httr")},
 ## Configurable Parameters
 
 
-```r
+``` r
 # is_docker - true/false depending on if you are running R from docker
 is_docker <- TRUE
 
 #directory where all the original input data file are
 # for example ./data/
-working_dir <- "./data/"
+working_dir <- params$working_dir
 
 
 #directory where all the generated data files are found.
@@ -42,15 +54,15 @@ working_dir <- "./data/"
 # If you are using all the notebooks from this set the generated data will be
 # put in the ./generated_data folder.  You have to specify if it is gsea or 
 # gprofiler
-output_dir <- "./generated_data/gsea/"
+output_dir <- params$output_dir
 
 
 #defined threshold for GSEA enrichments 
 #p-value to filter all the genesets.  For example -   1.0
-pvalue_gsea_threshold <- 1.0
+pvalue_gsea_threshold <- params$pvalue_thresh
 
 #q-value to filter all the genesets.  For example -   0.05
-qvalue_gsea_threshold <- 0.05
+qvalue_gsea_threshold <- params$qvalue_thresh
 
 #similarity threshold to filter all the genesets connections/edges.  
 # For example -   0.375
@@ -69,7 +81,7 @@ Depending on whether you are creating your enrichment map from g:Profiler or GSE
 Although there is a gmt file in the gsea edb results directory(which is the easiest method to create an enrichment map)  it have been filtered to contain only genes represented in the  expression set.  If you use this fltered file you will get different pathway connectivity depending on the dataset being used.  We recommend using original gmt file used for the gsea analysis and not the filtered one in the results directory.
 
 
-```r
+``` r
 #use the newest gmt file in the output directory
 gmt_files <- list.files(path = output_dir, pattern = "\\.gmt")
 
@@ -85,7 +97,7 @@ gmt_files <- list.files(path = output_dir, pattern = "\\.gmt")
 
 GSEA output directory - You can specify the exact name of the directory.  The below code looks for the newest GSEA results directory and uses that.
 
-```r
+``` r
 gsea_directories <- list.files(path = output_dir, pattern = "\\.GseaPreranked")
 
 #get the details on the files
@@ -107,15 +119,17 @@ These files are not needed to create the enrichment map but are very beneficial 
   * gene ranks file
 
 
-```r
+``` r
 gsea_ranks_file <- file.path(gsea_results_path,
                              list.files(gsea_results_path,pattern=".rnk"))
 
 expression_file_fullpath <- file.path(working_dir,
-                          "MesenchymalvsImmunoreactive_rnaseq_expression.txt")
+                          params$expression_file)
+
+cls_file_fullpath <- file.path(working_dir, params$cls_file)
 
 #define an analysis name
-cur_model_name <- "Mesen_vs_Immuno_buildfromR"
+cur_model_name <- params$analysis_name
 ```
 
 
@@ -125,7 +139,7 @@ Launch Cytoscape (by default cytoscape will automatically enable rest so as long
 
 ## Make sure you can connect to Cytoscape
 
-```r
+``` r
 if(is_docker){
   current_base = "host.docker.internal:1234/v1"
   .defaultBaseUrl <- "http://host.docker.internal:1234/v1"
@@ -140,13 +154,13 @@ cytoscapePing (base.url = current_base)
 ## You are connected to Cytoscape!
 ```
 
-```r
+``` r
 cytoscapeVersionInfo (base.url = current_base)
 ```
 
 ```
 ##       apiVersion cytoscapeVersion 
-##             "v1"         "3.10.1"
+##             "v1"         "3.10.2"
 ```
 ***
 ## Create an Enrichment map
@@ -154,7 +168,7 @@ cytoscapeVersionInfo (base.url = current_base)
 If you are running R from within a docker you need to first upload your datafiles to Cytoscape before you can create your enrichment map
 
 
-```r
+``` r
 #if using docker we need to replace all the the paths to the host path
 if(is_docker) {
   upload_em_file <- function(localPath) {
@@ -174,6 +188,7 @@ paste('http://host.docker.internal:1234/enrichmentmap/textfileupload?fileName=',
   # "upload" the files to the host machine and replace each path 
   # with the host machine path
   expression_file_fullpath <- upload_em_file(expression_file_fullpath)
+  class_file_fullpath <- upload_em_file(cls_file_fullpath)
   gmt_gsea_file <- upload_em_file(gmt_gsea_file)
   gsea_ranks_file <- upload_em_file(gsea_ranks_file)
   gsea_results_filename <- upload_em_file(gsea_results_filename)
@@ -182,7 +197,7 @@ paste('http://host.docker.internal:1234/enrichmentmap/textfileupload?fileName=',
 ***
 ## Create an Enrichment map - run EM command
 
-```r
+``` r
 #######################################
 #create EM
 current_network_name <- paste(cur_model_name,pvalue_gsea_threshold,
@@ -198,6 +213,7 @@ em_command = paste('enrichmentmap build analysisType="gsea" gmtFile=',
                    'enrichmentsDataset1=',gsea_results_filename, 
                    'filterByExpressions=false',
                    'expressionDataset1=',expression_file_fullpath,
+                   'classDataset1=',class_file_fullpath,
                    'gmtFile=',gmt_gsea_file,
                    sep=" ")
 
@@ -228,7 +244,7 @@ response <- renameNetwork(title=current_network_name,
 
 ## Get a screen shot of the initial network.
 
-```r
+``` r
 #you can only output the file if it isn't on docker
 #on docker is put it into the user's home directory with docker 
 # has not access to

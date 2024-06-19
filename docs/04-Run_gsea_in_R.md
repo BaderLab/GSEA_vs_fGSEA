@@ -1,12 +1,12 @@
 ---
 params:
-  analysis_name: Mesen_vs_Immuno
+  analysis_name: Basal_vs_Classical
   working_dir: ./data/
   output_dir: ./generated_data/gsea/
-  rnk_file: MesenchymalvsImmunoreactive_edger_ranks.rnk
-  gsea_jar: /home/rstudio/GSEA_4.3.2/gsea-cli.sh
+  rnk_file: TCGA-PAAD_GDC_Subtype_Moffitt_BasalvsClassical_ranks.rnk
+  gsea_jar: /home/rstudio/GSEA_4.3.3/gsea-cli.sh
   gsea_directory: ''
-  run_gsea: false
+  run_gsea: true
 ---
 # Run GSEA from within R
 
@@ -19,7 +19,7 @@ There is no package to run the original algorithm of GSEA[@gsea2005] in R.  Ther
 ## Load in required libraries
 
 
-```r
+``` r
 #install required R and bioconductor packages
 tryCatch(expr = { library("RCurl")}, 
          error = function(e) {  
@@ -36,7 +36,7 @@ In order to run GSEA automatically through the notebook you will need to downloa
 If you are running this notebook using the [baderlab workshop docker image](https://hub.docker.com/r/risserlin/workshop_base_image) then the image comes pre-installed with the gsea jar that you can use to run gsea directly in the docker.  The path to the GSEA jar in the docker is - /home/rstudio/GSEA_4.3.2/gsea-cli.sh
 
 In order to run GSEA automatically you need to speciry the path to the gsea jar file.
-The gsea_jar needs to be the full path to the GSEA 4.3.2 directory that you downloaded from GSEA. for example  /Users/johnsmith/GSEA_4.3.2/gsea-cli.sh
+The gsea_jar needs to be the full path to the GSEA 4.3.3 directory that you downloaded from GSEA. for example  /Users/johnsmith/GSEA_4.3.3/gsea-cli.sh
 
 The parameters are set manually here but if you want to run the script from the command line then you can update the notebook to pull the parameters from the command line given arguments by updating each variable below to pull the values from the paramters - for example:
 
@@ -45,38 +45,40 @@ The parameters are set manually here but if you want to run the script from the 
 For more details see - [defining and using parameters](https://bookdown.org/yihui/rmarkdown/params-declare.html) and [Knitting with parameters](https://bookdown.org/yihui/rmarkdown/params-knit.html)
 
 
-```r
+``` r
 #path to GSEA jar 
-gsea_jar <- "/home/rstudio/GSEA_4.3.2/gsea-cli.sh"
+# defined in the paramters at top of notebook
+gsea_jar <- params$gsea_jar
 ```
 
 Set the working directory as the directory to the directory where you downloaded all protocol files.  For example /User/JohnSmith/EMProtocolFiles/data
 
 
-```r
+``` r
+# defined in the paramters at top of notebook
+
 #directory where all the data files are found.  For example -   ./data/ 
-working_dir <- "./data/"
+working_dir <- params$working_dir
 
 #directory where all the data files are found.  For example -   ./generated_data/gsea/
-output_dir <- "./generated_data/gsea/"
+output_dir <- params$output_dir
 
-#The name to give the analysis in GSEA - for example Mesen_vs_Immuno
-analysis_name <- "Mesen_vs_Immuno"
+#The name to give the analysis in GSEA - for example Basal_vs_Classical
+analysis_name <- params$analysis_name
 
 #rank file to use in GSEA analysis.  
-#For example - MesenchymalvsImmunoreactive_edger_ranks.rnk
-rnk_file <- "MesenchymalvsImmunoreactive_edger_ranks.rnk"
+#For example - TCGA-PAAD_GDC_Subtype_Moffitt_BasalvsClassical_ranks.rnk
+rnk_file <- params$rnk_file
 
 #run_gsea - true/false
 # This parameter is for the compilation of the notebook.  
-run_gsea <- FALSE
+run_gsea <- params$run_gsea
 
 #set the gmt file you want to use if you don't want to use the latest gmt file.
 # For example, if you set dest_gmt_file =="" the below script will automatically
 # download the latest gmt file from baderlab webstie.  If it is set then it
 # will use the file specified.  
-dest_gmt_file = file.path(output_dir, 
-                          "Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol.gmt")
+dest_gmt_file = ""
 ```
 
 
@@ -89,7 +91,7 @@ Only Human, Mouse, Rat, and Woodchuck gene set files are currently available on 
 To create your own GMT file using Ensembl see [Create GMT file from Ensembl]
 
 
-```r
+``` r
 if(dest_gmt_file == ""){
   gmt_url = "http://download.baderlab.org/EM_Genesets/current_release/Human/symbol/"
   
@@ -102,7 +104,7 @@ if(dest_gmt_file == ""){
   #get the gmt that has all the pathways and does not include terms 
   # inferred from electronic annotations(IEA)
   #start with gmt file that has pathways only and GO Biological Process only.
-  rx = gregexpr("(?<=<a href=\")(.*.GOBP_AllPathways_no_GO_iea.*.)(.gmt)(?=\">)",
+  rx = gregexpr("(?<=<a href=\")(.*.GOBP_AllPathways_noPFOCR_no_GO_iea.*.)(.gmt)(?=\">)",
     contents, perl = TRUE)
   gmt_file = unlist(regmatches(contents, rx))
   
@@ -138,7 +140,7 @@ In the below command the following options have been specified:
 
  
 
-```r
+``` r
 if(run_gsea){
   command <- paste("",gsea_jar,  
                    "GSEAPreRanked -gmx", dest_gmt_file, 

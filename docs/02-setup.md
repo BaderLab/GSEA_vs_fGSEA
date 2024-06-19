@@ -50,7 +50,7 @@ One the best solutions to reproducibility issues is containing your workflow or 
   * Run the following command: (the only difference with the windows command is the way the current directory is written.  \$\{PWD\} instead of \"\$(pwd)\")
 
 
-```r
+``` r
 docker run -e PASSWORD=changeit --rm \
   -v ${PWD}:/home/rstudio/projects -p 8787:8787 \
   risserlin/workshop_base_image
@@ -67,7 +67,7 @@ docker run -e PASSWORD=changeit --rm \
   * Run the following command: (the only difference with the windows command is the way the current directory is written.   \$\{PWD\} instead of \"\$(pwd)\")
 
 
-```r
+``` r
 docker run -e PASSWORD=changeit --rm \
   -v "$(pwd)":/home/rstudio/projects -p 8787:8787 \
   --add-host "localhost:My.IP.address"

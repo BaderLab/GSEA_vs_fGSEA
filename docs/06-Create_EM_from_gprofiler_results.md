@@ -3,7 +3,7 @@
 ## Initialize variables and libraries
 
 
-```r
+``` r
 #use library
 #make sure biocManager is installed
 tryCatch(expr = { library("BiocManager")}, 
@@ -28,7 +28,7 @@ tryCatch(expr = { library("httr")},
 ## Configurable Parameters
 
 
-```r
+``` r
 # is_docker - true/false depending on if you are running R from docker
 is_docker <- TRUE
 
@@ -71,7 +71,7 @@ We have multiple g:profiler results.
   * varied geneset sources - baderlab genesets or g:profiler sets.
 
 
-```r
+``` r
 #get the newest gprofiler gmt file
 gprof_files <- file.info(list.files(file.path(getwd(),output_dir),
                                     pattern = "gprofiler_full",
@@ -98,7 +98,7 @@ Launch Cytoscape (by default cytoscape will automatically enable rest so as long
 
 ## Make sure you can connect to Cytoscape
 
-```r
+``` r
 if(is_docker){
   current_base = "host.docker.internal:1234/v1"
   .defaultBaseUrl <- "http://host.docker.internal:1234/v1"
@@ -113,13 +113,13 @@ cytoscapePing (base.url = current_base)
 ## You are connected to Cytoscape!
 ```
 
-```r
+``` r
 cytoscapeVersionInfo (base.url = current_base)
 ```
 
 ```
 ##       apiVersion cytoscapeVersion 
-##             "v1"         "3.10.1"
+##             "v1"         "3.10.2"
 ```
 ***
 ## Create an Enrichment map
@@ -127,7 +127,7 @@ cytoscapeVersionInfo (base.url = current_base)
 If you are running R from within a docker you need to first upload your datafiles to Cytoscape before you can create your enrichment map
 
 
-```r
+``` r
 #if using docker we need to replace all the the paths to the host path
 if(is_docker) {
   upload_em_file <- function(localPath) {
@@ -154,7 +154,7 @@ paste('http://host.docker.internal:1234/enrichmentmap/textfileupload?fileName=',
 ***
 ## Create an Enrichment map - run EM command
 
-```r
+``` r
 #######################################
 #create EM
 
@@ -197,7 +197,7 @@ response <- renameNetwork(title=current_network_name,
 
 ## Get a screen shot of the initial network.
 
-```r
+``` r
 #you can only output the file if it isn't on docker
 #on docker is put it into the user's home directory with docker has not access to
 if(!is_docker){

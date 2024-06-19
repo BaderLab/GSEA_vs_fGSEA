@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Run GSEA from within R | Translate gmt file from human to another species</title>
   <meta name="description" content="These are example R Notebooks to run g:profiler and GSEA and visualize results in Cytoscape with Enrichment map directly from R" />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Run GSEA from within R | Translate gmt file from human to another species" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Ruth Isserlin" />
 
 
-<meta name="date" content="2024-01-24" />
+<meta name="date" content="2024-06-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -56,7 +56,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -66,7 +66,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -127,6 +127,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -271,38 +272,40 @@ div.csl-indent {
 <p>In order to run GSEA automatically through the notebook you will need to download the gsea jar from <a href="http://software.broadinstitute.org/gsea/downloads.jsp">here</a>. Specify the exact path to the gsea jar in the parameters in order to automatically compute enrichments using GSEA.</p>
 <p>If you are running this notebook using the <a href="https://hub.docker.com/r/risserlin/workshop_base_image">baderlab workshop docker image</a> then the image comes pre-installed with the gsea jar that you can use to run gsea directly in the docker. The path to the GSEA jar in the docker is - /home/rstudio/GSEA_4.3.2/gsea-cli.sh</p>
 <p>In order to run GSEA automatically you need to speciry the path to the gsea jar file.
-The gsea_jar needs to be the full path to the GSEA 4.3.2 directory that you downloaded from GSEA. for example /Users/johnsmith/GSEA_4.3.2/gsea-cli.sh</p>
+The gsea_jar needs to be the full path to the GSEA 4.3.3 directory that you downloaded from GSEA. for example /Users/johnsmith/GSEA_4.3.3/gsea-cli.sh</p>
 <p>The parameters are set manually here but if you want to run the script from the command line then you can update the notebook to pull the parameters from the command line given arguments by updating each variable below to pull the values from the paramters - for example:</p>
 <ul>
 <li>variable &lt;- params$parameter_name</li>
 </ul>
 <p>For more details see - <a href="https://bookdown.org/yihui/rmarkdown/params-declare.html">defining and using parameters</a> and <a href="https://bookdown.org/yihui/rmarkdown/params-knit.html">Knitting with parameters</a></p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="run-gsea-from-within-r.html#cb44-1" tabindex="-1"></a><span class="co">#path to GSEA jar </span></span>
-<span id="cb44-2"><a href="run-gsea-from-within-r.html#cb44-2" tabindex="-1"></a>gsea_jar <span class="ot">&lt;-</span> <span class="st">&quot;/home/rstudio/GSEA_4.3.2/gsea-cli.sh&quot;</span></span></code></pre></div>
+<span id="cb44-2"><a href="run-gsea-from-within-r.html#cb44-2" tabindex="-1"></a><span class="co"># defined in the paramters at top of notebook</span></span>
+<span id="cb44-3"><a href="run-gsea-from-within-r.html#cb44-3" tabindex="-1"></a>gsea_jar <span class="ot">&lt;-</span> params<span class="sc">$</span>gsea_jar</span></code></pre></div>
 <p>Set the working directory as the directory to the directory where you downloaded all protocol files. For example /User/JohnSmith/EMProtocolFiles/data</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="run-gsea-from-within-r.html#cb45-1" tabindex="-1"></a><span class="co">#directory where all the data files are found.  For example -   ./data/ </span></span>
-<span id="cb45-2"><a href="run-gsea-from-within-r.html#cb45-2" tabindex="-1"></a>working_dir <span class="ot">&lt;-</span> <span class="st">&quot;./data/&quot;</span></span>
-<span id="cb45-3"><a href="run-gsea-from-within-r.html#cb45-3" tabindex="-1"></a></span>
-<span id="cb45-4"><a href="run-gsea-from-within-r.html#cb45-4" tabindex="-1"></a><span class="co">#directory where all the data files are found.  For example -   ./generated_data/gsea/</span></span>
-<span id="cb45-5"><a href="run-gsea-from-within-r.html#cb45-5" tabindex="-1"></a>output_dir <span class="ot">&lt;-</span> <span class="st">&quot;./generated_data/gsea/&quot;</span></span>
-<span id="cb45-6"><a href="run-gsea-from-within-r.html#cb45-6" tabindex="-1"></a></span>
-<span id="cb45-7"><a href="run-gsea-from-within-r.html#cb45-7" tabindex="-1"></a><span class="co">#The name to give the analysis in GSEA - for example Mesen_vs_Immuno</span></span>
-<span id="cb45-8"><a href="run-gsea-from-within-r.html#cb45-8" tabindex="-1"></a>analysis_name <span class="ot">&lt;-</span> <span class="st">&quot;Mesen_vs_Immuno&quot;</span></span>
-<span id="cb45-9"><a href="run-gsea-from-within-r.html#cb45-9" tabindex="-1"></a></span>
-<span id="cb45-10"><a href="run-gsea-from-within-r.html#cb45-10" tabindex="-1"></a><span class="co">#rank file to use in GSEA analysis.  </span></span>
-<span id="cb45-11"><a href="run-gsea-from-within-r.html#cb45-11" tabindex="-1"></a><span class="co">#For example - MesenchymalvsImmunoreactive_edger_ranks.rnk</span></span>
-<span id="cb45-12"><a href="run-gsea-from-within-r.html#cb45-12" tabindex="-1"></a>rnk_file <span class="ot">&lt;-</span> <span class="st">&quot;MesenchymalvsImmunoreactive_edger_ranks.rnk&quot;</span></span>
-<span id="cb45-13"><a href="run-gsea-from-within-r.html#cb45-13" tabindex="-1"></a></span>
-<span id="cb45-14"><a href="run-gsea-from-within-r.html#cb45-14" tabindex="-1"></a><span class="co">#run_gsea - true/false</span></span>
-<span id="cb45-15"><a href="run-gsea-from-within-r.html#cb45-15" tabindex="-1"></a><span class="co"># This parameter is for the compilation of the notebook.  </span></span>
-<span id="cb45-16"><a href="run-gsea-from-within-r.html#cb45-16" tabindex="-1"></a>run_gsea <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
-<span id="cb45-17"><a href="run-gsea-from-within-r.html#cb45-17" tabindex="-1"></a></span>
-<span id="cb45-18"><a href="run-gsea-from-within-r.html#cb45-18" tabindex="-1"></a><span class="co">#set the gmt file you want to use if you don&#39;t want to use the latest gmt file.</span></span>
-<span id="cb45-19"><a href="run-gsea-from-within-r.html#cb45-19" tabindex="-1"></a><span class="co"># For example, if you set dest_gmt_file ==&quot;&quot; the below script will automatically</span></span>
-<span id="cb45-20"><a href="run-gsea-from-within-r.html#cb45-20" tabindex="-1"></a><span class="co"># download the latest gmt file from baderlab webstie.  If it is set then it</span></span>
-<span id="cb45-21"><a href="run-gsea-from-within-r.html#cb45-21" tabindex="-1"></a><span class="co"># will use the file specified.  </span></span>
-<span id="cb45-22"><a href="run-gsea-from-within-r.html#cb45-22" tabindex="-1"></a>dest_gmt_file <span class="ot">=</span> <span class="fu">file.path</span>(output_dir, </span>
-<span id="cb45-23"><a href="run-gsea-from-within-r.html#cb45-23" tabindex="-1"></a>                          <span class="st">&quot;Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol.gmt&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="run-gsea-from-within-r.html#cb45-1" tabindex="-1"></a><span class="co"># defined in the paramters at top of notebook</span></span>
+<span id="cb45-2"><a href="run-gsea-from-within-r.html#cb45-2" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="run-gsea-from-within-r.html#cb45-3" tabindex="-1"></a><span class="co">#directory where all the data files are found.  For example -   ./data/ </span></span>
+<span id="cb45-4"><a href="run-gsea-from-within-r.html#cb45-4" tabindex="-1"></a>working_dir <span class="ot">&lt;-</span> params<span class="sc">$</span>working_dir</span>
+<span id="cb45-5"><a href="run-gsea-from-within-r.html#cb45-5" tabindex="-1"></a></span>
+<span id="cb45-6"><a href="run-gsea-from-within-r.html#cb45-6" tabindex="-1"></a><span class="co">#directory where all the data files are found.  For example -   ./generated_data/gsea/</span></span>
+<span id="cb45-7"><a href="run-gsea-from-within-r.html#cb45-7" tabindex="-1"></a>output_dir <span class="ot">&lt;-</span> params<span class="sc">$</span>output_dir</span>
+<span id="cb45-8"><a href="run-gsea-from-within-r.html#cb45-8" tabindex="-1"></a></span>
+<span id="cb45-9"><a href="run-gsea-from-within-r.html#cb45-9" tabindex="-1"></a><span class="co">#The name to give the analysis in GSEA - for example Basal_vs_Classical</span></span>
+<span id="cb45-10"><a href="run-gsea-from-within-r.html#cb45-10" tabindex="-1"></a>analysis_name <span class="ot">&lt;-</span> params<span class="sc">$</span>analysis_name</span>
+<span id="cb45-11"><a href="run-gsea-from-within-r.html#cb45-11" tabindex="-1"></a></span>
+<span id="cb45-12"><a href="run-gsea-from-within-r.html#cb45-12" tabindex="-1"></a><span class="co">#rank file to use in GSEA analysis.  </span></span>
+<span id="cb45-13"><a href="run-gsea-from-within-r.html#cb45-13" tabindex="-1"></a><span class="co">#For example - TCGA-PAAD_GDC_Subtype_Moffitt_BasalvsClassical_ranks.rnk</span></span>
+<span id="cb45-14"><a href="run-gsea-from-within-r.html#cb45-14" tabindex="-1"></a>rnk_file <span class="ot">&lt;-</span> params<span class="sc">$</span>rnk_file</span>
+<span id="cb45-15"><a href="run-gsea-from-within-r.html#cb45-15" tabindex="-1"></a></span>
+<span id="cb45-16"><a href="run-gsea-from-within-r.html#cb45-16" tabindex="-1"></a><span class="co">#run_gsea - true/false</span></span>
+<span id="cb45-17"><a href="run-gsea-from-within-r.html#cb45-17" tabindex="-1"></a><span class="co"># This parameter is for the compilation of the notebook.  </span></span>
+<span id="cb45-18"><a href="run-gsea-from-within-r.html#cb45-18" tabindex="-1"></a>run_gsea <span class="ot">&lt;-</span> params<span class="sc">$</span>run_gsea</span>
+<span id="cb45-19"><a href="run-gsea-from-within-r.html#cb45-19" tabindex="-1"></a></span>
+<span id="cb45-20"><a href="run-gsea-from-within-r.html#cb45-20" tabindex="-1"></a><span class="co">#set the gmt file you want to use if you don&#39;t want to use the latest gmt file.</span></span>
+<span id="cb45-21"><a href="run-gsea-from-within-r.html#cb45-21" tabindex="-1"></a><span class="co"># For example, if you set dest_gmt_file ==&quot;&quot; the below script will automatically</span></span>
+<span id="cb45-22"><a href="run-gsea-from-within-r.html#cb45-22" tabindex="-1"></a><span class="co"># download the latest gmt file from baderlab webstie.  If it is set then it</span></span>
+<span id="cb45-23"><a href="run-gsea-from-within-r.html#cb45-23" tabindex="-1"></a><span class="co"># will use the file specified.  </span></span>
+<span id="cb45-24"><a href="run-gsea-from-within-r.html#cb45-24" tabindex="-1"></a>dest_gmt_file <span class="ot">=</span> <span class="st">&quot;&quot;</span></span></code></pre></div>
 </div>
 <div id="download-the-latest-pathway-definition-file" class="section level2 hasAnchor" number="5.3">
 <h2><span class="header-section-number">5.3</span> Download the latest pathway definition file<a href="run-gsea-from-within-r.html#download-the-latest-pathway-definition-file" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -320,7 +323,7 @@ The gsea_jar needs to be the full path to the GSEA 4.3.2 directory that you down
 <span id="cb46-10"><a href="run-gsea-from-within-r.html#cb46-10" tabindex="-1"></a>  <span class="co">#get the gmt that has all the pathways and does not include terms </span></span>
 <span id="cb46-11"><a href="run-gsea-from-within-r.html#cb46-11" tabindex="-1"></a>  <span class="co"># inferred from electronic annotations(IEA)</span></span>
 <span id="cb46-12"><a href="run-gsea-from-within-r.html#cb46-12" tabindex="-1"></a>  <span class="co">#start with gmt file that has pathways only and GO Biological Process only.</span></span>
-<span id="cb46-13"><a href="run-gsea-from-within-r.html#cb46-13" tabindex="-1"></a>  rx <span class="ot">=</span> <span class="fu">gregexpr</span>(<span class="st">&quot;(?&lt;=&lt;a href=</span><span class="sc">\&quot;</span><span class="st">)(.*.GOBP_AllPathways_no_GO_iea.*.)(.gmt)(?=</span><span class="sc">\&quot;</span><span class="st">&gt;)&quot;</span>,</span>
+<span id="cb46-13"><a href="run-gsea-from-within-r.html#cb46-13" tabindex="-1"></a>  rx <span class="ot">=</span> <span class="fu">gregexpr</span>(<span class="st">&quot;(?&lt;=&lt;a href=</span><span class="sc">\&quot;</span><span class="st">)(.*.GOBP_AllPathways_noPFOCR_no_GO_iea.*.)(.gmt)(?=</span><span class="sc">\&quot;</span><span class="st">&gt;)&quot;</span>,</span>
 <span id="cb46-14"><a href="run-gsea-from-within-r.html#cb46-14" tabindex="-1"></a>    contents, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb46-15"><a href="run-gsea-from-within-r.html#cb46-15" tabindex="-1"></a>  gmt_file <span class="ot">=</span> <span class="fu">unlist</span>(<span class="fu">regmatches</span>(contents, rx))</span>
 <span id="cb46-16"><a href="run-gsea-from-within-r.html#cb46-16" tabindex="-1"></a>  </span>
@@ -369,7 +372,7 @@ The gsea_jar needs to be the full path to the GSEA 4.3.2 directory that you down
 </div>
 </div>
 <h3> References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-em2019" class="csl-entry">
 Reimand, Jüri, Ruth Isserlin, Veronique Voisin, Mike Kucera, Christian Tannus-Lopes, Asha Rostamianfar, Lina Wadi, et al. 2019. <span>“Pathway Enrichment Analysis and Visualization of Omics Data Using g: Profiler, GSEA, Cytoscape and EnrichmentMap.”</span> <em>Nature Protocols</em> 14 (2): 482–517.
 </div>

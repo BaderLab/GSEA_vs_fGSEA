@@ -58,7 +58,7 @@ if(dest_gmt_file == ""){
   #get the gmt that has all the pathways and does not include terms 
   # inferred from electronic annotations(IEA)
   #start with gmt file that has pathways only and GO Biological Process only.
-  rx = gregexpr("(?<=<a href=\")(.*.GOBP_AllPathways_no_GO_iea.*.)(.gmt)(?=\">)",
+  rx = gregexpr("(?<=<a href=\")(.*.GOBP_AllPathways_noPFOCR_no_GO_iea.*.)(.gmt)(?=\">)",
     contents, perl = TRUE)
   gmt_file = unlist(regmatches(contents, rx))
   

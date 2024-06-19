@@ -23,36 +23,40 @@ For more details see - [defining and using parameters](https://bookdown.org/yihu
 
 
 ```{r set parameters gprofiler}
+#all parameters are pulled from the defined parameters at the top of the notebook
+
 #where to put all the generated files
-working_dir <- "./generated_data/g_profiler"
+# for example - "./generated_data/g_profiler"
+working_dir <- params$working_dir
 
 # where to find the data files needed to run the analysis
-data_dir <-  "./data"
+# for example = "./data"
+data_dir <-  params$data_dir
 
 # File name containing the list of genes to be used for analysis
-genelist_file <- "Supplementary_Table1_Cancer_drivers.txt"
+# fro example - "Supplementary_Table1_Cancer_drivers.txt"
+genelist_file <- params$genelist_file
 
 # default max size of the genesets for example -  250.  For this example we
 # will be varying this parameter
-max_gs_size <- 250
+max_gs_size <- params$max_gs_size
 
 # default min size of the genesets for example -  3
-min_gs_size <- 3
+min_gs_size <- params$min_gs_size
 
 #min intersection between your genelist and the geneset - for example 3
-min_intersection <- 3
+min_intersection <- params$min_intersection
 
 # organism parameter used for g:profiler.  
 # First letter of first word in species name followed by 
 # the second word for example - hsapiens
-organism <- "hsapiens"
+organism <- params$organism
 
 #set the gmt file you want to use if you don't want to use the latest gmt file.
 # For example, if you set dest_gmt_file =="" the below script will automatically
 # download the latest gmt file from baderlab webstie.  If it is set then it
 # will use the file specified.  
-dest_gmt_file = file.path(working_dir, 
-                  "Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol.gmt")
+dest_gmt_file = ""
 ```
 
 
@@ -365,7 +369,7 @@ if(dest_gmt_file == ""){
   #get the gmt that has all the pathways and does not include 
   # terms inferred from electronic annotations(IEA)
   #start with gmt file that has pathways only
-  rx = gregexpr("(?<=<a href=\")(.*.GOBP_AllPathways_no_GO_iea.*.)(.gmt)(?=\">)",
+  rx = gregexpr("(?<=<a href=\")(.*.GOBP_AllPathways_noPFOCR_no_GO_iea.*.)(.gmt)(?=\">)",
     contents, perl = TRUE)
   gmt_file = unlist(regmatches(contents, rx))
   

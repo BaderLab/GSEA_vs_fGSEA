@@ -15,7 +15,7 @@ for species where there is a not an existing effort to characterize genes throug
 ## Load in required libraries
 
 
-```r
+``` r
 #install required R and bioconductor packages
 tryCatch(expr = { library("RCurl")}, 
          error = function(e) {  
@@ -43,7 +43,7 @@ Only Human, Mouse, Rat, and Woodchuck gene set files are currently available on 
 To create your own GMT file using Ensembl see [Create GMT file from Ensembl]
 
 
-```r
+``` r
 dest_gmt_file <- "" #params$dest_gmt_file 
 
 if(dest_gmt_file == ""){
@@ -58,7 +58,7 @@ if(dest_gmt_file == ""){
   #get the gmt that has all the pathways and does not include terms 
   # inferred from electronic annotations(IEA)
   #start with gmt file that has pathways only and GO Biological Process only.
-  rx = gregexpr("(?<=<a href=\")(.*.GOBP_AllPathways_no_GO_iea.*.)(.gmt)(?=\">)",
+  rx = gregexpr("(?<=<a href=\")(.*.GOBP_AllPathways_noPFOCR_no_GO_iea.*.)(.gmt)(?=\">)",
     contents, perl = TRUE)
   gmt_file = unlist(regmatches(contents, rx))
   
@@ -83,7 +83,7 @@ Load in the originaing gmt file
 
 Connect to Biomart
 
-```r
+``` r
 ensembl <- useEnsembl(biomart = "genes" , host = "asia.ensembl.org")
 #ensembl <- useEnsembl("ensembl")
 ```
@@ -92,7 +92,7 @@ ensembl <- useEnsembl(biomart = "genes" , host = "asia.ensembl.org")
 Figure out which dataset you want to use - for some species there might be a few datasets to choose from.  Not all of the datasets have common namesa associated with them.  For example, if you search for 'yeast' nothing will be returned but if you look for Saccharomyces or cerevisiae  you will be able to find it.
 
 
-```r
+``` r
 all_datasets <- listDatasets(ensembl, verbose=TRUE)
 ```
 
@@ -101,7 +101,7 @@ all_datasets <- listDatasets(ensembl, verbose=TRUE)
 ## asia.ensembl.org:80/biomart/martservice?redirect=no&type=datasets&requestid=biomaRt&mart=ENSEMBL_MART_ENSEMBL
 ```
 
-```r
+``` r
 #get all the datasets that match our species definition
 all_datasets[grep(all_datasets$description,
                   pattern=paste(params$new_species,sep=""),
@@ -115,7 +115,7 @@ all_datasets[grep(all_datasets$description,
 
 Based on the above table define the dataset
 
-```r
+``` r
 #get all the datasets that match our species definition
 base_dataset <- all_datasets$dataset[grep(all_datasets$description,
                   pattern=paste(params$new_species,sep=""),
@@ -127,7 +127,7 @@ base_dataset <- all_datasets$dataset[grep(all_datasets$description,
 If you know the ensembl dataset that you want to use you can specify it in the parameters above or grab from the above table the dataset of the species that you are interested in. 
 
 
-```r
+``` r
 ensembl = useDataset(base_dataset,mart=ensembl)
 ```
 
@@ -135,7 +135,7 @@ ensembl = useDataset(base_dataset,mart=ensembl)
 
 Get the homologs in the species of interest of the human genes.
 
-```r
+``` r
 homologs <- getBM(attributes = c("external_gene_name",
                                       "ensembl_gene_id",
                                       "hsapiens_homolog_ensembl_gene", 
@@ -149,7 +149,7 @@ homologs <- homologs[which((homologs$external_gene_name != "") & (homologs$hsapi
 Convert the human gmt file into the species of interest
 
 
-```r
+``` r
 names(originating_gmt$genesets) <- originating_gmt$geneset.names
 
 temp_genesets <- lapply(originating_gmt$genesets,FUN=function(x){homologs$external_gene_name[which(homologs$hsapiens_homolog_associated_gene_name %in% unlist(x))]})
@@ -164,7 +164,7 @@ translated_genessets <- list(geneset_names=originating_gmt$geneset.names,
 
 Convert lists to a tab delimited string of gene names
 
-```r
+``` r
 translated_genessets$collapsed_genenames  <- unlist(lapply(translated_genessets$genesets,
                                              FUN=function(x){
    paste(unlist(x),collapse = "\t")
@@ -181,7 +181,7 @@ The format of the GMT file is described [https://software.broadinstitute.org/can
   Write out the gmt file with genenames
 
 
-```r
+``` r
 gmt_file_genenames <- data.frame(name=translated_genessets$geneset_names,
                                  description=translated_genessets$geneset.descriptions,
                                  genes = translated_genessets$collapsed_genenames)

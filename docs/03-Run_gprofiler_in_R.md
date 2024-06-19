@@ -23,42 +23,46 @@ For more details see - [defining and using parameters](https://bookdown.org/yihu
 
 
 
-```r
+``` r
+#all parameters are pulled from the defined parameters at the top of the notebook
+
 #where to put all the generated files
-working_dir <- "./generated_data/g_profiler"
+# for example - "./generated_data/g_profiler"
+working_dir <- params$working_dir
 
 # where to find the data files needed to run the analysis
-data_dir <-  "./data"
+# for example = "./data"
+data_dir <-  params$data_dir
 
 # File name containing the list of genes to be used for analysis
-genelist_file <- "Supplementary_Table1_Cancer_drivers.txt"
+# fro example - "Supplementary_Table1_Cancer_drivers.txt"
+genelist_file <- params$genelist_file
 
 # default max size of the genesets for example -  250.  For this example we
 # will be varying this parameter
-max_gs_size <- 250
+max_gs_size <- params$max_gs_size
 
 # default min size of the genesets for example -  3
-min_gs_size <- 3
+min_gs_size <- params$min_gs_size
 
 #min intersection between your genelist and the geneset - for example 3
-min_intersection <- 3
+min_intersection <- params$min_intersection
 
 # organism parameter used for g:profiler.  
 # First letter of first word in species name followed by 
 # the second word for example - hsapiens
-organism <- "hsapiens"
+organism <- params$organism
 
 #set the gmt file you want to use if you don't want to use the latest gmt file.
 # For example, if you set dest_gmt_file =="" the below script will automatically
 # download the latest gmt file from baderlab webstie.  If it is set then it
 # will use the file specified.  
-dest_gmt_file = file.path(working_dir, 
-                  "Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol.gmt")
+dest_gmt_file = ""
 ```
 
 
 
-```r
+``` r
 #use library
 tryCatch(expr = { library("gprofiler2")}, 
          error = function(e) { 
@@ -73,7 +77,7 @@ tryCatch(expr = { library("GSA")},
 
 Create or set a directory to store all the generatd results
 
-```r
+``` r
 if(!dir.exists(params$working_dir)){
   dir.create(params$working_dir)
 }
@@ -83,7 +87,7 @@ if(!dir.exists(params$working_dir)){
 
 Load in the set of genes that we will be running g:profiler with
 
-```r
+``` r
  #load in the file
     current_genelist <- read.table(file = 
                                      file.path(data_dir, genelist_file),
@@ -118,7 +122,7 @@ For this query we are specifying -
   * source - the geneset source databases to use for the analysis.  We recommend using GO biological process (GO:BP), WikiPathways (WP) and Reactome (Reac) but there are additional sources you can add (GO molecular function or cellular component(GO:MF, GO:CC), KEGG, transcription factors (TF), microRNA targets (MIRNA), corum complexes (CORUM), Human protein atlas (HPA),Human phenotype ontology (HP) ) 
 
 
-```r
+``` r
 gprofiler_results <- gost(query = query_set ,
                           significant=FALSE,
                           ordered_query = FALSE,
@@ -130,7 +134,7 @@ gprofiler_results <- gost(query = query_set ,
 
 
 
-```r
+``` r
  #get the gprofiler results table
 enrichment_results <- gprofiler_results$result
     
@@ -139,29 +143,29 @@ enrichment_results[1:5,]
 
 ```
 ##     query significant      p_value term_size query_size intersection_size
-## 1 query_1        TRUE 2.891865e-32      4828        117               100
-## 2 query_1        TRUE 2.891865e-32      4690        117                99
-## 3 query_1        TRUE 7.118295e-32      5174        117               102
-## 4 query_1        TRUE 9.756118e-31      5190        117               101
-## 5 query_1        TRUE 1.240868e-29      5640        117               103
+## 1 query_1        TRUE 1.266713e-31      4791        117                99
+## 2 query_1        TRUE 6.230929e-31      4911        117                99
+## 3 query_1        TRUE 2.945299e-30      5297        117               101
+## 4 query_1        TRUE 2.945299e-30      5313        117               101
+## 5 query_1        TRUE 3.692367e-28      5757        117               102
 ##   precision     recall    term_id source
-## 1 0.8547009 0.02071251 GO:0080090  GO:BP
-## 2 0.8461538 0.02110874 GO:0051171  GO:BP
-## 3 0.8717949 0.01971395 GO:0031323  GO:BP
-## 4 0.8632479 0.01946050 GO:0060255  GO:BP
-## 5 0.8803419 0.01826241 GO:0019222  GO:BP
+## 1 0.8461538 0.02066374 GO:0051171  GO:BP
+## 2 0.8461538 0.02015883 GO:0080090  GO:BP
+## 3 0.8632479 0.01906740 GO:0060255  GO:BP
+## 4 0.8632479 0.01900998 GO:0031323  GO:BP
+## 5 0.8717949 0.01771756 GO:0019222  GO:BP
 ##                                           term_name effective_domain_size
-## 1           regulation of primary metabolic process                 15992
-## 2 regulation of nitrogen compound metabolic process                 15992
-## 3          regulation of cellular metabolic process                 15992
-## 4     regulation of macromolecule metabolic process                 15992
-## 5                   regulation of metabolic process                 15992
+## 1 regulation of nitrogen compound metabolic process                 16178
+## 2           regulation of primary metabolic process                 16178
+## 3     regulation of macromolecule metabolic process                 16178
+## 4          regulation of cellular metabolic process                 16178
+## 5                   regulation of metabolic process                 16178
 ##   source_order                            parents
-## 1        18641             GO:0019222, GO:0044238
-## 2        14228             GO:0006807, GO:0019222
-## 3         7461 GO:0019222, GO:0044237, GO:0050794
-## 4        15204             GO:0019222, GO:0043170
-## 5         5855             GO:0008152, GO:0050789
+## 1        13995             GO:0006807, GO:0019222
+## 2        18320             GO:0019222, GO:0044238
+## 3        14938             GO:0019222, GO:0043170
+## 4         7372 GO:0019222, GO:0044237, GO:0050794
+## 5         5789             GO:0008152, GO:0050789
 ```
 
 ## Download and load g:profiler geneset file
@@ -171,7 +175,7 @@ In order to create a proper Generic enrichment results file we will need a copy 
 Download the gmt file used for this analysis from g:profiler
 
 
-```r
+``` r
 #the link to the gmt file is static no matter what version
 gprofiler_gmt_url <- 
   "https://biit.cs.ut.ee/gprofiler/static/gprofiler_full_hsapiens.name.gmt"
@@ -194,7 +198,7 @@ if(!file.exists(gprofiler_gmt_filename)){
 To create a proper Generic enrichmentMap results file we need to include the list of genes that are associated with each geneset.  To do that we need to know what genes are associated with each set and filter them by our query set.  Load in the geneset definitions from the gmt file we just downloaded from g:profiler site.  
 
 
-```r
+``` r
 #load in the g:profiler geneset file
 capt_output <- capture.output(genesets_gprofiler <- GSA.read.gmt(
                                       filename = gprofiler_gmt_filename))
@@ -205,7 +209,7 @@ names(genesets_gprofiler$genesets) <- genesets_gprofiler$geneset.names
 For the next module the name of the gmt file is - gprofiler_full_hsapiens.name.gmt but it is important to preserve the database version so in the future when we revisit these results for publication or results verfication we have the exact version used.  Instead of creating a copy of the file (which can be pretty large) create a symbolic link to the file with the generic name.
 
 
-```r
+``` r
 #file.exists does not work for a symbolic link on my computer for some reason
 # list the files in the directory and check if the symbolic link is there
 #if(file.exists(file.path(working_dir, "gprofiler_full_hsapiens.name.gmt"))){
@@ -221,7 +225,7 @@ if(length(grep(x = list.files(file.path(working_dir)),
 ## [1] TRUE
 ```
 
-```r
+``` r
 file.symlink( gprofiler_gmt_filename,file.path(working_dir, 
                                    "gprofiler_full_hsapiens.name.gmt"))
 ```
@@ -232,7 +236,7 @@ file.symlink( gprofiler_gmt_filename,file.path(working_dir,
 
 
 
-```r
+``` r
 # Given:
 # query_genes - genes used for enrichment analysis (or as query)
 #
@@ -266,7 +270,7 @@ Vary the thresholds for max_gs_size just as we did in Module 2 lab -
   
 
 
-```r
+``` r
 # filer by params defined above
 # by default we have set the max and min gs size to 250 and 3, respectively.
 enrichment_results_mxgssize_250_min_3 <- 
@@ -304,7 +308,7 @@ The file requires -
 
 
 
-```r
+``` r
 # Given:
 # gprofiler_results - results form g_profiler R function (filtered by desired)
 # parameters
@@ -338,7 +342,7 @@ createGEMformat <- function(results, gs, query_genes){
 
 
 
-```r
+``` r
 enrichment_results_mxgssize_10000_min_3_GEMfile <- createGEMformat(
   enrichment_results_mxgssize_10000_min_3, genesets_gprofiler, query_set)
 
@@ -354,7 +358,7 @@ enrichment_results_mxgssize_250_min_3_GEMfile <- createGEMformat(
 Output each of the above filtered files
 
 
-```r
+``` r
 #output the enrichment map file
 write.table(enrichment_results_mxgssize_10000_min_3_GEMfile, 
             file = file.path(working_dir, 
@@ -390,7 +394,7 @@ write.table(enrichment_results_mxgssize_250_min_3_GEMfile,
 Download the latest [Bader lab genesets](https://download.baderlab.org/EM_Genesets/current_release/Human/)
 
 
-```r
+``` r
 if(dest_gmt_file == ""){
 
   gmt_url = "http://download.baderlab.org/EM_Genesets/current_release/Human/symbol/"
@@ -404,7 +408,7 @@ if(dest_gmt_file == ""){
   #get the gmt that has all the pathways and does not include 
   # terms inferred from electronic annotations(IEA)
   #start with gmt file that has pathways only
-  rx = gregexpr("(?<=<a href=\")(.*.GOBP_AllPathways_no_GO_iea.*.)(.gmt)(?=\">)",
+  rx = gregexpr("(?<=<a href=\")(.*.GOBP_AllPathways_noPFOCR_no_GO_iea.*.)(.gmt)(?=\">)",
     contents, perl = TRUE)
   gmt_file = unlist(regmatches(contents, rx))
   
@@ -434,7 +438,7 @@ Create multiple gmt files with different filtering thresholds - remove
   * geneset greater than 10000 genes
   
 
-```r
+``` r
 # Filter geneset GSA object by specified gs size threshold 
 #
 # Given - 
@@ -492,7 +496,7 @@ The format of the GMT file is described [https://software.broadinstitute.org/can
 Write out the gmt file with genenames
 
 
-```r
+``` r
 #get the geneset sizes
 gs_sizes_baderlab_sets <- lapply(genesets_baderlab_genesets$genesets,
                                  FUN = function(x){
@@ -556,46 +560,46 @@ if(!file.exists(genesets_baderlab_genesets_max250_filename)){
 
 In order to use your own genesets with g:Profiler you need to upload the the file to their server first.  The function will return an ID that you need to specify in the organism parameter of the g:Profiler gost function call. 
 
-```r
+``` r
 custom_gmt_max250 <- upload_GMT_file(
                         gmtfile=genesets_baderlab_genesets_max250_filename)
 ```
 
 ```
-## Your custom annotations ID is gp__9EwJ_1Vuj_avo
+## Your custom annotations ID is gp__kVgC_qZf0_9QY.
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 ```
 
 ```
-## Just use: gost(my_genes, organism = 'gp__9EwJ_1Vuj_avo')
+## Just use: gost(my_genes, organism = 'gp__kVgC_qZf0_9QY')
 ```
 
-```r
+``` r
 custom_gmt_max1000 <- upload_GMT_file(
                         gmtfile=genesets_baderlab_genesets_max1000_filename)
 ```
 
 ```
-## Your custom annotations ID is gp__rAPS_AQbx_byM
+## Your custom annotations ID is gp__XYsE_5zPH_pJY.
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 ```
 
 ```
-## Just use: gost(my_genes, organism = 'gp__rAPS_AQbx_byM')
+## Just use: gost(my_genes, organism = 'gp__XYsE_5zPH_pJY')
 ```
 
-```r
+``` r
 custom_gmt_max10000 <- upload_GMT_file(
                         gmtfile=genesets_baderlab_genesets_max10000_filename)
 ```
 
 ```
-## Your custom annotations ID is gp__ZbCQ_zXIE_Clk
+## Your custom annotations ID is gp__FSXN_4GOv_B2o.
 ## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
 ```
 
 ```
-## Just use: gost(my_genes, organism = 'gp__ZbCQ_zXIE_Clk')
+## Just use: gost(my_genes, organism = 'gp__FSXN_4GOv_B2o')
 ```
 
 For this query we are specifying - 
@@ -604,11 +608,11 @@ For this query we are specifying -
   * significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.
   * ordered_query - set to FALSE (but you can try setting it to true as well because for this set of genes they are ordered in order of their significance)
   * correction_method - set to fdr.  by default g:Profiler uses g:Scs
-  * organism - set to the custom_gmt ID ( for this run it is - gp__9EwJ_1Vuj_avo) that we received when we uploaded our genetset file.
+  * organism - set to the custom_gmt ID ( for this run it is - gp__kVgC_qZf0_9QY) that we received when we uploaded our genetset file.
 
 
 
-```r
+``` r
 gprofiler_results_custom_max250 <- gost(query = query_set ,
                                      significant=FALSE,
                                  ordered_query = FALSE,
@@ -622,7 +626,7 @@ gprofiler_results_custom_max250 <- gost(query = query_set ,
 ## Detected custom GMT source request
 ```
 
-```r
+``` r
 gprofiler_results_custom_max1000 <- gost(query = query_set ,
                                      significant=FALSE,
                                       ordered_query = FALSE,
@@ -636,7 +640,7 @@ gprofiler_results_custom_max1000 <- gost(query = query_set ,
 ## Detected custom GMT source request
 ```
 
-```r
+``` r
 gprofiler_results_custom_max10000 <- gost(query = query_set ,
                                      significant=FALSE,
                                       ordered_query = FALSE,
@@ -652,7 +656,7 @@ gprofiler_results_custom_max10000 <- gost(query = query_set ,
 
 
 
-```r
+``` r
  #get the gprofiler results table
 enrichment_results_customgmt_max250 <- gprofiler_results_custom_max250$result
 enrichment_results_customgmt_max1000 <- gprofiler_results_custom_max1000$result
@@ -664,47 +668,47 @@ enrichment_results_customgmt_max250[1:5,]
 
 ```
 ##     query significant      p_value term_size query_size intersection_size
-## 1 query_1        TRUE 6.644186e-20        64        109                17
-## 2 query_1        TRUE 1.060650e-19        68        109                17
-## 3 query_1        TRUE 1.926559e-14        54        109                13
-## 4 query_1        TRUE 5.137122e-14        97        109                15
-## 5 query_1        TRUE 1.818094e-13       159        109                17
+## 1 query_1        TRUE 2.274768e-19        69        108                17
+## 2 query_1        TRUE 1.758667e-18        64        108                16
+## 3 query_1        TRUE 1.639494e-14        54        108                13
+## 4 query_1        TRUE 5.029242e-14        98        108                15
+## 5 query_1        TRUE 1.653203e-13       160        108                17
 ##   precision    recall
-## 1 0.1559633 0.2656250
-## 2 0.1559633 0.2500000
-## 3 0.1192661 0.2407407
-## 4 0.1376147 0.1546392
-## 5 0.1559633 0.1069182
+## 1 0.1574074 0.2463768
+## 2 0.1481481 0.2500000
+## 3 0.1203704 0.2407407
+## 4 0.1388889 0.1530612
+## 5 0.1574074 0.1062500
 ##                                                                                   term_id
-## 1         HEAD AND NECK SQUAMOUS CELL CARCINOMA%WIKIPATHWAYS_20220510%WP4674%HOMO SAPIENS
-## 2               GLIOBLASTOMA SIGNALING PATHWAYS%WIKIPATHWAYS_20220510%WP2261%HOMO SAPIENS
-## 3 PATHWAYS AFFECTED IN ADENOID CYSTIC CARCINOMA%WIKIPATHWAYS_20220510%WP3651%HOMO SAPIENS
-## 4                                     CELL CYCLE%WIKIPATHWAYS_20220510%WP179%HOMO SAPIENS
+## 1               GLIOBLASTOMA SIGNALING PATHWAYS%WIKIPATHWAYS_20240510%WP2261%HOMO SAPIENS
+## 2         HEAD AND NECK SQUAMOUS CELL CARCINOMA%WIKIPATHWAYS_20240510%WP4674%HOMO SAPIENS
+## 3 PATHWAYS AFFECTED IN ADENOID CYSTIC CARCINOMA%WIKIPATHWAYS_20240510%WP3651%HOMO SAPIENS
+## 4                                     CELL CYCLE%WIKIPATHWAYS_20240510%WP179%HOMO SAPIENS
 ## 5                          REGULATION OF CELL CYCLE G1/S PHASE TRANSITION%GOBP%GO:1902806
-##                                                         source
-## 1 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
-## 2 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
-## 3 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
-## 4 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
-## 5 Human_GOBP_AllPathways_no_GO_iea_April_02_2023_symbol_max250
+##                                                                source
+## 1 Human_GOBP_AllPathways_noPFOCR_no_GO_iea_June_01_2024_symbol_max250
+## 2 Human_GOBP_AllPathways_noPFOCR_no_GO_iea_June_01_2024_symbol_max250
+## 3 Human_GOBP_AllPathways_noPFOCR_no_GO_iea_June_01_2024_symbol_max250
+## 4 Human_GOBP_AllPathways_noPFOCR_no_GO_iea_June_01_2024_symbol_max250
+## 5 Human_GOBP_AllPathways_noPFOCR_no_GO_iea_June_01_2024_symbol_max250
 ##                                        term_name effective_domain_size
-## 1          Head and neck squamous cell carcinoma                 17047
-## 2                Glioblastoma signaling pathways                 17047
-## 3  Pathways affected in adenoid cystic carcinoma                 17047
-## 4                                     Cell cycle                 17047
-## 5 regulation of cell cycle G1/S phase transition                 17047
+## 1                Glioblastoma signaling pathways                 17067
+## 2          Head and neck squamous cell carcinoma                 17067
+## 3  Pathways affected in adenoid cystic carcinoma                 17067
+## 4                                     Cell cycle                 17067
+## 5 regulation of cell cycle G1/S phase transition                 17067
 ##   source_order parents
-## 1         5002    NULL
-## 2         5554    NULL
-## 3         4968    NULL
-## 4         4934    NULL
-## 5        19009    NULL
+## 1         5048    NULL
+## 2         5575    NULL
+## 3         5198    NULL
+## 4         5170    NULL
+## 5        18856    NULL
 ```
 
 Filter the table to include just the columns that are required for the generic enrichment map file results [GEM](https://enrichmentmap.readthedocs.io/en/latest/FileFormats.html#generic-results-files). Restrict the results to just the ones that have at least min_gs_size and less than max_gs_size terms and  min_intersection size include only the term_id, term_name, p_value (and p_value again because the p_value is actually the corrected p-value.  The output file does not contain the nominal p_value.  For down stream analysis though it is expected to have both a p-value and a q-value so just duplicate the q-value as both p-value and q-value)
 
 
-```r
+``` r
 # filer by params defined above
 enrichment_results_customgmt_max250 <- subset(enrichment_results_customgmt_max250,
                                        term_size >= min_gs_size & 
@@ -731,7 +735,7 @@ enrichment_results_customgmt_max10000 <- subset(enrichment_results_customgmt_max
 Use the same function defined above but instead of passing the genesets from the g_profiler gmt file pass the geneset defitnions we loaded in from the Baderlab gmt file. 
 
 
-```r
+``` r
 enrichment_results_customgmt_GEM_max250 <- createGEMformat(
                                     enrichment_results_customgmt_max250, 
                                     genesets_baderlab_genesets_max250, 

@@ -1,7 +1,7 @@
 --- 
 title: "CBW pathways Workshops - example R notebooks"
 author: "Ruth Isserlin"
-date: "2024-01-24"
+date: "2024-06-19"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
