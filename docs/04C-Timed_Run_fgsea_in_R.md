@@ -246,11 +246,21 @@ end_time <- Sys.time()
 
 ## Timing
 
-GSEA started at 2025-04-23 13:29:10.83867
+GSEA started at 2025-04-23 14:10:31.589233
 
-GSEA finished at 2025-04-23 13:29:28.514751
+GSEA finished at 2025-04-23 14:10:50.267411
 
-GSEA total running time 17.6760807037354
+GSEA total running time - 
+
+
+``` r
+end_time - start_time
+```
+
+```
+## Time difference of 18.67818 secs
+```
+
 
 
 ## Results presented as R table
@@ -264,7 +274,7 @@ plotGseaTable(all_gs$genesets[topPathways], current_ranks, current_fgsea_results
               gseaParam=0.5)
 ```
 
-<img src="04C-Timed_Run_fgsea_in_R_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="04C-Timed_Run_fgsea_in_R_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
 
 

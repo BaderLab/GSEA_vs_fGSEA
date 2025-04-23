@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Run GSEA from within R | Comparison of GSEA and fGSEA</title>
+  <title>Chapter 2 Run GSEA from within R | Comparison of GSEA and fGSEA</title>
   <meta name="description" content="These are example R Notebooks comparing GSEA to fGSEA" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Run GSEA from within R | Comparison of GSEA and fGSEA" />
+  <meta property="og:title" content="Chapter 2 Run GSEA from within R | Comparison of GSEA and fGSEA" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/images/cover.png" />
   <meta property="og:description" content="These are example R Notebooks comparing GSEA to fGSEA" />
   <meta name="github-repo" content="risserlin/GSEA_vs_fGSEA" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Run GSEA from within R | Comparison of GSEA and fGSEA" />
+  <meta name="twitter:title" content="Chapter 2 Run GSEA from within R | Comparison of GSEA and fGSEA" />
   
   <meta name="twitter:description" content="These are example R Notebooks comparing GSEA to fGSEA" />
   <meta name="twitter:image" content="/images/cover.png" />
@@ -30,7 +30,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="setup.html"/>
+<link rel="prev" href="intro.html"/>
 <link rel="next" href="run-fgsea-from-within-r.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -159,61 +159,50 @@ div.csl-indent {
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Index</a></li>
-<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Comparing GSEA and fGSEA</a></li>
-<li class="chapter" data-level="3" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>3</b> Setup</a>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Comparing GSEA and fGSEA</a></li>
+<li class="chapter" data-level="2" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html"><i class="fa fa-check"></i><b>2</b> Run GSEA from within R</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="setup.html"><a href="setup.html#install-r-and-rstudio"><i class="fa fa-check"></i><b>3.1</b> Install R and RStudio</a></li>
-<li class="chapter" data-level="3.2" data-path="setup.html"><a href="setup.html#docker-optional"><i class="fa fa-check"></i><b>3.2</b> Docker [Optional]</a></li>
-<li class="chapter" data-level="3.3" data-path="setup.html"><a href="setup.html#install-docker"><i class="fa fa-check"></i><b>3.3</b> Install Docker</a>
+<li class="chapter" data-level="2.1" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#load-in-required-libraries"><i class="fa fa-check"></i><b>2.1</b> Load in required libraries</a></li>
+<li class="chapter" data-level="2.2" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#configurable-parameters"><i class="fa fa-check"></i><b>2.2</b> Configurable Parameters</a></li>
+<li class="chapter" data-level="2.3" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#download-the-latest-pathway-definition-file"><i class="fa fa-check"></i><b>2.3</b> Download the latest pathway definition file</a></li>
+<li class="chapter" data-level="2.4" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#run-gsea"><i class="fa fa-check"></i><b>2.4</b> Run GSEA</a></li>
+<li class="chapter" data-level="2.5" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#timing"><i class="fa fa-check"></i><b>2.5</b> Timing</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html"><i class="fa fa-check"></i><b>3</b> Run fGSEA from within R</a>
 <ul>
-<li class="chapter" data-level="3.3.1" data-path="setup.html"><a href="setup.html#windows"><i class="fa fa-check"></i><b>3.3.1</b> Windows</a></li>
-<li class="chapter" data-level="3.3.2" data-path="setup.html"><a href="setup.html#macos-linux"><i class="fa fa-check"></i><b>3.3.2</b> MacOS / Linux</a></li>
+<li class="chapter" data-level="3.1" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#load-in-required-libraries-1"><i class="fa fa-check"></i><b>3.1</b> Load in required libraries</a></li>
+<li class="chapter" data-level="3.2" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#function-to-write-out-fgsea-results"><i class="fa fa-check"></i><b>3.2</b> function to write out fGSEA results</a></li>
+<li class="chapter" data-level="3.3" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#configurable-parameters-1"><i class="fa fa-check"></i><b>3.3</b> Configurable Parameters</a></li>
+<li class="chapter" data-level="3.4" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#download-the-latest-pathway-definition-file-1"><i class="fa fa-check"></i><b>3.4</b> Download the latest pathway definition file</a></li>
+<li class="chapter" data-level="3.5" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#run-fgsea"><i class="fa fa-check"></i><b>3.5</b> Run fGSEA</a></li>
+<li class="chapter" data-level="3.6" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#timing-1"><i class="fa fa-check"></i><b>3.6</b> Timing</a></li>
+<li class="chapter" data-level="3.7" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#results-presented-as-r-table"><i class="fa fa-check"></i><b>3.7</b> Results presented as R table</a></li>
 </ul></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html"><i class="fa fa-check"></i><b>4</b> Run GSEA from within R</a>
+<li class="chapter" data-level="4" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html"><i class="fa fa-check"></i><b>4</b> Create Enrichment map from R with GSEA results</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#load-in-required-libraries"><i class="fa fa-check"></i><b>4.1</b> Load in required libraries</a></li>
-<li class="chapter" data-level="4.2" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#configurable-parameters"><i class="fa fa-check"></i><b>4.2</b> Configurable Parameters</a></li>
-<li class="chapter" data-level="4.3" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#download-the-latest-pathway-definition-file"><i class="fa fa-check"></i><b>4.3</b> Download the latest pathway definition file</a></li>
-<li class="chapter" data-level="4.4" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#run-gsea"><i class="fa fa-check"></i><b>4.4</b> Run GSEA</a></li>
-<li class="chapter" data-level="4.5" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#timing"><i class="fa fa-check"></i><b>4.5</b> Timing</a></li>
+<li class="chapter" data-level="4.1" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#initialize-variables-and-libraries"><i class="fa fa-check"></i><b>4.1</b> Initialize variables and libraries</a></li>
+<li class="chapter" data-level="4.2" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#configurable-parameters-2"><i class="fa fa-check"></i><b>4.2</b> Configurable Parameters</a></li>
+<li class="chapter" data-level="4.3" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#specify-data-files"><i class="fa fa-check"></i><b>4.3</b> Specify Data files</a></li>
+<li class="chapter" data-level="4.4" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#optional-file-specification"><i class="fa fa-check"></i><b>4.4</b> Optional File specification</a></li>
+<li class="chapter" data-level="4.5" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#launch-cytoscape"><i class="fa fa-check"></i><b>4.5</b> Launch Cytoscape</a></li>
+<li class="chapter" data-level="4.6" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#make-sure-you-can-connect-to-cytoscape"><i class="fa fa-check"></i><b>4.6</b> Make sure you can connect to Cytoscape</a></li>
+<li class="chapter" data-level="4.7" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#create-an-enrichment-map"><i class="fa fa-check"></i><b>4.7</b> Create an Enrichment map</a></li>
+<li class="chapter" data-level="4.8" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#create-an-enrichment-map---run-em-command"><i class="fa fa-check"></i><b>4.8</b> Create an Enrichment map - run EM command</a></li>
+<li class="chapter" data-level="4.9" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#get-a-screen-shot-of-the-initial-network."><i class="fa fa-check"></i><b>4.9</b> Get a screen shot of the initial network.</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html"><i class="fa fa-check"></i><b>5</b> Run fGSEA from within R</a>
+<li class="chapter" data-level="5" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html"><i class="fa fa-check"></i><b>5</b> Create Enrichment map from R with GSEA results</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#load-in-required-libraries-1"><i class="fa fa-check"></i><b>5.1</b> Load in required libraries</a></li>
-<li class="chapter" data-level="5.2" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#function-to-write-out-fgsea-results"><i class="fa fa-check"></i><b>5.2</b> function to write out fGSEA results</a></li>
-<li class="chapter" data-level="5.3" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#configurable-parameters-1"><i class="fa fa-check"></i><b>5.3</b> Configurable Parameters</a></li>
-<li class="chapter" data-level="5.4" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#download-the-latest-pathway-definition-file-1"><i class="fa fa-check"></i><b>5.4</b> Download the latest pathway definition file</a></li>
-<li class="chapter" data-level="5.5" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#run-fgsea"><i class="fa fa-check"></i><b>5.5</b> Run fGSEA</a></li>
-<li class="chapter" data-level="5.6" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#timing-1"><i class="fa fa-check"></i><b>5.6</b> Timing</a></li>
-<li class="chapter" data-level="5.7" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#results-presented-as-r-table"><i class="fa fa-check"></i><b>5.7</b> Results presented as R table</a></li>
+<li class="chapter" data-level="5.1" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#initialize-variables-and-libraries-1"><i class="fa fa-check"></i><b>5.1</b> Initialize variables and libraries</a></li>
+<li class="chapter" data-level="5.2" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#configurable-parameters-3"><i class="fa fa-check"></i><b>5.2</b> Configurable Parameters</a></li>
+<li class="chapter" data-level="5.3" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#specify-data-files-1"><i class="fa fa-check"></i><b>5.3</b> Specify Data files</a></li>
+<li class="chapter" data-level="5.4" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#optional-file-specification-1"><i class="fa fa-check"></i><b>5.4</b> Optional File specification</a></li>
+<li class="chapter" data-level="5.5" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#launch-cytoscape-1"><i class="fa fa-check"></i><b>5.5</b> Launch Cytoscape</a></li>
+<li class="chapter" data-level="5.6" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#make-sure-you-can-connect-to-cytoscape-1"><i class="fa fa-check"></i><b>5.6</b> Make sure you can connect to Cytoscape</a></li>
+<li class="chapter" data-level="5.7" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#create-an-enrichment-map-1"><i class="fa fa-check"></i><b>5.7</b> Create an Enrichment map</a></li>
+<li class="chapter" data-level="5.8" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#create-an-enrichment-map---run-em-command-1"><i class="fa fa-check"></i><b>5.8</b> Create an Enrichment map - run EM command</a></li>
+<li class="chapter" data-level="5.9" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#get-a-screen-shot-of-the-initial-network.-1"><i class="fa fa-check"></i><b>5.9</b> Get a screen shot of the initial network.</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html"><i class="fa fa-check"></i><b>6</b> Create Enrichment map from R with GSEA results</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#initialize-variables-and-libraries"><i class="fa fa-check"></i><b>6.1</b> Initialize variables and libraries</a></li>
-<li class="chapter" data-level="6.2" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#configurable-parameters-2"><i class="fa fa-check"></i><b>6.2</b> Configurable Parameters</a></li>
-<li class="chapter" data-level="6.3" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#specify-data-files"><i class="fa fa-check"></i><b>6.3</b> Specify Data files</a></li>
-<li class="chapter" data-level="6.4" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#optional-file-specification"><i class="fa fa-check"></i><b>6.4</b> Optional File specification</a></li>
-<li class="chapter" data-level="6.5" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#launch-cytoscape"><i class="fa fa-check"></i><b>6.5</b> Launch Cytoscape</a></li>
-<li class="chapter" data-level="6.6" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#make-sure-you-can-connect-to-cytoscape"><i class="fa fa-check"></i><b>6.6</b> Make sure you can connect to Cytoscape</a></li>
-<li class="chapter" data-level="6.7" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#create-an-enrichment-map"><i class="fa fa-check"></i><b>6.7</b> Create an Enrichment map</a></li>
-<li class="chapter" data-level="6.8" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#create-an-enrichment-map---run-em-command"><i class="fa fa-check"></i><b>6.8</b> Create an Enrichment map - run EM command</a></li>
-<li class="chapter" data-level="6.9" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#get-a-screen-shot-of-the-initial-network."><i class="fa fa-check"></i><b>6.9</b> Get a screen shot of the initial network.</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html"><i class="fa fa-check"></i><b>7</b> Create Enrichment map from R with GSEA results</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#initialize-variables-and-libraries-1"><i class="fa fa-check"></i><b>7.1</b> Initialize variables and libraries</a></li>
-<li class="chapter" data-level="7.2" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#configurable-parameters-3"><i class="fa fa-check"></i><b>7.2</b> Configurable Parameters</a></li>
-<li class="chapter" data-level="7.3" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#specify-data-files-1"><i class="fa fa-check"></i><b>7.3</b> Specify Data files</a></li>
-<li class="chapter" data-level="7.4" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#optional-file-specification-1"><i class="fa fa-check"></i><b>7.4</b> Optional File specification</a></li>
-<li class="chapter" data-level="7.5" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#launch-cytoscape-1"><i class="fa fa-check"></i><b>7.5</b> Launch Cytoscape</a></li>
-<li class="chapter" data-level="7.6" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#make-sure-you-can-connect-to-cytoscape-1"><i class="fa fa-check"></i><b>7.6</b> Make sure you can connect to Cytoscape</a></li>
-<li class="chapter" data-level="7.7" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#create-an-enrichment-map-1"><i class="fa fa-check"></i><b>7.7</b> Create an Enrichment map</a></li>
-<li class="chapter" data-level="7.8" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#create-an-enrichment-map---run-em-command-1"><i class="fa fa-check"></i><b>7.8</b> Create an Enrichment map - run EM command</a></li>
-<li class="chapter" data-level="7.9" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#get-a-screen-shot-of-the-initial-network.-1"><i class="fa fa-check"></i><b>7.9</b> Get a screen shot of the initial network.</a></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>8</b> References</a></li>
+<li class="chapter" data-level="6" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>6</b> References</a></li>
 <li class="divider"></li>
 <li><a href="https://baderlab.org" target="blank"><img src="./images/baderlablogo.png" width="280">Bader Lab</a></li>
 
@@ -234,21 +223,21 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="run-gsea-from-within-r" class="section level1 hasAnchor" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Run GSEA from within R<a href="run-gsea-from-within-r.html#run-gsea-from-within-r" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="run-gsea-from-within-r" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Run GSEA from within R<a href="run-gsea-from-within-r.html#run-gsea-from-within-r" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>This notebook is based largely on the <a href="https://baderlab.github.io/Cytoscape_workflows/EnrichmentMapPipeline/Protocol2_createEM.html">original notebook</a> published with EnrichmentMap Protocol<span class="citation">(<a href="#ref-em2019">Reimand et al. 2019</a>)</span></p>
 <p>There is no package to run the original algorithm of GSEA<span class="citation">(<a href="#ref-gsea2005">Subramanian et al. 2005</a>)</span> in R. There are many packages that have been published to imitate the process but none are recognized by The GSEA team.<br />
 <img src="images/gsea_r_package_message.png" alt="GSEA R package message" /></p>
-<div id="load-in-required-libraries" class="section level2 hasAnchor" number="4.1">
-<h2><span class="header-section-number">4.1</span> Load in required libraries<a href="run-gsea-from-within-r.html#load-in-required-libraries" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="run-gsea-from-within-r.html#cb3-1" tabindex="-1"></a><span class="co">#install required R and bioconductor packages</span></span>
-<span id="cb3-2"><a href="run-gsea-from-within-r.html#cb3-2" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;RCurl&quot;</span>)}, </span>
-<span id="cb3-3"><a href="run-gsea-from-within-r.html#cb3-3" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) {  </span>
-<span id="cb3-4"><a href="run-gsea-from-within-r.html#cb3-4" tabindex="-1"></a>           <span class="fu">install.packages</span>(<span class="st">&quot;RCurl&quot;</span>)}, </span>
-<span id="cb3-5"><a href="run-gsea-from-within-r.html#cb3-5" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;RCurl&quot;</span>))</span></code></pre></div>
+<div id="load-in-required-libraries" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Load in required libraries<a href="run-gsea-from-within-r.html#load-in-required-libraries" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="run-gsea-from-within-r.html#cb1-1" tabindex="-1"></a><span class="co">#install required R and bioconductor packages</span></span>
+<span id="cb1-2"><a href="run-gsea-from-within-r.html#cb1-2" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;RCurl&quot;</span>)}, </span>
+<span id="cb1-3"><a href="run-gsea-from-within-r.html#cb1-3" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) {  </span>
+<span id="cb1-4"><a href="run-gsea-from-within-r.html#cb1-4" tabindex="-1"></a>           <span class="fu">install.packages</span>(<span class="st">&quot;RCurl&quot;</span>)}, </span>
+<span id="cb1-5"><a href="run-gsea-from-within-r.html#cb1-5" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;RCurl&quot;</span>))</span></code></pre></div>
 </div>
-<div id="configurable-parameters" class="section level2 hasAnchor" number="4.2">
-<h2><span class="header-section-number">4.2</span> Configurable Parameters<a href="run-gsea-from-within-r.html#configurable-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="configurable-parameters" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Configurable Parameters<a href="run-gsea-from-within-r.html#configurable-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In order to run GSEA automatically through the notebook you will need to download the gsea jar from <a href="http://software.broadinstitute.org/gsea/downloads.jsp">here</a>. Specify the exact path to the gsea jar in the parameters in order to automatically compute enrichments using GSEA.</p>
 <p>If you are running this notebook using the <a href="https://hub.docker.com/r/risserlin/workshop_base_image">baderlab workshop docker image</a> then the image comes pre-installed with the gsea jar that you can use to run gsea directly in the docker. The path to the GSEA jar in the docker is - /home/rstudio/GSEA_4.3.2/gsea-cli.sh</p>
 <p>In order to run GSEA automatically you need to speciry the path to the gsea jar file.
@@ -258,72 +247,72 @@ The gsea_jar needs to be the full path to the GSEA 4.3.3 directory that you down
 <li>variable &lt;- params$parameter_name</li>
 </ul>
 <p>For more details see - <a href="https://bookdown.org/yihui/rmarkdown/params-declare.html">defining and using parameters</a> and <a href="https://bookdown.org/yihui/rmarkdown/params-knit.html">Knitting with parameters</a></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="run-gsea-from-within-r.html#cb4-1" tabindex="-1"></a><span class="co">#path to GSEA jar </span></span>
-<span id="cb4-2"><a href="run-gsea-from-within-r.html#cb4-2" tabindex="-1"></a><span class="co"># defined in the paramters at top of notebook</span></span>
-<span id="cb4-3"><a href="run-gsea-from-within-r.html#cb4-3" tabindex="-1"></a>gsea_jar <span class="ot">&lt;-</span> params<span class="sc">$</span>gsea_jar</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="run-gsea-from-within-r.html#cb2-1" tabindex="-1"></a><span class="co">#path to GSEA jar </span></span>
+<span id="cb2-2"><a href="run-gsea-from-within-r.html#cb2-2" tabindex="-1"></a><span class="co"># defined in the paramters at top of notebook</span></span>
+<span id="cb2-3"><a href="run-gsea-from-within-r.html#cb2-3" tabindex="-1"></a>gsea_jar <span class="ot">&lt;-</span> params<span class="sc">$</span>gsea_jar</span></code></pre></div>
 <p>Set the working directory as the directory to the directory where you downloaded all protocol files. For example /User/JohnSmith/EMProtocolFiles/data</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="run-gsea-from-within-r.html#cb5-1" tabindex="-1"></a><span class="co"># defined in the paramters at top of notebook</span></span>
-<span id="cb5-2"><a href="run-gsea-from-within-r.html#cb5-2" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="run-gsea-from-within-r.html#cb5-3" tabindex="-1"></a><span class="co">#directory where all the data files are found.  For example -   ./data/ </span></span>
-<span id="cb5-4"><a href="run-gsea-from-within-r.html#cb5-4" tabindex="-1"></a>working_dir <span class="ot">&lt;-</span> params<span class="sc">$</span>working_dir</span>
-<span id="cb5-5"><a href="run-gsea-from-within-r.html#cb5-5" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="run-gsea-from-within-r.html#cb5-6" tabindex="-1"></a><span class="co">#directory where all the data files are found.  For example -   ./generated_data/gsea/</span></span>
-<span id="cb5-7"><a href="run-gsea-from-within-r.html#cb5-7" tabindex="-1"></a>output_dir <span class="ot">&lt;-</span> params<span class="sc">$</span>output_dir</span>
-<span id="cb5-8"><a href="run-gsea-from-within-r.html#cb5-8" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(output_dir)){</span>
-<span id="cb5-9"><a href="run-gsea-from-within-r.html#cb5-9" tabindex="-1"></a>  <span class="fu">dir.create</span>(output_dir)</span>
-<span id="cb5-10"><a href="run-gsea-from-within-r.html#cb5-10" tabindex="-1"></a>}</span>
-<span id="cb5-11"><a href="run-gsea-from-within-r.html#cb5-11" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="run-gsea-from-within-r.html#cb5-12" tabindex="-1"></a><span class="co">#The name to give the analysis in GSEA - for example Basal_vs_Classical</span></span>
-<span id="cb5-13"><a href="run-gsea-from-within-r.html#cb5-13" tabindex="-1"></a>analysis_name <span class="ot">&lt;-</span> params<span class="sc">$</span>analysis_name</span>
-<span id="cb5-14"><a href="run-gsea-from-within-r.html#cb5-14" tabindex="-1"></a></span>
-<span id="cb5-15"><a href="run-gsea-from-within-r.html#cb5-15" tabindex="-1"></a><span class="co">#rank file to use in GSEA analysis.  </span></span>
-<span id="cb5-16"><a href="run-gsea-from-within-r.html#cb5-16" tabindex="-1"></a><span class="co">#For example - TCGA-PAAD_GDC_Subtype_Moffitt_BasalvsClassical_ranks.rnk</span></span>
-<span id="cb5-17"><a href="run-gsea-from-within-r.html#cb5-17" tabindex="-1"></a>rnk_file <span class="ot">&lt;-</span> params<span class="sc">$</span>rnk_file</span>
-<span id="cb5-18"><a href="run-gsea-from-within-r.html#cb5-18" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="run-gsea-from-within-r.html#cb5-19" tabindex="-1"></a><span class="co">#run_gsea - true/false</span></span>
-<span id="cb5-20"><a href="run-gsea-from-within-r.html#cb5-20" tabindex="-1"></a><span class="co"># This parameter is for the compilation of the notebook.  </span></span>
-<span id="cb5-21"><a href="run-gsea-from-within-r.html#cb5-21" tabindex="-1"></a>run_gsea <span class="ot">&lt;-</span> params<span class="sc">$</span>run_gsea</span>
-<span id="cb5-22"><a href="run-gsea-from-within-r.html#cb5-22" tabindex="-1"></a></span>
-<span id="cb5-23"><a href="run-gsea-from-within-r.html#cb5-23" tabindex="-1"></a><span class="co">#set the gmt file you want to use if you don&#39;t want to use the latest gmt file.</span></span>
-<span id="cb5-24"><a href="run-gsea-from-within-r.html#cb5-24" tabindex="-1"></a><span class="co"># For example, if you set dest_gmt_file ==&quot;&quot; the below script will automatically</span></span>
-<span id="cb5-25"><a href="run-gsea-from-within-r.html#cb5-25" tabindex="-1"></a><span class="co"># download the latest gmt file from baderlab webstie.  If it is set then it</span></span>
-<span id="cb5-26"><a href="run-gsea-from-within-r.html#cb5-26" tabindex="-1"></a><span class="co"># will use the file specified.  </span></span>
-<span id="cb5-27"><a href="run-gsea-from-within-r.html#cb5-27" tabindex="-1"></a>dest_gmt_file <span class="ot">=</span> <span class="st">&quot;&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="run-gsea-from-within-r.html#cb3-1" tabindex="-1"></a><span class="co"># defined in the paramters at top of notebook</span></span>
+<span id="cb3-2"><a href="run-gsea-from-within-r.html#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="run-gsea-from-within-r.html#cb3-3" tabindex="-1"></a><span class="co">#directory where all the data files are found.  For example -   ./data/ </span></span>
+<span id="cb3-4"><a href="run-gsea-from-within-r.html#cb3-4" tabindex="-1"></a>working_dir <span class="ot">&lt;-</span> params<span class="sc">$</span>working_dir</span>
+<span id="cb3-5"><a href="run-gsea-from-within-r.html#cb3-5" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="run-gsea-from-within-r.html#cb3-6" tabindex="-1"></a><span class="co">#directory where all the data files are found.  For example -   ./generated_data/gsea/</span></span>
+<span id="cb3-7"><a href="run-gsea-from-within-r.html#cb3-7" tabindex="-1"></a>output_dir <span class="ot">&lt;-</span> params<span class="sc">$</span>output_dir</span>
+<span id="cb3-8"><a href="run-gsea-from-within-r.html#cb3-8" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(output_dir)){</span>
+<span id="cb3-9"><a href="run-gsea-from-within-r.html#cb3-9" tabindex="-1"></a>  <span class="fu">dir.create</span>(output_dir)</span>
+<span id="cb3-10"><a href="run-gsea-from-within-r.html#cb3-10" tabindex="-1"></a>}</span>
+<span id="cb3-11"><a href="run-gsea-from-within-r.html#cb3-11" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="run-gsea-from-within-r.html#cb3-12" tabindex="-1"></a><span class="co">#The name to give the analysis in GSEA - for example Basal_vs_Classical</span></span>
+<span id="cb3-13"><a href="run-gsea-from-within-r.html#cb3-13" tabindex="-1"></a>analysis_name <span class="ot">&lt;-</span> params<span class="sc">$</span>analysis_name</span>
+<span id="cb3-14"><a href="run-gsea-from-within-r.html#cb3-14" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="run-gsea-from-within-r.html#cb3-15" tabindex="-1"></a><span class="co">#rank file to use in GSEA analysis.  </span></span>
+<span id="cb3-16"><a href="run-gsea-from-within-r.html#cb3-16" tabindex="-1"></a><span class="co">#For example - TCGA-PAAD_GDC_Subtype_Moffitt_BasalvsClassical_ranks.rnk</span></span>
+<span id="cb3-17"><a href="run-gsea-from-within-r.html#cb3-17" tabindex="-1"></a>rnk_file <span class="ot">&lt;-</span> params<span class="sc">$</span>rnk_file</span>
+<span id="cb3-18"><a href="run-gsea-from-within-r.html#cb3-18" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="run-gsea-from-within-r.html#cb3-19" tabindex="-1"></a><span class="co">#run_gsea - true/false</span></span>
+<span id="cb3-20"><a href="run-gsea-from-within-r.html#cb3-20" tabindex="-1"></a><span class="co"># This parameter is for the compilation of the notebook.  </span></span>
+<span id="cb3-21"><a href="run-gsea-from-within-r.html#cb3-21" tabindex="-1"></a>run_gsea <span class="ot">&lt;-</span> params<span class="sc">$</span>run_gsea</span>
+<span id="cb3-22"><a href="run-gsea-from-within-r.html#cb3-22" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="run-gsea-from-within-r.html#cb3-23" tabindex="-1"></a><span class="co">#set the gmt file you want to use if you don&#39;t want to use the latest gmt file.</span></span>
+<span id="cb3-24"><a href="run-gsea-from-within-r.html#cb3-24" tabindex="-1"></a><span class="co"># For example, if you set dest_gmt_file ==&quot;&quot; the below script will automatically</span></span>
+<span id="cb3-25"><a href="run-gsea-from-within-r.html#cb3-25" tabindex="-1"></a><span class="co"># download the latest gmt file from baderlab webstie.  If it is set then it</span></span>
+<span id="cb3-26"><a href="run-gsea-from-within-r.html#cb3-26" tabindex="-1"></a><span class="co"># will use the file specified.  </span></span>
+<span id="cb3-27"><a href="run-gsea-from-within-r.html#cb3-27" tabindex="-1"></a>dest_gmt_file <span class="ot">=</span> <span class="st">&quot;&quot;</span></span></code></pre></div>
 </div>
-<div id="download-the-latest-pathway-definition-file" class="section level2 hasAnchor" number="4.3">
-<h2><span class="header-section-number">4.3</span> Download the latest pathway definition file<a href="run-gsea-from-within-r.html#download-the-latest-pathway-definition-file" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="download-the-latest-pathway-definition-file" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Download the latest pathway definition file<a href="run-gsea-from-within-r.html#download-the-latest-pathway-definition-file" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Only Human, Mouse, Rat, and Woodchuck gene set files are currently available on the baderlab downloads site. If you are working with a species other than human (and it is either rat,mouse or woodchuck) change the gmt_url below to the correct species. Check <a href="http://download.baderlab.org/EM_Genesets/current_release/">here</a> to see all available species.</p>
 <p>To create your own GMT file using Ensembl see [Create GMT file from Ensembl]</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="run-gsea-from-within-r.html#cb6-1" tabindex="-1"></a><span class="cf">if</span>(dest_gmt_file <span class="sc">==</span> <span class="st">&quot;&quot;</span>){</span>
-<span id="cb6-2"><a href="run-gsea-from-within-r.html#cb6-2" tabindex="-1"></a>  gmt_url <span class="ot">=</span> <span class="st">&quot;http://download.baderlab.org/EM_Genesets/current_release/Human/symbol/&quot;</span></span>
-<span id="cb6-3"><a href="run-gsea-from-within-r.html#cb6-3" tabindex="-1"></a>  </span>
-<span id="cb6-4"><a href="run-gsea-from-within-r.html#cb6-4" tabindex="-1"></a>  <span class="co">#list all the files on the server</span></span>
-<span id="cb6-5"><a href="run-gsea-from-within-r.html#cb6-5" tabindex="-1"></a>  filenames <span class="ot">=</span> <span class="fu">getURL</span>(gmt_url)</span>
-<span id="cb6-6"><a href="run-gsea-from-within-r.html#cb6-6" tabindex="-1"></a>  tc <span class="ot">=</span> <span class="fu">textConnection</span>(filenames)</span>
-<span id="cb6-7"><a href="run-gsea-from-within-r.html#cb6-7" tabindex="-1"></a>  contents <span class="ot">=</span> <span class="fu">readLines</span>(tc)</span>
-<span id="cb6-8"><a href="run-gsea-from-within-r.html#cb6-8" tabindex="-1"></a>  <span class="fu">close</span>(tc)</span>
-<span id="cb6-9"><a href="run-gsea-from-within-r.html#cb6-9" tabindex="-1"></a>  </span>
-<span id="cb6-10"><a href="run-gsea-from-within-r.html#cb6-10" tabindex="-1"></a>  <span class="co">#get the gmt that has all the pathways and does not include terms </span></span>
-<span id="cb6-11"><a href="run-gsea-from-within-r.html#cb6-11" tabindex="-1"></a>  <span class="co"># inferred from electronic annotations(IEA)</span></span>
-<span id="cb6-12"><a href="run-gsea-from-within-r.html#cb6-12" tabindex="-1"></a>  <span class="co">#start with gmt file that has pathways only and GO Biological Process only.</span></span>
-<span id="cb6-13"><a href="run-gsea-from-within-r.html#cb6-13" tabindex="-1"></a>  rx <span class="ot">=</span> <span class="fu">gregexpr</span>(<span class="st">&quot;(?&lt;=&lt;a href=</span><span class="sc">\&quot;</span><span class="st">)(.*.GOBP_AllPathways_noPFOCR_no_GO_iea.*.)(.gmt)(?=</span><span class="sc">\&quot;</span><span class="st">&gt;)&quot;</span>,</span>
-<span id="cb6-14"><a href="run-gsea-from-within-r.html#cb6-14" tabindex="-1"></a>    contents, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-15"><a href="run-gsea-from-within-r.html#cb6-15" tabindex="-1"></a>  gmt_file <span class="ot">=</span> <span class="fu">unlist</span>(<span class="fu">regmatches</span>(contents, rx))</span>
-<span id="cb6-16"><a href="run-gsea-from-within-r.html#cb6-16" tabindex="-1"></a>  </span>
-<span id="cb6-17"><a href="run-gsea-from-within-r.html#cb6-17" tabindex="-1"></a>  dest_gmt_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(output_dir,gmt_file )</span>
-<span id="cb6-18"><a href="run-gsea-from-within-r.html#cb6-18" tabindex="-1"></a>  </span>
-<span id="cb6-19"><a href="run-gsea-from-within-r.html#cb6-19" tabindex="-1"></a>  <span class="co">#check if this gmt file already exists</span></span>
-<span id="cb6-20"><a href="run-gsea-from-within-r.html#cb6-20" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">file.exists</span>(dest_gmt_file)){</span>
-<span id="cb6-21"><a href="run-gsea-from-within-r.html#cb6-21" tabindex="-1"></a>    <span class="fu">download.file</span>(</span>
-<span id="cb6-22"><a href="run-gsea-from-within-r.html#cb6-22" tabindex="-1"></a>      <span class="fu">paste</span>(gmt_url,gmt_file,<span class="at">sep=</span><span class="st">&quot;&quot;</span>),</span>
-<span id="cb6-23"><a href="run-gsea-from-within-r.html#cb6-23" tabindex="-1"></a>      <span class="at">destfile=</span>dest_gmt_file</span>
-<span id="cb6-24"><a href="run-gsea-from-within-r.html#cb6-24" tabindex="-1"></a>    )</span>
-<span id="cb6-25"><a href="run-gsea-from-within-r.html#cb6-25" tabindex="-1"></a>  }</span>
-<span id="cb6-26"><a href="run-gsea-from-within-r.html#cb6-26" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="run-gsea-from-within-r.html#cb4-1" tabindex="-1"></a><span class="cf">if</span>(dest_gmt_file <span class="sc">==</span> <span class="st">&quot;&quot;</span>){</span>
+<span id="cb4-2"><a href="run-gsea-from-within-r.html#cb4-2" tabindex="-1"></a>  gmt_url <span class="ot">=</span> <span class="st">&quot;http://download.baderlab.org/EM_Genesets/current_release/Human/symbol/&quot;</span></span>
+<span id="cb4-3"><a href="run-gsea-from-within-r.html#cb4-3" tabindex="-1"></a>  </span>
+<span id="cb4-4"><a href="run-gsea-from-within-r.html#cb4-4" tabindex="-1"></a>  <span class="co">#list all the files on the server</span></span>
+<span id="cb4-5"><a href="run-gsea-from-within-r.html#cb4-5" tabindex="-1"></a>  filenames <span class="ot">=</span> <span class="fu">getURL</span>(gmt_url)</span>
+<span id="cb4-6"><a href="run-gsea-from-within-r.html#cb4-6" tabindex="-1"></a>  tc <span class="ot">=</span> <span class="fu">textConnection</span>(filenames)</span>
+<span id="cb4-7"><a href="run-gsea-from-within-r.html#cb4-7" tabindex="-1"></a>  contents <span class="ot">=</span> <span class="fu">readLines</span>(tc)</span>
+<span id="cb4-8"><a href="run-gsea-from-within-r.html#cb4-8" tabindex="-1"></a>  <span class="fu">close</span>(tc)</span>
+<span id="cb4-9"><a href="run-gsea-from-within-r.html#cb4-9" tabindex="-1"></a>  </span>
+<span id="cb4-10"><a href="run-gsea-from-within-r.html#cb4-10" tabindex="-1"></a>  <span class="co">#get the gmt that has all the pathways and does not include terms </span></span>
+<span id="cb4-11"><a href="run-gsea-from-within-r.html#cb4-11" tabindex="-1"></a>  <span class="co"># inferred from electronic annotations(IEA)</span></span>
+<span id="cb4-12"><a href="run-gsea-from-within-r.html#cb4-12" tabindex="-1"></a>  <span class="co">#start with gmt file that has pathways only and GO Biological Process only.</span></span>
+<span id="cb4-13"><a href="run-gsea-from-within-r.html#cb4-13" tabindex="-1"></a>  rx <span class="ot">=</span> <span class="fu">gregexpr</span>(<span class="st">&quot;(?&lt;=&lt;a href=</span><span class="sc">\&quot;</span><span class="st">)(.*.GOBP_AllPathways_noPFOCR_no_GO_iea.*.)(.gmt)(?=</span><span class="sc">\&quot;</span><span class="st">&gt;)&quot;</span>,</span>
+<span id="cb4-14"><a href="run-gsea-from-within-r.html#cb4-14" tabindex="-1"></a>    contents, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-15"><a href="run-gsea-from-within-r.html#cb4-15" tabindex="-1"></a>  gmt_file <span class="ot">=</span> <span class="fu">unlist</span>(<span class="fu">regmatches</span>(contents, rx))</span>
+<span id="cb4-16"><a href="run-gsea-from-within-r.html#cb4-16" tabindex="-1"></a>  </span>
+<span id="cb4-17"><a href="run-gsea-from-within-r.html#cb4-17" tabindex="-1"></a>  dest_gmt_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(output_dir,gmt_file )</span>
+<span id="cb4-18"><a href="run-gsea-from-within-r.html#cb4-18" tabindex="-1"></a>  </span>
+<span id="cb4-19"><a href="run-gsea-from-within-r.html#cb4-19" tabindex="-1"></a>  <span class="co">#check if this gmt file already exists</span></span>
+<span id="cb4-20"><a href="run-gsea-from-within-r.html#cb4-20" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">file.exists</span>(dest_gmt_file)){</span>
+<span id="cb4-21"><a href="run-gsea-from-within-r.html#cb4-21" tabindex="-1"></a>    <span class="fu">download.file</span>(</span>
+<span id="cb4-22"><a href="run-gsea-from-within-r.html#cb4-22" tabindex="-1"></a>      <span class="fu">paste</span>(gmt_url,gmt_file,<span class="at">sep=</span><span class="st">&quot;&quot;</span>),</span>
+<span id="cb4-23"><a href="run-gsea-from-within-r.html#cb4-23" tabindex="-1"></a>      <span class="at">destfile=</span>dest_gmt_file</span>
+<span id="cb4-24"><a href="run-gsea-from-within-r.html#cb4-24" tabindex="-1"></a>    )</span>
+<span id="cb4-25"><a href="run-gsea-from-within-r.html#cb4-25" tabindex="-1"></a>  }</span>
+<span id="cb4-26"><a href="run-gsea-from-within-r.html#cb4-26" tabindex="-1"></a>}</span></code></pre></div>
 <hr />
 </div>
-<div id="run-gsea" class="section level2 hasAnchor" number="4.4">
-<h2><span class="header-section-number">4.4</span> Run GSEA<a href="run-gsea-from-within-r.html#run-gsea" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="run-gsea" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Run GSEA<a href="run-gsea-from-within-r.html#run-gsea" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>(GSEA)[<a href="http://software.broadinstitute.org/gsea/index.jsp" class="uri">http://software.broadinstitute.org/gsea/index.jsp</a>] is a stand alone java program with many customizable options. It can be easily run through its integrated user interface. To make this a seemless pipeline we can run GSEA from the command line with a set of options. Any of the supplied options can be customized and there are many additional options that can be specified. For more details see (here)[<a href="http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Running_GSEA_from" class="uri">http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Running_GSEA_from</a>]</p>
 <p>In the below command the following options have been specified:</p>
 <ul>
@@ -339,28 +328,30 @@ The gsea_jar needs to be the full path to the GSEA 4.3.3 directory that you down
 <li>zip_report - true/false to zip output directory</li>
 <li>out - directory where to place the result directory.</li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="run-gsea-from-within-r.html#cb7-1" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb7-2"><a href="run-gsea-from-within-r.html#cb7-2" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="run-gsea-from-within-r.html#cb7-3" tabindex="-1"></a><span class="cf">if</span>(run_gsea){</span>
-<span id="cb7-4"><a href="run-gsea-from-within-r.html#cb7-4" tabindex="-1"></a>  command <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;&quot;</span>,gsea_jar,  </span>
-<span id="cb7-5"><a href="run-gsea-from-within-r.html#cb7-5" tabindex="-1"></a>                   <span class="st">&quot;GSEAPreRanked -gmx&quot;</span>, dest_gmt_file, </span>
-<span id="cb7-6"><a href="run-gsea-from-within-r.html#cb7-6" tabindex="-1"></a>                   <span class="st">&quot;-rnk&quot;</span> ,<span class="fu">file.path</span>(working_dir,rnk_file), </span>
-<span id="cb7-7"><a href="run-gsea-from-within-r.html#cb7-7" tabindex="-1"></a>                   <span class="st">&quot;-collapse false -nperm 1000 -scoring_scheme weighted&quot;</span>, </span>
-<span id="cb7-8"><a href="run-gsea-from-within-r.html#cb7-8" tabindex="-1"></a>                   <span class="st">&quot;-rpt_label &quot;</span>,analysis_name,</span>
-<span id="cb7-9"><a href="run-gsea-from-within-r.html#cb7-9" tabindex="-1"></a>                   <span class="st">&quot;  -plot_top_x 20 -rnd_seed 12345  -set_max 500&quot;</span>,  </span>
-<span id="cb7-10"><a href="run-gsea-from-within-r.html#cb7-10" tabindex="-1"></a>                   <span class="st">&quot; -set_min 15 -zip_report false &quot;</span>,</span>
-<span id="cb7-11"><a href="run-gsea-from-within-r.html#cb7-11" tabindex="-1"></a>                   <span class="st">&quot; -out&quot;</span> ,output_dir, </span>
-<span id="cb7-12"><a href="run-gsea-from-within-r.html#cb7-12" tabindex="-1"></a>                   <span class="st">&quot; &gt; gsea_output.txt&quot;</span>,<span class="at">sep=</span><span class="st">&quot; &quot;</span>)</span>
-<span id="cb7-13"><a href="run-gsea-from-within-r.html#cb7-13" tabindex="-1"></a>  <span class="fu">system</span>(command)</span>
-<span id="cb7-14"><a href="run-gsea-from-within-r.html#cb7-14" tabindex="-1"></a>}</span>
-<span id="cb7-15"><a href="run-gsea-from-within-r.html#cb7-15" tabindex="-1"></a></span>
-<span id="cb7-16"><a href="run-gsea-from-within-r.html#cb7-16" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="run-gsea-from-within-r.html#cb5-1" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb5-2"><a href="run-gsea-from-within-r.html#cb5-2" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="run-gsea-from-within-r.html#cb5-3" tabindex="-1"></a><span class="cf">if</span>(run_gsea){</span>
+<span id="cb5-4"><a href="run-gsea-from-within-r.html#cb5-4" tabindex="-1"></a>  command <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;&quot;</span>,gsea_jar,  </span>
+<span id="cb5-5"><a href="run-gsea-from-within-r.html#cb5-5" tabindex="-1"></a>                   <span class="st">&quot;GSEAPreRanked -gmx&quot;</span>, dest_gmt_file, </span>
+<span id="cb5-6"><a href="run-gsea-from-within-r.html#cb5-6" tabindex="-1"></a>                   <span class="st">&quot;-rnk&quot;</span> ,<span class="fu">file.path</span>(working_dir,rnk_file), </span>
+<span id="cb5-7"><a href="run-gsea-from-within-r.html#cb5-7" tabindex="-1"></a>                   <span class="st">&quot;-collapse false -nperm 1000 -scoring_scheme weighted&quot;</span>, </span>
+<span id="cb5-8"><a href="run-gsea-from-within-r.html#cb5-8" tabindex="-1"></a>                   <span class="st">&quot;-rpt_label &quot;</span>,analysis_name,</span>
+<span id="cb5-9"><a href="run-gsea-from-within-r.html#cb5-9" tabindex="-1"></a>                   <span class="st">&quot;  -plot_top_x 20 -rnd_seed 12345  -set_max 500&quot;</span>,  </span>
+<span id="cb5-10"><a href="run-gsea-from-within-r.html#cb5-10" tabindex="-1"></a>                   <span class="st">&quot; -set_min 15 -zip_report false &quot;</span>,</span>
+<span id="cb5-11"><a href="run-gsea-from-within-r.html#cb5-11" tabindex="-1"></a>                   <span class="st">&quot; -out&quot;</span> ,output_dir, </span>
+<span id="cb5-12"><a href="run-gsea-from-within-r.html#cb5-12" tabindex="-1"></a>                   <span class="st">&quot; &gt; gsea_output.txt&quot;</span>,<span class="at">sep=</span><span class="st">&quot; &quot;</span>)</span>
+<span id="cb5-13"><a href="run-gsea-from-within-r.html#cb5-13" tabindex="-1"></a>  <span class="fu">system</span>(command)</span>
+<span id="cb5-14"><a href="run-gsea-from-within-r.html#cb5-14" tabindex="-1"></a>}</span>
+<span id="cb5-15"><a href="run-gsea-from-within-r.html#cb5-15" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="run-gsea-from-within-r.html#cb5-16" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span></code></pre></div>
 </div>
-<div id="timing" class="section level2 hasAnchor" number="4.5">
-<h2><span class="header-section-number">4.5</span> Timing<a href="run-gsea-from-within-r.html#timing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>GSEA started at 2025-04-23 13:17:43.194343</p>
-<p>GSEA finished at 2025-04-23 13:28:48.445271</p>
-<p>GSEA total running time 11.0875154614449</p>
+<div id="timing" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Timing<a href="run-gsea-from-within-r.html#timing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>GSEA started at 2025-04-23 13:59:19.42084</p>
+<p>GSEA finished at 2025-04-23 14:10:09.588657</p>
+<p>GSEA total running time -</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="run-gsea-from-within-r.html#cb6-1" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span></code></pre></div>
+<pre><code>## Time difference of 10.83613 mins</code></pre>
 
 </div>
 </div>
@@ -378,7 +369,7 @@ Subramanian, Aravind, Pablo Tamayo, Vamsi K Mootha, Sayan Mukherjee, Benjamin L 
           </div>
         </div>
       </div>
-<a href="setup.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="run-fgsea-from-within-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

@@ -1,11 +1,4 @@
-index
 intro
-setup
-install-r-and-rstudio
-docker-optional
-install-docker
-windows
-macos-linux
 run-gsea-from-within-r
 load-in-required-libraries
 configurable-parameters

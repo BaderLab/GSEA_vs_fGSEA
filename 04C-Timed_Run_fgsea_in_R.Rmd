@@ -237,7 +237,12 @@ GSEA started at `r start_time`
 
 GSEA finished at `r end_time`
 
-GSEA total running time `r end_time - start_time`
+GSEA total running time - 
+
+```{r}
+end_time - start_time
+```
+
 
 
 ## Results presented as R table

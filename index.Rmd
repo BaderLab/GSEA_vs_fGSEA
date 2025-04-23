@@ -13,9 +13,6 @@ github-repo: risserlin/GSEA_vs_fGSEA
 description: "These are example R Notebooks comparing GSEA to fGSEA"
 ---
 
-# Index
-
-
 ```{r include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(
