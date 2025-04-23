@@ -233,11 +233,11 @@ end_time <- Sys.time()
 
 ## Timing
 
-GSEA started at `r start_time`
+fGSEA started at `r start_time`
 
-GSEA finished at `r end_time`
+fGSEA finished at `r end_time`
 
-GSEA total running time - 
+fGSEA total running time - 
 
 ```{r}
 end_time - start_time

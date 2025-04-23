@@ -246,11 +246,11 @@ end_time <- Sys.time()
 
 ## Timing
 
-GSEA started at 2025-04-23 14:10:31.589233
+fGSEA started at 2025-04-23 15:01:51.841727
 
-GSEA finished at 2025-04-23 14:10:50.267411
+fGSEA finished at 2025-04-23 15:02:09.713789
 
-GSEA total running time - 
+fGSEA total running time - 
 
 
 ``` r
@@ -258,7 +258,7 @@ end_time - start_time
 ```
 
 ```
-## Time difference of 18.67818 secs
+## Time difference of 17.87206 secs
 ```
 
 

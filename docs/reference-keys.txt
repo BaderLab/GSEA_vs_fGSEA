@@ -1,3 +1,4 @@
+index
 intro
 run-gsea-from-within-r
 load-in-required-libraries
