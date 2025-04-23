@@ -1,0 +1,262 @@
+---
+params:
+  analysis_name: Basal_vs_Classical
+  working_dir: ./data/
+  output_dir: ./generated_data/fgsea/
+  rnk_file: TCGA-PAAD_GDC_Subtype_Moffitt_BasalvsClassical_ranks.rnk
+  expression_file: TCGA-PAAD_GDC_BasalvsClassical_normalized_rnaseq.txt
+  cls_file: TCGA-PAAD_Subtype_Moffitt_BasalvsClassical_RNAseq_classes.cls
+  pvalue_thresh: 1.0
+  qvalue_thresh: 0.05
+---
+
+# Create Enrichment map from R with GSEA results
+
+## Initialize variables and libraries
+
+```{r}
+#use library
+#make sure biocManager is installed
+tryCatch(expr = { library("BiocManager")}, 
+         error = function(e) { 
+           install.packages("BiocManager")}, 
+         finally = library("BiocManager"))
+
+tryCatch(expr = { library("ggplot2")}, 
+         error = function(e) { install.packages("ggplot2")}, 
+         finally = library("ggplot2"))
+
+#use easy cyRest library to communicate with cytoscape.
+tryCatch(expr = { library("RCy3")}, 
+         error = function(e) { BiocManager::install("RCy3")}, 
+         finally = library("RCy3"))
+
+tryCatch(expr = { library("httr")}, 
+         error = function(e) { BiocManager::install("httr")}, 
+         finally = library("httr"))
+```
+
+## Configurable Parameters
+
+```{r initialize parameters - p-value q-value}
+
+# is_docker - true/false depending on if you are running R from docker
+is_docker <- TRUE
+
+#directory where all the original input data file are
+# for example ./data/
+working_dir <- params$working_dir
+
+
+#directory where all the generated data files are found.
+# For example - ./generated_data/
+# If you are using all the notebooks from this set the generated data will be
+# put in the ./generated_data folder.  You have to specify if it is gsea or 
+# gprofiler
+output_dir <- params$output_dir
+
+
+#defined threshold for GSEA enrichments 
+#p-value to filter all the genesets.  For example -   1.0
+pvalue_gsea_threshold <- params$pvalue_thresh
+
+#q-value to filter all the genesets.  For example -   0.05
+qvalue_gsea_threshold <- params$qvalue_thresh
+
+#similarity threshold to filter all the genesets connections/edges.  
+# For example -   0.375
+similarity_threshold <- "0.375"
+
+#similarity metric to filter all the genesets connections/edges 
+# (can be OVERLAP, JACCARD, or COMBINED.   For example -   Combined
+similarity_metric = "COMBINED"
+
+```
+
+## Specify Data files
+Depending on whether you are creating your enrichment map from g:Profiler or GSEA results the sets of files might be a little different.  Minimally, you will need to specify:
+  * gmt file
+  * enrichment results file
+
+Although there is a gmt file in the gsea edb results directory(which is the easiest method to create an enrichment map)  it have been filtered to contain only genes represented in the  expression set.  If you use this fltered file you will get different pathway connectivity depending on the dataset being used.  We recommend using original gmt file used for the gsea analysis and not the filtered one in the results directory.
+
+```{r specify results files - gmt file}
+#use the newest gmt file in the output directory
+gmt_files <- list.files(path = output_dir, pattern = "\\.gmt")
+
+  #get the details on the files
+  details = file.info(file.path(output_dir,gmt_files))
+  #order according to newest to oldest
+  details = details[with(details, order(as.POSIXct(mtime),decreasing = TRUE)), ]
+
+  #use the newest file:
+ gmt_gsea_file <- row.names(details)[1]
+
+
+```
+
+
+fGSEA output directory - You can specify the exact name of the directory.  The below code looks for the newest GSEA results directory and uses that.
+```{r}
+gsea_directories <- list.files(path = output_dir)
+
+#get the details on the files
+details = file.info(file.path(output_dir,gsea_directories))
+#order according to newest to oldest
+details = details[with(details, order(as.POSIXct(mtime),decreasing = TRUE)), ]
+
+#use the newest file:
+gsea_output_dir <- row.names(details)[1]
+
+fgsea_results_file <- list.files((gsea_output_dir),pattern = "fgsea_enr_results.txt")
+
+gsea_results_path <- file.path(gsea_output_dir)
+gsea_results_filename <- file.path(gsea_output_dir,fgsea_results_file )
+
+
+```
+
+## Optional File specification
+
+These files are not needed to create the enrichment map but are very beneficial when analyzing your result.  
+  * gene expression file
+  * gene ranks file
+
+```{r}
+gsea_ranks_file <- file.path(gsea_results_path,
+                             list.files(gsea_results_path,pattern=".rnk"))
+
+expression_file_fullpath <- file.path(working_dir,
+                          params$expression_file)
+
+cls_file_fullpath <- file.path(working_dir, params$cls_file)
+
+#define an analysis name
+cur_model_name <- paste("FGSEA",params$analysis_name,sep="_")
+
+
+```
+
+
+## Launch Cytoscape
+
+Launch Cytoscape (by default cytoscape will automatically enable rest so as long as cytoscape 3.3 or higher is open R should be able to communicate with it).  Make sure if you get an message asking you if you want communicate with other apps that you select "Allow".  
+
+## Make sure you can connect to Cytoscape
+```{r initialize cytoscape connection}
+if(is_docker){
+  current_base = "host.docker.internal:1234/v1"
+  .defaultBaseUrl <- "http://host.docker.internal:1234/v1"
+} else{
+  current_base = "localhost:1234/v1"
+}
+
+cytoscapePing (base.url = current_base)
+cytoscapeVersionInfo (base.url = current_base)
+```
+***
+## Create an Enrichment map
+
+If you are running R from within a docker you need to first upload your datafiles to Cytoscape before you can create your enrichment map
+
+```{r create enrichment map upload}
+
+#if using docker we need to replace all the the paths to the host path
+if(is_docker) {
+  upload_em_file <- function(localPath) {
+    bname <- basename(localPath)
+    r <- POST(
+      url = 
+paste('http://host.docker.internal:1234/enrichmentmap/textfileupload?fileName=', 
+                  bname, sep=""),
+      config = list(),
+      body = list(file = upload_file(localPath)),
+      encode = "multipart",
+      handle = NULL
+    )
+    content(r,"parsed")$path
+  }
+  
+  # "upload" the files to the host machine and replace each path 
+  # with the host machine path
+  expression_file_fullpath <- upload_em_file(expression_file_fullpath)
+  class_file_fullpath <- upload_em_file(cls_file_fullpath)
+  gmt_gsea_file <- upload_em_file(gmt_gsea_file)
+  gsea_ranks_file <- upload_em_file(gsea_ranks_file)
+  gsea_results_filename <- upload_em_file(gsea_results_filename)
+}
+```
+***
+## Create an Enrichment map - run EM command
+```{r create enrichment map}
+
+#######################################
+#create EM
+current_network_name <- paste(cur_model_name,pvalue_gsea_threshold,
+                              qvalue_gsea_threshold,sep="_")
+
+em_command = paste('enrichmentmap build analysisType="gsea" gmtFile=',
+                                                              gmt_gsea_file,
+                   'pvalue=',pvalue_gsea_threshold, 
+                   'qvalue=',qvalue_gsea_threshold,
+                   'similaritycutoff=',similarity_threshold,
+                   'coefficients=',similarity_metric,
+                   'ranksDataset1=', gsea_ranks_file,
+                   'enrichmentsDataset1=',gsea_results_filename, 
+                   'filterByExpressions=false',
+                   'expressionDataset1=',expression_file_fullpath,
+                   'classDataset1=',class_file_fullpath,
+                   'gmtFile=',gmt_gsea_file,
+                   sep=" ")
+
+#enrichment map command will return the suid of newly created network.
+response <- commandsGET(em_command,base.url = current_base)
+
+current_network_suid <- 0
+#enrichment map command will return the suid of newly created network 
+# unless it Failed.  If it failed it will contain the word failed
+if(grepl(pattern="Failed", response)){
+  paste(response)
+} else {
+  current_network_suid <- response
+}
+
+#check to see if the network name is unique
+current_names <- getNetworkList(base.url = current_base)
+if(current_network_name %in% current_names){
+  #if the name already exists in the network names then put the SUID in front
+  # of the name (this does not work if you put the suid at the end of the name)
+  current_network_name <- paste(current_network_suid,
+                                current_network_name,sep="_")
+}
+response <- renameNetwork(title=current_network_name, 
+                       network = as.numeric(current_network_suid),
+                       base.url = current_base)
+
+
+
+```
+
+## Get a screen shot of the initial network.
+```{r get screenshot}
+
+#you can only output the file if it isn't on docker
+#on docker is put it into the user's home directory with docker 
+# has not access to
+if(!is_docker){
+  output_network_file <- file.path(getwd(),"initial_screenshot_network.png")
+  output_network_file_current <- output_network_file
+
+  fitContent()
+
+  if(file.exists(output_network_file)){
+    #cytoscape hangs waiting for user response if file already exists.
+    # Remove it first
+    response <- file.remove(output_network_file)
+  } 
+
+  response <- exportImage(output_network_file, type = "png",
+                          base.url = current_base)
+}
+
+```

@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Run fGSEA from within R | Comparison of GSEA and fGSEA</title>
+  <meta name="description" content="These are example R Notebooks comparing GSEA to fGSEA" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Run fGSEA from within R | Comparison of GSEA and fGSEA" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/images/cover.png" />
+  <meta property="og:description" content="These are example R Notebooks comparing GSEA to fGSEA" />
+  <meta name="github-repo" content="risserlin/GSEA_vs_fGSEA" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Run fGSEA from within R | Comparison of GSEA and fGSEA" />
+  
+  <meta name="twitter:description" content="These are example R Notebooks comparing GSEA to fGSEA" />
+  <meta name="twitter:image" content="/images/cover.png" />
+
+<meta name="author" content="Ruth Isserlin" />
+
+
+<meta name="date" content="2025-04-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="run-gsea-from-within-r.html"/>
+<link rel="next" href="create-enrichment-map-from-r-with-gsea-results.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #204a87; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Index</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Comparing GSEA and fGSEA</a></li>
+<li class="chapter" data-level="3" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>3</b> Setup</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="setup.html"><a href="setup.html#install-r-and-rstudio"><i class="fa fa-check"></i><b>3.1</b> Install R and RStudio</a></li>
+<li class="chapter" data-level="3.2" data-path="setup.html"><a href="setup.html#docker-optional"><i class="fa fa-check"></i><b>3.2</b> Docker [Optional]</a></li>
+<li class="chapter" data-level="3.3" data-path="setup.html"><a href="setup.html#install-docker"><i class="fa fa-check"></i><b>3.3</b> Install Docker</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="setup.html"><a href="setup.html#windows"><i class="fa fa-check"></i><b>3.3.1</b> Windows</a></li>
+<li class="chapter" data-level="3.3.2" data-path="setup.html"><a href="setup.html#macos-linux"><i class="fa fa-check"></i><b>3.3.2</b> MacOS / Linux</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html"><i class="fa fa-check"></i><b>4</b> Run GSEA from within R</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#load-in-required-libraries"><i class="fa fa-check"></i><b>4.1</b> Load in required libraries</a></li>
+<li class="chapter" data-level="4.2" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#configurable-parameters"><i class="fa fa-check"></i><b>4.2</b> Configurable Parameters</a></li>
+<li class="chapter" data-level="4.3" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#download-the-latest-pathway-definition-file"><i class="fa fa-check"></i><b>4.3</b> Download the latest pathway definition file</a></li>
+<li class="chapter" data-level="4.4" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#run-gsea"><i class="fa fa-check"></i><b>4.4</b> Run GSEA</a></li>
+<li class="chapter" data-level="4.5" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#timing"><i class="fa fa-check"></i><b>4.5</b> Timing</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html"><i class="fa fa-check"></i><b>5</b> Run fGSEA from within R</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#load-in-required-libraries-1"><i class="fa fa-check"></i><b>5.1</b> Load in required libraries</a></li>
+<li class="chapter" data-level="5.2" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#function-to-write-out-fgsea-results"><i class="fa fa-check"></i><b>5.2</b> function to write out fGSEA results</a></li>
+<li class="chapter" data-level="5.3" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#configurable-parameters-1"><i class="fa fa-check"></i><b>5.3</b> Configurable Parameters</a></li>
+<li class="chapter" data-level="5.4" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#download-the-latest-pathway-definition-file-1"><i class="fa fa-check"></i><b>5.4</b> Download the latest pathway definition file</a></li>
+<li class="chapter" data-level="5.5" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#run-fgsea"><i class="fa fa-check"></i><b>5.5</b> Run fGSEA</a></li>
+<li class="chapter" data-level="5.6" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#timing-1"><i class="fa fa-check"></i><b>5.6</b> Timing</a></li>
+<li class="chapter" data-level="5.7" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#results-presented-as-r-table"><i class="fa fa-check"></i><b>5.7</b> Results presented as R table</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html"><i class="fa fa-check"></i><b>6</b> Create Enrichment map from R with GSEA results</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#initialize-variables-and-libraries"><i class="fa fa-check"></i><b>6.1</b> Initialize variables and libraries</a></li>
+<li class="chapter" data-level="6.2" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#configurable-parameters-2"><i class="fa fa-check"></i><b>6.2</b> Configurable Parameters</a></li>
+<li class="chapter" data-level="6.3" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#specify-data-files"><i class="fa fa-check"></i><b>6.3</b> Specify Data files</a></li>
+<li class="chapter" data-level="6.4" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#optional-file-specification"><i class="fa fa-check"></i><b>6.4</b> Optional File specification</a></li>
+<li class="chapter" data-level="6.5" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#launch-cytoscape"><i class="fa fa-check"></i><b>6.5</b> Launch Cytoscape</a></li>
+<li class="chapter" data-level="6.6" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#make-sure-you-can-connect-to-cytoscape"><i class="fa fa-check"></i><b>6.6</b> Make sure you can connect to Cytoscape</a></li>
+<li class="chapter" data-level="6.7" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#create-an-enrichment-map"><i class="fa fa-check"></i><b>6.7</b> Create an Enrichment map</a></li>
+<li class="chapter" data-level="6.8" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#create-an-enrichment-map---run-em-command"><i class="fa fa-check"></i><b>6.8</b> Create an Enrichment map - run EM command</a></li>
+<li class="chapter" data-level="6.9" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#get-a-screen-shot-of-the-initial-network."><i class="fa fa-check"></i><b>6.9</b> Get a screen shot of the initial network.</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html"><i class="fa fa-check"></i><b>7</b> Create Enrichment map from R with GSEA results</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#initialize-variables-and-libraries-1"><i class="fa fa-check"></i><b>7.1</b> Initialize variables and libraries</a></li>
+<li class="chapter" data-level="7.2" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#configurable-parameters-3"><i class="fa fa-check"></i><b>7.2</b> Configurable Parameters</a></li>
+<li class="chapter" data-level="7.3" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#specify-data-files-1"><i class="fa fa-check"></i><b>7.3</b> Specify Data files</a></li>
+<li class="chapter" data-level="7.4" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#optional-file-specification-1"><i class="fa fa-check"></i><b>7.4</b> Optional File specification</a></li>
+<li class="chapter" data-level="7.5" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#launch-cytoscape-1"><i class="fa fa-check"></i><b>7.5</b> Launch Cytoscape</a></li>
+<li class="chapter" data-level="7.6" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#make-sure-you-can-connect-to-cytoscape-1"><i class="fa fa-check"></i><b>7.6</b> Make sure you can connect to Cytoscape</a></li>
+<li class="chapter" data-level="7.7" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#create-an-enrichment-map-1"><i class="fa fa-check"></i><b>7.7</b> Create an Enrichment map</a></li>
+<li class="chapter" data-level="7.8" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#create-an-enrichment-map---run-em-command-1"><i class="fa fa-check"></i><b>7.8</b> Create an Enrichment map - run EM command</a></li>
+<li class="chapter" data-level="7.9" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#get-a-screen-shot-of-the-initial-network.-1"><i class="fa fa-check"></i><b>7.9</b> Get a screen shot of the initial network.</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>8</b> References</a></li>
+<li class="divider"></li>
+<li><a href="https://baderlab.org" target="blank"><img src="./images/baderlablogo.png" width="280">Bader Lab</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Comparison of GSEA and fGSEA</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="run-fgsea-from-within-r" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Run fGSEA from within R<a href="run-fgsea-from-within-r.html#run-fgsea-from-within-r" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This notebook is based largely on the <a href="https://baderlab.github.io/Cytoscape_workflows/EnrichmentMapPipeline/Protocol2_createEM.html">original notebook</a> published with EnrichmentMap Protocol<span class="citation">(<a href="#ref-em2019">Reimand et al. 2019</a>)</span></p>
+<div id="load-in-required-libraries-1" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Load in required libraries<a href="run-fgsea-from-within-r.html#load-in-required-libraries-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="run-fgsea-from-within-r.html#cb8-1" tabindex="-1"></a><span class="co">#install required R and bioconductor packages</span></span>
+<span id="cb8-2"><a href="run-fgsea-from-within-r.html#cb8-2" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;RCurl&quot;</span>)}, </span>
+<span id="cb8-3"><a href="run-fgsea-from-within-r.html#cb8-3" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) {  </span>
+<span id="cb8-4"><a href="run-fgsea-from-within-r.html#cb8-4" tabindex="-1"></a>           <span class="fu">install.packages</span>(<span class="st">&quot;RCurl&quot;</span>)}, </span>
+<span id="cb8-5"><a href="run-fgsea-from-within-r.html#cb8-5" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;RCurl&quot;</span>))</span>
+<span id="cb8-6"><a href="run-fgsea-from-within-r.html#cb8-6" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="run-fgsea-from-within-r.html#cb8-7" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;fgsea&quot;</span>)}, </span>
+<span id="cb8-8"><a href="run-fgsea-from-within-r.html#cb8-8" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) {  </span>
+<span id="cb8-9"><a href="run-fgsea-from-within-r.html#cb8-9" tabindex="-1"></a>           <span class="fu">install.packages</span>(<span class="st">&quot;fgsea&quot;</span>)}, </span>
+<span id="cb8-10"><a href="run-fgsea-from-within-r.html#cb8-10" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;fgsea&quot;</span>))</span>
+<span id="cb8-11"><a href="run-fgsea-from-within-r.html#cb8-11" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="run-fgsea-from-within-r.html#cb8-12" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;GSA&quot;</span>)}, </span>
+<span id="cb8-13"><a href="run-fgsea-from-within-r.html#cb8-13" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) {  </span>
+<span id="cb8-14"><a href="run-fgsea-from-within-r.html#cb8-14" tabindex="-1"></a>           <span class="fu">install.packages</span>(<span class="st">&quot;GSA&quot;</span>)}, </span>
+<span id="cb8-15"><a href="run-fgsea-from-within-r.html#cb8-15" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;GSA&quot;</span>))</span></code></pre></div>
+</div>
+<div id="function-to-write-out-fgsea-results" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> function to write out fGSEA results<a href="run-fgsea-from-within-r.html#function-to-write-out-fgsea-results" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Create function to write out fgsea results files for each sample</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="run-fgsea-from-within-r.html#cb9-1" tabindex="-1"></a>write_sample_fgsea_results<span class="ot">&lt;-</span> <span class="cf">function</span>(current_fgsea_results, current_results_dir, </span>
+<span id="cb9-2"><a href="run-fgsea-from-within-r.html#cb9-2" tabindex="-1"></a>                                       current_sample){</span>
+<span id="cb9-3"><a href="run-fgsea-from-within-r.html#cb9-3" tabindex="-1"></a>    </span>
+<span id="cb9-4"><a href="run-fgsea-from-within-r.html#cb9-4" tabindex="-1"></a>  current_sample <span class="ot">&lt;-</span> current_sample</span>
+<span id="cb9-5"><a href="run-fgsea-from-within-r.html#cb9-5" tabindex="-1"></a>  </span>
+<span id="cb9-6"><a href="run-fgsea-from-within-r.html#cb9-6" tabindex="-1"></a>    current_sample_directory_fullpath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(current_results_dir, current_sample)</span>
+<span id="cb9-7"><a href="run-fgsea-from-within-r.html#cb9-7" tabindex="-1"></a>    <span class="cf">if</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(current_sample_directory_fullpath)){</span>
+<span id="cb9-8"><a href="run-fgsea-from-within-r.html#cb9-8" tabindex="-1"></a>      <span class="fu">dir.create</span>(current_sample_directory_fullpath)</span>
+<span id="cb9-9"><a href="run-fgsea-from-within-r.html#cb9-9" tabindex="-1"></a>    }</span>
+<span id="cb9-10"><a href="run-fgsea-from-within-r.html#cb9-10" tabindex="-1"></a>  </span>
+<span id="cb9-11"><a href="run-fgsea-from-within-r.html#cb9-11" tabindex="-1"></a>    <span class="co">#calculate the rank at max</span></span>
+<span id="cb9-12"><a href="run-fgsea-from-within-r.html#cb9-12" tabindex="-1"></a>    <span class="co">#fgsea returns the leading edge.  Just need to extract the highest rank from </span></span>
+<span id="cb9-13"><a href="run-fgsea-from-within-r.html#cb9-13" tabindex="-1"></a>    <span class="co"># set to get the rank at max</span></span>
+<span id="cb9-14"><a href="run-fgsea-from-within-r.html#cb9-14" tabindex="-1"></a>    calculated_rank_at_max <span class="ot">&lt;-</span> <span class="fu">apply</span>(current_fgsea_results,<span class="dv">1</span>,<span class="at">FUN=</span><span class="cf">function</span>(x){ <span class="fu">max</span>(<span class="fu">which</span>(<span class="fu">names</span>(current_ranks) <span class="sc">%in%</span> <span class="fu">unlist</span>(x[<span class="dv">8</span>])))})</span>
+<span id="cb9-15"><a href="run-fgsea-from-within-r.html#cb9-15" tabindex="-1"></a>    </span>
+<span id="cb9-16"><a href="run-fgsea-from-within-r.html#cb9-16" tabindex="-1"></a>    </span>
+<span id="cb9-17"><a href="run-fgsea-from-within-r.html#cb9-17" tabindex="-1"></a>    fakeenr_current_sample <span class="ot">&lt;-</span> <span class="fu">cbind</span>(current_fgsea_results<span class="sc">$</span>pathway,</span>
+<span id="cb9-18"><a href="run-fgsea-from-within-r.html#cb9-18" tabindex="-1"></a>                                     current_fgsea_results<span class="sc">$</span>pathway,</span>
+<span id="cb9-19"><a href="run-fgsea-from-within-r.html#cb9-19" tabindex="-1"></a>                                     <span class="st">&quot;Details&quot;</span>,</span>
+<span id="cb9-20"><a href="run-fgsea-from-within-r.html#cb9-20" tabindex="-1"></a>                                     current_fgsea_results<span class="sc">$</span>size,</span>
+<span id="cb9-21"><a href="run-fgsea-from-within-r.html#cb9-21" tabindex="-1"></a>                                     current_fgsea_results<span class="sc">$</span>ES,</span>
+<span id="cb9-22"><a href="run-fgsea-from-within-r.html#cb9-22" tabindex="-1"></a>                                     current_fgsea_results<span class="sc">$</span>NES,</span>
+<span id="cb9-23"><a href="run-fgsea-from-within-r.html#cb9-23" tabindex="-1"></a>                                     current_fgsea_results<span class="sc">$</span>pval,</span>
+<span id="cb9-24"><a href="run-fgsea-from-within-r.html#cb9-24" tabindex="-1"></a>                                     current_fgsea_results<span class="sc">$</span>padj,</span>
+<span id="cb9-25"><a href="run-fgsea-from-within-r.html#cb9-25" tabindex="-1"></a>                                     <span class="dv">0</span>,</span>
+<span id="cb9-26"><a href="run-fgsea-from-within-r.html#cb9-26" tabindex="-1"></a>                                     calculated_rank_at_max,</span>
+<span id="cb9-27"><a href="run-fgsea-from-within-r.html#cb9-27" tabindex="-1"></a>                                     <span class="fu">apply</span>(current_fgsea_results,<span class="dv">1</span>,</span>
+<span id="cb9-28"><a href="run-fgsea-from-within-r.html#cb9-28" tabindex="-1"></a>                                           <span class="at">FUN=</span><span class="cf">function</span>(x){<span class="fu">paste</span>(<span class="fu">unlist</span>(x[<span class="dv">8</span>]),<span class="at">collapse=</span><span class="st">&quot;,&quot;</span>)})) </span>
+<span id="cb9-29"><a href="run-fgsea-from-within-r.html#cb9-29" tabindex="-1"></a>    </span>
+<span id="cb9-30"><a href="run-fgsea-from-within-r.html#cb9-30" tabindex="-1"></a>    <span class="fu">colnames</span>(fakeenr_current_sample) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;name&quot;</span>,<span class="st">&quot;description&quot;</span>,<span class="st">&quot;GS details&quot;</span>,<span class="st">&quot;SIZE&quot;</span>,<span class="st">&quot;ES&quot;</span>,<span class="st">&quot;NES&quot;</span>,<span class="st">&quot;pval&quot;</span>,<span class="st">&quot;padj&quot;</span>,<span class="st">&quot;FWER&quot;</span>,<span class="st">&quot;Rank at Max&quot;</span>,<span class="st">&quot;leading edge genes&quot;</span>)</span>
+<span id="cb9-31"><a href="run-fgsea-from-within-r.html#cb9-31" tabindex="-1"></a>    </span>
+<span id="cb9-32"><a href="run-fgsea-from-within-r.html#cb9-32" tabindex="-1"></a>    fakeenr_filename <span class="ot">&lt;-</span> <span class="fu">paste0</span>(current_sample, <span class="st">&quot;_fgsea_enr_results.txt&quot;</span>,<span class="at">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb9-33"><a href="run-fgsea-from-within-r.html#cb9-33" tabindex="-1"></a>    fakeenr_filename_docker <span class="ot">&lt;-</span> <span class="fu">file.path</span>(current_sample_directory_fullpath,fakeenr_filename)</span>
+<span id="cb9-34"><a href="run-fgsea-from-within-r.html#cb9-34" tabindex="-1"></a>    </span>
+<span id="cb9-35"><a href="run-fgsea-from-within-r.html#cb9-35" tabindex="-1"></a>    <span class="fu">write.table</span>(fakeenr_current_sample ,</span>
+<span id="cb9-36"><a href="run-fgsea-from-within-r.html#cb9-36" tabindex="-1"></a>                fakeenr_filename_docker,</span>
+<span id="cb9-37"><a href="run-fgsea-from-within-r.html#cb9-37" tabindex="-1"></a>                <span class="at">col.name=</span><span class="cn">TRUE</span>,<span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,<span class="at">row.names=</span><span class="cn">FALSE</span>,<span class="at">quote=</span><span class="cn">FALSE</span>,<span class="at">fileEncoding=</span><span class="st">&quot;latin1&quot;</span>)</span>
+<span id="cb9-38"><a href="run-fgsea-from-within-r.html#cb9-38" tabindex="-1"></a>    </span>
+<span id="cb9-39"><a href="run-fgsea-from-within-r.html#cb9-39" tabindex="-1"></a>    <span class="co"># &quot;upload&quot; the files to the host machine and replace each path with the host machine path</span></span>
+<span id="cb9-40"><a href="run-fgsea-from-within-r.html#cb9-40" tabindex="-1"></a>    </span>
+<span id="cb9-41"><a href="run-fgsea-from-within-r.html#cb9-41" tabindex="-1"></a>    <span class="co">#create a fake expression file</span></span>
+<span id="cb9-42"><a href="run-fgsea-from-within-r.html#cb9-42" tabindex="-1"></a>    fakeexp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">name =</span> <span class="fu">names</span>(current_ranks), </span>
+<span id="cb9-43"><a href="run-fgsea-from-within-r.html#cb9-43" tabindex="-1"></a>                          <span class="at">description =</span> <span class="fu">names</span>(current_ranks),current_ranks)</span>
+<span id="cb9-44"><a href="run-fgsea-from-within-r.html#cb9-44" tabindex="-1"></a>    fakeexp_filename <span class="ot">&lt;-</span> <span class="fu">paste0</span>(current_sample,<span class="st">&quot;fakeexpression.txt&quot;</span>,<span class="at">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb9-45"><a href="run-fgsea-from-within-r.html#cb9-45" tabindex="-1"></a>    fakeexp_name_docker <span class="ot">&lt;-</span> <span class="fu">file.path</span>( current_sample_directory_fullpath,fakeexp_filename)</span>
+<span id="cb9-46"><a href="run-fgsea-from-within-r.html#cb9-46" tabindex="-1"></a></span>
+<span id="cb9-47"><a href="run-fgsea-from-within-r.html#cb9-47" tabindex="-1"></a>    <span class="fu">write.table</span>(fakeexp,</span>
+<span id="cb9-48"><a href="run-fgsea-from-within-r.html#cb9-48" tabindex="-1"></a>                fakeexp_name_docker,</span>
+<span id="cb9-49"><a href="run-fgsea-from-within-r.html#cb9-49" tabindex="-1"></a>                <span class="at">col.name=</span><span class="cn">TRUE</span>,<span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,<span class="at">row.names=</span><span class="cn">FALSE</span>,<span class="at">quote=</span><span class="cn">FALSE</span>,<span class="at">fileEncoding=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb9-50"><a href="run-fgsea-from-within-r.html#cb9-50" tabindex="-1"></a>    </span>
+<span id="cb9-51"><a href="run-fgsea-from-within-r.html#cb9-51" tabindex="-1"></a>    </span>
+<span id="cb9-52"><a href="run-fgsea-from-within-r.html#cb9-52" tabindex="-1"></a>    <span class="co">#create a rank expression file</span></span>
+<span id="cb9-53"><a href="run-fgsea-from-within-r.html#cb9-53" tabindex="-1"></a>    fakernk <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">name =</span> <span class="fu">names</span>(current_ranks), </span>
+<span id="cb9-54"><a href="run-fgsea-from-within-r.html#cb9-54" tabindex="-1"></a>                          current_ranks)</span>
+<span id="cb9-55"><a href="run-fgsea-from-within-r.html#cb9-55" tabindex="-1"></a>    fakernk_filename <span class="ot">&lt;-</span> <span class="fu">paste0</span>(current_sample,<span class="st">&quot;fakeranks.rnk&quot;</span>,<span class="at">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb9-56"><a href="run-fgsea-from-within-r.html#cb9-56" tabindex="-1"></a>    fakernk_name_docker <span class="ot">&lt;-</span> <span class="fu">file.path</span>( current_sample_directory_fullpath,fakernk_filename)</span>
+<span id="cb9-57"><a href="run-fgsea-from-within-r.html#cb9-57" tabindex="-1"></a></span>
+<span id="cb9-58"><a href="run-fgsea-from-within-r.html#cb9-58" tabindex="-1"></a>    <span class="fu">write.table</span>(fakernk,</span>
+<span id="cb9-59"><a href="run-fgsea-from-within-r.html#cb9-59" tabindex="-1"></a>                fakernk_name_docker,</span>
+<span id="cb9-60"><a href="run-fgsea-from-within-r.html#cb9-60" tabindex="-1"></a>                <span class="at">col.name=</span><span class="cn">TRUE</span>,<span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,<span class="at">row.names=</span><span class="cn">FALSE</span>,<span class="at">quote=</span><span class="cn">FALSE</span>,<span class="at">fileEncoding=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb9-61"><a href="run-fgsea-from-within-r.html#cb9-61" tabindex="-1"></a>    </span>
+<span id="cb9-62"><a href="run-fgsea-from-within-r.html#cb9-62" tabindex="-1"></a>      </span>
+<span id="cb9-63"><a href="run-fgsea-from-within-r.html#cb9-63" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="configurable-parameters-1" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Configurable Parameters<a href="run-fgsea-from-within-r.html#configurable-parameters-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Set the working directory as the directory to the directory where you downloaded all protocol files. For example /User/JohnSmith/EMProtocolFiles/data</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="run-fgsea-from-within-r.html#cb10-1" tabindex="-1"></a><span class="co"># defined in the paramters at top of notebook</span></span>
+<span id="cb10-2"><a href="run-fgsea-from-within-r.html#cb10-2" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="run-fgsea-from-within-r.html#cb10-3" tabindex="-1"></a><span class="co">#directory where all the data files are found.  For example -   ./data/ </span></span>
+<span id="cb10-4"><a href="run-fgsea-from-within-r.html#cb10-4" tabindex="-1"></a>working_dir <span class="ot">&lt;-</span> params<span class="sc">$</span>working_dir</span>
+<span id="cb10-5"><a href="run-fgsea-from-within-r.html#cb10-5" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="run-fgsea-from-within-r.html#cb10-6" tabindex="-1"></a><span class="co">#directory where all the data files are found.  For example -   ./generated_data/gsea/</span></span>
+<span id="cb10-7"><a href="run-fgsea-from-within-r.html#cb10-7" tabindex="-1"></a>output_dir <span class="ot">&lt;-</span> params<span class="sc">$</span>output_dir</span>
+<span id="cb10-8"><a href="run-fgsea-from-within-r.html#cb10-8" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">exists</span>(output_dir)){</span>
+<span id="cb10-9"><a href="run-fgsea-from-within-r.html#cb10-9" tabindex="-1"></a>  <span class="fu">dir.create</span>(output_dir)</span>
+<span id="cb10-10"><a href="run-fgsea-from-within-r.html#cb10-10" tabindex="-1"></a>}</span>
+<span id="cb10-11"><a href="run-fgsea-from-within-r.html#cb10-11" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="run-fgsea-from-within-r.html#cb10-12" tabindex="-1"></a><span class="co">#The name to give the analysis in GSEA - for example Basal_vs_Classical</span></span>
+<span id="cb10-13"><a href="run-fgsea-from-within-r.html#cb10-13" tabindex="-1"></a>analysis_name <span class="ot">&lt;-</span> params<span class="sc">$</span>analysis_name</span>
+<span id="cb10-14"><a href="run-fgsea-from-within-r.html#cb10-14" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="run-fgsea-from-within-r.html#cb10-15" tabindex="-1"></a><span class="co">#rank file to use in GSEA analysis.  </span></span>
+<span id="cb10-16"><a href="run-fgsea-from-within-r.html#cb10-16" tabindex="-1"></a><span class="co">#For example - TCGA-PAAD_GDC_Subtype_Moffitt_BasalvsClassical_ranks.rnk</span></span>
+<span id="cb10-17"><a href="run-fgsea-from-within-r.html#cb10-17" tabindex="-1"></a>rnk_file <span class="ot">&lt;-</span> params<span class="sc">$</span>rnk_file</span>
+<span id="cb10-18"><a href="run-fgsea-from-within-r.html#cb10-18" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="run-fgsea-from-within-r.html#cb10-19" tabindex="-1"></a><span class="co">#run_gsea - true/false</span></span>
+<span id="cb10-20"><a href="run-fgsea-from-within-r.html#cb10-20" tabindex="-1"></a><span class="co"># This parameter is for the compilation of the notebook.  </span></span>
+<span id="cb10-21"><a href="run-fgsea-from-within-r.html#cb10-21" tabindex="-1"></a>run_fgsea <span class="ot">&lt;-</span> params<span class="sc">$</span>run_fgsea</span>
+<span id="cb10-22"><a href="run-fgsea-from-within-r.html#cb10-22" tabindex="-1"></a></span>
+<span id="cb10-23"><a href="run-fgsea-from-within-r.html#cb10-23" tabindex="-1"></a><span class="co">#set the gmt file you want to use if you don&#39;t want to use the latest gmt file.</span></span>
+<span id="cb10-24"><a href="run-fgsea-from-within-r.html#cb10-24" tabindex="-1"></a><span class="co"># For example, if you set dest_gmt_file ==&quot;&quot; the below script will automatically</span></span>
+<span id="cb10-25"><a href="run-fgsea-from-within-r.html#cb10-25" tabindex="-1"></a><span class="co"># download the latest gmt file from baderlab webstie.  If it is set then it</span></span>
+<span id="cb10-26"><a href="run-fgsea-from-within-r.html#cb10-26" tabindex="-1"></a><span class="co"># will use the file specified.  </span></span>
+<span id="cb10-27"><a href="run-fgsea-from-within-r.html#cb10-27" tabindex="-1"></a>dest_gmt_file <span class="ot">=</span> <span class="st">&quot;&quot;</span></span></code></pre></div>
+</div>
+<div id="download-the-latest-pathway-definition-file-1" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Download the latest pathway definition file<a href="run-fgsea-from-within-r.html#download-the-latest-pathway-definition-file-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Only Human, Mouse, Rat, and Woodchuck gene set files are currently available on the baderlab downloads site. If you are working with a species other than human (and it is either rat,mouse or woodchuck) change the gmt_url below to the correct species. Check <a href="http://download.baderlab.org/EM_Genesets/current_release/">here</a> to see all available species.</p>
+<p>To create your own GMT file using Ensembl see [Create GMT file from Ensembl]</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="run-fgsea-from-within-r.html#cb11-1" tabindex="-1"></a><span class="cf">if</span>(dest_gmt_file <span class="sc">==</span> <span class="st">&quot;&quot;</span>){</span>
+<span id="cb11-2"><a href="run-fgsea-from-within-r.html#cb11-2" tabindex="-1"></a>  gmt_url <span class="ot">=</span> <span class="st">&quot;http://download.baderlab.org/EM_Genesets/current_release/Human/symbol/&quot;</span></span>
+<span id="cb11-3"><a href="run-fgsea-from-within-r.html#cb11-3" tabindex="-1"></a>  </span>
+<span id="cb11-4"><a href="run-fgsea-from-within-r.html#cb11-4" tabindex="-1"></a>  <span class="co">#list all the files on the server</span></span>
+<span id="cb11-5"><a href="run-fgsea-from-within-r.html#cb11-5" tabindex="-1"></a>  filenames <span class="ot">=</span> <span class="fu">getURL</span>(gmt_url)</span>
+<span id="cb11-6"><a href="run-fgsea-from-within-r.html#cb11-6" tabindex="-1"></a>  tc <span class="ot">=</span> <span class="fu">textConnection</span>(filenames)</span>
+<span id="cb11-7"><a href="run-fgsea-from-within-r.html#cb11-7" tabindex="-1"></a>  contents <span class="ot">=</span> <span class="fu">readLines</span>(tc)</span>
+<span id="cb11-8"><a href="run-fgsea-from-within-r.html#cb11-8" tabindex="-1"></a>  <span class="fu">close</span>(tc)</span>
+<span id="cb11-9"><a href="run-fgsea-from-within-r.html#cb11-9" tabindex="-1"></a>  </span>
+<span id="cb11-10"><a href="run-fgsea-from-within-r.html#cb11-10" tabindex="-1"></a>  <span class="co">#get the gmt that has all the pathways and does not include terms </span></span>
+<span id="cb11-11"><a href="run-fgsea-from-within-r.html#cb11-11" tabindex="-1"></a>  <span class="co"># inferred from electronic annotations(IEA)</span></span>
+<span id="cb11-12"><a href="run-fgsea-from-within-r.html#cb11-12" tabindex="-1"></a>  <span class="co">#start with gmt file that has pathways only and GO Biological Process only.</span></span>
+<span id="cb11-13"><a href="run-fgsea-from-within-r.html#cb11-13" tabindex="-1"></a>  rx <span class="ot">=</span> <span class="fu">gregexpr</span>(<span class="st">&quot;(?&lt;=&lt;a href=</span><span class="sc">\&quot;</span><span class="st">)(.*.GOBP_AllPathways_noPFOCR_no_GO_iea.*.)(.gmt)(?=</span><span class="sc">\&quot;</span><span class="st">&gt;)&quot;</span>,</span>
+<span id="cb11-14"><a href="run-fgsea-from-within-r.html#cb11-14" tabindex="-1"></a>    contents, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-15"><a href="run-fgsea-from-within-r.html#cb11-15" tabindex="-1"></a>  gmt_file <span class="ot">=</span> <span class="fu">unlist</span>(<span class="fu">regmatches</span>(contents, rx))</span>
+<span id="cb11-16"><a href="run-fgsea-from-within-r.html#cb11-16" tabindex="-1"></a>  </span>
+<span id="cb11-17"><a href="run-fgsea-from-within-r.html#cb11-17" tabindex="-1"></a>  dest_gmt_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(output_dir,gmt_file )</span>
+<span id="cb11-18"><a href="run-fgsea-from-within-r.html#cb11-18" tabindex="-1"></a>  </span>
+<span id="cb11-19"><a href="run-fgsea-from-within-r.html#cb11-19" tabindex="-1"></a>  <span class="co">#check if this gmt file already exists</span></span>
+<span id="cb11-20"><a href="run-fgsea-from-within-r.html#cb11-20" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">file.exists</span>(dest_gmt_file)){</span>
+<span id="cb11-21"><a href="run-fgsea-from-within-r.html#cb11-21" tabindex="-1"></a>    <span class="fu">download.file</span>(</span>
+<span id="cb11-22"><a href="run-fgsea-from-within-r.html#cb11-22" tabindex="-1"></a>      <span class="fu">paste</span>(gmt_url,gmt_file,<span class="at">sep=</span><span class="st">&quot;&quot;</span>),</span>
+<span id="cb11-23"><a href="run-fgsea-from-within-r.html#cb11-23" tabindex="-1"></a>      <span class="at">destfile=</span>dest_gmt_file</span>
+<span id="cb11-24"><a href="run-fgsea-from-within-r.html#cb11-24" tabindex="-1"></a>    )</span>
+<span id="cb11-25"><a href="run-fgsea-from-within-r.html#cb11-25" tabindex="-1"></a>  }</span>
+<span id="cb11-26"><a href="run-fgsea-from-within-r.html#cb11-26" tabindex="-1"></a>}</span>
+<span id="cb11-27"><a href="run-fgsea-from-within-r.html#cb11-27" tabindex="-1"></a></span>
+<span id="cb11-28"><a href="run-fgsea-from-within-r.html#cb11-28" tabindex="-1"></a></span>
+<span id="cb11-29"><a href="run-fgsea-from-within-r.html#cb11-29" tabindex="-1"></a><span class="co">#load in the genesets.</span></span>
+<span id="cb11-30"><a href="run-fgsea-from-within-r.html#cb11-30" tabindex="-1"></a><span class="fu">capture.output</span>(all_gs <span class="ot">&lt;-</span> <span class="fu">GSA.read.gmt</span>(dest_gmt_file) ,<span class="at">file=</span><span class="st">&quot;gsa_load.out&quot;</span>)</span>
+<span id="cb11-31"><a href="run-fgsea-from-within-r.html#cb11-31" tabindex="-1"></a><span class="fu">names</span>(all_gs<span class="sc">$</span>genesets) <span class="ot">&lt;-</span> all_gs<span class="sc">$</span>geneset.names</span></code></pre></div>
+<hr />
+</div>
+<div id="run-fgsea" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Run fGSEA<a href="run-fgsea-from-within-r.html#run-fgsea" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>(fGSEA)[<a href="https://bioconductor.org/packages/release/bioc/html/fgsea.html" class="uri">https://bioconductor.org/packages/release/bioc/html/fgsea.html</a>] is an R package that runs a fast Gene Set Enrichment Analysis.</p>
+<p>In the below command the following options have been specified:</p>
+<ul>
+<li>pathways - list of genesets to use for the calculation</li>
+<li>stats - genes and their associated statistic, sorted</li>
+<li>max_size - maximum size for individual gene sets. In GSEA interface this is set to 500 but we prefer to use a more stringent setting of 200.</li>
+<li>min_size - minimum size for individual gene sets</li>
+</ul>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="run-fgsea-from-within-r.html#cb12-1" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb12-2"><a href="run-fgsea-from-within-r.html#cb12-2" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="run-fgsea-from-within-r.html#cb12-3" tabindex="-1"></a><span class="cf">if</span>(run_fgsea){</span>
+<span id="cb12-4"><a href="run-fgsea-from-within-r.html#cb12-4" tabindex="-1"></a>  <span class="co">#get the subset of genes that are protein coding. </span></span>
+<span id="cb12-5"><a href="run-fgsea-from-within-r.html#cb12-5" tabindex="-1"></a>    current_ranks <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="fu">file.path</span>(working_dir,rnk_file),<span class="at">header=</span><span class="cn">TRUE</span>,<span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span>
+<span id="cb12-6"><a href="run-fgsea-from-within-r.html#cb12-6" tabindex="-1"></a>    fgsea_ranks <span class="ot">&lt;-</span> current_ranks[,<span class="dv">2</span>]</span>
+<span id="cb12-7"><a href="run-fgsea-from-within-r.html#cb12-7" tabindex="-1"></a>    <span class="fu">names</span>(fgsea_ranks) <span class="ot">&lt;-</span> current_ranks[,<span class="dv">1</span>]</span>
+<span id="cb12-8"><a href="run-fgsea-from-within-r.html#cb12-8" tabindex="-1"></a> </span>
+<span id="cb12-9"><a href="run-fgsea-from-within-r.html#cb12-9" tabindex="-1"></a>    current_ranks <span class="ot">&lt;-</span> fgsea_ranks</span>
+<span id="cb12-10"><a href="run-fgsea-from-within-r.html#cb12-10" tabindex="-1"></a> </span>
+<span id="cb12-11"><a href="run-fgsea-from-within-r.html#cb12-11" tabindex="-1"></a>    <span class="co">#remove duplicated genes</span></span>
+<span id="cb12-12"><a href="run-fgsea-from-within-r.html#cb12-12" tabindex="-1"></a>    duplicated_gene_names <span class="ot">&lt;-</span>   </span>
+<span id="cb12-13"><a href="run-fgsea-from-within-r.html#cb12-13" tabindex="-1"></a>      <span class="fu">names</span>(current_ranks)[<span class="fu">which</span>(<span class="fu">duplicated</span>(<span class="fu">names</span>(current_ranks)))]</span>
+<span id="cb12-14"><a href="run-fgsea-from-within-r.html#cb12-14" tabindex="-1"></a>    current_ranks <span class="ot">&lt;-</span> current_ranks[<span class="fu">which</span>(<span class="sc">!</span><span class="fu">names</span>(current_ranks) <span class="sc">%in%</span> </span>
+<span id="cb12-15"><a href="run-fgsea-from-within-r.html#cb12-15" tabindex="-1"></a>                                           duplicated_gene_names)]</span>
+<span id="cb12-16"><a href="run-fgsea-from-within-r.html#cb12-16" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="run-fgsea-from-within-r.html#cb12-17" tabindex="-1"></a>    current_ranks <span class="ot">&lt;-</span> <span class="fu">sort</span>(current_ranks,<span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-18"><a href="run-fgsea-from-within-r.html#cb12-18" tabindex="-1"></a>    <span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb12-19"><a href="run-fgsea-from-within-r.html#cb12-19" tabindex="-1"></a>    current_fgsea_results <span class="ot">&lt;-</span> fgsea<span class="sc">::</span><span class="fu">fgsea</span>(all_gs<span class="sc">$</span>genesets, </span>
+<span id="cb12-20"><a href="run-fgsea-from-within-r.html#cb12-20" tabindex="-1"></a>                                      <span class="fu">sort</span>(current_ranks,<span class="at">decreasing=</span><span class="cn">TRUE</span>),</span>
+<span id="cb12-21"><a href="run-fgsea-from-within-r.html#cb12-21" tabindex="-1"></a>                                      <span class="at">minSize=</span><span class="dv">15</span>,</span>
+<span id="cb12-22"><a href="run-fgsea-from-within-r.html#cb12-22" tabindex="-1"></a>                                      <span class="at">maxSize =</span> <span class="dv">500</span></span>
+<span id="cb12-23"><a href="run-fgsea-from-within-r.html#cb12-23" tabindex="-1"></a>                                      )</span>
+<span id="cb12-24"><a href="run-fgsea-from-within-r.html#cb12-24" tabindex="-1"></a>    </span>
+<span id="cb12-25"><a href="run-fgsea-from-within-r.html#cb12-25" tabindex="-1"></a>    <span class="co">#write out the fgsea results for this patient</span></span>
+<span id="cb12-26"><a href="run-fgsea-from-within-r.html#cb12-26" tabindex="-1"></a>      <span class="fu">write_sample_fgsea_results</span>(current_fgsea_results,output_dir,analysis_name)</span>
+<span id="cb12-27"><a href="run-fgsea-from-within-r.html#cb12-27" tabindex="-1"></a>      </span>
+<span id="cb12-28"><a href="run-fgsea-from-within-r.html#cb12-28" tabindex="-1"></a></span>
+<span id="cb12-29"><a href="run-fgsea-from-within-r.html#cb12-29" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## Warning in write.table(fakeenr_current_sample, fakeenr_filename_docker, :
+## invalid char string in output conversion
+## Warning in write.table(fakeenr_current_sample, fakeenr_filename_docker, :
+## invalid char string in output conversion
+## Warning in write.table(fakeenr_current_sample, fakeenr_filename_docker, :
+## invalid char string in output conversion
+## Warning in write.table(fakeenr_current_sample, fakeenr_filename_docker, :
+## invalid char string in output conversion</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="run-fgsea-from-within-r.html#cb14-1" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span></code></pre></div>
+</div>
+<div id="timing-1" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> Timing<a href="run-fgsea-from-within-r.html#timing-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>GSEA started at 2025-04-23 13:29:10.83867</p>
+<p>GSEA finished at 2025-04-23 13:29:28.514751</p>
+<p>GSEA total running time 17.6760807037354</p>
+</div>
+<div id="results-presented-as-r-table" class="section level2 hasAnchor" number="5.7">
+<h2><span class="header-section-number">5.7</span> Results presented as R table<a href="run-fgsea-from-within-r.html#results-presented-as-r-table" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="run-fgsea-from-within-r.html#cb15-1" tabindex="-1"></a>topPathwaysUp <span class="ot">&lt;-</span> current_fgsea_results[ES <span class="sc">&gt;</span> <span class="dv">0</span>][<span class="fu">head</span>(<span class="fu">order</span>(pval), <span class="at">n=</span><span class="dv">10</span>), pathway]</span>
+<span id="cb15-2"><a href="run-fgsea-from-within-r.html#cb15-2" tabindex="-1"></a>topPathwaysDown <span class="ot">&lt;-</span> current_fgsea_results[ES <span class="sc">&lt;</span> <span class="dv">0</span>][<span class="fu">head</span>(<span class="fu">order</span>(pval), <span class="at">n=</span><span class="dv">10</span>), pathway]</span>
+<span id="cb15-3"><a href="run-fgsea-from-within-r.html#cb15-3" tabindex="-1"></a>topPathways <span class="ot">&lt;-</span> <span class="fu">c</span>(topPathwaysUp, <span class="fu">rev</span>(topPathwaysDown))</span>
+<span id="cb15-4"><a href="run-fgsea-from-within-r.html#cb15-4" tabindex="-1"></a><span class="fu">plotGseaTable</span>(all_gs<span class="sc">$</span>genesets[topPathways], current_ranks, current_fgsea_results, </span>
+<span id="cb15-5"><a href="run-fgsea-from-within-r.html#cb15-5" tabindex="-1"></a>              <span class="at">gseaParam=</span><span class="fl">0.5</span>)</span></code></pre></div>
+<p><img src="04C-Timed_Run_fgsea_in_R_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+
+</div>
+</div>
+<h3> References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-em2019" class="csl-entry">
+Reimand, Jüri, Ruth Isserlin, Veronique Voisin, Mike Kucera, Christian Tannus-Lopes, Asha Rostamianfar, Lina Wadi, et al. 2019. <span>“Pathway Enrichment Analysis and Visualization of Omics Data Using g: Profiler, GSEA, Cytoscape and EnrichmentMap.”</span> <em>Nature Protocols</em> 14 (2): 482–517.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="run-gsea-from-within-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="create-enrichment-map-from-r-with-gsea-results.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/risserlin/CBW_pathways_workshop_R_notebooks/edit/main/04C-Timed_Run_fgsea_in_R.Rmd",
+"text": "Suggest an edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["cbw_workshop_notebooks.pdf", "https://github.com/risserlin/CBW_pathways_workshop_R_notebooks/raw/main/04C-Timed_Run_fgsea_in_R.Rmd"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

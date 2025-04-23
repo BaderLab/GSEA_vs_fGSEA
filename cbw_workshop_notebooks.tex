@@ -151,14 +151,14 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
-  pdftitle={Translate gmt file from human to another species},
+  pdftitle={CBW pathways Workshops - example R notebooks},
   pdfauthor={Ruth Isserlin},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
-\title{Translate gmt file from human to another species}
+\title{CBW pathways Workshops - example R notebooks}
 \author{Ruth Isserlin}
-\date{2024-06-19}
+\date{2025-04-21}
 
 \begin{document}
 \maketitle
@@ -171,11 +171,13 @@
 
 \includegraphics{./images/cover.png}
 
-\chapter{CBW Workshop example R Notebooks}\label{intro}
+\chapter{Comparing GSEA and fGSEA}\label{intro}
 
-Do you want to run the pathways and network analysis from R instead of doing everything mannually as demonstrated in the workshop?
+Do you want to run the pathways and network analysis from R instead of doing everything mannually?
 
-Everything (almost!) that was discussed in the lectures and practicals can be done computationally through R.
+GSEA is a java application that can be run through their GUI or through the command line but is dependant on a java installation. There is no recent implementation of GSEA in R although there are many packages that perform similiar analysis.
+
+Compare enrichment results from the GSEA java application and fast running R package fGSEA.
 
 We are using the \textbf{bookdown} package (\citeproc{ref-R-bookdown}{Xie 2024}) in this Workshop R Notebooks book, which was built on top of R Markdown and \textbf{knitr} (\citeproc{ref-xie2015}{Xie 2015}).
 
@@ -304,833 +306,6 @@ One the best solutions to reproducibility issues is containing your workflow or 
 \end{Highlighting}
 \end{Shaded}
 
-\chapter{Run g:profiler from R}\label{run-gprofiler-from-r}
-
-\section{Initialize variables and libraries}\label{initialize-variables-and-libraries}
-
-Detailed instructions on how to run \href{https://biit.cs.ut.ee/gprofiler/gost}{g:Profiler} programmatically from R
-
-The parameters are set manually here but if you want to run the script from the command line then you can update the notebook to pull the parameters from the command line given arguments by updating each variable below to pull the values from the paramters - for example:
-
-\begin{itemize}
-\tightlist
-\item
-  variable \textless- params\$parameter\_name
-\end{itemize}
-
-For more details see - \href{https://bookdown.org/yihui/rmarkdown/params-declare.html}{defining and using parameters} and \href{https://bookdown.org/yihui/rmarkdown/params-knit.html}{Knitting with parameters}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#all parameters are pulled from the defined parameters at the top of the notebook}
-
-\CommentTok{\#where to put all the generated files}
-\CommentTok{\# for example {-} "./generated\_data/g\_profiler"}
-\NormalTok{working\_dir }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{working\_dir}
-
-\CommentTok{\# where to find the data files needed to run the analysis}
-\CommentTok{\# for example = "./data"}
-\NormalTok{data\_dir }\OtherTok{\textless{}{-}}\NormalTok{  params}\SpecialCharTok{$}\NormalTok{data\_dir}
-
-\CommentTok{\# File name containing the list of genes to be used for analysis}
-\CommentTok{\# fro example {-} "Supplementary\_Table1\_Cancer\_drivers.txt"}
-\NormalTok{genelist\_file }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{genelist\_file}
-
-\CommentTok{\# default max size of the genesets for example {-}  250.  For this example we}
-\CommentTok{\# will be varying this parameter}
-\NormalTok{max\_gs\_size }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{max\_gs\_size}
-
-\CommentTok{\# default min size of the genesets for example {-}  3}
-\NormalTok{min\_gs\_size }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{min\_gs\_size}
-
-\CommentTok{\#min intersection between your genelist and the geneset {-} for example 3}
-\NormalTok{min\_intersection }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{min\_intersection}
-
-\CommentTok{\# organism parameter used for g:profiler.  }
-\CommentTok{\# First letter of first word in species name followed by }
-\CommentTok{\# the second word for example {-} hsapiens}
-\NormalTok{organism }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{organism}
-
-\CommentTok{\#set the gmt file you want to use if you don\textquotesingle{}t want to use the latest gmt file.}
-\CommentTok{\# For example, if you set dest\_gmt\_file =="" the below script will automatically}
-\CommentTok{\# download the latest gmt file from baderlab webstie.  If it is set then it}
-\CommentTok{\# will use the file specified.  }
-\NormalTok{dest\_gmt\_file }\OtherTok{=} \StringTok{""}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#use library}
-\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"gprofiler2"}\NormalTok{)\}, }
-         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }
-           \FunctionTok{install.packages}\NormalTok{(}\StringTok{"gprofiler2"}\NormalTok{)\}, }
-         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"gprofiler2"}\NormalTok{))}
-
-\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"GSA"}\NormalTok{)\}, }
-         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }
-           \FunctionTok{install.packages}\NormalTok{(}\StringTok{"GSA"}\NormalTok{)\}, }
-         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"GSA"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-Create or set a directory to store all the generatd results
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{dir.exists}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{working\_dir))\{}
-  \FunctionTok{dir.create}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{working\_dir)}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\section{Load in Query set}\label{load-in-query-set}
-
-Load in the set of genes that we will be running g:profiler with
-
-\begin{Shaded}
-\begin{Highlighting}[]
- \CommentTok{\#load in the file}
-\NormalTok{    current\_genelist }\OtherTok{\textless{}{-}} \FunctionTok{read.table}\NormalTok{(}\AttributeTok{file =} 
-                                     \FunctionTok{file.path}\NormalTok{(data\_dir, genelist\_file),}
-                                   \AttributeTok{header =} \ConstantTok{FALSE}\NormalTok{,}
-                                   \AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\AttributeTok{quote =} \StringTok{""}\NormalTok{,}
-                                   \AttributeTok{stringsAsFactors =} \ConstantTok{FALSE}\NormalTok{)}
-
-\NormalTok{  query\_set }\OtherTok{\textless{}{-}}\NormalTok{ current\_genelist}\SpecialCharTok{$}\NormalTok{V1}
-\end{Highlighting}
-\end{Shaded}
-
-With regards to pathway sets there are two options when using \href{https://biit.cs.ut.ee/gprofiler/gost}{g:Profiler} -
-
-\begin{itemize}
-\tightlist
-\item
-  Use the genesets that are supplied by \href{https://biit.cs.ut.ee/gprofiler/gost}{g:Profiler}
-\item
-  Upload your own genesets.
-\end{itemize}
-
-The most common reasons for supplying your own genesets is the ability to use up to date annotations or in-house annotations that might not be available in the public sphere yet. One of the greatest features of \href{https://biit.cs.ut.ee/gprofiler/gost}{g:Profiler} is that it is updated on a regular basis and most of the previous versions are available online ont the \href{https://biit.cs.ut.ee/gprofiler/page/archives}{gprofiler archive}.
-
-The \href{https://biit.cs.ut.ee/gprofiler/page/r}{gprofielr2} -\href{https://biit.cs.ut.ee/gprofiler/gost}{g:Profiler} R implementation is a wrapper for the web version. You require an internet connection to get enrichment results.
-
-\section{Run g:profiler with supplied genesets}\label{run-gprofiler-with-supplied-genesets}
-
-For detailed descriptions of all the parameters that can be specified for the gost g:profiler function see -\href{https://rdrr.io/cran/gprofiler2/man/gost.html}{here}
-
-For this query we are specifying -
-
-\begin{itemize}
-\tightlist
-\item
-  query - the set of genes of interest, as loaded in from the Supplementary\_Table1\_Cancer\_drivers.txt file.
-\item
-  significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.
-\item
-  ordered\_query - set to TRUE because for this set of genes they are ordered in order of their significance
-\item
-  correction\_method - set to fdr. by default g:Profiler uses g:Scs
-\item
-  organism - set to ``hsapiens'' for homo sapiens. Organism names are constructed by concatenating the first letter of the name and the family name (according to gprofiler2 documentation)
-\item
-  source - the geneset source databases to use for the analysis. We recommend using GO biological process (\url{GO:BP}), WikiPathways (WP) and Reactome (Reac) but there are additional sources you can add (GO molecular function or cellular component(\url{GO:MF}, \url{GO:CC}), KEGG, transcription factors (TF), microRNA targets (MIRNA), corum complexes (CORUM), Human protein atlas (HPA),Human phenotype ontology (HP) )
-\end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{gprofiler\_results }\OtherTok{\textless{}{-}} \FunctionTok{gost}\NormalTok{(}\AttributeTok{query =}\NormalTok{ query\_set ,}
-                          \AttributeTok{significant=}\ConstantTok{FALSE}\NormalTok{,}
-                          \AttributeTok{ordered\_query =} \ConstantTok{FALSE}\NormalTok{,}
-                          \AttributeTok{exclude\_iea=}\ConstantTok{TRUE}\NormalTok{,}
-                          \AttributeTok{correction\_method =} \StringTok{"fdr"}\NormalTok{,}
-                          \AttributeTok{organism =}\NormalTok{ organism,}
-                          \AttributeTok{source =} \FunctionTok{c}\NormalTok{(}\StringTok{"REAC"}\NormalTok{,}\StringTok{"WP"}\NormalTok{,}\StringTok{"GO:BP"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
- \CommentTok{\#get the gprofiler results table}
-\NormalTok{enrichment\_results }\OtherTok{\textless{}{-}}\NormalTok{ gprofiler\_results}\SpecialCharTok{$}\NormalTok{result}
-    
-\NormalTok{enrichment\_results[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{,]}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##     query significant      p_value term_size query_size intersection_size
-## 1 query_1        TRUE 1.266713e-31      4791        117                99
-## 2 query_1        TRUE 6.230929e-31      4911        117                99
-## 3 query_1        TRUE 2.945299e-30      5297        117               101
-## 4 query_1        TRUE 2.945299e-30      5313        117               101
-## 5 query_1        TRUE 3.692367e-28      5757        117               102
-##   precision     recall    term_id source
-## 1 0.8461538 0.02066374 GO:0051171  GO:BP
-## 2 0.8461538 0.02015883 GO:0080090  GO:BP
-## 3 0.8632479 0.01906740 GO:0060255  GO:BP
-## 4 0.8632479 0.01900998 GO:0031323  GO:BP
-## 5 0.8717949 0.01771756 GO:0019222  GO:BP
-##                                           term_name effective_domain_size
-## 1 regulation of nitrogen compound metabolic process                 16178
-## 2           regulation of primary metabolic process                 16178
-## 3     regulation of macromolecule metabolic process                 16178
-## 4          regulation of cellular metabolic process                 16178
-## 5                   regulation of metabolic process                 16178
-##   source_order                            parents
-## 1        13995             GO:0006807, GO:0019222
-## 2        18320             GO:0019222, GO:0044238
-## 3        14938             GO:0019222, GO:0043170
-## 4         7372 GO:0019222, GO:0044237, GO:0050794
-## 5         5789             GO:0008152, GO:0050789
-\end{verbatim}
-
-\section{Download and load g:profiler geneset file}\label{download-and-load-gprofiler-geneset-file}
-
-In order to create a proper Generic enrichment results file we will need a copy of the gmt file used by g:Profiler. (also to create an Enrichment map).
-
-Download the gmt file used for this analysis from g:profiler
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#the link to the gmt file is static no matter what version}
-\NormalTok{gprofiler\_gmt\_url }\OtherTok{\textless{}{-}} 
-  \StringTok{"https://biit.cs.ut.ee/gprofiler/static/gprofiler\_full\_hsapiens.name.gmt"}
-
-\CommentTok{\#get version info gprofiler as the gmt file is always associated with }
-\CommentTok{\# a specific version of g:profiler}
-\NormalTok{gprofiler\_version }\OtherTok{\textless{}{-}} \FunctionTok{get\_version\_info}\NormalTok{(}\AttributeTok{organism=}\NormalTok{organism)}
-
-\NormalTok{gprofiler\_gmt\_filename }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(working\_dir,}
-                                  \FunctionTok{paste}\NormalTok{(}\StringTok{"gprofiler\_full"}\NormalTok{, organism,}
-\NormalTok{                                    gprofiler\_version}\SpecialCharTok{$}\NormalTok{gprofiler\_version,}\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{,}
-                                    \StringTok{".name.gmt"}\NormalTok{))}
-
-\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{file.exists}\NormalTok{(gprofiler\_gmt\_filename))\{}
-  \FunctionTok{download.file}\NormalTok{(}\AttributeTok{url =}\NormalTok{ gprofiler\_gmt\_url, }
-              \AttributeTok{destfile =}\NormalTok{ gprofiler\_gmt\_filename)}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-To create a proper Generic enrichmentMap results file we need to include the list of genes that are associated with each geneset. To do that we need to know what genes are associated with each set and filter them by our query set. Load in the geneset definitions from the gmt file we just downloaded from g:profiler site.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#load in the g:profiler geneset file}
-\NormalTok{capt\_output }\OtherTok{\textless{}{-}} \FunctionTok{capture.output}\NormalTok{(genesets\_gprofiler }\OtherTok{\textless{}{-}} \FunctionTok{GSA.read.gmt}\NormalTok{(}
-                                      \AttributeTok{filename =}\NormalTok{ gprofiler\_gmt\_filename))}
-
-\FunctionTok{names}\NormalTok{(genesets\_gprofiler}\SpecialCharTok{$}\NormalTok{genesets) }\OtherTok{\textless{}{-}}\NormalTok{ genesets\_gprofiler}\SpecialCharTok{$}\NormalTok{geneset.names}
-\end{Highlighting}
-\end{Shaded}
-
-For the next module the name of the gmt file is - gprofiler\_full\_hsapiens.name.gmt but it is important to preserve the database version so in the future when we revisit these results for publication or results verfication we have the exact version used. Instead of creating a copy of the file (which can be pretty large) create a symbolic link to the file with the generic name.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#file.exists does not work for a symbolic link on my computer for some reason}
-\CommentTok{\# list the files in the directory and check if the symbolic link is there}
-\CommentTok{\#if(file.exists(file.path(working\_dir, "gprofiler\_full\_hsapiens.name.gmt")))\{}
-\ControlFlowTok{if}\NormalTok{(}\FunctionTok{length}\NormalTok{(}\FunctionTok{grep}\NormalTok{(}\AttributeTok{x =} \FunctionTok{list.files}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(working\_dir)), }
-              \AttributeTok{pattern =} \StringTok{"gprofiler\_full\_hsapiens.name.gmt"}\NormalTok{,}
-              \AttributeTok{fixed =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{ ))\{}
-
-  \FunctionTok{file.remove}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(working\_dir, }\StringTok{"gprofiler\_full\_hsapiens.name.gmt"}\NormalTok{))}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] TRUE
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{file.symlink}\NormalTok{( gprofiler\_gmt\_filename,}\FunctionTok{file.path}\NormalTok{(working\_dir, }
-                                   \StringTok{"gprofiler\_full\_hsapiens.name.gmt"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] TRUE
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Given:}
-\CommentTok{\# query\_genes {-} genes used for enrichment analysis (or as query)}
-\CommentTok{\#}
-\CommentTok{\# returns {-} the genes that overlap with the query set and part of the given}
-\CommentTok{\#           genesets}
-\NormalTok{getGenesetGenes }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(query\_genes, subset\_genesets)\{}
-\NormalTok{  genes }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(subset\_genesets,}\AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{intersect}\NormalTok{(x,query\_genes)\})}
-  
-  \CommentTok{\# For each of the genes collapse to the comma separate text}
-\NormalTok{  genes\_collapsed }\OtherTok{\textless{}{-}} \FunctionTok{unlist}\NormalTok{(}\FunctionTok{lapply}\NormalTok{(genes,}\AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{}
-                                                \FunctionTok{paste}\NormalTok{(x,}\AttributeTok{collapse =} \StringTok{","}\NormalTok{)\}))}
-  
-\NormalTok{  genes\_collapsed\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{term\_id =} \FunctionTok{names}\NormalTok{(genes), }
-                            \AttributeTok{genes =}\NormalTok{ genes\_collapsed,}\AttributeTok{stringsAsFactors =} \ConstantTok{FALSE}\NormalTok{)}
-  
-  \FunctionTok{return}\NormalTok{(genes\_collapsed\_df)}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\section{Filter results by geneset size}\label{filter-results-by-geneset-size}
-
-Filter the table to include just the columns that are required for the generic enrichment map file results \href{https://enrichmentmap.readthedocs.io/en/latest/FileFormats.html\#generic-results-files}{GEM}. Restrict the results to just the ones that have at least min\_gs\_size and less than max\_gs\_size terms and min\_intersection size include only the term\_id, term\_name, p\_value (and p\_value again because the p\_value is actually the corrected p-value. The output file does not contain the nominal p\_value. For down stream analysis though it is expected to have both a p-value and a q-value so just duplicate the q-value as both p-value and q-value)
-
-Vary the thresholds for max\_gs\_size just as we did in Module 2 lab -
-
-\begin{itemize}
-\item
-  min\_gs\_size = 3
-\item
-  max\_gs\_size = 10000
-\item
-  max\_gs\_size = 1000
-\item
-  max\_gs\_size = 250
-\end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# filer by params defined above}
-\CommentTok{\# by default we have set the max and min gs size to 250 and 3, respectively.}
-\NormalTok{enrichment\_results\_mxgssize\_250\_min\_3 }\OtherTok{\textless{}{-}} 
-                        \FunctionTok{subset}\NormalTok{(enrichment\_results,term\_size }\SpecialCharTok{\textgreater{}=}\NormalTok{ min\_gs\_size }\SpecialCharTok{\&} 
-\NormalTok{                                   term\_size }\SpecialCharTok{\textless{}=}\NormalTok{ max\_gs\_size }\SpecialCharTok{\&} 
-\NormalTok{                                   intersection\_size }\SpecialCharTok{\textgreater{}=}\NormalTok{ min\_intersection , }
-                                 \AttributeTok{select =} \FunctionTok{c}\NormalTok{(term\_id,term\_name,p\_value,p\_value ))}
-
-\NormalTok{enrichment\_results\_mxgssize\_1000\_min\_3 }\OtherTok{\textless{}{-}} 
-                        \FunctionTok{subset}\NormalTok{(enrichment\_results,term\_size }\SpecialCharTok{\textgreater{}=}\NormalTok{ min\_gs\_size }\SpecialCharTok{\&} 
-\NormalTok{                                   term\_size }\SpecialCharTok{\textless{}=} \DecValTok{1000} \SpecialCharTok{\&} 
-\NormalTok{                                   intersection\_size }\SpecialCharTok{\textgreater{}=}\NormalTok{ min\_intersection , }
-                                 \AttributeTok{select =} \FunctionTok{c}\NormalTok{(term\_id,term\_name,p\_value,p\_value ))}
-
-\NormalTok{enrichment\_results\_mxgssize\_10000\_min\_3 }\OtherTok{\textless{}{-}} 
-                        \FunctionTok{subset}\NormalTok{(enrichment\_results,term\_size }\SpecialCharTok{\textgreater{}=}\NormalTok{ min\_gs\_size }\SpecialCharTok{\&} 
-\NormalTok{                                   term\_size }\SpecialCharTok{\textless{}=} \DecValTok{10000} \SpecialCharTok{\&} 
-\NormalTok{                                   intersection\_size }\SpecialCharTok{\textgreater{}=}\NormalTok{ min\_intersection , }
-                                 \AttributeTok{select =} \FunctionTok{c}\NormalTok{(term\_id,term\_name,p\_value,p\_value ))}
-\end{Highlighting}
-\end{Shaded}
-
-\section{Create an output file of the results - Generic enrichment Map file from g:profiler gmt}\label{create-an-output-file-of-the-results---generic-enrichment-map-file-from-gprofiler-gmt}
-
-The file requires -
-
-\begin{itemize}
-\tightlist
-\item
-  name
-\item
-  description
-\item
-  p-value
-\item
-  q-value
-\item
-  phenotyp
-\item
-  list of genes (overlap of query set and original geneset)
-\end{itemize}
-
-The list of genes needs to be calculated using the gmt file and original query set. For each geneset found in the result find the overlap between the set of genes that are a part of the geneset and the query set.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Given:}
-\CommentTok{\# gprofiler\_results {-} results form g\_profiler R function (filtered by desired)}
-\CommentTok{\# parameters}
-\CommentTok{\# gs {-} genes associated with each geneset, loaded in from a gmt file. }
-\CommentTok{\#}
-\CommentTok{\# returns {-} the properly formatted GEM file results}
-\CommentTok{\#}
-\NormalTok{createGEMformat }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(results, gs, query\_genes)\{}
-
-  \ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(results) }\SpecialCharTok{\textgreater{}}\DecValTok{0}\NormalTok{)\{    }
-
-           \CommentTok{\#add phenotype to the results}
-\NormalTok{          formatted\_results }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(results,}\DecValTok{1}\NormalTok{)}
-          
-          \CommentTok{\# Add the genes to the genesets}
-\NormalTok{          subset\_genesets }\OtherTok{\textless{}{-}}\NormalTok{ gs}\SpecialCharTok{$}\NormalTok{genesets[}
-            \FunctionTok{which}\NormalTok{(gs}\SpecialCharTok{$}\NormalTok{geneset.names }
-                  \SpecialCharTok{\%in\%}\NormalTok{ results}\SpecialCharTok{$}\NormalTok{term\_id)]}
-          
-\NormalTok{          genes }\OtherTok{\textless{}{-}} \FunctionTok{getGenesetGenes}\NormalTok{(query\_genes, subset\_genesets)}
-          
-\NormalTok{          formatted\_results }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(formatted\_results,genes,}\AttributeTok{by.x=}\DecValTok{1}\NormalTok{, }\AttributeTok{by.y=}\DecValTok{1}\NormalTok{)}
-          
-          \FunctionTok{colnames}\NormalTok{(formatted\_results) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{,}\StringTok{"description"}\NormalTok{,}\StringTok{"p{-}value"}\NormalTok{,}
-                                           \StringTok{"q{-}value"}\NormalTok{,}\StringTok{"phenotype"}\NormalTok{,}\StringTok{"genes"}\NormalTok{)}
-          
-\NormalTok{  \}}
-  \FunctionTok{return}\NormalTok{(formatted\_results)}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{enrichment\_results\_mxgssize\_10000\_min\_3\_GEMfile }\OtherTok{\textless{}{-}} \FunctionTok{createGEMformat}\NormalTok{(}
-\NormalTok{  enrichment\_results\_mxgssize\_10000\_min\_3, genesets\_gprofiler, query\_set)}
-
-\NormalTok{enrichment\_results\_mxgssize\_1000\_min\_3\_GEMfile }\OtherTok{\textless{}{-}} \FunctionTok{createGEMformat}\NormalTok{(}
-\NormalTok{  enrichment\_results\_mxgssize\_1000\_min\_3, genesets\_gprofiler, query\_set)}
-
-\NormalTok{enrichment\_results\_mxgssize\_250\_min\_3\_GEMfile }\OtherTok{\textless{}{-}} \FunctionTok{createGEMformat}\NormalTok{(}
-\NormalTok{  enrichment\_results\_mxgssize\_250\_min\_3, genesets\_gprofiler, query\_set)}
-\end{Highlighting}
-\end{Shaded}
-
-Output each of the above filtered files
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#output the enrichment map file}
-\FunctionTok{write.table}\NormalTok{(enrichment\_results\_mxgssize\_10000\_min\_3\_GEMfile, }
-            \AttributeTok{file =} \FunctionTok{file.path}\NormalTok{(working\_dir, }
-                \StringTok{"gProfiler\_hsapiens\_lab2\_results\_GEM\_termmin3\_max10000.gem.txt"}\NormalTok{),}
-            \AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{, }
-            \AttributeTok{col.names =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{sep=}\StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}
-            \AttributeTok{quote =} \ConstantTok{FALSE}\NormalTok{)}
-
-\CommentTok{\#output the enrichment map file}
-\FunctionTok{write.table}\NormalTok{(enrichment\_results\_mxgssize\_1000\_min\_3\_GEMfile, }
-            \AttributeTok{file =} \FunctionTok{file.path}\NormalTok{(working\_dir, }
-                \StringTok{"gProfiler\_hsapiens\_lab2\_results\_GEM\_termmin3\_max1000.gem.txt"}\NormalTok{),}
-            \AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{, }
-            \AttributeTok{col.names =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{sep=}\StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}
-            \AttributeTok{quote =} \ConstantTok{FALSE}\NormalTok{)}
-
-\CommentTok{\#output the enrichment map file}
-\FunctionTok{write.table}\NormalTok{(enrichment\_results\_mxgssize\_250\_min\_3\_GEMfile, }
-            \AttributeTok{file =} \FunctionTok{file.path}\NormalTok{(working\_dir, }
-                \StringTok{"gProfiler\_hsapiens\_lab2\_results\_GEM\_termmin3\_max250.gem.txt"}\NormalTok{),}
-            \AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{, }
-            \AttributeTok{col.names =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{sep=}\StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}
-            \AttributeTok{quote =} \ConstantTok{FALSE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\section{Run g:profiler with your own genesets (example using BaderLab genesets)}\label{run-gprofiler-with-your-own-genesets-example-using-baderlab-genesets}
-
-\section{Download and load Bader lab geneset file}\label{download-and-load-bader-lab-geneset-file}
-
-Download the latest \href{https://download.baderlab.org/EM_Genesets/current_release/Human/}{Bader lab genesets}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\ControlFlowTok{if}\NormalTok{(dest\_gmt\_file }\SpecialCharTok{==} \StringTok{""}\NormalTok{)\{}
-
-\NormalTok{  gmt\_url }\OtherTok{=} \StringTok{"http://download.baderlab.org/EM\_Genesets/current\_release/Human/symbol/"}
-
-  \CommentTok{\#list all the files on the server}
-\NormalTok{  filenames }\OtherTok{=}\NormalTok{ RCurl}\SpecialCharTok{::}\FunctionTok{getURL}\NormalTok{(gmt\_url)}
-\NormalTok{  tc }\OtherTok{=} \FunctionTok{textConnection}\NormalTok{(filenames)}
-\NormalTok{  contents }\OtherTok{=} \FunctionTok{readLines}\NormalTok{(tc)}
-  \FunctionTok{close}\NormalTok{(tc)}
-  
-  \CommentTok{\#get the gmt that has all the pathways and does not include }
-  \CommentTok{\# terms inferred from electronic annotations(IEA)}
-  \CommentTok{\#start with gmt file that has pathways only}
-\NormalTok{  rx }\OtherTok{=} \FunctionTok{gregexpr}\NormalTok{(}\StringTok{"(?\textless{}=\textless{}a href=}\SpecialCharTok{\textbackslash{}"}\StringTok{)(.*.GOBP\_AllPathways\_noPFOCR\_no\_GO\_iea.*.)(.gmt)(?=}\SpecialCharTok{\textbackslash{}"}\StringTok{\textgreater{})"}\NormalTok{,}
-\NormalTok{    contents, }\AttributeTok{perl =} \ConstantTok{TRUE}\NormalTok{)}
-\NormalTok{  gmt\_file }\OtherTok{=} \FunctionTok{unlist}\NormalTok{(}\FunctionTok{regmatches}\NormalTok{(contents, rx))}
-  
-\NormalTok{  dest\_gmt\_file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(working\_dir,gmt\_file)}
-  
-  \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{file.exists}\NormalTok{(dest\_gmt\_file))\{}
-    \FunctionTok{download.file}\NormalTok{(}
-      \FunctionTok{paste}\NormalTok{(gmt\_url,gmt\_file,}\AttributeTok{sep=}\StringTok{""}\NormalTok{),}
-      \AttributeTok{destfile=}\NormalTok{dest\_gmt\_file}
-\NormalTok{    )}
-\NormalTok{  \}}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-In order to use our results down stream in the Enrichment map we need to generate results files that we can pass to Enrichment Map.
-
-Load in the GMT file
-
-\section{Filter Bader lab geneset file}\label{filter-bader-lab-geneset-file}
-
-The g:Profiler interface only allows for filtering genesets by size only after the analysis is complete. After the analysis is complete means the filtering is happening after Multiple hypothesis testing. Filtering prior to the analysis will generate more robust results because we exclude the uninformative large genesets prior to testing changing the sets that multiple hypothesis filtering will get rid of.
-
-Create multiple gmt files with different filtering thresholds - remove
-* genesets greater than 250 genes
-* geneset greater than 1000 genes
-* geneset greater than 10000 genes
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Filter geneset GSA object by specified gs size threshold }
-\CommentTok{\#}
-\CommentTok{\# Given {-} }
-\CommentTok{\# genesets {-} in GSA object}
-\CommentTok{\# gs\_sizes {-} list of all the sizes of the genesets found in the genesets}
-\CommentTok{\# filter\_threshold {-} value to filter the geneset by.  }
-\CommentTok{\# }
-\CommentTok{\# returns {-} filtered genesets in GSA object}
-\NormalTok{filter\_genesets }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(genesets, gs\_sizes, filter\_threshold) \{}
-  
-\NormalTok{  filtered\_genesets }\OtherTok{\textless{}{-}}\NormalTok{ genesets}
-  
-\NormalTok{  filtered\_genesets}\SpecialCharTok{$}\NormalTok{genesets }\OtherTok{\textless{}{-}}\NormalTok{ genesets}\SpecialCharTok{$}\NormalTok{genesets[}
-                      \FunctionTok{which}\NormalTok{(gs\_sizes}\SpecialCharTok{\textless{}}\NormalTok{filter\_threshold)]}
-\NormalTok{  filtered\_genesets}\SpecialCharTok{$}\NormalTok{geneset.names }\OtherTok{\textless{}{-}}\NormalTok{ genesets}\SpecialCharTok{$}\NormalTok{geneset.names[}
-                      \FunctionTok{which}\NormalTok{(gs\_sizes}\SpecialCharTok{\textless{}}\NormalTok{filter\_threshold)]}
-\NormalTok{  filtered\_genesets}\SpecialCharTok{$}\NormalTok{geneset.descriptions }\OtherTok{\textless{}{-}}\NormalTok{ genesets}\SpecialCharTok{$}\NormalTok{geneset.descriptions[}
-                      \FunctionTok{which}\NormalTok{(gs\_sizes}\SpecialCharTok{\textless{}}\NormalTok{filter\_threshold)]}
-
-  \FunctionTok{return}\NormalTok{(filtered\_genesets)}
-\NormalTok{\}}
-
-\CommentTok{\# You can not simply write a list of lists to a file in R.  In order}
-\CommentTok{\# to output the new geneset file you need to convert it ot a data.frame}
-\CommentTok{\# To do this convert the list of genes to a tab delmiated list in one column}
-\CommentTok{\# of the dataframe.}
-\CommentTok{\# format to write out to a file. }
-\CommentTok{\#}
-\CommentTok{\# Given {-} }
-\CommentTok{\# genesets {-} in GSA object}
- 
-\CommentTok{\# returns {-} formatted genesets as data frame}
-  
-\NormalTok{format\_genesets }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(genesets) \{}
-    
-\NormalTok{  collapsed\_genesets }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{name=}\NormalTok{genesets}\SpecialCharTok{$}\NormalTok{geneset.names, }
-                            \AttributeTok{description=}\NormalTok{ genesets}\SpecialCharTok{$}\NormalTok{geneset.description)}
-\NormalTok{  collapsed\_genesets}\SpecialCharTok{$}\NormalTok{genes }\OtherTok{\textless{}{-}} \FunctionTok{unlist}\NormalTok{(}\FunctionTok{lapply}\NormalTok{(genesets}\SpecialCharTok{$}\NormalTok{genesets,}
-                                             \AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{}
-                                              \FunctionTok{paste}\NormalTok{(x,}\AttributeTok{collapse =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
-\NormalTok{                                            \}))}
-  
-  \FunctionTok{return}\NormalTok{(collapsed\_genesets)}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-The format of the GMT file is described \href{here}{https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data\_formats\#GMT:\emph{Gene\_Matrix\_Transposed\_file\_format}.28.2A.gmt.29} and consists of rows with the following
-
-\begin{itemize}
-\tightlist
-\item
-  Name
-\item
-  Description
-\item
-  tab delimited list of genes a part of this geneset
-\end{itemize}
-
-Write out the gmt file with genenames
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#get the geneset sizes}
-\NormalTok{gs\_sizes\_baderlab\_sets }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(genesets\_baderlab\_genesets}\SpecialCharTok{$}\NormalTok{genesets,}
-                                 \AttributeTok{FUN =} \ControlFlowTok{function}\NormalTok{(x)\{}
-                                               \FunctionTok{length}\NormalTok{(x)}
-\NormalTok{                                                  \})}
-
-\CommentTok{\# max 10,000}
-\NormalTok{genesets\_baderlab\_genesets\_max10000 }\OtherTok{\textless{}{-}} \FunctionTok{filter\_genesets}\NormalTok{(genesets\_baderlab\_genesets,}
-\NormalTok{                                                gs\_sizes\_baderlab\_sets, }
-                                                \DecValTok{10000}\NormalTok{)}
-
-\NormalTok{genesets\_baderlab\_genesets\_max10000\_filename }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(}\AttributeTok{x =}\NormalTok{dest\_gmt\_file, }
-                                                  \AttributeTok{pattern =} \StringTok{"symbol"}\NormalTok{ ,}
-                                                  \AttributeTok{replacement =} \StringTok{"symbol\_max10000"}
-\NormalTok{                                                     )}
-
-\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{file.exists}\NormalTok{(genesets\_baderlab\_genesets\_max10000\_filename))\{}
-
-  \FunctionTok{write.table}\NormalTok{(}\AttributeTok{x =} \FunctionTok{format\_genesets}\NormalTok{(genesets\_baderlab\_genesets\_max10000),}
-            \AttributeTok{file =}\NormalTok{ genesets\_baderlab\_genesets\_max10000\_filename,}
-            \AttributeTok{quote =} \ConstantTok{FALSE}\NormalTok{,}\AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}\AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{,}
-            \AttributeTok{col.names=}\ConstantTok{TRUE}\NormalTok{)}
-\NormalTok{\}}
-
-\CommentTok{\#max gs size of 1,000}
-\NormalTok{genesets\_baderlab\_genesets\_max1000 }\OtherTok{\textless{}{-}} \FunctionTok{filter\_genesets}\NormalTok{(genesets\_baderlab\_genesets,}
-\NormalTok{                                                      gs\_sizes\_baderlab\_sets, }
-                                                      \DecValTok{1000}\NormalTok{)}
-\NormalTok{genesets\_baderlab\_genesets\_max1000\_filename }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(}\AttributeTok{x =}\NormalTok{dest\_gmt\_file, }
-                                                \AttributeTok{pattern =} \StringTok{"symbol"}\NormalTok{ ,}
-                                                \AttributeTok{replacement =} \StringTok{"symbol\_max1000"}
-\NormalTok{                                                     )}
-\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{file.exists}\NormalTok{(genesets\_baderlab\_genesets\_max1000\_filename))\{}
-
-  \FunctionTok{write.table}\NormalTok{(}\AttributeTok{x =} \FunctionTok{format\_genesets}\NormalTok{(genesets\_baderlab\_genesets\_max1000),}
-            \AttributeTok{file =}\NormalTok{ genesets\_baderlab\_genesets\_max1000\_filename,}
-            \AttributeTok{quote =} \ConstantTok{FALSE}\NormalTok{,}\AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}\AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{,}
-            \AttributeTok{col.names=}\ConstantTok{TRUE}\NormalTok{)}
-\NormalTok{\}}
-
-\CommentTok{\#max gs size of 250}
-\NormalTok{genesets\_baderlab\_genesets\_max250 }\OtherTok{\textless{}{-}} \FunctionTok{filter\_genesets}\NormalTok{(genesets\_baderlab\_genesets,}
-\NormalTok{                                                      gs\_sizes\_baderlab\_sets, }
-                                                      \DecValTok{250}\NormalTok{)}
-
-
-\NormalTok{genesets\_baderlab\_genesets\_max250\_filename }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(}\AttributeTok{x =}\NormalTok{dest\_gmt\_file, }
-                                                  \AttributeTok{pattern =} \StringTok{"symbol"}\NormalTok{ ,}
-                                                  \AttributeTok{replacement =} \StringTok{"symbol\_max250"}
-\NormalTok{                                                     )}
-\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{file.exists}\NormalTok{(genesets\_baderlab\_genesets\_max250\_filename))\{}
-  \FunctionTok{write.table}\NormalTok{(}\AttributeTok{x =} \FunctionTok{format\_genesets}\NormalTok{(genesets\_baderlab\_genesets\_max250),}
-            \AttributeTok{file =}\NormalTok{ genesets\_baderlab\_genesets\_max250\_filename,}
-            \AttributeTok{quote =} \ConstantTok{FALSE}\NormalTok{,}\AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}\AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{,}
-            \AttributeTok{col.names=}\ConstantTok{TRUE}\NormalTok{)}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\section{Upload the gmt files to gprofiler}\label{upload-the-gmt-files-to-gprofiler}
-
-In order to use your own genesets with g:Profiler you need to upload the the file to their server first. The function will return an ID that you need to specify in the organism parameter of the g:Profiler gost function call.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{custom\_gmt\_max250 }\OtherTok{\textless{}{-}} \FunctionTok{upload\_GMT\_file}\NormalTok{(}
-                        \AttributeTok{gmtfile=}\NormalTok{genesets\_baderlab\_genesets\_max250\_filename)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Your custom annotations ID is gp__kVgC_qZf0_9QY.
-## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
-\end{verbatim}
-
-\begin{verbatim}
-## Just use: gost(my_genes, organism = 'gp__kVgC_qZf0_9QY')
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{custom\_gmt\_max1000 }\OtherTok{\textless{}{-}} \FunctionTok{upload\_GMT\_file}\NormalTok{(}
-                        \AttributeTok{gmtfile=}\NormalTok{genesets\_baderlab\_genesets\_max1000\_filename)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Your custom annotations ID is gp__XYsE_5zPH_pJY.
-## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
-\end{verbatim}
-
-\begin{verbatim}
-## Just use: gost(my_genes, organism = 'gp__XYsE_5zPH_pJY')
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{custom\_gmt\_max10000 }\OtherTok{\textless{}{-}} \FunctionTok{upload\_GMT\_file}\NormalTok{(}
-                        \AttributeTok{gmtfile=}\NormalTok{genesets\_baderlab\_genesets\_max10000\_filename)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Your custom annotations ID is gp__FSXN_4GOv_B2o.
-## You can use this ID as an 'organism' name in all the related enrichment tests against this custom source.
-\end{verbatim}
-
-\begin{verbatim}
-## Just use: gost(my_genes, organism = 'gp__FSXN_4GOv_B2o')
-\end{verbatim}
-
-For this query we are specifying -
-
-\begin{itemize}
-\tightlist
-\item
-  query - the set of genes of interest, as loaded in from the Supplementary\_Table1\_Cancer\_drivers.txt file.
-\item
-  significant - set to FALSE because we want g:Profiler to return all the results not just the ones that it deems significant by its perdetermined threshold.
-\item
-  ordered\_query - set to FALSE (but you can try setting it to true as well because for this set of genes they are ordered in order of their significance)
-\item
-  correction\_method - set to fdr. by default g:Profiler uses g:Scs
-\item
-  organism - set to the custom\_gmt ID ( for this run it is - gp\_\_kVgC\_qZf0\_9QY) that we received when we uploaded our genetset file.
-\end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{gprofiler\_results\_custom\_max250 }\OtherTok{\textless{}{-}} \FunctionTok{gost}\NormalTok{(}\AttributeTok{query =}\NormalTok{ query\_set ,}
-                                     \AttributeTok{significant=}\ConstantTok{FALSE}\NormalTok{,}
-                                 \AttributeTok{ordered\_query =} \ConstantTok{FALSE}\NormalTok{,}
-                                  \AttributeTok{exclude\_iea=}\ConstantTok{TRUE}\NormalTok{,}
-                                     \AttributeTok{correction\_method =} \StringTok{"fdr"}\NormalTok{,}
-                                 \AttributeTok{organism =}\NormalTok{ custom\_gmt\_max250}
-\NormalTok{                                     )}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Detected custom GMT source request
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{gprofiler\_results\_custom\_max1000 }\OtherTok{\textless{}{-}} \FunctionTok{gost}\NormalTok{(}\AttributeTok{query =}\NormalTok{ query\_set ,}
-                                     \AttributeTok{significant=}\ConstantTok{FALSE}\NormalTok{,}
-                                      \AttributeTok{ordered\_query =} \ConstantTok{FALSE}\NormalTok{,}
-                                      \AttributeTok{exclude\_iea=}\ConstantTok{TRUE}\NormalTok{,}
-                                     \AttributeTok{correction\_method =} \StringTok{"fdr"}\NormalTok{,}
-                                 \AttributeTok{organism =}\NormalTok{ custom\_gmt\_max1000}
-\NormalTok{                                     )}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Detected custom GMT source request
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{gprofiler\_results\_custom\_max10000 }\OtherTok{\textless{}{-}} \FunctionTok{gost}\NormalTok{(}\AttributeTok{query =}\NormalTok{ query\_set ,}
-                                     \AttributeTok{significant=}\ConstantTok{FALSE}\NormalTok{,}
-                                      \AttributeTok{ordered\_query =} \ConstantTok{FALSE}\NormalTok{,}
-                                      \AttributeTok{exclude\_iea=}\ConstantTok{TRUE}\NormalTok{,}
-                                     \AttributeTok{correction\_method =} \StringTok{"fdr"}\NormalTok{,}
-                                 \AttributeTok{organism =}\NormalTok{ custom\_gmt\_max10000}
-\NormalTok{                                     )}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Detected custom GMT source request
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
- \CommentTok{\#get the gprofiler results table}
-\NormalTok{enrichment\_results\_customgmt\_max250 }\OtherTok{\textless{}{-}}\NormalTok{ gprofiler\_results\_custom\_max250}\SpecialCharTok{$}\NormalTok{result}
-\NormalTok{enrichment\_results\_customgmt\_max1000 }\OtherTok{\textless{}{-}}\NormalTok{ gprofiler\_results\_custom\_max1000}\SpecialCharTok{$}\NormalTok{result}
-\NormalTok{enrichment\_results\_customgmt\_max10000 }\OtherTok{\textless{}{-}}\NormalTok{ gprofiler\_results\_custom\_max10000}\SpecialCharTok{$}\NormalTok{result}
-
-    
-\NormalTok{enrichment\_results\_customgmt\_max250[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{,]}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##     query significant      p_value term_size query_size intersection_size
-## 1 query_1        TRUE 2.274768e-19        69        108                17
-## 2 query_1        TRUE 1.758667e-18        64        108                16
-## 3 query_1        TRUE 1.639494e-14        54        108                13
-## 4 query_1        TRUE 5.029242e-14        98        108                15
-## 5 query_1        TRUE 1.653203e-13       160        108                17
-##   precision    recall
-## 1 0.1574074 0.2463768
-## 2 0.1481481 0.2500000
-## 3 0.1203704 0.2407407
-## 4 0.1388889 0.1530612
-## 5 0.1574074 0.1062500
-##                                                                                   term_id
-## 1               GLIOBLASTOMA SIGNALING PATHWAYS%WIKIPATHWAYS_20240510%WP2261%HOMO SAPIENS
-## 2         HEAD AND NECK SQUAMOUS CELL CARCINOMA%WIKIPATHWAYS_20240510%WP4674%HOMO SAPIENS
-## 3 PATHWAYS AFFECTED IN ADENOID CYSTIC CARCINOMA%WIKIPATHWAYS_20240510%WP3651%HOMO SAPIENS
-## 4                                     CELL CYCLE%WIKIPATHWAYS_20240510%WP179%HOMO SAPIENS
-## 5                          REGULATION OF CELL CYCLE G1/S PHASE TRANSITION%GOBP%GO:1902806
-##                                                                source
-## 1 Human_GOBP_AllPathways_noPFOCR_no_GO_iea_June_01_2024_symbol_max250
-## 2 Human_GOBP_AllPathways_noPFOCR_no_GO_iea_June_01_2024_symbol_max250
-## 3 Human_GOBP_AllPathways_noPFOCR_no_GO_iea_June_01_2024_symbol_max250
-## 4 Human_GOBP_AllPathways_noPFOCR_no_GO_iea_June_01_2024_symbol_max250
-## 5 Human_GOBP_AllPathways_noPFOCR_no_GO_iea_June_01_2024_symbol_max250
-##                                        term_name effective_domain_size
-## 1                Glioblastoma signaling pathways                 17067
-## 2          Head and neck squamous cell carcinoma                 17067
-## 3  Pathways affected in adenoid cystic carcinoma                 17067
-## 4                                     Cell cycle                 17067
-## 5 regulation of cell cycle G1/S phase transition                 17067
-##   source_order parents
-## 1         5048    NULL
-## 2         5575    NULL
-## 3         5198    NULL
-## 4         5170    NULL
-## 5        18856    NULL
-\end{verbatim}
-
-Filter the table to include just the columns that are required for the generic enrichment map file results \href{https://enrichmentmap.readthedocs.io/en/latest/FileFormats.html\#generic-results-files}{GEM}. Restrict the results to just the ones that have at least min\_gs\_size and less than max\_gs\_size terms and min\_intersection size include only the term\_id, term\_name, p\_value (and p\_value again because the p\_value is actually the corrected p-value. The output file does not contain the nominal p\_value. For down stream analysis though it is expected to have both a p-value and a q-value so just duplicate the q-value as both p-value and q-value)
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# filer by params defined above}
-\NormalTok{enrichment\_results\_customgmt\_max250 }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(enrichment\_results\_customgmt\_max250,}
-\NormalTok{                                       term\_size }\SpecialCharTok{\textgreater{}=}\NormalTok{ min\_gs\_size }\SpecialCharTok{\&} 
-\NormalTok{                                   term\_size }\SpecialCharTok{\textless{}=}\NormalTok{ max\_gs\_size }\SpecialCharTok{\&} 
-\NormalTok{                                   intersection\_size }\SpecialCharTok{\textgreater{}=}\NormalTok{ min\_intersection , }
-                                 \AttributeTok{select =} \FunctionTok{c}\NormalTok{(term\_id,term\_name,p\_value,p\_value ))}
-
-\NormalTok{enrichment\_results\_customgmt\_max1000 }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(enrichment\_results\_customgmt\_max1000,}
-\NormalTok{                                       term\_size }\SpecialCharTok{\textgreater{}=}\NormalTok{ min\_gs\_size }\SpecialCharTok{\&} 
-\NormalTok{                                   term\_size }\SpecialCharTok{\textless{}=}\NormalTok{ max\_gs\_size }\SpecialCharTok{\&} 
-\NormalTok{                                   intersection\_size }\SpecialCharTok{\textgreater{}=}\NormalTok{ min\_intersection , }
-                                 \AttributeTok{select =} \FunctionTok{c}\NormalTok{(term\_id,term\_name,p\_value,p\_value ))}
-
-\NormalTok{enrichment\_results\_customgmt\_max10000 }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(enrichment\_results\_customgmt\_max10000,}
-\NormalTok{                                       term\_size }\SpecialCharTok{\textgreater{}=}\NormalTok{ min\_gs\_size }\SpecialCharTok{\&} 
-\NormalTok{                                   term\_size }\SpecialCharTok{\textless{}=}\NormalTok{ max\_gs\_size }\SpecialCharTok{\&} 
-\NormalTok{                                   intersection\_size }\SpecialCharTok{\textgreater{}=}\NormalTok{ min\_intersection , }
-                                 \AttributeTok{select =} \FunctionTok{c}\NormalTok{(term\_id,term\_name,p\_value,p\_value ))}
-\end{Highlighting}
-\end{Shaded}
-
-\section{Create an output file of the results - Generic enrichment Map file from Baderlab gmt}\label{create-an-output-file-of-the-results---generic-enrichment-map-file-from-baderlab-gmt}
-
-Use the same function defined above but instead of passing the genesets from the g\_profiler gmt file pass the geneset defitnions we loaded in from the Baderlab gmt file.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{enrichment\_results\_customgmt\_GEM\_max250 }\OtherTok{\textless{}{-}} \FunctionTok{createGEMformat}\NormalTok{(}
-\NormalTok{                                    enrichment\_results\_customgmt\_max250, }
-\NormalTok{                                    genesets\_baderlab\_genesets\_max250, }
-\NormalTok{                                    query\_set)}
-
-\CommentTok{\#output the enrichment map file}
-\FunctionTok{write.table}\NormalTok{(enrichment\_results\_customgmt\_GEM\_max250, }
-                  \AttributeTok{file =} \FunctionTok{file.path}\NormalTok{(}
-\NormalTok{                    working\_dir, }\StringTok{"gProfiler\_hsapiens\_Baderlab\_max250.gem.txt"}\NormalTok{),}
-                  \AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{, }
-                  \AttributeTok{col.names =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{sep=}\StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}
-                  \AttributeTok{quote =} \ConstantTok{FALSE}\NormalTok{)}
-       
-\NormalTok{enrichment\_results\_customgmt\_GEM\_max1000 }\OtherTok{\textless{}{-}} \FunctionTok{createGEMformat}\NormalTok{(}
-\NormalTok{                                  enrichment\_results\_customgmt\_max1000,}
-\NormalTok{                                  genesets\_baderlab\_genesets\_max1000, }
-\NormalTok{                                  query\_set)}
-
-\CommentTok{\#output the enrichment map file}
-\FunctionTok{write.table}\NormalTok{(enrichment\_results\_customgmt\_GEM\_max1000, }
-                  \AttributeTok{file =} \FunctionTok{file.path}\NormalTok{(}
-\NormalTok{                    working\_dir, }\StringTok{"gProfiler\_hsapiens\_Baderlab\_max1000.gem.txt"}\NormalTok{),}
-                  \AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{, }
-                  \AttributeTok{col.names =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{sep=}\StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}
-                  \AttributeTok{quote =} \ConstantTok{FALSE}\NormalTok{)}
-
-\NormalTok{enrichment\_results\_customgmt\_GEM\_max10000 }\OtherTok{\textless{}{-}} \FunctionTok{createGEMformat}\NormalTok{(}
-\NormalTok{                                  enrichment\_results\_customgmt\_max10000,}
-\NormalTok{                                  genesets\_baderlab\_genesets\_max10000, }
-\NormalTok{                                  query\_set)}
-
-\CommentTok{\#output the enrichment map file}
-\FunctionTok{write.table}\NormalTok{(enrichment\_results\_customgmt\_GEM\_max10000, }
-                  \AttributeTok{file =} \FunctionTok{file.path}\NormalTok{(}
-\NormalTok{                    working\_dir, }\StringTok{"gProfiler\_hsapiens\_Baderlab\_max10000.gem.txt"}\NormalTok{),}
-                  \AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{, }
-                  \AttributeTok{col.names =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{sep=}\StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}
-                  \AttributeTok{quote =} \ConstantTok{FALSE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
 \chapter{Run GSEA from within R}\label{run-gsea-from-within-r}
 
 This notebook is based largely on the \href{https://baderlab.github.io/Cytoscape_workflows/EnrichmentMapPipeline/Protocol2_createEM.html}{original notebook} published with EnrichmentMap Protocol(\citeproc{ref-em2019}{Reimand et al. 2019})
@@ -1188,6 +363,9 @@ Set the working directory as the directory to the directory where you downloaded
 
 \CommentTok{\#directory where all the data files are found.  For example {-}   ./generated\_data/gsea/}
 \NormalTok{output\_dir }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{output\_dir}
+\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{dir.exists}\NormalTok{(output\_dir))\{}
+  \FunctionTok{dir.create}\NormalTok{(output\_dir)}
+\NormalTok{\}}
 
 \CommentTok{\#The name to give the analysis in GSEA {-} for example Basal\_vs\_Classical}
 \NormalTok{analysis\_name }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{analysis\_name}
@@ -1212,7 +390,7 @@ Set the working directory as the directory to the directory where you downloaded
 
 Only Human, Mouse, Rat, and Woodchuck gene set files are currently available on the baderlab downloads site. If you are working with a species other than human (and it is either rat,mouse or woodchuck) change the gmt\_url below to the correct species. Check \href{http://download.baderlab.org/EM_Genesets/current_release/}{here} to see all available species.
 
-To create your own GMT file using Ensembl see \hyperref[create-gmt-file-from-ensembl]{Create GMT file from Ensembl}
+To create your own GMT file using Ensembl see {[}Create GMT file from Ensembl{]}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1281,284 +459,35 @@ In the below command the following options have been specified:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\NormalTok{start\_time }\OtherTok{\textless{}{-}} \FunctionTok{Sys.time}\NormalTok{()}
+
 \ControlFlowTok{if}\NormalTok{(run\_gsea)\{}
 \NormalTok{  command }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\StringTok{""}\NormalTok{,gsea\_jar,  }
                    \StringTok{"GSEAPreRanked {-}gmx"}\NormalTok{, dest\_gmt\_file, }
                    \StringTok{"{-}rnk"}\NormalTok{ ,}\FunctionTok{file.path}\NormalTok{(working\_dir,rnk\_file), }
                    \StringTok{"{-}collapse false {-}nperm 1000 {-}scoring\_scheme weighted"}\NormalTok{, }
                    \StringTok{"{-}rpt\_label "}\NormalTok{,analysis\_name,}
-                   \StringTok{"  {-}plot\_top\_x 20 {-}rnd\_seed 12345  {-}set\_max 200"}\NormalTok{,  }
+                   \StringTok{"  {-}plot\_top\_x 20 {-}rnd\_seed 12345  {-}set\_max 500"}\NormalTok{,  }
                    \StringTok{" {-}set\_min 15 {-}zip\_report false "}\NormalTok{,}
                    \StringTok{" {-}out"}\NormalTok{ ,output\_dir, }
                    \StringTok{" \textgreater{} gsea\_output.txt"}\NormalTok{,}\AttributeTok{sep=}\StringTok{" "}\NormalTok{)}
   \FunctionTok{system}\NormalTok{(command)}
 \NormalTok{\}}
+
+\NormalTok{end\_time }\OtherTok{\textless{}{-}} \FunctionTok{Sys.time}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
-\chapter{Create GMT file from Ensembl}\label{create-gmt-file-from-ensembl}
+GSEA started at 2025-04-21 18:20:56.793255
+GSEA finished at 2025-04-21 18:31:43.923337
 
-The \href{https://download.baderlab.org/EM_Genesets/}{Baderlab geneset download site} is an updated resource for geneset files from GO, Reactome, WikiPathways, Pathbank, NetPath, HumanCyc, IOB, \ldots{} many others that can be used in \href{https://biit.cs.ut.ee/gprofiler/gost}{g:Profiler} or \href{https://www.gsea-msigdb.org/gsea/index.jsp}{GSEA} and many other enrichment tools that support the gmt format.
+GSEA total running time 10.7855013648669
 
-Unfortunately genesets are only supplied for:
+\section{Create an Enrichment map of the top pathways.}\label{create-an-enrichment-map-of-the-top-pathways.}
 
-\begin{itemize}
-\tightlist
-\item
-  \href{https://download.baderlab.org/EM_Genesets/current_release/Human/}{Human}
-\item
-  \href{https://download.baderlab.org/EM_Genesets/current_release/Mouse/}{Mouse}
-\item
-  \href{https://download.baderlab.org/EM_Genesets/current_release/Rat/}{Rat}
-\item
-  \href{https://download.baderlab.org/EM_Genesets/current_release/Woodchuck/}{Woodchuck}
-\end{itemize}
+\chapter{Run fGSEA from within R}\label{run-fgsea-from-within-r}
 
-If you are working in a different species you will need to generate your own gmt file. The best way to do this is through ensembl. Ensembl doesn't have annotations for all the pathway databases listed above but it has annotations for most species from GO.
-
-The parameters are set in the params option on this notebook but you can also manually set them here.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# for example {-} working\_dir \textless{}{-} "./genereated\_data"}
-\NormalTok{working\_dir }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{working\_dir}
-
-\CommentTok{\# for example {-} species \textless{}{-} "horse"}
-\NormalTok{species }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{species}
-
-\CommentTok{\# for example {-} ensembl\_dataset \textless{}{-} "ecaballus\_gene\_ensembl"}
-\NormalTok{ensembl\_dataset }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{ensembl\_dataset}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#use library}
-\CommentTok{\#make sure biocManager is installed}
-\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)\}, }
-         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }
-           \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)\}, }
-         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{))}
-
-
-\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"biomaRt"}\NormalTok{)\}, }
-         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }
-\NormalTok{           BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\StringTok{"biomaRt"}\NormalTok{)\}, }
-         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"biomaRt"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\section{Load Libraries}\label{load-libraries}
-
-Create or set a directory to store all the generatd results
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{dir.exists}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{working\_dir))\{}
-  \FunctionTok{dir.create}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{working\_dir)}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\section{Set up Biomart connection}\label{set-up-biomart-connection}
-
-Connect to Biomart
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{ensembl }\OtherTok{\textless{}{-}} \FunctionTok{useEnsembl}\NormalTok{(}\AttributeTok{biomart =} \StringTok{"genes"}\NormalTok{, }\AttributeTok{host =} \StringTok{"asia.ensembl.org"}\NormalTok{)}
-\CommentTok{\#ensembl \textless{}{-} useEnsembl("ensembl")}
-\end{Highlighting}
-\end{Shaded}
-
-Figure out which dataset you want to use - for some species there might be a few datasets to choose from. Not all of the datasets have common namesa associated with them. For example, if you search for `yeast' nothing will be returned but if you look for Saccharomyces or cerevisiae you will be able to find it.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{all\_datasets }\OtherTok{\textless{}{-}} \FunctionTok{listDatasets}\NormalTok{(ensembl)}
-
-\CommentTok{\#get all the datasets that match our species definition}
-\NormalTok{all\_datasets[}\FunctionTok{grep}\NormalTok{(all\_datasets}\SpecialCharTok{$}\NormalTok{description,}
-                  \AttributeTok{pattern=}\NormalTok{species,}
-                  \AttributeTok{ignore.case =} \ConstantTok{TRUE}\NormalTok{),]}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##                dataset                 description         version
-## 68 fcatus_gene_ensembl Cat genes (Felis_catus_9.0) Felis_catus_9.0
-\end{verbatim}
-
-If you know the ensembl dataset that you want to use you can specify it in the parameters above or grab from the above table the dataset of the species that you are interested in.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{ensembl }\OtherTok{=} \FunctionTok{useDataset}\NormalTok{(ensembl\_dataset,}\AttributeTok{mart=}\NormalTok{ensembl)}
-\end{Highlighting}
-\end{Shaded}
-
-\section{Get species GO annotations}\label{get-species-go-annotations}
-
-Get the GO annotations for our species
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{go\_annotation }\OtherTok{\textless{}{-}} \FunctionTok{getBM}\NormalTok{(}\AttributeTok{attributes =} \FunctionTok{c}\NormalTok{(}\StringTok{"external\_gene\_name"}\NormalTok{,}
-                                      \StringTok{"ensembl\_gene\_id"}\NormalTok{,}
-                                      \StringTok{"ensembl\_transcript\_id"}\NormalTok{,}
-                                      \StringTok{"go\_id"}\NormalTok{, }
-                                      \StringTok{"name\_1006"}\NormalTok{, }
-                                      \StringTok{"namespace\_1003"}\NormalTok{,}
-                                      \StringTok{"go\_linkage\_type"}\NormalTok{), }
-                       \AttributeTok{filters=}\FunctionTok{list}\NormalTok{(}\AttributeTok{biotype=}\StringTok{\textquotesingle{}protein\_coding\textquotesingle{}}\NormalTok{), }\AttributeTok{mart=}\NormalTok{ensembl);}
-
-\CommentTok{\#get just the go biological process subset}
-\DocumentationTok{\#\#\#\#\#}
-\CommentTok{\# Get rid of this line if you want to include all of go and not just biological process}
-\DocumentationTok{\#\#\#\#\#}
-\NormalTok{go\_annotation\_bp }\OtherTok{\textless{}{-}}\NormalTok{ go\_annotation[}\FunctionTok{which}\NormalTok{(}
-\NormalTok{  go\_annotation}\SpecialCharTok{$}\NormalTok{namespace\_1003 }\SpecialCharTok{==} \StringTok{"biological\_process"}\NormalTok{),]}
-
-\CommentTok{\#compute the unique pathway sets}
-\NormalTok{go\_pathway\_sets }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(go\_annotation\_bp[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{],}
-                             \AttributeTok{by =} \FunctionTok{list}\NormalTok{(go\_annotation\_bp}\SpecialCharTok{$}\NormalTok{go\_id),}
-                             \AttributeTok{FUN =} \ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{list}\NormalTok{(}\FunctionTok{unique}\NormalTok{(x))\})}
-
-\CommentTok{\#unlist the go descriptions}
-\NormalTok{go\_pathway\_sets}\SpecialCharTok{$}\NormalTok{name\_1006 }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(go\_pathway\_sets,}\DecValTok{1}\NormalTok{,}\AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{}
-   \FunctionTok{paste}\NormalTok{(}\FunctionTok{gsub}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{name\_1006),}\AttributeTok{pattern=} \StringTok{"}\SpecialCharTok{\textbackslash{}"}\StringTok{"}\NormalTok{,}
-              \AttributeTok{replacement =} \StringTok{""}\NormalTok{),}\AttributeTok{collapse =} \StringTok{""}\NormalTok{)\})}
-\end{Highlighting}
-\end{Shaded}
-
-There are two identifiers that you can choose from in the above table
-* external\_symbols
-* ensembl\_ids
-
-Each of these is stored as a list in the dataframe. In order to convert it to the right format for the gmt file we need to convert the list to string of tab delimited strings. (unfortunately there is no streaightforward way to write out a dataframe's column of lists.)
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{go\_pathway\_sets[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{,}\StringTok{"external\_gene\_name"}\NormalTok{]}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [[1]]
-## [1] "MGME1"    "MPV17"    "AKT3"     "SLC25A36" "MEF2A"    "SLC25A33" "OPA1"    
-## 
-## [[2]]
-## [1] ""      "MMP23"
-## 
-## [[3]]
-##  [1] "TNP1"  "XNDC1" "SIRT1" "TDP1"  "APLF"  "ERCC6" "XRCC1" "APTX"  "LIG4" 
-## [10] "ERCC8"
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{go\_pathway\_sets[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{,}\StringTok{"ensembl\_gene\_id"}\NormalTok{]}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [[1]]
-## [1] "ENSFCAG00000023195" "ENSFCAG00000015150" "ENSFCAG00000003700"
-## [4] "ENSFCAG00000035204" "ENSFCAG00000022495" "ENSFCAG00000022044"
-## [7] "ENSFCAG00000000695"
-## 
-## [[2]]
-## [1] "ENSFCAG00000034109" "ENSFCAG00000008341"
-## 
-## [[3]]
-##  [1] "ENSFCAG00000036860" "ENSFCAG00000044053" "ENSFCAG00000012373"
-##  [4] "ENSFCAG00000005982" "ENSFCAG00000022636" "ENSFCAG00000031322"
-##  [7] "ENSFCAG00000005222" "ENSFCAG00000008728" "ENSFCAG00000031985"
-## [10] "ENSFCAG00000026531"
-\end{verbatim}
-
-\section{Format results into GMT file}\label{format-results-into-gmt-file}
-
-Convert column of lists to a tab delimited string of gene names
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{go\_pathway\_sets}\SpecialCharTok{$}\NormalTok{collapsed\_genenames }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(go\_pathway\_sets,}\DecValTok{1}\NormalTok{,}
-                                             \AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{}
-   \FunctionTok{paste}\NormalTok{(}\FunctionTok{gsub}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{external\_gene\_name),}\AttributeTok{pattern=} \StringTok{"}\SpecialCharTok{\textbackslash{}"}\StringTok{"}\NormalTok{,}
-              \AttributeTok{replacement =} \StringTok{""}\NormalTok{),}\AttributeTok{collapse =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
-\NormalTok{\})}
-\end{Highlighting}
-\end{Shaded}
-
-Convert column of lists to a tab delimited string of gene names
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{go\_pathway\_sets}\SpecialCharTok{$}\NormalTok{collapsed\_ensemblids }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(go\_pathway\_sets,}\DecValTok{1}\NormalTok{,}
-                                              \AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{}
-   \FunctionTok{paste}\NormalTok{(}\FunctionTok{gsub}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{ensembl\_gene\_id),}\AttributeTok{pattern=} \StringTok{"}\SpecialCharTok{\textbackslash{}"}\StringTok{"}\NormalTok{,}
-              \AttributeTok{replacement =} \StringTok{""}\NormalTok{),}\AttributeTok{collapse =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
-\NormalTok{\})}
-\end{Highlighting}
-\end{Shaded}
-
-The format of the GMT file is described \href{here}{https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data\_formats\#GMT:\emph{Gene\_Matrix\_Transposed\_file\_format}.28.2A.gmt.29} and consists of rows with the following
-
-\begin{itemize}
-\tightlist
-\item
-  Name
-\item
-  Description
-\item
-  tab delimited list of genes a part of this geneset
-\end{itemize}
-
-Write out the gmt file with genenames
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{gmt\_file\_genenames }\OtherTok{\textless{}{-}}\NormalTok{ go\_pathway\_sets[,}\FunctionTok{c}\NormalTok{(}\StringTok{"Group.1"}\NormalTok{,}\StringTok{"name\_1006"}\NormalTok{,}
-                                         \StringTok{"collapsed\_genenames"}\NormalTok{)]}
-\FunctionTok{colnames}\NormalTok{(gmt\_file\_genenames)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{,}\StringTok{"description"}\NormalTok{) }
-
-\NormalTok{gmt\_file\_genenames}\SpecialCharTok{$}\NormalTok{name }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(gmt\_file\_genenames}\SpecialCharTok{$}\NormalTok{description, gmt\_file\_genenames}\SpecialCharTok{$}\NormalTok{name,}\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{)}
-\NormalTok{gmt\_file\_genenames}\SpecialCharTok{$}\NormalTok{name }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(gmt\_file\_genenames}\SpecialCharTok{$}\NormalTok{name,}\AttributeTok{pattern =} \StringTok{" "}\NormalTok{,}\AttributeTok{replacement =} \StringTok{"\_"}\NormalTok{)}
-\NormalTok{gmt\_file\_genenames}\SpecialCharTok{$}\NormalTok{name }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(gmt\_file\_genenames}\SpecialCharTok{$}\NormalTok{name,}\AttributeTok{pattern =} \StringTok{":"}\NormalTok{,}\AttributeTok{replacement =} \StringTok{"\_"}\NormalTok{)}
-
-\NormalTok{gmt\_genenames\_filename }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{working\_dir, }\FunctionTok{paste}\NormalTok{(species,ensembl\_dataset,}\StringTok{"GO\_genesets\_GN.gmt"}\NormalTok{,}\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{))}
-
-\FunctionTok{write.table}\NormalTok{(}\AttributeTok{x =}\NormalTok{ gmt\_file\_genenames,}\AttributeTok{file =}\NormalTok{ gmt\_genenames\_filename,}
-            \AttributeTok{quote =} \ConstantTok{FALSE}\NormalTok{,}\AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}\AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{,}
-            \AttributeTok{col.names=}\ConstantTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-Write out the gmt file with ensembl ids
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{gmt\_file\_ensemblids }\OtherTok{\textless{}{-}}\NormalTok{ go\_pathway\_sets[,}\FunctionTok{c}\NormalTok{(}\StringTok{"Group.1"}\NormalTok{,}\StringTok{"name\_1006"}\NormalTok{,}
-                                          \StringTok{"collapsed\_ensemblids"}\NormalTok{)]}
-\FunctionTok{colnames}\NormalTok{(gmt\_file\_ensemblids)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{,}\StringTok{"description"}\NormalTok{) }
-
-\NormalTok{gmt\_file\_ensemblids}\SpecialCharTok{$}\NormalTok{name }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(gmt\_file\_ensemblids}\SpecialCharTok{$}\NormalTok{description, gmt\_file\_ensemblids}\SpecialCharTok{$}\NormalTok{name,}\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{)}
-\NormalTok{gmt\_file\_ensemblids}\SpecialCharTok{$}\NormalTok{name }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(gmt\_file\_ensemblids}\SpecialCharTok{$}\NormalTok{name,}\AttributeTok{pattern =} \StringTok{" "}\NormalTok{,}\AttributeTok{replacement =} \StringTok{"\_"}\NormalTok{)}
-\NormalTok{gmt\_file\_ensemblids}\SpecialCharTok{$}\NormalTok{name }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(gmt\_file\_ensemblids}\SpecialCharTok{$}\NormalTok{name,}\AttributeTok{pattern =} \StringTok{":"}\NormalTok{,}\AttributeTok{replacement =} \StringTok{"\_"}\NormalTok{)}
-
-
-\NormalTok{gmt\_ensemblids\_filename }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{working\_dir, }\FunctionTok{paste}\NormalTok{(species,ensembl\_dataset,}\StringTok{"GO\_genesets\_esemblids.gmt"}\NormalTok{,}\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{))}
-
-\FunctionTok{write.table}\NormalTok{(}\AttributeTok{x =}\NormalTok{ gmt\_file\_ensemblids,}\AttributeTok{file =}\NormalTok{ gmt\_ensemblids\_filename,}
-            \AttributeTok{quote =} \ConstantTok{FALSE}\NormalTok{,}\AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}\AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{,}
-            \AttributeTok{col.names=}\ConstantTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\chapter{Translate human gmt file to another species using ensembl}\label{translate-human-gmt-file-to-another-species-using-ensembl}
-
-for species where there is a not an existing effort to characterize genes through GO, a much richer gmt file will come from mapping the gmt file from a well defined species preferrably the species your experiment is trying to model (for example, if you are modelling a human disease in mouse using a human gmt might return much richer results but species specific changes might be lost )
+This notebook is based largely on the \href{https://baderlab.github.io/Cytoscape_workflows/EnrichmentMapPipeline/Protocol2_createEM.html}{original notebook} published with EnrichmentMap Protocol(\citeproc{ref-em2019}{Reimand et al. 2019})
 
 \section{Load in required libraries}\label{load-in-required-libraries-1}
 
@@ -1570,18 +499,131 @@ for species where there is a not an existing effort to characterize genes throug
            \FunctionTok{install.packages}\NormalTok{(}\StringTok{"RCurl"}\NormalTok{)\}, }
          \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"RCurl"}\NormalTok{))}
 
-\CommentTok{\#use library}
-\CommentTok{\#make sure biocManager is installed}
-\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)\}, }
-         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }
-           \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)\}, }
-         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{))}
+\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"fgsea"}\NormalTok{)\}, }
+         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{  }
+           \FunctionTok{install.packages}\NormalTok{(}\StringTok{"fgsea"}\NormalTok{)\}, }
+         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"fgsea"}\NormalTok{))}
 
+\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"GSA"}\NormalTok{)\}, }
+         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{  }
+           \FunctionTok{install.packages}\NormalTok{(}\StringTok{"GSA"}\NormalTok{)\}, }
+         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"GSA"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
 
-\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"biomaRt"}\NormalTok{)\}, }
-         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }
-\NormalTok{           BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\StringTok{"biomaRt"}\NormalTok{)\}, }
-         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"biomaRt"}\NormalTok{))}
+\section{function to write out fGSEA results}\label{function-to-write-out-fgsea-results}
+
+Create function to write out fgsea results files for each sample
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{write\_sample\_fgsea\_results}\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(current\_fgsea\_results, current\_results\_dir, }
+\NormalTok{                                       current\_sample)\{}
+    
+\NormalTok{  current\_sample }\OtherTok{\textless{}{-}}\NormalTok{ current\_sample}
+  
+\NormalTok{    current\_sample\_directory\_fullpath }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(current\_results\_dir, current\_sample)}
+    \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{dir.exists}\NormalTok{(current\_sample\_directory\_fullpath))\{}
+      \FunctionTok{dir.create}\NormalTok{(current\_sample\_directory\_fullpath)}
+\NormalTok{    \}}
+  
+    \CommentTok{\#calculate the rank at max}
+    \CommentTok{\#fgsea returns the leading edge.  Just need to extract the highest rank from }
+    \CommentTok{\# set to get the rank at max}
+\NormalTok{    calculated\_rank\_at\_max }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(current\_fgsea\_results,}\DecValTok{1}\NormalTok{,}\AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{ }\FunctionTok{max}\NormalTok{(}\FunctionTok{which}\NormalTok{(}\FunctionTok{names}\NormalTok{(current\_ranks) }\SpecialCharTok{\%in\%} \FunctionTok{unlist}\NormalTok{(x[}\DecValTok{8}\NormalTok{])))\})}
+    
+    
+\NormalTok{    fakeenr\_current\_sample }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(current\_fgsea\_results}\SpecialCharTok{$}\NormalTok{pathway,}
+\NormalTok{                                     current\_fgsea\_results}\SpecialCharTok{$}\NormalTok{pathway,}
+                                     \StringTok{"Details"}\NormalTok{,}
+\NormalTok{                                     current\_fgsea\_results}\SpecialCharTok{$}\NormalTok{size,}
+\NormalTok{                                     current\_fgsea\_results}\SpecialCharTok{$}\NormalTok{ES,}
+\NormalTok{                                     current\_fgsea\_results}\SpecialCharTok{$}\NormalTok{NES,}
+\NormalTok{                                     current\_fgsea\_results}\SpecialCharTok{$}\NormalTok{pval,}
+\NormalTok{                                     current\_fgsea\_results}\SpecialCharTok{$}\NormalTok{padj,}
+                                     \DecValTok{0}\NormalTok{,}
+\NormalTok{                                     calculated\_rank\_at\_max,}
+                                     \FunctionTok{apply}\NormalTok{(current\_fgsea\_results,}\DecValTok{1}\NormalTok{,}
+                                           \AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{paste}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(x[}\DecValTok{8}\NormalTok{]),}\AttributeTok{collapse=}\StringTok{","}\NormalTok{)\})) }
+    
+    \FunctionTok{colnames}\NormalTok{(fakeenr\_current\_sample) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{,}\StringTok{"description"}\NormalTok{,}\StringTok{"GS details"}\NormalTok{,}\StringTok{"SIZE"}\NormalTok{,}\StringTok{"ES"}\NormalTok{,}\StringTok{"NES"}\NormalTok{,}\StringTok{"pval"}\NormalTok{,}\StringTok{"padj"}\NormalTok{,}\StringTok{"FWER"}\NormalTok{,}\StringTok{"Rank at Max"}\NormalTok{,}\StringTok{"leading edge genes"}\NormalTok{)}
+    
+\NormalTok{    fakeenr\_filename }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(current\_sample, }\StringTok{"\_fgsea\_enr\_results.txt"}\NormalTok{,}\AttributeTok{sep=}\StringTok{""}\NormalTok{)}
+\NormalTok{    fakeenr\_filename\_docker }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(current\_sample\_directory\_fullpath,fakeenr\_filename)}
+    
+    \FunctionTok{write.table}\NormalTok{(fakeenr\_current\_sample ,}
+\NormalTok{                fakeenr\_filename\_docker,}
+                \AttributeTok{col.name=}\ConstantTok{TRUE}\NormalTok{,}\AttributeTok{sep=}\StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}\AttributeTok{row.names=}\ConstantTok{FALSE}\NormalTok{,}\AttributeTok{quote=}\ConstantTok{FALSE}\NormalTok{,}\AttributeTok{fileEncoding=}\StringTok{"latin1"}\NormalTok{)}
+    
+    \CommentTok{\# "upload" the files to the host machine and replace each path with the host machine path}
+    
+    \CommentTok{\#create a fake expression file}
+\NormalTok{    fakeexp }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{name =} \FunctionTok{names}\NormalTok{(current\_ranks), }
+                          \AttributeTok{description =} \FunctionTok{names}\NormalTok{(current\_ranks),current\_ranks)}
+\NormalTok{    fakeexp\_filename }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(current\_sample,}\StringTok{"fakeexpression.txt"}\NormalTok{,}\AttributeTok{sep=}\StringTok{""}\NormalTok{)}
+\NormalTok{    fakeexp\_name\_docker }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{( current\_sample\_directory\_fullpath,fakeexp\_filename)}
+
+    \FunctionTok{write.table}\NormalTok{(fakeexp,}
+\NormalTok{                fakeexp\_name\_docker,}
+                \AttributeTok{col.name=}\ConstantTok{TRUE}\NormalTok{,}\AttributeTok{sep=}\StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}\AttributeTok{row.names=}\ConstantTok{FALSE}\NormalTok{,}\AttributeTok{quote=}\ConstantTok{FALSE}\NormalTok{,}\AttributeTok{fileEncoding=}\StringTok{""}\NormalTok{)}
+    
+    
+    \CommentTok{\#create a rank expression file}
+\NormalTok{    fakernk }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{name =} \FunctionTok{names}\NormalTok{(current\_ranks), }
+\NormalTok{                          current\_ranks)}
+\NormalTok{    fakernk\_filename }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(current\_sample,}\StringTok{"fakeranks.rnk"}\NormalTok{,}\AttributeTok{sep=}\StringTok{""}\NormalTok{)}
+\NormalTok{    fakernk\_name\_docker }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{( current\_sample\_directory\_fullpath,fakernk\_filename)}
+
+    \FunctionTok{write.table}\NormalTok{(fakernk,}
+\NormalTok{                fakernk\_name\_docker,}
+                \AttributeTok{col.name=}\ConstantTok{TRUE}\NormalTok{,}\AttributeTok{sep=}\StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}\AttributeTok{row.names=}\ConstantTok{FALSE}\NormalTok{,}\AttributeTok{quote=}\ConstantTok{FALSE}\NormalTok{,}\AttributeTok{fileEncoding=}\StringTok{""}\NormalTok{)}
+    
+      
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Configurable Parameters}\label{configurable-parameters-1}
+
+Set the working directory as the directory to the directory where you downloaded all protocol files. For example /User/JohnSmith/EMProtocolFiles/data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# defined in the paramters at top of notebook}
+
+\CommentTok{\#directory where all the data files are found.  For example {-}   ./data/ }
+\NormalTok{working\_dir }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{working\_dir}
+
+\CommentTok{\#directory where all the data files are found.  For example {-}   ./generated\_data/gsea/}
+\NormalTok{output\_dir }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{output\_dir}
+\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{exists}\NormalTok{(output\_dir))\{}
+  \FunctionTok{dir.create}\NormalTok{(output\_dir)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in dir.create(output_dir): './generated_data/fgsea' already exists
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#The name to give the analysis in GSEA {-} for example Basal\_vs\_Classical}
+\NormalTok{analysis\_name }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{analysis\_name}
+
+\CommentTok{\#rank file to use in GSEA analysis.  }
+\CommentTok{\#For example {-} TCGA{-}PAAD\_GDC\_Subtype\_Moffitt\_BasalvsClassical\_ranks.rnk}
+\NormalTok{rnk\_file }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{rnk\_file}
+
+\CommentTok{\#run\_gsea {-} true/false}
+\CommentTok{\# This parameter is for the compilation of the notebook.  }
+\NormalTok{run\_fgsea }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{run\_fgsea}
+
+\CommentTok{\#set the gmt file you want to use if you don\textquotesingle{}t want to use the latest gmt file.}
+\CommentTok{\# For example, if you set dest\_gmt\_file =="" the below script will automatically}
+\CommentTok{\# download the latest gmt file from baderlab webstie.  If it is set then it}
+\CommentTok{\# will use the file specified.  }
+\NormalTok{dest\_gmt\_file }\OtherTok{=} \StringTok{""}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1589,12 +631,10 @@ for species where there is a not an existing effort to characterize genes throug
 
 Only Human, Mouse, Rat, and Woodchuck gene set files are currently available on the baderlab downloads site. If you are working with a species other than human (and it is either rat,mouse or woodchuck) change the gmt\_url below to the correct species. Check \href{http://download.baderlab.org/EM_Genesets/current_release/}{here} to see all available species.
 
-To create your own GMT file using Ensembl see \hyperref[create-gmt-file-from-ensembl]{Create GMT file from Ensembl}
+To create your own GMT file using Ensembl see {[}Create GMT file from Ensembl{]}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dest\_gmt\_file }\OtherTok{\textless{}{-}} \StringTok{""} \CommentTok{\#params$dest\_gmt\_file }
-
 \ControlFlowTok{if}\NormalTok{(dest\_gmt\_file }\SpecialCharTok{==} \StringTok{""}\NormalTok{)\{}
 \NormalTok{  gmt\_url }\OtherTok{=} \StringTok{"http://download.baderlab.org/EM\_Genesets/current\_release/Human/symbol/"}
   
@@ -1611,7 +651,7 @@ To create your own GMT file using Ensembl see \hyperref[create-gmt-file-from-ens
 \NormalTok{    contents, }\AttributeTok{perl =} \ConstantTok{TRUE}\NormalTok{)}
 \NormalTok{  gmt\_file }\OtherTok{=} \FunctionTok{unlist}\NormalTok{(}\FunctionTok{regmatches}\NormalTok{(contents, rx))}
   
-\NormalTok{  dest\_gmt\_file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{working\_dir,gmt\_file )}
+\NormalTok{  dest\_gmt\_file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(output\_dir,gmt\_file )}
   
   \CommentTok{\#check if this gmt file already exists}
   \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{file.exists}\NormalTok{(dest\_gmt\_file))\{}
@@ -1621,380 +661,121 @@ To create your own GMT file using Ensembl see \hyperref[create-gmt-file-from-ens
 \NormalTok{    )}
 \NormalTok{  \}}
 \NormalTok{\}}
+
+
+\CommentTok{\#load in the genesets.}
+\FunctionTok{capture.output}\NormalTok{(all\_gs }\OtherTok{\textless{}{-}} \FunctionTok{GSA.read.gmt}\NormalTok{(dest\_gmt\_file) ,}\AttributeTok{file=}\StringTok{"gsa\_load.out"}\NormalTok{)}
+\FunctionTok{names}\NormalTok{(all\_gs}\SpecialCharTok{$}\NormalTok{genesets) }\OtherTok{\textless{}{-}}\NormalTok{ all\_gs}\SpecialCharTok{$}\NormalTok{geneset.names}
 \end{Highlighting}
 \end{Shaded}
 
-Load in the originaing gmt file
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\section{Set up Biomart connection}\label{set-up-biomart-connection-1}
+\section{Run fGSEA}\label{run-fgsea}
 
-Connect to Biomart
+(fGSEA){[}\url{https://bioconductor.org/packages/release/bioc/html/fgsea.html}{]} is an R package that runs a fast Gene Set Enrichment Analysis.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{ensembl }\OtherTok{\textless{}{-}} \FunctionTok{useEnsembl}\NormalTok{(}\AttributeTok{biomart =} \StringTok{"genes"}\NormalTok{ , }\AttributeTok{host =} \StringTok{"asia.ensembl.org"}\NormalTok{)}
-\CommentTok{\#ensembl \textless{}{-} useEnsembl("ensembl")}
-\end{Highlighting}
-\end{Shaded}
-
-Figure out which dataset you want to use - for some species there might be a few datasets to choose from. Not all of the datasets have common namesa associated with them. For example, if you search for `yeast' nothing will be returned but if you look for Saccharomyces or cerevisiae you will be able to find it.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{all\_datasets }\OtherTok{\textless{}{-}} \FunctionTok{listDatasets}\NormalTok{(ensembl, }\AttributeTok{verbose=}\ConstantTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Attempting web service request:
-## asia.ensembl.org:80/biomart/martservice?redirect=no&type=datasets&requestid=biomaRt&mart=ENSEMBL_MART_ENSEMBL
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#get all the datasets that match our species definition}
-\NormalTok{all\_datasets[}\FunctionTok{grep}\NormalTok{(all\_datasets}\SpecialCharTok{$}\NormalTok{description,}
-                  \AttributeTok{pattern=}\FunctionTok{paste}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{new\_species,}\AttributeTok{sep=}\StringTok{""}\NormalTok{),}
-                  \AttributeTok{ignore.case =} \ConstantTok{TRUE}\NormalTok{),]}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##                dataset                 description         version
-## 68 fcatus_gene_ensembl Cat genes (Felis_catus_9.0) Felis_catus_9.0
-\end{verbatim}
-
-Based on the above table define the dataset
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#get all the datasets that match our species definition}
-\NormalTok{base\_dataset }\OtherTok{\textless{}{-}}\NormalTok{ all\_datasets}\SpecialCharTok{$}\NormalTok{dataset[}\FunctionTok{grep}\NormalTok{(all\_datasets}\SpecialCharTok{$}\NormalTok{description,}
-                  \AttributeTok{pattern=}\FunctionTok{paste}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{new\_species,}\AttributeTok{sep=}\StringTok{""}\NormalTok{),}
-                  \AttributeTok{ignore.case =} \ConstantTok{TRUE}\NormalTok{)]}
-\end{Highlighting}
-\end{Shaded}
-
-If you know the ensembl dataset that you want to use you can specify it in the parameters above or grab from the above table the dataset of the species that you are interested in.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{ensembl }\OtherTok{=} \FunctionTok{useDataset}\NormalTok{(base\_dataset,}\AttributeTok{mart=}\NormalTok{ensembl)}
-\end{Highlighting}
-\end{Shaded}
-
-\section{Convert the species genes from human}\label{convert-the-species-genes-from-human}
-
-Get the homologs in the species of interest of the human genes.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{homologs }\OtherTok{\textless{}{-}} \FunctionTok{getBM}\NormalTok{(}\AttributeTok{attributes =} \FunctionTok{c}\NormalTok{(}\StringTok{"external\_gene\_name"}\NormalTok{,}
-                                      \StringTok{"ensembl\_gene\_id"}\NormalTok{,}
-                                      \StringTok{"hsapiens\_homolog\_ensembl\_gene"}\NormalTok{, }
-                                      \StringTok{"hsapiens\_homolog\_associated\_gene\_name"} 
-\NormalTok{                                      ), }
-                       \AttributeTok{filters=}\FunctionTok{list}\NormalTok{(}\AttributeTok{biotype=}\StringTok{\textquotesingle{}protein\_coding\textquotesingle{}}\NormalTok{), }\AttributeTok{mart=}\NormalTok{ensembl);}
-\CommentTok{\# get rid of rows that have an empty gene name for new species or for human}
-\NormalTok{homologs }\OtherTok{\textless{}{-}}\NormalTok{ homologs[}\FunctionTok{which}\NormalTok{((homologs}\SpecialCharTok{$}\NormalTok{external\_gene\_name }\SpecialCharTok{!=} \StringTok{""}\NormalTok{) }\SpecialCharTok{\&}\NormalTok{ (homologs}\SpecialCharTok{$}\NormalTok{hsapiens\_homolog\_associated\_gene\_name }\SpecialCharTok{!=} \StringTok{""}\NormalTok{)),]}
-\end{Highlighting}
-\end{Shaded}
-
-Convert the human gmt file into the species of interest
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{names}\NormalTok{(originating\_gmt}\SpecialCharTok{$}\NormalTok{genesets) }\OtherTok{\textless{}{-}}\NormalTok{ originating\_gmt}\SpecialCharTok{$}\NormalTok{geneset.names}
-
-\NormalTok{temp\_genesets }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(originating\_gmt}\SpecialCharTok{$}\NormalTok{genesets,}\AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{homologs}\SpecialCharTok{$}\NormalTok{external\_gene\_name[}\FunctionTok{which}\NormalTok{(homologs}\SpecialCharTok{$}\NormalTok{hsapiens\_homolog\_associated\_gene\_name }\SpecialCharTok{\%in\%} \FunctionTok{unlist}\NormalTok{(x))]\})}
-
-\NormalTok{translated\_genessets }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\AttributeTok{geneset\_names=}\NormalTok{originating\_gmt}\SpecialCharTok{$}\NormalTok{geneset.names, }
-                             \AttributeTok{genesets =}\NormalTok{ temp\_genesets,}
-                             \AttributeTok{geneset.descriptions=}\NormalTok{originating\_gmt}\SpecialCharTok{$}\NormalTok{geneset.descriptions)}
-\end{Highlighting}
-\end{Shaded}
-
-\section{Format results into GMT file}\label{format-results-into-gmt-file-1}
-
-Convert lists to a tab delimited string of gene names
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{translated\_genessets}\SpecialCharTok{$}\NormalTok{collapsed\_genenames  }\OtherTok{\textless{}{-}} \FunctionTok{unlist}\NormalTok{(}\FunctionTok{lapply}\NormalTok{(translated\_genessets}\SpecialCharTok{$}\NormalTok{genesets,}
-                                             \AttributeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x)\{}
-   \FunctionTok{paste}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(x),}\AttributeTok{collapse =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
-\NormalTok{\}))}
-\end{Highlighting}
-\end{Shaded}
-
-The format of the GMT file is described \href{here}{https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data\_formats\#GMT:\emph{Gene\_Matrix\_Transposed\_file\_format}.28.2A.gmt.29} and consists of rows with the following
+In the below command the following options have been specified:
 
 \begin{itemize}
 \tightlist
 \item
-  Name
+  rnk - path to the rank file
 \item
-  Description
+  gmx - path to the gene set definition (gmt) file
 \item
-  tab delimited list of genes a part of this geneset
+  collapse - true/false indicates whether the expression/rnk file needs to be collapsed from probes to gene symbols
+\item
+  nperm - number of permutations
+\item
+  scoring\_scheme -
+\item
+  rpt\_label - name of the directory with output
+\item
+  rnd\_seed - random seed to use
+\item
+  set\_max - maximum size for individual gene sets. In GSEA interface this is set to 500 but we prefer to use a more stringent setting of 200.
+\item
+  set\_min - minimum size for individual gene sets
+\item
+  zip\_report - true/false to zip output directory
+\item
+  out - directory where to place the result directory.
 \end{itemize}
 
-Write out the gmt file with genenames
-
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gmt\_file\_genenames }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{name=}\NormalTok{translated\_genessets}\SpecialCharTok{$}\NormalTok{geneset\_names,}
-                                 \AttributeTok{description=}\NormalTok{translated\_genessets}\SpecialCharTok{$}\NormalTok{geneset.descriptions,}
-                                 \AttributeTok{genes =}\NormalTok{ translated\_genessets}\SpecialCharTok{$}\NormalTok{collapsed\_genenames)}
+\NormalTok{start\_time }\OtherTok{\textless{}{-}} \FunctionTok{Sys.time}\NormalTok{()}
 
-\NormalTok{gmt\_genenames\_filename }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{working\_dir, }\FunctionTok{paste}\NormalTok{(params}\SpecialCharTok{$}\NormalTok{new\_species,}\StringTok{"convertedfrom"}\NormalTok{,}\FunctionTok{basename}\NormalTok{(dest\_gmt\_file),}\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{))}
+\ControlFlowTok{if}\NormalTok{(run\_fgsea)\{}
+  \CommentTok{\#get the subset of genes that are protein coding. }
+\NormalTok{    current\_ranks }\OtherTok{\textless{}{-}} \FunctionTok{read.table}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(working\_dir,rnk\_file),}\AttributeTok{header=}\ConstantTok{TRUE}\NormalTok{,}\AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
+\NormalTok{    fgsea\_ranks }\OtherTok{\textless{}{-}}\NormalTok{ current\_ranks[,}\DecValTok{2}\NormalTok{]}
+    \FunctionTok{names}\NormalTok{(fgsea\_ranks) }\OtherTok{\textless{}{-}}\NormalTok{ current\_ranks[,}\DecValTok{1}\NormalTok{]}
+ 
+\NormalTok{    current\_ranks }\OtherTok{\textless{}{-}}\NormalTok{ fgsea\_ranks}
+ 
+    \CommentTok{\#remove duplicated genes}
+\NormalTok{    duplicated\_gene\_names }\OtherTok{\textless{}{-}}   
+      \FunctionTok{names}\NormalTok{(current\_ranks)[}\FunctionTok{which}\NormalTok{(}\FunctionTok{duplicated}\NormalTok{(}\FunctionTok{names}\NormalTok{(current\_ranks)))]}
+\NormalTok{    current\_ranks }\OtherTok{\textless{}{-}}\NormalTok{ current\_ranks[}\FunctionTok{which}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{names}\NormalTok{(current\_ranks) }\SpecialCharTok{\%in\%} 
+\NormalTok{                                           duplicated\_gene\_names)]}
 
-\FunctionTok{write.table}\NormalTok{(}\AttributeTok{x =}\NormalTok{ gmt\_file\_genenames,}\AttributeTok{file =}\NormalTok{ gmt\_genenames\_filename,}
-            \AttributeTok{quote =} \ConstantTok{FALSE}\NormalTok{,}\AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}\AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{,}
-            \AttributeTok{col.names=}\ConstantTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+\NormalTok{    current\_ranks }\OtherTok{\textless{}{-}} \FunctionTok{sort}\NormalTok{(current\_ranks,}\AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{)}
+    \FunctionTok{set.seed}\NormalTok{(}\DecValTok{42}\NormalTok{)}
+\NormalTok{    current\_fgsea\_results }\OtherTok{\textless{}{-}}\NormalTok{ fgsea}\SpecialCharTok{::}\FunctionTok{fgsea}\NormalTok{(all\_gs}\SpecialCharTok{$}\NormalTok{genesets, }
+                                      \FunctionTok{sort}\NormalTok{(current\_ranks,}\AttributeTok{decreasing=}\ConstantTok{TRUE}\NormalTok{),}
+                                      \AttributeTok{minSize=}\DecValTok{15}\NormalTok{,}
+                                      \AttributeTok{maxSize =} \DecValTok{500}
+\NormalTok{                                      )}
+    
+    \CommentTok{\#write out the fgsea results for this patient}
+      \FunctionTok{write\_sample\_fgsea\_results}\NormalTok{(current\_fgsea\_results,output\_dir,analysis\_name)}
+      
 
-\chapter{Create Enrichment map from R with g:Profiler results}\label{create-enrichment-map-from-r-with-gprofiler-results}
-
-\section{Initialize variables and libraries}\label{initialize-variables-and-libraries-1}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#use library}
-\CommentTok{\#make sure biocManager is installed}
-\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)\}, }
-         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }
-           \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)\}, }
-         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{))}
-
-\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)\}, }
-         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)\}, }
-         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{))}
-
-\CommentTok{\#use easy cyRest library to communicate with cytoscape.}
-\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"RCy3"}\NormalTok{)\}, }
-         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\StringTok{"RCy3"}\NormalTok{)\}, }
-         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"RCy3"}\NormalTok{))}
-
-\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"httr"}\NormalTok{)\}, }
-         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\StringTok{"httr"}\NormalTok{)\}, }
-         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"httr"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\section{Configurable Parameters}\label{configurable-parameters-1}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# is\_docker {-} true/false depending on if you are running R from docker}
-\NormalTok{is\_docker }\OtherTok{\textless{}{-}} \ConstantTok{TRUE}
-
-\CommentTok{\#directory where all the original input data file are}
-\CommentTok{\# for example ./data/}
-\NormalTok{working\_dir }\OtherTok{\textless{}{-}} \StringTok{"./data/"}
-
-
-\CommentTok{\#directory where all the generated data files are found.}
-\CommentTok{\# For example {-} ./generated\_data/}
-\CommentTok{\# If you are using all the notebooks from this set the generated data will be}
-\CommentTok{\# put in the ./generated\_data folder.  You have to specify if it is gsea or }
-\CommentTok{\# gprofiler}
-\NormalTok{output\_dir }\OtherTok{\textless{}{-}} \StringTok{"./generated\_data/g\_profiler"}
-
-
-\CommentTok{\#defined threshold for gprofiler enrichments }
-\CommentTok{\#p{-}value to filter all the genesets.  For example {-}   1.0}
-\NormalTok{pvalue\_gprofiler\_threshold }\OtherTok{\textless{}{-}} \FloatTok{1.0}
-
-\CommentTok{\#q{-}value to filter all the genesets.  For example {-}   0.05}
-\NormalTok{qvalue\_gprofiler\_threshold }\OtherTok{\textless{}{-}} \FloatTok{0.001}
-
-\CommentTok{\#similarity threshold to filter all the genesets connections/edges.  }
-\CommentTok{\# For example {-}   0.375}
-\NormalTok{similarity\_threshold }\OtherTok{\textless{}{-}} \StringTok{"0.35"}
-
-\CommentTok{\#similarity metric to filter all the genesets connections/edges }
-\CommentTok{\# (can be OVERLAP, JACCARD, or COMBINED.   For example {-}   Combined}
-\NormalTok{similarity\_metric }\OtherTok{=} \StringTok{"JACCARD"}
-\end{Highlighting}
-\end{Shaded}
-
-\section{Specify Data files}\label{specify-data-files}
-
-Depending on whether you are creating your enrichment map from g:Profiler or GSEA results the sets of files might be a little different. Minimally, you will need to specify:
-* gmt file
-* enrichment results file
-
-We have multiple g:profiler results.\\
-* varied geneset size limit ( 250, 1000 or 10,000)
-* varied geneset sources - baderlab genesets or g:profiler sets.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#get the newest gprofiler gmt file}
-\NormalTok{gprof\_files }\OtherTok{\textless{}{-}} \FunctionTok{file.info}\NormalTok{(}\FunctionTok{list.files}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(}\FunctionTok{getwd}\NormalTok{(),output\_dir),}
-                                    \AttributeTok{pattern =} \StringTok{"gprofiler\_full"}\NormalTok{,}
-                                    \AttributeTok{full.names =} \ConstantTok{TRUE}\NormalTok{) )}
-\NormalTok{gmt\_gprofiler\_file }\OtherTok{\textless{}{-}} \FunctionTok{rownames}\NormalTok{(gprof\_files)[}\FunctionTok{which.max}\NormalTok{(gprof\_files}\SpecialCharTok{$}\NormalTok{mtime)]}
-\CommentTok{\#gmt\_gprofiler\_file\textless{}{-}file.path(getwd(),output\_dir,}
-\CommentTok{\#                "gprofiler\_full\_hsapiens\_e109\_eg56\_p17\_1d3191d\_.name.gmt")}
-
-\NormalTok{gprofiler\_results\_filename1 }\OtherTok{\textless{}{-}}\FunctionTok{file.path}\NormalTok{(}\FunctionTok{getwd}\NormalTok{(),output\_dir,}
-                \StringTok{"gProfiler\_hsapiens\_lab2\_results\_GEM\_termmin3\_max250.gem.txt"}\NormalTok{)}
-
-\NormalTok{gprofiler\_results\_filename2 }\OtherTok{\textless{}{-}}\FunctionTok{file.path}\NormalTok{(}\FunctionTok{getwd}\NormalTok{(),output\_dir,}
-                \StringTok{"gProfiler\_hsapiens\_lab2\_results\_GEM\_termmin3\_max10000.gem.txt"}\NormalTok{)}
-
-
-\NormalTok{current\_network\_name }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\StringTok{"gprofiler\_max250"}\NormalTok{,pvalue\_gprofiler\_threshold,}
-\NormalTok{                              qvalue\_gprofiler\_threshold,}\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\section{Launch Cytoscape}\label{launch-cytoscape}
-
-Launch Cytoscape (by default cytoscape will automatically enable rest so as long as cytoscape 3.3 or higher is open R should be able to communicate with it). Make sure if you get an message asking you if you want communicate with other apps that you select ``Allow''.
-
-\section{Make sure you can connect to Cytoscape}\label{make-sure-you-can-connect-to-cytoscape}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\ControlFlowTok{if}\NormalTok{(is\_docker)\{}
-\NormalTok{  current\_base }\OtherTok{=} \StringTok{"host.docker.internal:1234/v1"}
-\NormalTok{  .defaultBaseUrl }\OtherTok{\textless{}{-}} \StringTok{"http://host.docker.internal:1234/v1"}
-\NormalTok{\} }\ControlFlowTok{else}\NormalTok{\{}
-\NormalTok{  current\_base }\OtherTok{=} \StringTok{"localhost:1234/v1"}
 \NormalTok{\}}
-
-\FunctionTok{cytoscapePing}\NormalTok{ (}\AttributeTok{base.url =}\NormalTok{ current\_base)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## You are connected to Cytoscape!
+## Warning in write.table(fakeenr_current_sample, fakeenr_filename_docker, :
+## invalid char string in output conversion
+## Warning in write.table(fakeenr_current_sample, fakeenr_filename_docker, :
+## invalid char string in output conversion
+## Warning in write.table(fakeenr_current_sample, fakeenr_filename_docker, :
+## invalid char string in output conversion
+## Warning in write.table(fakeenr_current_sample, fakeenr_filename_docker, :
+## invalid char string in output conversion
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{cytoscapeVersionInfo}\NormalTok{ (}\AttributeTok{base.url =}\NormalTok{ current\_base)}
+\NormalTok{end\_time }\OtherTok{\textless{}{-}} \FunctionTok{Sys.time}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-##       apiVersion cytoscapeVersion 
-##             "v1"         "3.10.2"
-\end{verbatim}
+GSEA started at 2025-04-21 18:32:04.383981
+GSEA finished at 2025-04-21 18:32:21.759779
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-\section{Create an Enrichment map}\label{create-an-enrichment-map}
-
-If you are running R from within a docker you need to first upload your datafiles to Cytoscape before you can create your enrichment map
+GSEA total running time 17.3757982254028
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\#if using docker we need to replace all the the paths to the host path}
-\ControlFlowTok{if}\NormalTok{(is\_docker) \{}
-\NormalTok{  upload\_em\_file }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(localPath) \{}
-\NormalTok{    bname }\OtherTok{\textless{}{-}} \FunctionTok{basename}\NormalTok{(localPath)}
-\NormalTok{    r }\OtherTok{\textless{}{-}} \FunctionTok{POST}\NormalTok{(}
-      \AttributeTok{url =} 
-\FunctionTok{paste}\NormalTok{(}\StringTok{\textquotesingle{}http://host.docker.internal:1234/enrichmentmap/textfileupload?fileName=\textquotesingle{}}\NormalTok{, }
-\NormalTok{                  bname, }\AttributeTok{sep=}\StringTok{""}\NormalTok{),}
-      \AttributeTok{config =} \FunctionTok{list}\NormalTok{(),}
-      \AttributeTok{body =} \FunctionTok{list}\NormalTok{(}\AttributeTok{file =} \FunctionTok{upload\_file}\NormalTok{(localPath)),}
-      \AttributeTok{encode =} \StringTok{"multipart"}\NormalTok{,}
-      \AttributeTok{handle =} \ConstantTok{NULL}
-\NormalTok{    )}
-    \FunctionTok{content}\NormalTok{(r,}\StringTok{"parsed"}\NormalTok{)}\SpecialCharTok{$}\NormalTok{path}
-\NormalTok{  \}}
-  
-  \CommentTok{\# "upload" the files to the host machine and replace each path with the }
-  \CommentTok{\# host machine path}
-\NormalTok{   gmt\_gprofiler\_file }\OtherTok{\textless{}{-}} \FunctionTok{upload\_em\_file}\NormalTok{(gmt\_gprofiler\_file)}
-\NormalTok{  gprofiler\_results\_filename1 }\OtherTok{\textless{}{-}} \FunctionTok{upload\_em\_file}\NormalTok{(gprofiler\_results\_filename1)}
-\NormalTok{  gprofiler\_results\_filename2 }\OtherTok{\textless{}{-}} \FunctionTok{upload\_em\_file}\NormalTok{(gprofiler\_results\_filename2)}
-\NormalTok{\}}
+\NormalTok{topPathwaysUp }\OtherTok{\textless{}{-}}\NormalTok{ current\_fgsea\_results[ES }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{][}\FunctionTok{head}\NormalTok{(}\FunctionTok{order}\NormalTok{(pval), }\AttributeTok{n=}\DecValTok{10}\NormalTok{), pathway]}
+\NormalTok{topPathwaysDown }\OtherTok{\textless{}{-}}\NormalTok{ current\_fgsea\_results[ES }\SpecialCharTok{\textless{}} \DecValTok{0}\NormalTok{][}\FunctionTok{head}\NormalTok{(}\FunctionTok{order}\NormalTok{(pval), }\AttributeTok{n=}\DecValTok{10}\NormalTok{), pathway]}
+\NormalTok{topPathways }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(topPathwaysUp, }\FunctionTok{rev}\NormalTok{(topPathwaysDown))}
+\FunctionTok{plotGseaTable}\NormalTok{(all\_gs}\SpecialCharTok{$}\NormalTok{genesets[topPathways], current\_ranks, current\_fgsea\_results, }
+              \AttributeTok{gseaParam=}\FloatTok{0.5}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\includegraphics{04C-Timed_Run_fgsea_in_R_files/figure-latex/unnamed-chunk-2-1.pdf}
 
-\section{Create an Enrichment map - run EM command}\label{create-an-enrichment-map---run-em-command}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
-\CommentTok{\#create EM}
-
-\NormalTok{em\_command }\OtherTok{=} \FunctionTok{paste}\NormalTok{(}\StringTok{\textquotesingle{}enrichmentmap build analysisType="generic" gmtFile=\textquotesingle{}}\NormalTok{,}
-\NormalTok{                   gmt\_gprofiler\_file,}
-                   \StringTok{\textquotesingle{}pvalue=\textquotesingle{}}\NormalTok{,pvalue\_gprofiler\_threshold, }
-                   \StringTok{\textquotesingle{}qvalue=\textquotesingle{}}\NormalTok{,qvalue\_gprofiler\_threshold,}
-                   \StringTok{\textquotesingle{}similaritycutoff=\textquotesingle{}}\NormalTok{,similarity\_threshold,}
-                   \StringTok{\textquotesingle{}coefficients=\textquotesingle{}}\NormalTok{,similarity\_metric,}
-                   \StringTok{\textquotesingle{}enrichmentsDataset1=\textquotesingle{}}\NormalTok{,gprofiler\_results\_filename1, }
-                   \StringTok{\textquotesingle{}enrichmentsDataset2=\textquotesingle{}}\NormalTok{,gprofiler\_results\_filename2,}
-                   \StringTok{\textquotesingle{}gmtFile=\textquotesingle{}}\NormalTok{,gmt\_gprofiler\_file,}
-                   \StringTok{\textquotesingle{}filterByExpressions=false\textquotesingle{}}\NormalTok{,}
-                   \AttributeTok{sep=}\StringTok{" "}\NormalTok{)}
-
-\CommentTok{\#enrichment map command will return the suid of newly created network.}
-\NormalTok{response }\OtherTok{\textless{}{-}} \FunctionTok{commandsGET}\NormalTok{(em\_command,}\AttributeTok{base.url =}\NormalTok{ current\_base)}
-
-\NormalTok{current\_network\_suid }\OtherTok{\textless{}{-}} \DecValTok{0}
-\CommentTok{\#enrichment map command will return the suid of newly created network }
-\CommentTok{\# unless it Failed.  If it failed it will contain the word failed}
-\ControlFlowTok{if}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\AttributeTok{pattern=}\StringTok{"Failed"}\NormalTok{, response))\{}
-  \FunctionTok{paste}\NormalTok{(response)}
-\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
-\NormalTok{  current\_network\_suid }\OtherTok{\textless{}{-}}\NormalTok{ response}
-\NormalTok{\}}
-
-\CommentTok{\#check to see if the network name is unique}
-\NormalTok{current\_names }\OtherTok{\textless{}{-}} \FunctionTok{getNetworkList}\NormalTok{(}\AttributeTok{base.url =}\NormalTok{ current\_base)}
-\ControlFlowTok{if}\NormalTok{(current\_network\_name }\SpecialCharTok{\%in\%}\NormalTok{ current\_names)\{}
-  \CommentTok{\#if the name already exists in the network names then put the SUID in front}
-  \CommentTok{\# of the name (this does not work if you put the suid at the end of the name)}
-\NormalTok{  current\_network\_name }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(current\_network\_suid,}
-\NormalTok{                                current\_network\_name,  }\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{)}
-\NormalTok{\}}
-\NormalTok{response }\OtherTok{\textless{}{-}} \FunctionTok{renameNetwork}\NormalTok{(}\AttributeTok{title=}\NormalTok{current\_network\_name, }
-                       \AttributeTok{network =} \FunctionTok{as.numeric}\NormalTok{(current\_network\_suid),}
-                       \AttributeTok{base.url =}\NormalTok{ current\_base)}
-\end{Highlighting}
-\end{Shaded}
-
-\section{Get a screen shot of the initial network.}\label{get-a-screen-shot-of-the-initial-network.}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#you can only output the file if it isn\textquotesingle{}t on docker}
-\CommentTok{\#on docker is put it into the user\textquotesingle{}s home directory with docker has not access to}
-\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\NormalTok{is\_docker)\{}
-\NormalTok{  output\_network\_file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\FunctionTok{getwd}\NormalTok{(),}\StringTok{"initial\_screenshot\_network.png"}\NormalTok{)}
-\NormalTok{  output\_network\_file\_current }\OtherTok{\textless{}{-}}\NormalTok{ output\_network\_file}
-
-  \FunctionTok{fitContent}\NormalTok{()}
-
-  \ControlFlowTok{if}\NormalTok{(}\FunctionTok{file.exists}\NormalTok{(output\_network\_file))\{}
-    \CommentTok{\#cytoscape hangs waiting for user response if file already exists.  }
-    \CommentTok{\# Remove it first}
-\NormalTok{    response }\OtherTok{\textless{}{-}} \FunctionTok{file.remove}\NormalTok{(output\_network\_file)}
-\NormalTok{  \} }
-
-\NormalTok{  response }\OtherTok{\textless{}{-}} \FunctionTok{exportImage}\NormalTok{(output\_network\_file, }\AttributeTok{type =} \StringTok{"png"}\NormalTok{,}
-                          \AttributeTok{base.url =}\NormalTok{ current\_base)}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-Change the files and create all the different networks we generated in class in Cytoscape.
+\section{Create an Enrichment map of the top pathways.}\label{create-an-enrichment-map-of-the-top-pathways.-1}
 
 \chapter{Create Enrichment map from R with GSEA results}\label{create-enrichment-map-from-r-with-gsea-results}
 
-\section{Initialize variables and libraries}\label{initialize-variables-and-libraries-2}
+\section{Initialize variables and libraries}\label{initialize-variables-and-libraries}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2004,7 +785,16 @@ Change the files and create all the different networks we generated in class in 
          \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }
            \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)\}, }
          \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
 
+\begin{verbatim}
+## Bioconductor version '3.19' is out-of-date; the current release version '3.21'
+##   is available with R version '4.5'; see https://bioconductor.org/install
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)\}, }
          \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)\}, }
          \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{))}
@@ -2057,7 +847,7 @@ Change the files and create all the different networks we generated in class in 
 \end{Highlighting}
 \end{Shaded}
 
-\section{Specify Data files}\label{specify-data-files-1}
+\section{Specify Data files}\label{specify-data-files}
 
 Depending on whether you are creating your enrichment map from g:Profiler or GSEA results the sets of files might be a little different. Minimally, you will need to specify:
 * gmt file
@@ -2120,6 +910,290 @@ These files are not needed to create the enrichment map but are very beneficial 
 \end{Highlighting}
 \end{Shaded}
 
+\section{Launch Cytoscape}\label{launch-cytoscape}
+
+Launch Cytoscape (by default cytoscape will automatically enable rest so as long as cytoscape 3.3 or higher is open R should be able to communicate with it). Make sure if you get an message asking you if you want communicate with other apps that you select ``Allow''.
+
+\section{Make sure you can connect to Cytoscape}\label{make-sure-you-can-connect-to-cytoscape}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{(is\_docker)\{}
+\NormalTok{  current\_base }\OtherTok{=} \StringTok{"host.docker.internal:1234/v1"}
+\NormalTok{  .defaultBaseUrl }\OtherTok{\textless{}{-}} \StringTok{"http://host.docker.internal:1234/v1"}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{\{}
+\NormalTok{  current\_base }\OtherTok{=} \StringTok{"localhost:1234/v1"}
+\NormalTok{\}}
+
+\FunctionTok{cytoscapePing}\NormalTok{ (}\AttributeTok{base.url =}\NormalTok{ current\_base)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## You are connected to Cytoscape!
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cytoscapeVersionInfo}\NormalTok{ (}\AttributeTok{base.url =}\NormalTok{ current\_base)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       apiVersion cytoscapeVersion 
+##             "v1"         "3.10.3"
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Create an Enrichment map}\label{create-an-enrichment-map}
+
+If you are running R from within a docker you need to first upload your datafiles to Cytoscape before you can create your enrichment map
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#if using docker we need to replace all the the paths to the host path}
+\ControlFlowTok{if}\NormalTok{(is\_docker) \{}
+\NormalTok{  upload\_em\_file }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(localPath) \{}
+\NormalTok{    bname }\OtherTok{\textless{}{-}} \FunctionTok{basename}\NormalTok{(localPath)}
+\NormalTok{    r }\OtherTok{\textless{}{-}} \FunctionTok{POST}\NormalTok{(}
+      \AttributeTok{url =} 
+\FunctionTok{paste}\NormalTok{(}\StringTok{\textquotesingle{}http://host.docker.internal:1234/enrichmentmap/textfileupload?fileName=\textquotesingle{}}\NormalTok{, }
+\NormalTok{                  bname, }\AttributeTok{sep=}\StringTok{""}\NormalTok{),}
+      \AttributeTok{config =} \FunctionTok{list}\NormalTok{(),}
+      \AttributeTok{body =} \FunctionTok{list}\NormalTok{(}\AttributeTok{file =} \FunctionTok{upload\_file}\NormalTok{(localPath)),}
+      \AttributeTok{encode =} \StringTok{"multipart"}\NormalTok{,}
+      \AttributeTok{handle =} \ConstantTok{NULL}
+\NormalTok{    )}
+    \FunctionTok{content}\NormalTok{(r,}\StringTok{"parsed"}\NormalTok{)}\SpecialCharTok{$}\NormalTok{path}
+\NormalTok{  \}}
+  
+  \CommentTok{\# "upload" the files to the host machine and replace each path }
+  \CommentTok{\# with the host machine path}
+\NormalTok{  expression\_file\_fullpath }\OtherTok{\textless{}{-}} \FunctionTok{upload\_em\_file}\NormalTok{(expression\_file\_fullpath)}
+\NormalTok{  class\_file\_fullpath }\OtherTok{\textless{}{-}} \FunctionTok{upload\_em\_file}\NormalTok{(cls\_file\_fullpath)}
+\NormalTok{  gmt\_gsea\_file }\OtherTok{\textless{}{-}} \FunctionTok{upload\_em\_file}\NormalTok{(gmt\_gsea\_file)}
+\NormalTok{  gsea\_ranks\_file }\OtherTok{\textless{}{-}} \FunctionTok{upload\_em\_file}\NormalTok{(gsea\_ranks\_file)}
+\NormalTok{  gsea\_results\_filename }\OtherTok{\textless{}{-}} \FunctionTok{upload\_em\_file}\NormalTok{(gsea\_results\_filename)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Create an Enrichment map - run EM command}\label{create-an-enrichment-map---run-em-command}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+\CommentTok{\#create EM}
+\NormalTok{current\_network\_name }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(cur\_model\_name,pvalue\_gsea\_threshold,}
+\NormalTok{                              qvalue\_gsea\_threshold,}\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{)}
+
+\NormalTok{em\_command }\OtherTok{=} \FunctionTok{paste}\NormalTok{(}\StringTok{\textquotesingle{}enrichmentmap build analysisType="gsea" gmtFile=\textquotesingle{}}\NormalTok{,}
+\NormalTok{                                                              gmt\_gsea\_file,}
+                   \StringTok{\textquotesingle{}pvalue=\textquotesingle{}}\NormalTok{,pvalue\_gsea\_threshold, }
+                   \StringTok{\textquotesingle{}qvalue=\textquotesingle{}}\NormalTok{,qvalue\_gsea\_threshold,}
+                   \StringTok{\textquotesingle{}similaritycutoff=\textquotesingle{}}\NormalTok{,similarity\_threshold,}
+                   \StringTok{\textquotesingle{}coefficients=\textquotesingle{}}\NormalTok{,similarity\_metric,}
+                   \StringTok{\textquotesingle{}ranksDataset1=\textquotesingle{}}\NormalTok{, gsea\_ranks\_file,}
+                   \StringTok{\textquotesingle{}enrichmentsDataset1=\textquotesingle{}}\NormalTok{,gsea\_results\_filename, }
+                   \StringTok{\textquotesingle{}filterByExpressions=false\textquotesingle{}}\NormalTok{,}
+                   \StringTok{\textquotesingle{}expressionDataset1=\textquotesingle{}}\NormalTok{,expression\_file\_fullpath,}
+                   \StringTok{\textquotesingle{}classDataset1=\textquotesingle{}}\NormalTok{,class\_file\_fullpath,}
+                   \StringTok{\textquotesingle{}gmtFile=\textquotesingle{}}\NormalTok{,gmt\_gsea\_file,}
+                   \AttributeTok{sep=}\StringTok{" "}\NormalTok{)}
+
+\CommentTok{\#enrichment map command will return the suid of newly created network.}
+\NormalTok{response }\OtherTok{\textless{}{-}} \FunctionTok{commandsGET}\NormalTok{(em\_command,}\AttributeTok{base.url =}\NormalTok{ current\_base)}
+
+\NormalTok{current\_network\_suid }\OtherTok{\textless{}{-}} \DecValTok{0}
+\CommentTok{\#enrichment map command will return the suid of newly created network }
+\CommentTok{\# unless it Failed.  If it failed it will contain the word failed}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\AttributeTok{pattern=}\StringTok{"Failed"}\NormalTok{, response))\{}
+  \FunctionTok{paste}\NormalTok{(response)}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{  current\_network\_suid }\OtherTok{\textless{}{-}}\NormalTok{ response}
+\NormalTok{\}}
+
+\CommentTok{\#check to see if the network name is unique}
+\NormalTok{current\_names }\OtherTok{\textless{}{-}} \FunctionTok{getNetworkList}\NormalTok{(}\AttributeTok{base.url =}\NormalTok{ current\_base)}
+\ControlFlowTok{if}\NormalTok{(current\_network\_name }\SpecialCharTok{\%in\%}\NormalTok{ current\_names)\{}
+  \CommentTok{\#if the name already exists in the network names then put the SUID in front}
+  \CommentTok{\# of the name (this does not work if you put the suid at the end of the name)}
+\NormalTok{  current\_network\_name }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(current\_network\_suid,}
+\NormalTok{                                current\_network\_name,}\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{response }\OtherTok{\textless{}{-}} \FunctionTok{renameNetwork}\NormalTok{(}\AttributeTok{title=}\NormalTok{current\_network\_name, }
+                       \AttributeTok{network =} \FunctionTok{as.numeric}\NormalTok{(current\_network\_suid),}
+                       \AttributeTok{base.url =}\NormalTok{ current\_base)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Get a screen shot of the initial network.}\label{get-a-screen-shot-of-the-initial-network.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#you can only output the file if it isn\textquotesingle{}t on docker}
+\CommentTok{\#on docker is put it into the user\textquotesingle{}s home directory with docker }
+\CommentTok{\# has not access to}
+\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\NormalTok{is\_docker)\{}
+\NormalTok{  output\_network\_file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(}\FunctionTok{getwd}\NormalTok{(),}\StringTok{"initial\_screenshot\_network.png"}\NormalTok{)}
+\NormalTok{  output\_network\_file\_current }\OtherTok{\textless{}{-}}\NormalTok{ output\_network\_file}
+
+  \FunctionTok{fitContent}\NormalTok{()}
+
+  \ControlFlowTok{if}\NormalTok{(}\FunctionTok{file.exists}\NormalTok{(output\_network\_file))\{}
+    \CommentTok{\#cytoscape hangs waiting for user response if file already exists.}
+    \CommentTok{\# Remove it first}
+\NormalTok{    response }\OtherTok{\textless{}{-}} \FunctionTok{file.remove}\NormalTok{(output\_network\_file)}
+\NormalTok{  \} }
+
+\NormalTok{  response }\OtherTok{\textless{}{-}} \FunctionTok{exportImage}\NormalTok{(output\_network\_file, }\AttributeTok{type =} \StringTok{"png"}\NormalTok{,}
+                          \AttributeTok{base.url =}\NormalTok{ current\_base)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\chapter{Create Enrichment map from R with GSEA results}\label{create-enrichment-map-from-r-with-gsea-results-1}
+
+\section{Initialize variables and libraries}\label{initialize-variables-and-libraries-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#use library}
+\CommentTok{\#make sure biocManager is installed}
+\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)\}, }
+         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }
+           \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)\}, }
+         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Bioconductor version '3.19' is out-of-date; the current release version '3.21'
+##   is available with R version '4.5'; see https://bioconductor.org/install
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)\}, }
+         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)\}, }
+         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{))}
+
+\CommentTok{\#use easy cyRest library to communicate with cytoscape.}
+\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"RCy3"}\NormalTok{)\}, }
+         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\StringTok{"RCy3"}\NormalTok{)\}, }
+         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"RCy3"}\NormalTok{))}
+
+\FunctionTok{tryCatch}\NormalTok{(}\AttributeTok{expr =}\NormalTok{ \{ }\FunctionTok{library}\NormalTok{(}\StringTok{"httr"}\NormalTok{)\}, }
+         \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{ BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\StringTok{"httr"}\NormalTok{)\}, }
+         \AttributeTok{finally =} \FunctionTok{library}\NormalTok{(}\StringTok{"httr"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Configurable Parameters}\label{configurable-parameters-3}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# is\_docker {-} true/false depending on if you are running R from docker}
+\NormalTok{is\_docker }\OtherTok{\textless{}{-}} \ConstantTok{TRUE}
+
+\CommentTok{\#directory where all the original input data file are}
+\CommentTok{\# for example ./data/}
+\NormalTok{working\_dir }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{working\_dir}
+
+
+\CommentTok{\#directory where all the generated data files are found.}
+\CommentTok{\# For example {-} ./generated\_data/}
+\CommentTok{\# If you are using all the notebooks from this set the generated data will be}
+\CommentTok{\# put in the ./generated\_data folder.  You have to specify if it is gsea or }
+\CommentTok{\# gprofiler}
+\NormalTok{output\_dir }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{output\_dir}
+
+
+\CommentTok{\#defined threshold for GSEA enrichments }
+\CommentTok{\#p{-}value to filter all the genesets.  For example {-}   1.0}
+\NormalTok{pvalue\_gsea\_threshold }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{pvalue\_thresh}
+
+\CommentTok{\#q{-}value to filter all the genesets.  For example {-}   0.05}
+\NormalTok{qvalue\_gsea\_threshold }\OtherTok{\textless{}{-}}\NormalTok{ params}\SpecialCharTok{$}\NormalTok{qvalue\_thresh}
+
+\CommentTok{\#similarity threshold to filter all the genesets connections/edges.  }
+\CommentTok{\# For example {-}   0.375}
+\NormalTok{similarity\_threshold }\OtherTok{\textless{}{-}} \StringTok{"0.375"}
+
+\CommentTok{\#similarity metric to filter all the genesets connections/edges }
+\CommentTok{\# (can be OVERLAP, JACCARD, or COMBINED.   For example {-}   Combined}
+\NormalTok{similarity\_metric }\OtherTok{=} \StringTok{"COMBINED"}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Specify Data files}\label{specify-data-files-1}
+
+Depending on whether you are creating your enrichment map from g:Profiler or GSEA results the sets of files might be a little different. Minimally, you will need to specify:
+* gmt file
+* enrichment results file
+
+Although there is a gmt file in the gsea edb results directory(which is the easiest method to create an enrichment map) it have been filtered to contain only genes represented in the expression set. If you use this fltered file you will get different pathway connectivity depending on the dataset being used. We recommend using original gmt file used for the gsea analysis and not the filtered one in the results directory.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#use the newest gmt file in the output directory}
+\NormalTok{gmt\_files }\OtherTok{\textless{}{-}} \FunctionTok{list.files}\NormalTok{(}\AttributeTok{path =}\NormalTok{ output\_dir, }\AttributeTok{pattern =} \StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{.gmt"}\NormalTok{)}
+
+  \CommentTok{\#get the details on the files}
+\NormalTok{  details }\OtherTok{=} \FunctionTok{file.info}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(output\_dir,gmt\_files))}
+  \CommentTok{\#order according to newest to oldest}
+\NormalTok{  details }\OtherTok{=}\NormalTok{ details[}\FunctionTok{with}\NormalTok{(details, }\FunctionTok{order}\NormalTok{(}\FunctionTok{as.POSIXct}\NormalTok{(mtime),}\AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{)), ]}
+
+  \CommentTok{\#use the newest file:}
+\NormalTok{ gmt\_gsea\_file }\OtherTok{\textless{}{-}} \FunctionTok{row.names}\NormalTok{(details)[}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+fGSEA output directory - You can specify the exact name of the directory. The below code looks for the newest GSEA results directory and uses that.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gsea\_directories }\OtherTok{\textless{}{-}} \FunctionTok{list.files}\NormalTok{(}\AttributeTok{path =}\NormalTok{ output\_dir)}
+
+\CommentTok{\#get the details on the files}
+\NormalTok{details }\OtherTok{=} \FunctionTok{file.info}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(output\_dir,gsea\_directories))}
+\CommentTok{\#order according to newest to oldest}
+\NormalTok{details }\OtherTok{=}\NormalTok{ details[}\FunctionTok{with}\NormalTok{(details, }\FunctionTok{order}\NormalTok{(}\FunctionTok{as.POSIXct}\NormalTok{(mtime),}\AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{)), ]}
+
+\CommentTok{\#use the newest file:}
+\NormalTok{gsea\_output\_dir }\OtherTok{\textless{}{-}} \FunctionTok{row.names}\NormalTok{(details)[}\DecValTok{1}\NormalTok{]}
+
+\NormalTok{fgsea\_results\_file }\OtherTok{\textless{}{-}} \FunctionTok{list.files}\NormalTok{((gsea\_output\_dir),}\AttributeTok{pattern =} \StringTok{"fgsea\_enr\_results.txt"}\NormalTok{)}
+
+\NormalTok{gsea\_results\_path }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(gsea\_output\_dir)}
+\NormalTok{gsea\_results\_filename }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(gsea\_output\_dir,fgsea\_results\_file )}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Optional File specification}\label{optional-file-specification-1}
+
+These files are not needed to create the enrichment map but are very beneficial when analyzing your result.\\
+* gene expression file
+* gene ranks file
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gsea\_ranks\_file }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(gsea\_results\_path,}
+                             \FunctionTok{list.files}\NormalTok{(gsea\_results\_path,}\AttributeTok{pattern=}\StringTok{".rnk"}\NormalTok{))}
+
+\NormalTok{expression\_file\_fullpath }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(working\_dir,}
+\NormalTok{                          params}\SpecialCharTok{$}\NormalTok{expression\_file)}
+
+\NormalTok{cls\_file\_fullpath }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(working\_dir, params}\SpecialCharTok{$}\NormalTok{cls\_file)}
+
+\CommentTok{\#define an analysis name}
+\NormalTok{cur\_model\_name }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\StringTok{"FGSEA"}\NormalTok{,params}\SpecialCharTok{$}\NormalTok{analysis\_name,}\AttributeTok{sep=}\StringTok{"\_"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
 \section{Launch Cytoscape}\label{launch-cytoscape-1}
 
 Launch Cytoscape (by default cytoscape will automatically enable rest so as long as cytoscape 3.3 or higher is open R should be able to communicate with it). Make sure if you get an message asking you if you want communicate with other apps that you select ``Allow''.
@@ -2151,7 +1225,7 @@ Launch Cytoscape (by default cytoscape will automatically enable rest so as long
 
 \begin{verbatim}
 ##       apiVersion cytoscapeVersion 
-##             "v1"         "3.10.2"
+##             "v1"         "3.10.3"
 \end{verbatim}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}

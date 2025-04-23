@@ -1,7 +1,7 @@
 --- 
-title: "CBW pathways Workshops - example R notebooks"
+title: "Comparison of GSEA and fGSEA"
 author: "Ruth Isserlin"
-date: "2024-06-19"
+date: "2025-04-23"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
@@ -9,12 +9,11 @@ bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 cover-image: images/cover.png
 link-citations: yes
-github-repo: risserlin/CBW_pathways_workshop_R_notebooks
-description: "These are example R Notebooks to run g:profiler and GSEA and visualize results in Cytoscape with Enrichment map directly from R"
+github-repo: risserlin/GSEA_vs_fGSEA
+description: "These are example R Notebooks comparing GSEA to fGSEA"
 ---
 
 # Index
 
-![](./images/cover.png)
 
 

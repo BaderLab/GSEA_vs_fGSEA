@@ -6,3 +6,4 @@ _bookdown_files
 rsconnect
 **/*.GseaPreranked*/
 gsea_output.txt
+**/generated_data/
