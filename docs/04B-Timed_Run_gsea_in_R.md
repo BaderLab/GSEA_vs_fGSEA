@@ -1,13 +1,11 @@
 ---
 params:
-  analysis_name: Basal_vs_Classical
+  analysis_name: BRCA_hd_tep
   working_dir: ./data/
   output_dir: ./generated_data/gsea/
-  rnk_file: TCGA-PAAD_GDC_Subtype_Moffitt_BasalvsClassical_ranks.rnk
-  exp_file: TCGA-PAAD_GDC_BasalvsClassical_normalized_rnaseq.txt
-  cls_file: TCGA-PAAD_Subtype_Moffitt_BasalvsClassical_RNAseq_classes.cls
+  rnk_file: brca_hd_tep_ranks.rnk
   gsea_jar: /home/rstudio/GSEA_4.3.3/gsea-cli.sh
-  gsea_directory: ''
+  gsea_directory: 'data/Human_GOBP_AllPathways_noPFOCR_no_GO_iea_May_01_2024_symbol.gmt'
   run_gsea: true
 ---
 # Run GSEA from within R
@@ -83,7 +81,7 @@ run_gsea <- params$run_gsea
 # For example, if you set dest_gmt_file =="" the below script will automatically
 # download the latest gmt file from baderlab webstie.  If it is set then it
 # will use the file specified.  
-dest_gmt_file = ""
+dest_gmt_file = params$gsea_directory
 ```
 
 
@@ -122,7 +120,13 @@ if(dest_gmt_file == ""){
       destfile=dest_gmt_file
     )
   }
+} else {
+  file.copy(dest_gmt_file,to = output_dir)
 }
+```
+
+```
+## [1] TRUE
 ```
 
 ***
@@ -166,9 +170,9 @@ end_time <- Sys.time()
 
 ## Timing
 
-GSEA started at 2025-04-23 14:50:22.297414
+GSEA started at 2025-04-29 15:27:58.810297
 
-GSEA finished at 2025-04-23 15:01:29.69987
+GSEA finished at 2025-04-29 15:34:15.140584
 
 GSEA total running time - 
 
@@ -178,10 +182,6 @@ end_time - start_time
 ```
 
 ```
-## Time difference of 11.12337 mins
+## Time difference of 6.272171 mins
 ```
-
-
-  
-
 

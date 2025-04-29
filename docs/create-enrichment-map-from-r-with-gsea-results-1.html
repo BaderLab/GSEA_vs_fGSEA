@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 6 Create Enrichment map from R with GSEA results | Comparison of GSEA and fGSEA</title>
+  <title>Chapter 7 Create Enrichment map from R with GSEA results | Comparison of GSEA and fGSEA</title>
   <meta name="description" content="These are example R Notebooks comparing GSEA to fGSEA" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 6 Create Enrichment map from R with GSEA results | Comparison of GSEA and fGSEA" />
+  <meta property="og:title" content="Chapter 7 Create Enrichment map from R with GSEA results | Comparison of GSEA and fGSEA" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="These are example R Notebooks comparing GSEA to fGSEA" />
   <meta name="github-repo" content="risserlin/GSEA_vs_fGSEA" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 6 Create Enrichment map from R with GSEA results | Comparison of GSEA and fGSEA" />
+  <meta name="twitter:title" content="Chapter 7 Create Enrichment map from R with GSEA results | Comparison of GSEA and fGSEA" />
   
   <meta name="twitter:description" content="These are example R Notebooks comparing GSEA to fGSEA" />
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Ruth Isserlin" />
 
 
-<meta name="date" content="2025-04-23" />
+<meta name="date" content="2025-04-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -179,31 +179,38 @@ div.csl-indent {
 <li class="chapter" data-level="4.6" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#timing-1"><i class="fa fa-check"></i><b>4.6</b> Timing</a></li>
 <li class="chapter" data-level="4.7" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#results-presented-as-r-table"><i class="fa fa-check"></i><b>4.7</b> Results presented as R table</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html"><i class="fa fa-check"></i><b>5</b> Create Enrichment map from R with GSEA results</a>
+<li class="chapter" data-level="5" data-path="compare-outputs-of-fgsea-and-gsea.html"><a href="compare-outputs-of-fgsea-and-gsea.html"><i class="fa fa-check"></i><b>5</b> Compare Outputs of fGSEA and GSEA</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#initialize-variables-and-libraries"><i class="fa fa-check"></i><b>5.1</b> Initialize variables and libraries</a></li>
-<li class="chapter" data-level="5.2" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#configurable-parameters-2"><i class="fa fa-check"></i><b>5.2</b> Configurable Parameters</a></li>
-<li class="chapter" data-level="5.3" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#specify-data-files"><i class="fa fa-check"></i><b>5.3</b> Specify Data files</a></li>
-<li class="chapter" data-level="5.4" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#optional-file-specification"><i class="fa fa-check"></i><b>5.4</b> Optional File specification</a></li>
-<li class="chapter" data-level="5.5" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#launch-cytoscape"><i class="fa fa-check"></i><b>5.5</b> Launch Cytoscape</a></li>
-<li class="chapter" data-level="5.6" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#make-sure-you-can-connect-to-cytoscape"><i class="fa fa-check"></i><b>5.6</b> Make sure you can connect to Cytoscape</a></li>
-<li class="chapter" data-level="5.7" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#create-an-enrichment-map"><i class="fa fa-check"></i><b>5.7</b> Create an Enrichment map</a></li>
-<li class="chapter" data-level="5.8" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#create-an-enrichment-map---run-em-command"><i class="fa fa-check"></i><b>5.8</b> Create an Enrichment map - run EM command</a></li>
-<li class="chapter" data-level="5.9" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#get-a-screen-shot-of-the-initial-network."><i class="fa fa-check"></i><b>5.9</b> Get a screen shot of the initial network.</a></li>
+<li class="chapter" data-level="5.1" data-path="compare-outputs-of-fgsea-and-gsea.html"><a href="compare-outputs-of-fgsea-and-gsea.html#load-in-required-libraries-and-files."><i class="fa fa-check"></i><b>5.1</b> Load in required libraries and files.</a></li>
+<li class="chapter" data-level="5.2" data-path="compare-outputs-of-fgsea-and-gsea.html"><a href="compare-outputs-of-fgsea-and-gsea.html#compare-nes-values"><i class="fa fa-check"></i><b>5.2</b> Compare NES values</a></li>
+<li class="chapter" data-level="5.3" data-path="compare-outputs-of-fgsea-and-gsea.html"><a href="compare-outputs-of-fgsea-and-gsea.html#compare-p-values"><i class="fa fa-check"></i><b>5.3</b> Compare p-values</a></li>
+<li class="chapter" data-level="5.4" data-path="compare-outputs-of-fgsea-and-gsea.html"><a href="compare-outputs-of-fgsea-and-gsea.html#compare-corrected-p--values"><i class="fa fa-check"></i><b>5.4</b> Compare corrected p- values</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html"><i class="fa fa-check"></i><b>6</b> Create Enrichment map from R with GSEA results</a>
+<li class="chapter" data-level="6" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html"><i class="fa fa-check"></i><b>6</b> Create Enrichment map from R with GSEA results</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#initialize-variables-and-libraries-1"><i class="fa fa-check"></i><b>6.1</b> Initialize variables and libraries</a></li>
-<li class="chapter" data-level="6.2" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#configurable-parameters-3"><i class="fa fa-check"></i><b>6.2</b> Configurable Parameters</a></li>
-<li class="chapter" data-level="6.3" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#specify-data-files-1"><i class="fa fa-check"></i><b>6.3</b> Specify Data files</a></li>
-<li class="chapter" data-level="6.4" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#optional-file-specification-1"><i class="fa fa-check"></i><b>6.4</b> Optional File specification</a></li>
-<li class="chapter" data-level="6.5" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#launch-cytoscape-1"><i class="fa fa-check"></i><b>6.5</b> Launch Cytoscape</a></li>
-<li class="chapter" data-level="6.6" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#make-sure-you-can-connect-to-cytoscape-1"><i class="fa fa-check"></i><b>6.6</b> Make sure you can connect to Cytoscape</a></li>
-<li class="chapter" data-level="6.7" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#create-an-enrichment-map-1"><i class="fa fa-check"></i><b>6.7</b> Create an Enrichment map</a></li>
-<li class="chapter" data-level="6.8" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#create-an-enrichment-map---run-em-command-1"><i class="fa fa-check"></i><b>6.8</b> Create an Enrichment map - run EM command</a></li>
-<li class="chapter" data-level="6.9" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#get-a-screen-shot-of-the-initial-network.-1"><i class="fa fa-check"></i><b>6.9</b> Get a screen shot of the initial network.</a></li>
+<li class="chapter" data-level="6.1" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#initialize-variables-and-libraries"><i class="fa fa-check"></i><b>6.1</b> Initialize variables and libraries</a></li>
+<li class="chapter" data-level="6.2" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#configurable-parameters-2"><i class="fa fa-check"></i><b>6.2</b> Configurable Parameters</a></li>
+<li class="chapter" data-level="6.3" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#specify-data-files"><i class="fa fa-check"></i><b>6.3</b> Specify Data files</a></li>
+<li class="chapter" data-level="6.4" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#optional-file-specification"><i class="fa fa-check"></i><b>6.4</b> Optional File specification</a></li>
+<li class="chapter" data-level="6.5" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#launch-cytoscape"><i class="fa fa-check"></i><b>6.5</b> Launch Cytoscape</a></li>
+<li class="chapter" data-level="6.6" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#make-sure-you-can-connect-to-cytoscape"><i class="fa fa-check"></i><b>6.6</b> Make sure you can connect to Cytoscape</a></li>
+<li class="chapter" data-level="6.7" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#create-an-enrichment-map"><i class="fa fa-check"></i><b>6.7</b> Create an Enrichment map</a></li>
+<li class="chapter" data-level="6.8" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#create-an-enrichment-map---run-em-command"><i class="fa fa-check"></i><b>6.8</b> Create an Enrichment map - run EM command</a></li>
+<li class="chapter" data-level="6.9" data-path="create-enrichment-map-from-r-with-gsea-results.html"><a href="create-enrichment-map-from-r-with-gsea-results.html#get-a-screen-shot-of-the-initial-network."><i class="fa fa-check"></i><b>6.9</b> Get a screen shot of the initial network.</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>7</b> References</a></li>
+<li class="chapter" data-level="7" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html"><i class="fa fa-check"></i><b>7</b> Create Enrichment map from R with GSEA results</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#initialize-variables-and-libraries-1"><i class="fa fa-check"></i><b>7.1</b> Initialize variables and libraries</a></li>
+<li class="chapter" data-level="7.2" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#configurable-parameters-3"><i class="fa fa-check"></i><b>7.2</b> Configurable Parameters</a></li>
+<li class="chapter" data-level="7.3" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#specify-data-files-1"><i class="fa fa-check"></i><b>7.3</b> Specify Data files</a></li>
+<li class="chapter" data-level="7.4" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#optional-file-specification-1"><i class="fa fa-check"></i><b>7.4</b> Optional File specification</a></li>
+<li class="chapter" data-level="7.5" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#launch-cytoscape-1"><i class="fa fa-check"></i><b>7.5</b> Launch Cytoscape</a></li>
+<li class="chapter" data-level="7.6" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#make-sure-you-can-connect-to-cytoscape-1"><i class="fa fa-check"></i><b>7.6</b> Make sure you can connect to Cytoscape</a></li>
+<li class="chapter" data-level="7.7" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#create-an-enrichment-map-1"><i class="fa fa-check"></i><b>7.7</b> Create an Enrichment map</a></li>
+<li class="chapter" data-level="7.8" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#create-an-enrichment-map---run-em-command-1"><i class="fa fa-check"></i><b>7.8</b> Create an Enrichment map - run EM command</a></li>
+<li class="chapter" data-level="7.9" data-path="create-enrichment-map-from-r-with-gsea-results-1.html"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#get-a-screen-shot-of-the-initial-network.-1"><i class="fa fa-check"></i><b>7.9</b> Get a screen shot of the initial network.</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>8</b> References</a></li>
 <li class="divider"></li>
 <li><a href="https://baderlab.org" target="blank"><img src="./images/baderlablogo.png" width="280">Bader Lab</a></li>
 
@@ -224,226 +231,224 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="create-enrichment-map-from-r-with-gsea-results-1" class="section level1 hasAnchor" number="6">
-<h1><span class="header-section-number">Chapter 6</span> Create Enrichment map from R with GSEA results<a href="create-enrichment-map-from-r-with-gsea-results-1.html#create-enrichment-map-from-r-with-gsea-results-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="initialize-variables-and-libraries-1" class="section level2 hasAnchor" number="6.1">
-<h2><span class="header-section-number">6.1</span> Initialize variables and libraries<a href="create-enrichment-map-from-r-with-gsea-results-1.html#initialize-variables-and-libraries-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb32-1" tabindex="-1"></a><span class="co">#use library</span></span>
-<span id="cb32-2"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb32-2" tabindex="-1"></a><span class="co">#make sure biocManager is installed</span></span>
-<span id="cb32-3"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb32-3" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;BiocManager&quot;</span>)}, </span>
-<span id="cb32-4"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb32-4" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { </span>
-<span id="cb32-5"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb32-5" tabindex="-1"></a>           <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)}, </span>
-<span id="cb32-6"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb32-6" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;BiocManager&quot;</span>))</span></code></pre></div>
+<div id="create-enrichment-map-from-r-with-gsea-results-1" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Create Enrichment map from R with GSEA results<a href="create-enrichment-map-from-r-with-gsea-results-1.html#create-enrichment-map-from-r-with-gsea-results-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="initialize-variables-and-libraries-1" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Initialize variables and libraries<a href="create-enrichment-map-from-r-with-gsea-results-1.html#initialize-variables-and-libraries-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb41-1" tabindex="-1"></a><span class="co">#use library</span></span>
+<span id="cb41-2"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb41-2" tabindex="-1"></a><span class="co">#make sure biocManager is installed</span></span>
+<span id="cb41-3"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb41-3" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;BiocManager&quot;</span>)}, </span>
+<span id="cb41-4"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb41-4" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { </span>
+<span id="cb41-5"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb41-5" tabindex="-1"></a>           <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)}, </span>
+<span id="cb41-6"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb41-6" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;BiocManager&quot;</span>))</span></code></pre></div>
 <pre><code>## Bioconductor version &#39;3.19&#39; is out-of-date; the current release version &#39;3.21&#39;
 ##   is available with R version &#39;4.5&#39;; see https://bioconductor.org/install</code></pre>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb34-1" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>)}, </span>
-<span id="cb34-2"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb34-2" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { <span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)}, </span>
-<span id="cb34-3"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb34-3" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>))</span>
-<span id="cb34-4"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb34-4" tabindex="-1"></a></span>
-<span id="cb34-5"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb34-5" tabindex="-1"></a><span class="co">#use easy cyRest library to communicate with cytoscape.</span></span>
-<span id="cb34-6"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb34-6" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;RCy3&quot;</span>)}, </span>
-<span id="cb34-7"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb34-7" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;RCy3&quot;</span>)}, </span>
-<span id="cb34-8"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb34-8" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;RCy3&quot;</span>))</span>
-<span id="cb34-9"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb34-9" tabindex="-1"></a></span>
-<span id="cb34-10"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb34-10" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;httr&quot;</span>)}, </span>
-<span id="cb34-11"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb34-11" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;httr&quot;</span>)}, </span>
-<span id="cb34-12"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb34-12" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;httr&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-1" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>)}, </span>
+<span id="cb43-2"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-2" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { <span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)}, </span>
+<span id="cb43-3"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-3" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>))</span>
+<span id="cb43-4"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-4" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-5" tabindex="-1"></a><span class="co">#use easy cyRest library to communicate with cytoscape.</span></span>
+<span id="cb43-6"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-6" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;RCy3&quot;</span>)}, </span>
+<span id="cb43-7"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-7" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;RCy3&quot;</span>)}, </span>
+<span id="cb43-8"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-8" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;RCy3&quot;</span>))</span>
+<span id="cb43-9"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-9" tabindex="-1"></a></span>
+<span id="cb43-10"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-10" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;httr&quot;</span>)}, </span>
+<span id="cb43-11"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-11" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) { BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;httr&quot;</span>)}, </span>
+<span id="cb43-12"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-12" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;httr&quot;</span>))</span></code></pre></div>
 </div>
-<div id="configurable-parameters-3" class="section level2 hasAnchor" number="6.2">
-<h2><span class="header-section-number">6.2</span> Configurable Parameters<a href="create-enrichment-map-from-r-with-gsea-results-1.html#configurable-parameters-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-1" tabindex="-1"></a><span class="co"># is_docker - true/false depending on if you are running R from docker</span></span>
-<span id="cb35-2"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-2" tabindex="-1"></a>is_docker <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
-<span id="cb35-3"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-3" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-4" tabindex="-1"></a><span class="co">#directory where all the original input data file are</span></span>
-<span id="cb35-5"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-5" tabindex="-1"></a><span class="co"># for example ./data/</span></span>
-<span id="cb35-6"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-6" tabindex="-1"></a>working_dir <span class="ot">&lt;-</span> params<span class="sc">$</span>working_dir</span>
-<span id="cb35-7"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-7" tabindex="-1"></a></span>
-<span id="cb35-8"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-8" tabindex="-1"></a></span>
-<span id="cb35-9"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-9" tabindex="-1"></a><span class="co">#directory where all the generated data files are found.</span></span>
-<span id="cb35-10"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-10" tabindex="-1"></a><span class="co"># For example - ./generated_data/</span></span>
-<span id="cb35-11"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-11" tabindex="-1"></a><span class="co"># If you are using all the notebooks from this set the generated data will be</span></span>
-<span id="cb35-12"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-12" tabindex="-1"></a><span class="co"># put in the ./generated_data folder.  You have to specify if it is gsea or </span></span>
-<span id="cb35-13"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-13" tabindex="-1"></a><span class="co"># gprofiler</span></span>
-<span id="cb35-14"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-14" tabindex="-1"></a>output_dir <span class="ot">&lt;-</span> params<span class="sc">$</span>output_dir</span>
-<span id="cb35-15"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-15" tabindex="-1"></a></span>
-<span id="cb35-16"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-16" tabindex="-1"></a></span>
-<span id="cb35-17"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-17" tabindex="-1"></a><span class="co">#defined threshold for GSEA enrichments </span></span>
-<span id="cb35-18"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-18" tabindex="-1"></a><span class="co">#p-value to filter all the genesets.  For example -   1.0</span></span>
-<span id="cb35-19"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-19" tabindex="-1"></a>pvalue_gsea_threshold <span class="ot">&lt;-</span> params<span class="sc">$</span>pvalue_thresh</span>
-<span id="cb35-20"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-20" tabindex="-1"></a></span>
-<span id="cb35-21"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-21" tabindex="-1"></a><span class="co">#q-value to filter all the genesets.  For example -   0.05</span></span>
-<span id="cb35-22"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-22" tabindex="-1"></a>qvalue_gsea_threshold <span class="ot">&lt;-</span> params<span class="sc">$</span>qvalue_thresh</span>
-<span id="cb35-23"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-23" tabindex="-1"></a></span>
-<span id="cb35-24"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-24" tabindex="-1"></a><span class="co">#similarity threshold to filter all the genesets connections/edges.  </span></span>
-<span id="cb35-25"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-25" tabindex="-1"></a><span class="co"># For example -   0.375</span></span>
-<span id="cb35-26"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-26" tabindex="-1"></a>similarity_threshold <span class="ot">&lt;-</span> <span class="st">&quot;0.375&quot;</span></span>
-<span id="cb35-27"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-27" tabindex="-1"></a></span>
-<span id="cb35-28"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-28" tabindex="-1"></a><span class="co">#similarity metric to filter all the genesets connections/edges </span></span>
-<span id="cb35-29"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-29" tabindex="-1"></a><span class="co"># (can be OVERLAP, JACCARD, or COMBINED.   For example -   Combined</span></span>
-<span id="cb35-30"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb35-30" tabindex="-1"></a>similarity_metric <span class="ot">=</span> <span class="st">&quot;COMBINED&quot;</span></span></code></pre></div>
+<div id="configurable-parameters-3" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Configurable Parameters<a href="create-enrichment-map-from-r-with-gsea-results-1.html#configurable-parameters-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-1" tabindex="-1"></a><span class="co"># is_docker - true/false depending on if you are running R from docker</span></span>
+<span id="cb44-2"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-2" tabindex="-1"></a>is_docker <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb44-3"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-3" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-4" tabindex="-1"></a><span class="co">#directory where all the original input data file are</span></span>
+<span id="cb44-5"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-5" tabindex="-1"></a><span class="co"># for example ./data/</span></span>
+<span id="cb44-6"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-6" tabindex="-1"></a>working_dir <span class="ot">&lt;-</span> params<span class="sc">$</span>working_dir</span>
+<span id="cb44-7"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-7" tabindex="-1"></a></span>
+<span id="cb44-8"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-8" tabindex="-1"></a></span>
+<span id="cb44-9"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-9" tabindex="-1"></a><span class="co">#directory where all the generated data files are found.</span></span>
+<span id="cb44-10"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-10" tabindex="-1"></a><span class="co"># For example - ./generated_data/</span></span>
+<span id="cb44-11"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-11" tabindex="-1"></a><span class="co"># If you are using all the notebooks from this set the generated data will be</span></span>
+<span id="cb44-12"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-12" tabindex="-1"></a><span class="co"># put in the ./generated_data folder.  You have to specify if it is gsea or </span></span>
+<span id="cb44-13"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-13" tabindex="-1"></a><span class="co"># gprofiler</span></span>
+<span id="cb44-14"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-14" tabindex="-1"></a>output_dir <span class="ot">&lt;-</span> params<span class="sc">$</span>output_dir</span>
+<span id="cb44-15"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-15" tabindex="-1"></a></span>
+<span id="cb44-16"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-16" tabindex="-1"></a></span>
+<span id="cb44-17"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-17" tabindex="-1"></a><span class="co">#defined threshold for GSEA enrichments </span></span>
+<span id="cb44-18"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-18" tabindex="-1"></a><span class="co">#p-value to filter all the genesets.  For example -   1.0</span></span>
+<span id="cb44-19"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-19" tabindex="-1"></a>pvalue_gsea_threshold <span class="ot">&lt;-</span> params<span class="sc">$</span>pvalue_thresh</span>
+<span id="cb44-20"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-20" tabindex="-1"></a></span>
+<span id="cb44-21"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-21" tabindex="-1"></a><span class="co">#q-value to filter all the genesets.  For example -   0.05</span></span>
+<span id="cb44-22"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-22" tabindex="-1"></a>qvalue_gsea_threshold <span class="ot">&lt;-</span> params<span class="sc">$</span>qvalue_thresh</span>
+<span id="cb44-23"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-23" tabindex="-1"></a></span>
+<span id="cb44-24"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-24" tabindex="-1"></a><span class="co">#similarity threshold to filter all the genesets connections/edges.  </span></span>
+<span id="cb44-25"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-25" tabindex="-1"></a><span class="co"># For example -   0.375</span></span>
+<span id="cb44-26"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-26" tabindex="-1"></a>similarity_threshold <span class="ot">&lt;-</span> <span class="st">&quot;0.375&quot;</span></span>
+<span id="cb44-27"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-27" tabindex="-1"></a></span>
+<span id="cb44-28"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-28" tabindex="-1"></a><span class="co">#similarity metric to filter all the genesets connections/edges </span></span>
+<span id="cb44-29"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-29" tabindex="-1"></a><span class="co"># (can be OVERLAP, JACCARD, or COMBINED.   For example -   Combined</span></span>
+<span id="cb44-30"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-30" tabindex="-1"></a>similarity_metric <span class="ot">=</span> <span class="st">&quot;COMBINED&quot;</span></span>
+<span id="cb44-31"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-31" tabindex="-1"></a></span>
+<span id="cb44-32"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-32" tabindex="-1"></a><span class="co">#cytoscape output directory changes if you are using docker. </span></span>
+<span id="cb44-33"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-33" tabindex="-1"></a><span class="cf">if</span>(is_docker){</span>
+<span id="cb44-34"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-34" tabindex="-1"></a>  cytoscape_basedir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;/Users/risserlin/GSEA_vs_fGSEA&quot;</span>)</span>
+<span id="cb44-35"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-35" tabindex="-1"></a>  cytoscape_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(cytoscape_basedir,</span>
+<span id="cb44-36"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-36" tabindex="-1"></a>                                         params<span class="sc">$</span>output_dir)</span>
+<span id="cb44-37"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-37" tabindex="-1"></a>} <span class="cf">else</span>{</span>
+<span id="cb44-38"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-38" tabindex="-1"></a>  cytoscape_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(params<span class="sc">$</span>output_dir)</span>
+<span id="cb44-39"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-39" tabindex="-1"></a>}</span></code></pre></div>
 </div>
-<div id="specify-data-files-1" class="section level2 hasAnchor" number="6.3">
-<h2><span class="header-section-number">6.3</span> Specify Data files<a href="create-enrichment-map-from-r-with-gsea-results-1.html#specify-data-files-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="specify-data-files-1" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Specify Data files<a href="create-enrichment-map-from-r-with-gsea-results-1.html#specify-data-files-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Depending on whether you are creating your enrichment map from g:Profiler or GSEA results the sets of files might be a little different. Minimally, you will need to specify:
 * gmt file
 * enrichment results file</p>
 <p>Although there is a gmt file in the gsea edb results directory(which is the easiest method to create an enrichment map) it have been filtered to contain only genes represented in the expression set. If you use this fltered file you will get different pathway connectivity depending on the dataset being used. We recommend using original gmt file used for the gsea analysis and not the filtered one in the results directory.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb36-1" tabindex="-1"></a><span class="co">#use the newest gmt file in the output directory</span></span>
-<span id="cb36-2"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb36-2" tabindex="-1"></a>gmt_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> output_dir, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.gmt&quot;</span>)</span>
-<span id="cb36-3"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb36-3" tabindex="-1"></a></span>
-<span id="cb36-4"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb36-4" tabindex="-1"></a>  <span class="co">#get the details on the files</span></span>
-<span id="cb36-5"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb36-5" tabindex="-1"></a>  details <span class="ot">=</span> <span class="fu">file.info</span>(<span class="fu">file.path</span>(output_dir,gmt_files))</span>
-<span id="cb36-6"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb36-6" tabindex="-1"></a>  <span class="co">#order according to newest to oldest</span></span>
-<span id="cb36-7"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb36-7" tabindex="-1"></a>  details <span class="ot">=</span> details[<span class="fu">with</span>(details, <span class="fu">order</span>(<span class="fu">as.POSIXct</span>(mtime),<span class="at">decreasing =</span> <span class="cn">TRUE</span>)), ]</span>
-<span id="cb36-8"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb36-8" tabindex="-1"></a></span>
-<span id="cb36-9"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb36-9" tabindex="-1"></a>  <span class="co">#use the newest file:</span></span>
-<span id="cb36-10"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb36-10" tabindex="-1"></a> gmt_gsea_file <span class="ot">&lt;-</span> <span class="fu">row.names</span>(details)[<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-1" tabindex="-1"></a><span class="co">#use the newest gmt file in the output directory</span></span>
+<span id="cb45-2"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-2" tabindex="-1"></a>gmt_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> output_dir, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.gmt&quot;</span>)</span>
+<span id="cb45-3"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-3" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-4" tabindex="-1"></a>  <span class="co">#get the details on the files</span></span>
+<span id="cb45-5"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-5" tabindex="-1"></a>  details <span class="ot">=</span> <span class="fu">file.info</span>(<span class="fu">file.path</span>(output_dir,gmt_files))</span>
+<span id="cb45-6"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-6" tabindex="-1"></a>  <span class="co">#order according to newest to oldest</span></span>
+<span id="cb45-7"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-7" tabindex="-1"></a>  details <span class="ot">=</span> details[<span class="fu">with</span>(details, <span class="fu">order</span>(<span class="fu">as.POSIXct</span>(mtime),<span class="at">decreasing =</span> <span class="cn">TRUE</span>)), ]</span>
+<span id="cb45-8"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-8" tabindex="-1"></a></span>
+<span id="cb45-9"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-9" tabindex="-1"></a>  <span class="co">#use the newest file:</span></span>
+<span id="cb45-10"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-10" tabindex="-1"></a> gmt_gsea_file <span class="ot">&lt;-</span> <span class="fu">row.names</span>(details)[<span class="dv">1</span>]</span></code></pre></div>
 <p>fGSEA output directory - You can specify the exact name of the directory. The below code looks for the newest GSEA results directory and uses that.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb37-1" tabindex="-1"></a>gsea_directories <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> output_dir)</span>
-<span id="cb37-2"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb37-2" tabindex="-1"></a></span>
-<span id="cb37-3"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb37-3" tabindex="-1"></a><span class="co">#get the details on the files</span></span>
-<span id="cb37-4"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb37-4" tabindex="-1"></a>details <span class="ot">=</span> <span class="fu">file.info</span>(<span class="fu">file.path</span>(output_dir,gsea_directories))</span>
-<span id="cb37-5"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb37-5" tabindex="-1"></a><span class="co">#order according to newest to oldest</span></span>
-<span id="cb37-6"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb37-6" tabindex="-1"></a>details <span class="ot">=</span> details[<span class="fu">with</span>(details, <span class="fu">order</span>(<span class="fu">as.POSIXct</span>(mtime),<span class="at">decreasing =</span> <span class="cn">TRUE</span>)), ]</span>
-<span id="cb37-7"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb37-7" tabindex="-1"></a></span>
-<span id="cb37-8"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb37-8" tabindex="-1"></a><span class="co">#use the newest file:</span></span>
-<span id="cb37-9"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb37-9" tabindex="-1"></a>gsea_output_dir <span class="ot">&lt;-</span> <span class="fu">row.names</span>(details)[<span class="dv">1</span>]</span>
-<span id="cb37-10"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb37-10" tabindex="-1"></a></span>
-<span id="cb37-11"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb37-11" tabindex="-1"></a>fgsea_results_file <span class="ot">&lt;-</span> <span class="fu">list.files</span>((gsea_output_dir),<span class="at">pattern =</span> <span class="st">&quot;fgsea_enr_results.txt&quot;</span>)</span>
-<span id="cb37-12"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb37-12" tabindex="-1"></a></span>
-<span id="cb37-13"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb37-13" tabindex="-1"></a>gsea_results_path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(gsea_output_dir)</span>
-<span id="cb37-14"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb37-14" tabindex="-1"></a>gsea_results_filename <span class="ot">&lt;-</span> <span class="fu">file.path</span>(gsea_output_dir,fgsea_results_file )</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb46-1" tabindex="-1"></a>gsea_directories <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> output_dir)</span>
+<span id="cb46-2"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb46-2" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb46-3" tabindex="-1"></a><span class="co">#get the details on the files</span></span>
+<span id="cb46-4"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb46-4" tabindex="-1"></a>details <span class="ot">=</span> <span class="fu">file.info</span>(<span class="fu">file.path</span>(output_dir,gsea_directories))</span>
+<span id="cb46-5"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb46-5" tabindex="-1"></a><span class="co">#order according to newest to oldest</span></span>
+<span id="cb46-6"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb46-6" tabindex="-1"></a>details <span class="ot">=</span> details[<span class="fu">with</span>(details, <span class="fu">order</span>(<span class="fu">as.POSIXct</span>(mtime),<span class="at">decreasing =</span> <span class="cn">TRUE</span>)), ]</span>
+<span id="cb46-7"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb46-7" tabindex="-1"></a></span>
+<span id="cb46-8"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb46-8" tabindex="-1"></a><span class="co">#use the newest file:</span></span>
+<span id="cb46-9"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb46-9" tabindex="-1"></a>gsea_output_dir <span class="ot">&lt;-</span> <span class="fu">row.names</span>(details)[<span class="dv">1</span>]</span>
+<span id="cb46-10"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb46-10" tabindex="-1"></a></span>
+<span id="cb46-11"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb46-11" tabindex="-1"></a>fgsea_results_file <span class="ot">&lt;-</span> <span class="fu">list.files</span>((gsea_output_dir),<span class="at">pattern =</span> <span class="st">&quot;fgsea_enr_results.txt&quot;</span>)</span>
+<span id="cb46-12"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb46-12" tabindex="-1"></a></span>
+<span id="cb46-13"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb46-13" tabindex="-1"></a>gsea_results_path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(gsea_output_dir)</span>
+<span id="cb46-14"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb46-14" tabindex="-1"></a>gsea_results_filename <span class="ot">&lt;-</span> <span class="fu">file.path</span>(gsea_output_dir,fgsea_results_file )</span></code></pre></div>
 </div>
-<div id="optional-file-specification-1" class="section level2 hasAnchor" number="6.4">
-<h2><span class="header-section-number">6.4</span> Optional File specification<a href="create-enrichment-map-from-r-with-gsea-results-1.html#optional-file-specification-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="optional-file-specification-1" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Optional File specification<a href="create-enrichment-map-from-r-with-gsea-results-1.html#optional-file-specification-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>These files are not needed to create the enrichment map but are very beneficial when analyzing your result.<br />
 * gene expression file
 * gene ranks file</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb38-1" tabindex="-1"></a>gsea_ranks_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(gsea_results_path,</span>
-<span id="cb38-2"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb38-2" tabindex="-1"></a>                             <span class="fu">list.files</span>(gsea_results_path,<span class="at">pattern=</span><span class="st">&quot;.rnk&quot;</span>))</span>
-<span id="cb38-3"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb38-3" tabindex="-1"></a></span>
-<span id="cb38-4"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb38-4" tabindex="-1"></a>expression_file_fullpath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(working_dir,</span>
-<span id="cb38-5"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb38-5" tabindex="-1"></a>                          params<span class="sc">$</span>expression_file)</span>
-<span id="cb38-6"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb38-6" tabindex="-1"></a></span>
-<span id="cb38-7"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb38-7" tabindex="-1"></a>cls_file_fullpath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(working_dir, params<span class="sc">$</span>cls_file)</span>
-<span id="cb38-8"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb38-8" tabindex="-1"></a></span>
-<span id="cb38-9"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb38-9" tabindex="-1"></a><span class="co">#define an analysis name</span></span>
-<span id="cb38-10"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb38-10" tabindex="-1"></a>cur_model_name <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;FGSEA&quot;</span>,params<span class="sc">$</span>analysis_name,<span class="at">sep=</span><span class="st">&quot;_&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb47-1" tabindex="-1"></a>gsea_ranks_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(gsea_results_path,</span>
+<span id="cb47-2"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb47-2" tabindex="-1"></a>                             <span class="fu">list.files</span>(gsea_results_path,<span class="at">pattern=</span><span class="st">&quot;.rnk&quot;</span>))</span>
+<span id="cb47-3"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb47-3" tabindex="-1"></a></span>
+<span id="cb47-4"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb47-4" tabindex="-1"></a>expression_file_fullpath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(working_dir,</span>
+<span id="cb47-5"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb47-5" tabindex="-1"></a>                          params<span class="sc">$</span>expression_file)</span>
+<span id="cb47-6"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb47-6" tabindex="-1"></a></span>
+<span id="cb47-7"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb47-7" tabindex="-1"></a>cls_file_fullpath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(working_dir, params<span class="sc">$</span>cls_file)</span>
+<span id="cb47-8"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb47-8" tabindex="-1"></a></span>
+<span id="cb47-9"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb47-9" tabindex="-1"></a><span class="co">#define an analysis name</span></span>
+<span id="cb47-10"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb47-10" tabindex="-1"></a>cur_model_name <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;FGSEA&quot;</span>,params<span class="sc">$</span>analysis_name,<span class="at">sep=</span><span class="st">&quot;_&quot;</span>)</span></code></pre></div>
 </div>
-<div id="launch-cytoscape-1" class="section level2 hasAnchor" number="6.5">
-<h2><span class="header-section-number">6.5</span> Launch Cytoscape<a href="create-enrichment-map-from-r-with-gsea-results-1.html#launch-cytoscape-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="launch-cytoscape-1" class="section level2 hasAnchor" number="7.5">
+<h2><span class="header-section-number">7.5</span> Launch Cytoscape<a href="create-enrichment-map-from-r-with-gsea-results-1.html#launch-cytoscape-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Launch Cytoscape (by default cytoscape will automatically enable rest so as long as cytoscape 3.3 or higher is open R should be able to communicate with it). Make sure if you get an message asking you if you want communicate with other apps that you select “Allow”.</p>
 </div>
-<div id="make-sure-you-can-connect-to-cytoscape-1" class="section level2 hasAnchor" number="6.6">
-<h2><span class="header-section-number">6.6</span> Make sure you can connect to Cytoscape<a href="create-enrichment-map-from-r-with-gsea-results-1.html#make-sure-you-can-connect-to-cytoscape-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb39-1" tabindex="-1"></a><span class="cf">if</span>(is_docker){</span>
-<span id="cb39-2"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb39-2" tabindex="-1"></a>  current_base <span class="ot">=</span> <span class="st">&quot;host.docker.internal:1234/v1&quot;</span></span>
-<span id="cb39-3"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb39-3" tabindex="-1"></a>  .defaultBaseUrl <span class="ot">&lt;-</span> <span class="st">&quot;http://host.docker.internal:1234/v1&quot;</span></span>
-<span id="cb39-4"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb39-4" tabindex="-1"></a>} <span class="cf">else</span>{</span>
-<span id="cb39-5"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb39-5" tabindex="-1"></a>  current_base <span class="ot">=</span> <span class="st">&quot;localhost:1234/v1&quot;</span></span>
-<span id="cb39-6"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb39-6" tabindex="-1"></a>}</span>
-<span id="cb39-7"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb39-7" tabindex="-1"></a></span>
-<span id="cb39-8"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb39-8" tabindex="-1"></a><span class="fu">cytoscapePing</span> (<span class="at">base.url =</span> current_base)</span></code></pre></div>
+<div id="make-sure-you-can-connect-to-cytoscape-1" class="section level2 hasAnchor" number="7.6">
+<h2><span class="header-section-number">7.6</span> Make sure you can connect to Cytoscape<a href="create-enrichment-map-from-r-with-gsea-results-1.html#make-sure-you-can-connect-to-cytoscape-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb48-1" tabindex="-1"></a><span class="cf">if</span>(is_docker){</span>
+<span id="cb48-2"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb48-2" tabindex="-1"></a>  current_base <span class="ot">=</span> <span class="st">&quot;host.docker.internal:1234/v1&quot;</span></span>
+<span id="cb48-3"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb48-3" tabindex="-1"></a>  .defaultBaseUrl <span class="ot">&lt;-</span> <span class="st">&quot;http://host.docker.internal:1234/v1&quot;</span></span>
+<span id="cb48-4"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb48-4" tabindex="-1"></a>} <span class="cf">else</span>{</span>
+<span id="cb48-5"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb48-5" tabindex="-1"></a>  current_base <span class="ot">=</span> <span class="st">&quot;localhost:1234/v1&quot;</span></span>
+<span id="cb48-6"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb48-6" tabindex="-1"></a>}</span>
+<span id="cb48-7"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb48-7" tabindex="-1"></a></span>
+<span id="cb48-8"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb48-8" tabindex="-1"></a><span class="fu">cytoscapePing</span> (<span class="at">base.url =</span> current_base)</span></code></pre></div>
 <pre><code>## You are connected to Cytoscape!</code></pre>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb41-1" tabindex="-1"></a><span class="fu">cytoscapeVersionInfo</span> (<span class="at">base.url =</span> current_base)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb50-1" tabindex="-1"></a><span class="fu">cytoscapeVersionInfo</span> (<span class="at">base.url =</span> current_base)</span></code></pre></div>
 <pre><code>##       apiVersion cytoscapeVersion 
 ##             &quot;v1&quot;         &quot;3.10.3&quot;</code></pre>
 <hr />
 </div>
-<div id="create-an-enrichment-map-1" class="section level2 hasAnchor" number="6.7">
-<h2><span class="header-section-number">6.7</span> Create an Enrichment map<a href="create-enrichment-map-from-r-with-gsea-results-1.html#create-an-enrichment-map-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="create-an-enrichment-map-1" class="section level2 hasAnchor" number="7.7">
+<h2><span class="header-section-number">7.7</span> Create an Enrichment map<a href="create-enrichment-map-from-r-with-gsea-results-1.html#create-an-enrichment-map-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>If you are running R from within a docker you need to first upload your datafiles to Cytoscape before you can create your enrichment map</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-1" tabindex="-1"></a><span class="co">#if using docker we need to replace all the the paths to the host path</span></span>
-<span id="cb43-2"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-2" tabindex="-1"></a><span class="cf">if</span>(is_docker) {</span>
-<span id="cb43-3"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-3" tabindex="-1"></a>  upload_em_file <span class="ot">&lt;-</span> <span class="cf">function</span>(localPath) {</span>
-<span id="cb43-4"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-4" tabindex="-1"></a>    bname <span class="ot">&lt;-</span> <span class="fu">basename</span>(localPath)</span>
-<span id="cb43-5"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-5" tabindex="-1"></a>    r <span class="ot">&lt;-</span> <span class="fu">POST</span>(</span>
-<span id="cb43-6"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-6" tabindex="-1"></a>      <span class="at">url =</span> </span>
-<span id="cb43-7"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-7" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">&#39;http://host.docker.internal:1234/enrichmentmap/textfileupload?fileName=&#39;</span>, </span>
-<span id="cb43-8"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-8" tabindex="-1"></a>                  bname, <span class="at">sep=</span><span class="st">&quot;&quot;</span>),</span>
-<span id="cb43-9"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-9" tabindex="-1"></a>      <span class="at">config =</span> <span class="fu">list</span>(),</span>
-<span id="cb43-10"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-10" tabindex="-1"></a>      <span class="at">body =</span> <span class="fu">list</span>(<span class="at">file =</span> <span class="fu">upload_file</span>(localPath)),</span>
-<span id="cb43-11"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-11" tabindex="-1"></a>      <span class="at">encode =</span> <span class="st">&quot;multipart&quot;</span>,</span>
-<span id="cb43-12"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-12" tabindex="-1"></a>      <span class="at">handle =</span> <span class="cn">NULL</span></span>
-<span id="cb43-13"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-13" tabindex="-1"></a>    )</span>
-<span id="cb43-14"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-14" tabindex="-1"></a>    <span class="fu">content</span>(r,<span class="st">&quot;parsed&quot;</span>)<span class="sc">$</span>path</span>
-<span id="cb43-15"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-15" tabindex="-1"></a>  }</span>
-<span id="cb43-16"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-16" tabindex="-1"></a>  </span>
-<span id="cb43-17"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-17" tabindex="-1"></a>  <span class="co"># &quot;upload&quot; the files to the host machine and replace each path </span></span>
-<span id="cb43-18"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-18" tabindex="-1"></a>  <span class="co"># with the host machine path</span></span>
-<span id="cb43-19"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-19" tabindex="-1"></a>  expression_file_fullpath <span class="ot">&lt;-</span> <span class="fu">upload_em_file</span>(expression_file_fullpath)</span>
-<span id="cb43-20"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-20" tabindex="-1"></a>  class_file_fullpath <span class="ot">&lt;-</span> <span class="fu">upload_em_file</span>(cls_file_fullpath)</span>
-<span id="cb43-21"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-21" tabindex="-1"></a>  gmt_gsea_file <span class="ot">&lt;-</span> <span class="fu">upload_em_file</span>(gmt_gsea_file)</span>
-<span id="cb43-22"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-22" tabindex="-1"></a>  gsea_ranks_file <span class="ot">&lt;-</span> <span class="fu">upload_em_file</span>(gsea_ranks_file)</span>
-<span id="cb43-23"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-23" tabindex="-1"></a>  gsea_results_filename <span class="ot">&lt;-</span> <span class="fu">upload_em_file</span>(gsea_results_filename)</span>
-<span id="cb43-24"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb43-24" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-1" tabindex="-1"></a><span class="co">#if using docker we need to replace all the the paths to the host path</span></span>
+<span id="cb52-2"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-2" tabindex="-1"></a><span class="cf">if</span>(is_docker) {</span>
+<span id="cb52-3"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-3" tabindex="-1"></a>  upload_em_file <span class="ot">&lt;-</span> <span class="cf">function</span>(localPath) {</span>
+<span id="cb52-4"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-4" tabindex="-1"></a>    bname <span class="ot">&lt;-</span> <span class="fu">basename</span>(localPath)</span>
+<span id="cb52-5"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-5" tabindex="-1"></a>    r <span class="ot">&lt;-</span> <span class="fu">POST</span>(</span>
+<span id="cb52-6"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-6" tabindex="-1"></a>      <span class="at">url =</span> </span>
+<span id="cb52-7"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-7" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">&#39;http://host.docker.internal:1234/enrichmentmap/textfileupload?fileName=&#39;</span>, </span>
+<span id="cb52-8"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-8" tabindex="-1"></a>                  bname, <span class="at">sep=</span><span class="st">&quot;&quot;</span>),</span>
+<span id="cb52-9"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-9" tabindex="-1"></a>      <span class="at">config =</span> <span class="fu">list</span>(),</span>
+<span id="cb52-10"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-10" tabindex="-1"></a>      <span class="at">body =</span> <span class="fu">list</span>(<span class="at">file =</span> <span class="fu">upload_file</span>(localPath)),</span>
+<span id="cb52-11"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-11" tabindex="-1"></a>      <span class="at">encode =</span> <span class="st">&quot;multipart&quot;</span>,</span>
+<span id="cb52-12"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-12" tabindex="-1"></a>      <span class="at">handle =</span> <span class="cn">NULL</span></span>
+<span id="cb52-13"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-13" tabindex="-1"></a>    )</span>
+<span id="cb52-14"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-14" tabindex="-1"></a>    <span class="fu">content</span>(r,<span class="st">&quot;parsed&quot;</span>)<span class="sc">$</span>path</span>
+<span id="cb52-15"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-15" tabindex="-1"></a>  }</span>
+<span id="cb52-16"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-16" tabindex="-1"></a>  </span>
+<span id="cb52-17"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-17" tabindex="-1"></a>  <span class="co"># &quot;upload&quot; the files to the host machine and replace each path </span></span>
+<span id="cb52-18"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-18" tabindex="-1"></a>  <span class="co"># with the host machine path</span></span>
+<span id="cb52-19"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-19" tabindex="-1"></a>  expression_file_fullpath <span class="ot">&lt;-</span> <span class="fu">upload_em_file</span>(expression_file_fullpath)</span>
+<span id="cb52-20"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-20" tabindex="-1"></a>  class_file_fullpath <span class="ot">&lt;-</span> <span class="fu">upload_em_file</span>(cls_file_fullpath)</span>
+<span id="cb52-21"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-21" tabindex="-1"></a>  gmt_gsea_file <span class="ot">&lt;-</span> <span class="fu">upload_em_file</span>(gmt_gsea_file)</span>
+<span id="cb52-22"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-22" tabindex="-1"></a>  gsea_ranks_file <span class="ot">&lt;-</span> <span class="fu">upload_em_file</span>(gsea_ranks_file)</span>
+<span id="cb52-23"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-23" tabindex="-1"></a>  gsea_results_filename <span class="ot">&lt;-</span> <span class="fu">upload_em_file</span>(gsea_results_filename)</span>
+<span id="cb52-24"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb52-24" tabindex="-1"></a>}</span></code></pre></div>
 <hr />
 </div>
-<div id="create-an-enrichment-map---run-em-command-1" class="section level2 hasAnchor" number="6.8">
-<h2><span class="header-section-number">6.8</span> Create an Enrichment map - run EM command<a href="create-enrichment-map-from-r-with-gsea-results-1.html#create-an-enrichment-map---run-em-command-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-1" tabindex="-1"></a><span class="do">#######################################</span></span>
-<span id="cb44-2"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-2" tabindex="-1"></a><span class="co">#create EM</span></span>
-<span id="cb44-3"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-3" tabindex="-1"></a>current_network_name <span class="ot">&lt;-</span> <span class="fu">paste</span>(cur_model_name,pvalue_gsea_threshold,</span>
-<span id="cb44-4"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-4" tabindex="-1"></a>                              qvalue_gsea_threshold,<span class="at">sep=</span><span class="st">&quot;_&quot;</span>)</span>
-<span id="cb44-5"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-5" tabindex="-1"></a></span>
-<span id="cb44-6"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-6" tabindex="-1"></a>em_command <span class="ot">=</span> <span class="fu">paste</span>(<span class="st">&#39;enrichmentmap build analysisType=&quot;gsea&quot; gmtFile=&#39;</span>,</span>
-<span id="cb44-7"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-7" tabindex="-1"></a>                                                              gmt_gsea_file,</span>
-<span id="cb44-8"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-8" tabindex="-1"></a>                   <span class="st">&#39;pvalue=&#39;</span>,pvalue_gsea_threshold, </span>
-<span id="cb44-9"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-9" tabindex="-1"></a>                   <span class="st">&#39;qvalue=&#39;</span>,qvalue_gsea_threshold,</span>
-<span id="cb44-10"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-10" tabindex="-1"></a>                   <span class="st">&#39;similaritycutoff=&#39;</span>,similarity_threshold,</span>
-<span id="cb44-11"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-11" tabindex="-1"></a>                   <span class="st">&#39;coefficients=&#39;</span>,similarity_metric,</span>
-<span id="cb44-12"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-12" tabindex="-1"></a>                   <span class="st">&#39;ranksDataset1=&#39;</span>, gsea_ranks_file,</span>
-<span id="cb44-13"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-13" tabindex="-1"></a>                   <span class="st">&#39;enrichmentsDataset1=&#39;</span>,gsea_results_filename, </span>
-<span id="cb44-14"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-14" tabindex="-1"></a>                   <span class="st">&#39;filterByExpressions=false&#39;</span>,</span>
-<span id="cb44-15"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-15" tabindex="-1"></a>                   <span class="st">&#39;expressionDataset1=&#39;</span>,expression_file_fullpath,</span>
-<span id="cb44-16"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-16" tabindex="-1"></a>                   <span class="st">&#39;classDataset1=&#39;</span>,class_file_fullpath,</span>
-<span id="cb44-17"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-17" tabindex="-1"></a>                   <span class="st">&#39;gmtFile=&#39;</span>,gmt_gsea_file,</span>
-<span id="cb44-18"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-18" tabindex="-1"></a>                   <span class="at">sep=</span><span class="st">&quot; &quot;</span>)</span>
-<span id="cb44-19"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-19" tabindex="-1"></a></span>
-<span id="cb44-20"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-20" tabindex="-1"></a><span class="co">#enrichment map command will return the suid of newly created network.</span></span>
-<span id="cb44-21"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-21" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">commandsGET</span>(em_command,<span class="at">base.url =</span> current_base)</span>
-<span id="cb44-22"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-22" tabindex="-1"></a></span>
-<span id="cb44-23"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-23" tabindex="-1"></a>current_network_suid <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb44-24"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-24" tabindex="-1"></a><span class="co">#enrichment map command will return the suid of newly created network </span></span>
-<span id="cb44-25"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-25" tabindex="-1"></a><span class="co"># unless it Failed.  If it failed it will contain the word failed</span></span>
-<span id="cb44-26"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-26" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">grepl</span>(<span class="at">pattern=</span><span class="st">&quot;Failed&quot;</span>, response)){</span>
-<span id="cb44-27"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-27" tabindex="-1"></a>  <span class="fu">paste</span>(response)</span>
-<span id="cb44-28"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-28" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb44-29"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-29" tabindex="-1"></a>  current_network_suid <span class="ot">&lt;-</span> response</span>
-<span id="cb44-30"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-30" tabindex="-1"></a>}</span>
-<span id="cb44-31"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-31" tabindex="-1"></a></span>
-<span id="cb44-32"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-32" tabindex="-1"></a><span class="co">#check to see if the network name is unique</span></span>
-<span id="cb44-33"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-33" tabindex="-1"></a>current_names <span class="ot">&lt;-</span> <span class="fu">getNetworkList</span>(<span class="at">base.url =</span> current_base)</span>
-<span id="cb44-34"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-34" tabindex="-1"></a><span class="cf">if</span>(current_network_name <span class="sc">%in%</span> current_names){</span>
-<span id="cb44-35"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-35" tabindex="-1"></a>  <span class="co">#if the name already exists in the network names then put the SUID in front</span></span>
-<span id="cb44-36"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-36" tabindex="-1"></a>  <span class="co"># of the name (this does not work if you put the suid at the end of the name)</span></span>
-<span id="cb44-37"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-37" tabindex="-1"></a>  current_network_name <span class="ot">&lt;-</span> <span class="fu">paste</span>(current_network_suid,</span>
-<span id="cb44-38"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-38" tabindex="-1"></a>                                current_network_name,<span class="at">sep=</span><span class="st">&quot;_&quot;</span>)</span>
-<span id="cb44-39"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-39" tabindex="-1"></a>}</span>
-<span id="cb44-40"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-40" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">renameNetwork</span>(<span class="at">title=</span>current_network_name, </span>
-<span id="cb44-41"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-41" tabindex="-1"></a>                       <span class="at">network =</span> <span class="fu">as.numeric</span>(current_network_suid),</span>
-<span id="cb44-42"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb44-42" tabindex="-1"></a>                       <span class="at">base.url =</span> current_base)</span></code></pre></div>
+<div id="create-an-enrichment-map---run-em-command-1" class="section level2 hasAnchor" number="7.8">
+<h2><span class="header-section-number">7.8</span> Create an Enrichment map - run EM command<a href="create-enrichment-map-from-r-with-gsea-results-1.html#create-an-enrichment-map---run-em-command-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-1" tabindex="-1"></a><span class="do">#######################################</span></span>
+<span id="cb53-2"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-2" tabindex="-1"></a><span class="co">#create EM</span></span>
+<span id="cb53-3"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-3" tabindex="-1"></a>current_network_name <span class="ot">&lt;-</span> <span class="fu">paste</span>(cur_model_name,pvalue_gsea_threshold,</span>
+<span id="cb53-4"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-4" tabindex="-1"></a>                              qvalue_gsea_threshold,<span class="at">sep=</span><span class="st">&quot;_&quot;</span>)</span>
+<span id="cb53-5"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-5" tabindex="-1"></a></span>
+<span id="cb53-6"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-6" tabindex="-1"></a>em_command <span class="ot">=</span> <span class="fu">paste</span>(<span class="st">&#39;enrichmentmap build analysisType=&quot;gsea&quot; gmtFile=&#39;</span>,</span>
+<span id="cb53-7"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-7" tabindex="-1"></a>                                                              gmt_gsea_file,</span>
+<span id="cb53-8"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-8" tabindex="-1"></a>                   <span class="st">&#39;pvalue=&#39;</span>,pvalue_gsea_threshold, </span>
+<span id="cb53-9"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-9" tabindex="-1"></a>                   <span class="st">&#39;qvalue=&#39;</span>,qvalue_gsea_threshold,</span>
+<span id="cb53-10"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-10" tabindex="-1"></a>                   <span class="st">&#39;similaritycutoff=&#39;</span>,similarity_threshold,</span>
+<span id="cb53-11"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-11" tabindex="-1"></a>                   <span class="st">&#39;coefficients=&#39;</span>,similarity_metric,</span>
+<span id="cb53-12"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-12" tabindex="-1"></a>                   <span class="st">&#39;ranksDataset1=&#39;</span>, gsea_ranks_file,</span>
+<span id="cb53-13"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-13" tabindex="-1"></a>                   <span class="st">&#39;enrichmentsDataset1=&#39;</span>,gsea_results_filename, </span>
+<span id="cb53-14"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-14" tabindex="-1"></a>                   <span class="st">&#39;filterByExpressions=false&#39;</span>,</span>
+<span id="cb53-15"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-15" tabindex="-1"></a>                   <span class="st">&#39;expressionDataset1=&#39;</span>,expression_file_fullpath,</span>
+<span id="cb53-16"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-16" tabindex="-1"></a>                   <span class="st">&#39;classDataset1=&#39;</span>,class_file_fullpath,</span>
+<span id="cb53-17"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-17" tabindex="-1"></a>                   <span class="st">&#39;gmtFile=&#39;</span>,gmt_gsea_file,</span>
+<span id="cb53-18"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-18" tabindex="-1"></a>                   <span class="at">sep=</span><span class="st">&quot; &quot;</span>)</span>
+<span id="cb53-19"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-19" tabindex="-1"></a></span>
+<span id="cb53-20"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-20" tabindex="-1"></a><span class="co">#enrichment map command will return the suid of newly created network.</span></span>
+<span id="cb53-21"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-21" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">commandsGET</span>(em_command,<span class="at">base.url =</span> current_base)</span>
+<span id="cb53-22"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-22" tabindex="-1"></a></span>
+<span id="cb53-23"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-23" tabindex="-1"></a>current_network_suid <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb53-24"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-24" tabindex="-1"></a><span class="co">#enrichment map command will return the suid of newly created network </span></span>
+<span id="cb53-25"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-25" tabindex="-1"></a><span class="co"># unless it Failed.  If it failed it will contain the word failed</span></span>
+<span id="cb53-26"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-26" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">grepl</span>(<span class="at">pattern=</span><span class="st">&quot;Failed&quot;</span>, response)){</span>
+<span id="cb53-27"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-27" tabindex="-1"></a>  <span class="fu">paste</span>(response)</span>
+<span id="cb53-28"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-28" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb53-29"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-29" tabindex="-1"></a>  current_network_suid <span class="ot">&lt;-</span> response</span>
+<span id="cb53-30"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-30" tabindex="-1"></a>}</span>
+<span id="cb53-31"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-31" tabindex="-1"></a></span>
+<span id="cb53-32"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-32" tabindex="-1"></a><span class="co">#check to see if the network name is unique</span></span>
+<span id="cb53-33"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-33" tabindex="-1"></a>current_names <span class="ot">&lt;-</span> <span class="fu">getNetworkList</span>(<span class="at">base.url =</span> current_base)</span>
+<span id="cb53-34"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-34" tabindex="-1"></a><span class="cf">if</span>(current_network_name <span class="sc">%in%</span> current_names){</span>
+<span id="cb53-35"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-35" tabindex="-1"></a>  <span class="co">#if the name already exists in the network names then put the SUID in front</span></span>
+<span id="cb53-36"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-36" tabindex="-1"></a>  <span class="co"># of the name (this does not work if you put the suid at the end of the name)</span></span>
+<span id="cb53-37"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-37" tabindex="-1"></a>  current_network_name <span class="ot">&lt;-</span> <span class="fu">paste</span>(current_network_suid,</span>
+<span id="cb53-38"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-38" tabindex="-1"></a>                                current_network_name,<span class="at">sep=</span><span class="st">&quot;_&quot;</span>)</span>
+<span id="cb53-39"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-39" tabindex="-1"></a>}</span>
+<span id="cb53-40"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-40" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">renameNetwork</span>(<span class="at">title=</span>current_network_name, </span>
+<span id="cb53-41"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-41" tabindex="-1"></a>                       <span class="at">network =</span> <span class="fu">as.numeric</span>(current_network_suid),</span>
+<span id="cb53-42"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb53-42" tabindex="-1"></a>                       <span class="at">base.url =</span> current_base)</span></code></pre></div>
 </div>
-<div id="get-a-screen-shot-of-the-initial-network.-1" class="section level2 hasAnchor" number="6.9">
-<h2><span class="header-section-number">6.9</span> Get a screen shot of the initial network.<a href="create-enrichment-map-from-r-with-gsea-results-1.html#get-a-screen-shot-of-the-initial-network.-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-1" tabindex="-1"></a><span class="co">#you can only output the file if it isn&#39;t on docker</span></span>
-<span id="cb45-2"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-2" tabindex="-1"></a><span class="co">#on docker is put it into the user&#39;s home directory with docker </span></span>
-<span id="cb45-3"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-3" tabindex="-1"></a><span class="co"># has not access to</span></span>
-<span id="cb45-4"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-4" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span>is_docker){</span>
-<span id="cb45-5"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-5" tabindex="-1"></a>  output_network_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">getwd</span>(),<span class="st">&quot;initial_screenshot_network.png&quot;</span>)</span>
-<span id="cb45-6"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-6" tabindex="-1"></a>  output_network_file_current <span class="ot">&lt;-</span> output_network_file</span>
-<span id="cb45-7"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-7" tabindex="-1"></a></span>
-<span id="cb45-8"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-8" tabindex="-1"></a>  <span class="fu">fitContent</span>()</span>
-<span id="cb45-9"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-9" tabindex="-1"></a></span>
-<span id="cb45-10"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-10" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">file.exists</span>(output_network_file)){</span>
-<span id="cb45-11"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-11" tabindex="-1"></a>    <span class="co">#cytoscape hangs waiting for user response if file already exists.</span></span>
-<span id="cb45-12"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-12" tabindex="-1"></a>    <span class="co"># Remove it first</span></span>
-<span id="cb45-13"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-13" tabindex="-1"></a>    response <span class="ot">&lt;-</span> <span class="fu">file.remove</span>(output_network_file)</span>
-<span id="cb45-14"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-14" tabindex="-1"></a>  } </span>
-<span id="cb45-15"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-15" tabindex="-1"></a></span>
-<span id="cb45-16"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-16" tabindex="-1"></a>  response <span class="ot">&lt;-</span> <span class="fu">exportImage</span>(output_network_file, <span class="at">type =</span> <span class="st">&quot;png&quot;</span>,</span>
-<span id="cb45-17"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-17" tabindex="-1"></a>                          <span class="at">base.url =</span> current_base)</span>
-<span id="cb45-18"><a href="create-enrichment-map-from-r-with-gsea-results-1.html#cb45-18" tabindex="-1"></a>}</span></code></pre></div>
+<div id="get-a-screen-shot-of-the-initial-network.-1" class="section level2 hasAnchor" number="7.9">
+<h2><span class="header-section-number">7.9</span> Get a screen shot of the initial network.<a href="create-enrichment-map-from-r-with-gsea-results-1.html#get-a-screen-shot-of-the-initial-network.-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Resulting network</p>
+<div class="figure">
+<img src="generated_data/fgsea/fGSEA_initial_screenshot_network.png" alt="FGSEA Enrichment Map" width="100%" />
+<p class="caption">
+(#fig:fgsea_network)FGSEA Enrichment Map
+</p>
+</div>
 
 </div>
 </div>
@@ -484,7 +489,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/risserlin/CBW_pathways_workshop_R_notebooks/edit/main/07b-Create_EM_from_fGSEA_results.Rmd",
+"link": "https://github.com/BaderLab/GSEA_vs_fGSEA/edit/main/07b-Create_EM_from_fGSEA_results.Rmd",
 "text": "Suggest an edit"
 },
 "history": {
@@ -495,7 +500,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["cbw_workshop_notebooks.pdf", "https://github.com/risserlin/CBW_pathways_workshop_R_notebooks/raw/main/07b-Create_EM_from_fGSEA_results.Rmd"],
+"download": ["cbw_workshop_notebooks.pdf", "https://github.com/BaderLab/GSEA_vs_fGSEA/raw/main/07b-Create_EM_from_fGSEA_results.Rmd"],
 "search": {
 "engine": "fuse",
 "options": null

@@ -1,13 +1,11 @@
 ---
 params:
-  analysis_name: Basal_vs_Classical
+  analysis_name: BRCA_hd_tep
   working_dir: ./data/
   output_dir: ./generated_data/gsea/
-  rnk_file: TCGA-PAAD_GDC_Subtype_Moffitt_BasalvsClassical_ranks.rnk
-  exp_file: TCGA-PAAD_GDC_BasalvsClassical_normalized_rnaseq.txt
-  cls_file: TCGA-PAAD_Subtype_Moffitt_BasalvsClassical_RNAseq_classes.cls
+  rnk_file: brca_hd_tep_ranks.rnk
   gsea_jar: /home/rstudio/GSEA_4.3.3/gsea-cli.sh
-  gsea_directory: ''
+  gsea_directory: 'data/Human_GOBP_AllPathways_noPFOCR_no_GO_iea_May_01_2024_symbol.gmt'
   run_gsea: true
 ---
 # Run GSEA from within R
@@ -82,7 +80,7 @@ run_gsea <- params$run_gsea
 # For example, if you set dest_gmt_file =="" the below script will automatically
 # download the latest gmt file from baderlab webstie.  If it is set then it
 # will use the file specified.  
-dest_gmt_file = ""
+dest_gmt_file = params$gsea_directory
 
 
 ```
@@ -123,6 +121,8 @@ if(dest_gmt_file == ""){
       destfile=dest_gmt_file
     )
   }
+} else {
+  file.copy(dest_gmt_file,to = output_dir)
 }
 
 ```
@@ -177,22 +177,3 @@ GSEA total running time -
 end_time - start_time
 ```
 
-
-  
-
-```{r build_em, eval=FALSE, include=FALSE}
-
-## Create an Enrichment map of the top pathways.
-
-rmarkdown::render(input = "07-Create_EM_from_GSEA_results.Rmd",
-                    params = list(analysis_name = params$analysis_name,
-                                  working_dir = params$working_dir,
-                                  output_dir = output_dir,
-                                  rnk_file = params$rnk_file,
-                                  expression_file = params$exp_file,
-                                  cls_file = params$cls_file,
-                                  pvalue_thresh = 1.0, qvalue_thresh = 0.05),
-                    output_format = "html_document",
-                    output_file = paste("gsea_em_creation_results",
-                                        ".html",sep="_"),envir = new.env())
-```

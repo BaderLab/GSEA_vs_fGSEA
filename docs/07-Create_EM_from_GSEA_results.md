@@ -1,10 +1,10 @@
 ---
 params:
-  analysis_name: Basal_vs_Classical
+  analysis_name: BRCA_hd_tep
   working_dir: ./data/
   output_dir: ./generated_data/gsea/
-  rnk_file: TCGA-PAAD_GDC_Subtype_Moffitt_BasalvsClassical_ranks.rnk
-  expression_file: TCGA-PAAD_GDC_BasalvsClassical_normalized_rnaseq.txt
+  rnk_file: brca_hd_tep_ranks.rnk
+  expression_file: brca_hd_tep_ranks.rnk
   cls_file: TCGA-PAAD_Subtype_Moffitt_BasalvsClassical_RNAseq_classes.cls
   pvalue_thresh: 1.0
   qvalue_thresh: 0.05
@@ -78,6 +78,15 @@ similarity_threshold <- "0.375"
 #similarity metric to filter all the genesets connections/edges 
 # (can be OVERLAP, JACCARD, or COMBINED.   For example -   Combined
 similarity_metric = "COMBINED"
+
+#cytoscape output directory changes if you are using docker. 
+if(is_docker){
+  cytoscape_basedir <- file.path("/Users/risserlin/GSEA_vs_fGSEA")
+  cytoscape_dir <- file.path(cytoscape_basedir,
+                                         params$output_dir)
+} else{
+  cytoscape_dir <- file.path(params$output_dir)
+}
 ```
 
 ## Specify Data files
@@ -251,23 +260,12 @@ response <- renameNetwork(title=current_network_name,
 
 ## Get a screen shot of the initial network.
 
-``` r
-#you can only output the file if it isn't on docker
-#on docker is put it into the user's home directory with docker 
-# has not access to
-if(!is_docker){
-  output_network_file <- file.path(getwd(),"initial_screenshot_network.png")
-  output_network_file_current <- output_network_file
+Resulting network
 
-  fitContent()
 
-  if(file.exists(output_network_file)){
-    #cytoscape hangs waiting for user response if file already exists.
-    # Remove it first
-    response <- file.remove(output_network_file)
-  } 
 
-  response <- exportImage(output_network_file, type = "png",
-                          base.url = current_base)
-}
-```
+<div class="figure">
+<img src="./generated_data/gsea//GSEA_initial_screenshot_network.png" alt="GSEA Enrichment Map" width="100%" />
+<p class="caption">(\#fig:network_gsea)GSEA Enrichment Map</p>
+</div>
+

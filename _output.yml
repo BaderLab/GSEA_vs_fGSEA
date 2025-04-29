@@ -3,7 +3,7 @@ bookdown::gitbook:
   css: style.css
   config:
     edit:
-      link: https://github.com/risserlin/CBW_pathways_workshop_R_notebooks/edit/main/%s
+      link: https://github.com/BaderLab/GSEA_vs_fGSEA/edit/main/%s
       text: "Suggest an edit"
     toc:
       after: |

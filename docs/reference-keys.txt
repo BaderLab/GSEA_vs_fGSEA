@@ -14,6 +14,11 @@ download-the-latest-pathway-definition-file-1
 run-fgsea
 timing-1
 results-presented-as-r-table
+compare-outputs-of-fgsea-and-gsea
+load-in-required-libraries-and-files.
+compare-nes-values
+compare-p-values
+compare-corrected-p--values
 create-enrichment-map-from-r-with-gsea-results
 initialize-variables-and-libraries
 configurable-parameters-2
