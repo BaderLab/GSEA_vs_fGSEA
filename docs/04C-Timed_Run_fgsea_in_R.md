@@ -285,65 +285,14 @@ get_cpu()
 ## $no_of_cores
 ## [1] 24
 ```
-R version - 
 
-
-``` r
-get_r_version()
-```
-
-```
-## $platform
-## [1] "x86_64-pc-linux-gnu"
-## 
-## $arch
-## [1] "x86_64"
-## 
-## $os
-## [1] "linux-gnu"
-## 
-## $system
-## [1] "x86_64, linux-gnu"
-## 
-## $status
-## [1] ""
-## 
-## $major
-## [1] "4"
-## 
-## $minor
-## [1] "4.0"
-## 
-## $year
-## [1] "2024"
-## 
-## $month
-## [1] "04"
-## 
-## $day
-## [1] "24"
-## 
-## $`svn rev`
-## [1] "86474"
-## 
-## $language
-## [1] "R"
-## 
-## $version.string
-## [1] "R version 4.4.0 (2024-04-24)"
-## 
-## $nickname
-## [1] "Puppy Cup"
-```
-
-
-Run on Intel(R) Xeon(R) CPU E5-2697 v2 @ 2.70GHz with 24 and 9.0146152\times 10^{10} of RAM using Linux version #1 SMP PREEMPT_DYNAMIC Fri Nov 29 17:24:06 UTC 2024
+Run on Intel(R) Xeon(R) CPU E5-2697 v2 @ 2.70GHz with 24 cores and 9.0146152\times 10^{10} of RAM using Linux version Linux release - 6.10.14-linuxkit and  R version 4.4.0 (2024-04-24)
 
 ## Timing
 
-fGSEA started at 2025-04-30 14:21:01.632425
+fGSEA started at 2025-04-30 14:53:55.923914
 
-fGSEA finished at 2025-04-30 14:21:20.66858
+fGSEA finished at 2025-04-30 14:54:14.432212
 
 fGSEA total running time - 
 
@@ -353,7 +302,7 @@ end_time - start_time
 ```
 
 ```
-## Time difference of 19.03616 secs
+## Time difference of 18.5083 secs
 ```
 
 
@@ -369,7 +318,7 @@ plotGseaTable(all_gs$genesets[topPathways], current_ranks, current_fgsea_results
               gseaParam=0.5)
 ```
 
-<img src="04C-Timed_Run_fgsea_in_R_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="04C-Timed_Run_fgsea_in_R_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
 
 

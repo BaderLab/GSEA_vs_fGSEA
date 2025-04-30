@@ -184,13 +184,9 @@ CPU -
 ```{r}
 get_cpu()
 ```
-R version - 
 
-```{r}
-get_r_version()
-```
 
-Run on `r get_cpu()['model_name']` with `r get_cpu()['no_of_cores']` and `r get_ram()` of RAM using `r  Sys.info()['sysname']` version `r  Sys.info()['version']`
+Run on `r get_cpu()['model_name']` with `r get_cpu()['no_of_cores']` cores and `r get_ram()` of RAM using `r  Sys.info()['sysname']` version `r  Sys.info()['sysname']` release - `r  Sys.info()['release']` and  `r get_r_version()['version.string']`
 
 ## Timing
 
