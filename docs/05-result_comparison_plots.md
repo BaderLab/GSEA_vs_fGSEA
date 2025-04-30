@@ -18,6 +18,15 @@ tryCatch(expr = { library("ggpubr")},
 ```
 
 ```
+## Installing package into '/usr/local/lib/R/site-library'
+## (as 'lib' is unspecified)
+```
+
+```
+## also installing the dependencies 'rbibutils', 'Deriv', 'modelr', 'microbenchmark', 'Rdpack', 'numDeriv', 'doBy', 'minqa', 'nloptr', 'reformulas', 'RcppEigen', 'carData', 'pbkrtest', 'lme4', 'broom', 'corrplot', 'car', 'ggrepel', 'ggsci', 'ggsignif', 'polynom', 'rstatix'
+```
+
+```
 ## Loading required package: ggplot2
 ```
 

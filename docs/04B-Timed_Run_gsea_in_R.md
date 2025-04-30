@@ -33,6 +33,15 @@ tryCatch(expr = { library("benchmarkme")},
          finally = library("benchmarkme"))
 ```
 
+```
+## Installing package into '/usr/local/lib/R/site-library'
+## (as 'lib' is unspecified)
+```
+
+```
+## also installing the dependency 'benchmarkmeData'
+```
+
 
 
 ## Configurable Parameters
@@ -206,13 +215,13 @@ get_cpu()
 ```
 
 
-Run on Intel(R) Xeon(R) CPU E5-2697 v2 @ 2.70GHz with 24 cores and 9.0146152\times 10^{10} of RAM using Linux version Linux release - 6.10.14-linuxkit and  R version 4.4.0 (2024-04-24)
+Run on Intel(R) Xeon(R) CPU E5-2697 v2 @ 2.70GHz with 24 cores and 9.0146152\times 10^{10} of RAM using Linux version Linux release - 6.10.14-linuxkit and  R version 4.4.2 (2024-10-31)
 
 ## Timing
 
-GSEA started at 2025-04-30 14:47:06.577797
+GSEA started at 2025-04-30 17:47:09.385154
 
-GSEA finished at 2025-04-30 14:53:34.127342
+GSEA finished at 2025-04-30 17:53:03.638655
 
 GSEA total running time - 
 
@@ -222,6 +231,6 @@ end_time - start_time
 ```
 
 ```
-## Time difference of 6.459159 mins
+## Time difference of 5.904225 mins
 ```
 

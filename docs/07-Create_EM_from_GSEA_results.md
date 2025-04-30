@@ -25,7 +25,7 @@ tryCatch(expr = { library("BiocManager")},
 ```
 
 ```
-## Bioconductor version '3.19' is out-of-date; the current release version '3.21'
+## Bioconductor version '3.20' is out-of-date; the current release version '3.21'
 ##   is available with R version '4.5'; see https://bioconductor.org/install
 ```
 

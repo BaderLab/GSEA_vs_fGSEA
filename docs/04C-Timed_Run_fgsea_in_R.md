@@ -286,13 +286,13 @@ get_cpu()
 ## [1] 24
 ```
 
-Run on Intel(R) Xeon(R) CPU E5-2697 v2 @ 2.70GHz with 24 cores and 9.0146152\times 10^{10} of RAM using Linux version Linux release - 6.10.14-linuxkit and  R version 4.4.0 (2024-04-24)
+Run on Intel(R) Xeon(R) CPU E5-2697 v2 @ 2.70GHz with 24 cores and 9.0146152\times 10^{10} of RAM using Linux version Linux release - 6.10.14-linuxkit and  R version 4.4.2 (2024-10-31)
 
 ## Timing
 
-fGSEA started at 2025-04-30 14:53:55.923914
+fGSEA started at 2025-04-30 17:53:25.142519
 
-fGSEA finished at 2025-04-30 14:54:14.432212
+fGSEA finished at 2025-04-30 17:53:43.553462
 
 fGSEA total running time - 
 
@@ -302,7 +302,7 @@ end_time - start_time
 ```
 
 ```
-## Time difference of 18.5083 secs
+## Time difference of 18.41094 secs
 ```
 
 
