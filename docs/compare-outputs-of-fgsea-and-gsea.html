@@ -23,7 +23,7 @@
 <meta name="author" content="Ruth Isserlin" />
 
 
-<meta name="date" content="2025-04-29" />
+<meta name="date" content="2025-04-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -167,7 +167,8 @@ div.csl-indent {
 <li class="chapter" data-level="3.2" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#configurable-parameters"><i class="fa fa-check"></i><b>3.2</b> Configurable Parameters</a></li>
 <li class="chapter" data-level="3.3" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#download-the-latest-pathway-definition-file"><i class="fa fa-check"></i><b>3.3</b> Download the latest pathway definition file</a></li>
 <li class="chapter" data-level="3.4" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#run-gsea"><i class="fa fa-check"></i><b>3.4</b> Run GSEA</a></li>
-<li class="chapter" data-level="3.5" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#timing"><i class="fa fa-check"></i><b>3.5</b> Timing</a></li>
+<li class="chapter" data-level="3.5" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#system-stats"><i class="fa fa-check"></i><b>3.5</b> System Stats</a></li>
+<li class="chapter" data-level="3.6" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#timing"><i class="fa fa-check"></i><b>3.6</b> Timing</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html"><i class="fa fa-check"></i><b>4</b> Run fGSEA from within R</a>
 <ul>
@@ -176,8 +177,9 @@ div.csl-indent {
 <li class="chapter" data-level="4.3" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#configurable-parameters-1"><i class="fa fa-check"></i><b>4.3</b> Configurable Parameters</a></li>
 <li class="chapter" data-level="4.4" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#download-the-latest-pathway-definition-file-1"><i class="fa fa-check"></i><b>4.4</b> Download the latest pathway definition file</a></li>
 <li class="chapter" data-level="4.5" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#run-fgsea"><i class="fa fa-check"></i><b>4.5</b> Run fGSEA</a></li>
-<li class="chapter" data-level="4.6" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#timing-1"><i class="fa fa-check"></i><b>4.6</b> Timing</a></li>
-<li class="chapter" data-level="4.7" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#results-presented-as-r-table"><i class="fa fa-check"></i><b>4.7</b> Results presented as R table</a></li>
+<li class="chapter" data-level="4.6" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#system-stats-1"><i class="fa fa-check"></i><b>4.6</b> System Stats</a></li>
+<li class="chapter" data-level="4.7" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#timing-1"><i class="fa fa-check"></i><b>4.7</b> Timing</a></li>
+<li class="chapter" data-level="4.8" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#results-presented-as-r-table"><i class="fa fa-check"></i><b>4.8</b> Results presented as R table</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="compare-outputs-of-fgsea-and-gsea.html"><a href="compare-outputs-of-fgsea-and-gsea.html"><i class="fa fa-check"></i><b>5</b> Compare Outputs of fGSEA and GSEA</a>
 <ul>
@@ -236,55 +238,55 @@ div.csl-indent {
 <div id="load-in-required-libraries-and-files." class="section level2 hasAnchor" number="5.1">
 <h2><span class="header-section-number">5.1</span> Load in required libraries and files.<a href="compare-outputs-of-fgsea-and-gsea.html#load-in-required-libraries-and-files." class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Load required libraries</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="compare-outputs-of-fgsea-and-gsea.html#cb22-1" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;ggpubr&quot;</span>)}, </span>
-<span id="cb22-2"><a href="compare-outputs-of-fgsea-and-gsea.html#cb22-2" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) {  </span>
-<span id="cb22-3"><a href="compare-outputs-of-fgsea-and-gsea.html#cb22-3" tabindex="-1"></a>             <span class="fu">install.packages</span>(<span class="st">&quot;ggpubr&quot;</span>)}, </span>
-<span id="cb22-4"><a href="compare-outputs-of-fgsea-and-gsea.html#cb22-4" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;ggpubr&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="compare-outputs-of-fgsea-and-gsea.html#cb34-1" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;ggpubr&quot;</span>)}, </span>
+<span id="cb34-2"><a href="compare-outputs-of-fgsea-and-gsea.html#cb34-2" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) {  </span>
+<span id="cb34-3"><a href="compare-outputs-of-fgsea-and-gsea.html#cb34-3" tabindex="-1"></a>             <span class="fu">install.packages</span>(<span class="st">&quot;ggpubr&quot;</span>)}, </span>
+<span id="cb34-4"><a href="compare-outputs-of-fgsea-and-gsea.html#cb34-4" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;ggpubr&quot;</span>))</span></code></pre></div>
 <pre><code>## Loading required package: ggplot2</code></pre>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="compare-outputs-of-fgsea-and-gsea.html#cb24-1" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>)}, </span>
-<span id="cb24-2"><a href="compare-outputs-of-fgsea-and-gsea.html#cb24-2" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) {  </span>
-<span id="cb24-3"><a href="compare-outputs-of-fgsea-and-gsea.html#cb24-3" tabindex="-1"></a>             <span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)}, </span>
-<span id="cb24-4"><a href="compare-outputs-of-fgsea-and-gsea.html#cb24-4" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="compare-outputs-of-fgsea-and-gsea.html#cb36-1" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>)}, </span>
+<span id="cb36-2"><a href="compare-outputs-of-fgsea-and-gsea.html#cb36-2" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) {  </span>
+<span id="cb36-3"><a href="compare-outputs-of-fgsea-and-gsea.html#cb36-3" tabindex="-1"></a>             <span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)}, </span>
+<span id="cb36-4"><a href="compare-outputs-of-fgsea-and-gsea.html#cb36-4" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>))</span></code></pre></div>
 <p>Load in the output files for each of the analysis and compare the NES values generated by each method</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="compare-outputs-of-fgsea-and-gsea.html#cb25-1" tabindex="-1"></a><span class="co">#list directories in generated data directory</span></span>
-<span id="cb25-2"><a href="compare-outputs-of-fgsea-and-gsea.html#cb25-2" tabindex="-1"></a>output_directories <span class="ot">&lt;-</span> <span class="fu">list.dirs</span>(params<span class="sc">$</span>output_dir,<span class="at">recursive =</span> <span class="cn">FALSE</span>,<span class="at">full.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="compare-outputs-of-fgsea-and-gsea.html#cb37-1" tabindex="-1"></a><span class="co">#list directories in generated data directory</span></span>
+<span id="cb37-2"><a href="compare-outputs-of-fgsea-and-gsea.html#cb37-2" tabindex="-1"></a>output_directories <span class="ot">&lt;-</span> <span class="fu">list.dirs</span>(params<span class="sc">$</span>output_dir,<span class="at">recursive =</span> <span class="cn">FALSE</span>,<span class="at">full.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p>go through the directories and load in the results</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-1" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(output_directories)){</span>
-<span id="cb26-2"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-2" tabindex="-1"></a>  </span>
-<span id="cb26-3"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-3" tabindex="-1"></a>  current_directory <span class="ot">&lt;-</span> output_directories[i]</span>
-<span id="cb26-4"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-4" tabindex="-1"></a>  </span>
-<span id="cb26-5"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-5" tabindex="-1"></a>  <span class="cf">if</span>(current_directory <span class="sc">==</span> <span class="st">&quot;fgsea&quot;</span>){</span>
-<span id="cb26-6"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-6" tabindex="-1"></a>    fgsea_results_filename <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="fu">file.path</span>(params<span class="sc">$</span>output_dir,current_directory),</span>
-<span id="cb26-7"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-7" tabindex="-1"></a>                                         <span class="at">pattern =</span> <span class="st">&quot;fgsea_enr_results&quot;</span>,</span>
-<span id="cb26-8"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-8" tabindex="-1"></a>                                         <span class="at">recursive =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb26-9"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-9" tabindex="-1"></a>                                         <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb26-10"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-10" tabindex="-1"></a>    </span>
-<span id="cb26-11"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-11" tabindex="-1"></a>    fgsea_results <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> fgsea_results_filename,</span>
-<span id="cb26-12"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-12" tabindex="-1"></a>                                <span class="at">header =</span> <span class="cn">TRUE</span>,<span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,<span class="at">quote =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb26-13"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-13" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (current_directory <span class="sc">==</span> <span class="st">&quot;gsea&quot;</span>){</span>
-<span id="cb26-14"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-14" tabindex="-1"></a>    <span class="co">#load in the negative results file</span></span>
-<span id="cb26-15"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-15" tabindex="-1"></a>    gsea_neg_results_filename <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="fu">list.files</span>(<span class="fu">file.path</span>(params<span class="sc">$</span>output_dir,current_directory),</span>
-<span id="cb26-16"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-16" tabindex="-1"></a>                                         <span class="at">pattern =</span> <span class="st">&quot;gsea_report_for_na_neg&quot;</span>,</span>
-<span id="cb26-17"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-17" tabindex="-1"></a>                                         <span class="at">recursive =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb26-18"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-18" tabindex="-1"></a>                                         <span class="at">full.names =</span> <span class="cn">TRUE</span>),<span class="at">pattern=</span><span class="st">&quot;tsv&quot;</span>,<span class="at">value =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb26-19"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-19" tabindex="-1"></a>    gsea_neg_results <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> gsea_neg_results_filename,</span>
-<span id="cb26-20"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-20" tabindex="-1"></a>                                <span class="at">header =</span> <span class="cn">TRUE</span>,<span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,<span class="at">quote =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb26-21"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-21" tabindex="-1"></a>    </span>
-<span id="cb26-22"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-22" tabindex="-1"></a>    <span class="co">#load inthe positive results file</span></span>
-<span id="cb26-23"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-23" tabindex="-1"></a>    gsea_pos_results_filename <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="fu">list.files</span>(<span class="fu">file.path</span>(params<span class="sc">$</span>output_dir,current_directory),</span>
-<span id="cb26-24"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-24" tabindex="-1"></a>                                         <span class="at">pattern =</span> <span class="st">&quot;gsea_report_for_na_pos&quot;</span>,</span>
-<span id="cb26-25"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-25" tabindex="-1"></a>                                         <span class="at">recursive =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb26-26"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-26" tabindex="-1"></a>                                         <span class="at">full.names =</span> <span class="cn">TRUE</span>),<span class="at">pattern=</span><span class="st">&quot;tsv&quot;</span>,<span class="at">value =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb26-27"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-27" tabindex="-1"></a>    gsea_pos_results <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> gsea_pos_results_filename,</span>
-<span id="cb26-28"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-28" tabindex="-1"></a>                                <span class="at">header =</span> <span class="cn">TRUE</span>,<span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,<span class="at">quote =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb26-29"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-29" tabindex="-1"></a></span>
-<span id="cb26-30"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-30" tabindex="-1"></a>    <span class="co">#merge the two results files</span></span>
-<span id="cb26-31"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-31" tabindex="-1"></a>    gsea_results <span class="ot">&lt;-</span> <span class="fu">rbind</span>(gsea_neg_results,gsea_pos_results)</span>
-<span id="cb26-32"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-32" tabindex="-1"></a>    </span>
-<span id="cb26-33"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-33" tabindex="-1"></a>      }</span>
-<span id="cb26-34"><a href="compare-outputs-of-fgsea-and-gsea.html#cb26-34" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-1" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(output_directories)){</span>
+<span id="cb38-2"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-2" tabindex="-1"></a>  </span>
+<span id="cb38-3"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-3" tabindex="-1"></a>  current_directory <span class="ot">&lt;-</span> output_directories[i]</span>
+<span id="cb38-4"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-4" tabindex="-1"></a>  </span>
+<span id="cb38-5"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-5" tabindex="-1"></a>  <span class="cf">if</span>(current_directory <span class="sc">==</span> <span class="st">&quot;fgsea&quot;</span>){</span>
+<span id="cb38-6"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-6" tabindex="-1"></a>    fgsea_results_filename <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="fu">file.path</span>(params<span class="sc">$</span>output_dir,current_directory),</span>
+<span id="cb38-7"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-7" tabindex="-1"></a>                                         <span class="at">pattern =</span> <span class="st">&quot;fgsea_enr_results&quot;</span>,</span>
+<span id="cb38-8"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-8" tabindex="-1"></a>                                         <span class="at">recursive =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb38-9"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-9" tabindex="-1"></a>                                         <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb38-10"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-10" tabindex="-1"></a>    </span>
+<span id="cb38-11"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-11" tabindex="-1"></a>    fgsea_results <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> fgsea_results_filename,</span>
+<span id="cb38-12"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-12" tabindex="-1"></a>                                <span class="at">header =</span> <span class="cn">TRUE</span>,<span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,<span class="at">quote =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb38-13"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-13" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (current_directory <span class="sc">==</span> <span class="st">&quot;gsea&quot;</span>){</span>
+<span id="cb38-14"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-14" tabindex="-1"></a>    <span class="co">#load in the negative results file</span></span>
+<span id="cb38-15"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-15" tabindex="-1"></a>    gsea_neg_results_filename <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="fu">list.files</span>(<span class="fu">file.path</span>(params<span class="sc">$</span>output_dir,current_directory),</span>
+<span id="cb38-16"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-16" tabindex="-1"></a>                                         <span class="at">pattern =</span> <span class="st">&quot;gsea_report_for_na_neg&quot;</span>,</span>
+<span id="cb38-17"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-17" tabindex="-1"></a>                                         <span class="at">recursive =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb38-18"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-18" tabindex="-1"></a>                                         <span class="at">full.names =</span> <span class="cn">TRUE</span>),<span class="at">pattern=</span><span class="st">&quot;tsv&quot;</span>,<span class="at">value =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb38-19"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-19" tabindex="-1"></a>    gsea_neg_results <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> gsea_neg_results_filename,</span>
+<span id="cb38-20"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-20" tabindex="-1"></a>                                <span class="at">header =</span> <span class="cn">TRUE</span>,<span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,<span class="at">quote =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb38-21"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-21" tabindex="-1"></a>    </span>
+<span id="cb38-22"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-22" tabindex="-1"></a>    <span class="co">#load inthe positive results file</span></span>
+<span id="cb38-23"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-23" tabindex="-1"></a>    gsea_pos_results_filename <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="fu">list.files</span>(<span class="fu">file.path</span>(params<span class="sc">$</span>output_dir,current_directory),</span>
+<span id="cb38-24"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-24" tabindex="-1"></a>                                         <span class="at">pattern =</span> <span class="st">&quot;gsea_report_for_na_pos&quot;</span>,</span>
+<span id="cb38-25"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-25" tabindex="-1"></a>                                         <span class="at">recursive =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb38-26"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-26" tabindex="-1"></a>                                         <span class="at">full.names =</span> <span class="cn">TRUE</span>),<span class="at">pattern=</span><span class="st">&quot;tsv&quot;</span>,<span class="at">value =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb38-27"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-27" tabindex="-1"></a>    gsea_pos_results <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> gsea_pos_results_filename,</span>
+<span id="cb38-28"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-28" tabindex="-1"></a>                                <span class="at">header =</span> <span class="cn">TRUE</span>,<span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,<span class="at">quote =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb38-29"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-29" tabindex="-1"></a></span>
+<span id="cb38-30"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-30" tabindex="-1"></a>    <span class="co">#merge the two results files</span></span>
+<span id="cb38-31"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-31" tabindex="-1"></a>    gsea_results <span class="ot">&lt;-</span> <span class="fu">rbind</span>(gsea_neg_results,gsea_pos_results)</span>
+<span id="cb38-32"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-32" tabindex="-1"></a>    </span>
+<span id="cb38-33"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-33" tabindex="-1"></a>      }</span>
+<span id="cb38-34"><a href="compare-outputs-of-fgsea-and-gsea.html#cb38-34" tabindex="-1"></a>  }</span></code></pre></div>
 <p>Merge the two different sets of results</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="compare-outputs-of-fgsea-and-gsea.html#cb27-1" tabindex="-1"></a>merged_results <span class="ot">&lt;-</span>  <span class="fu">merge</span>(gsea_results,fgsea_results,<span class="at">by.x =</span> <span class="dv">1</span>, <span class="at">by.y=</span><span class="dv">1</span>, <span class="at">all =</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="compare-outputs-of-fgsea-and-gsea.html#cb39-1" tabindex="-1"></a>merged_results <span class="ot">&lt;-</span>  <span class="fu">merge</span>(gsea_results,fgsea_results,<span class="at">by.x =</span> <span class="dv">1</span>, <span class="at">by.y=</span><span class="dv">1</span>, <span class="at">all =</span><span class="cn">TRUE</span>)</span></code></pre></div>
 </div>
 <div id="compare-nes-values" class="section level2 hasAnchor" number="5.2">
 <h2><span class="header-section-number">5.2</span> Compare NES values<a href="compare-outputs-of-fgsea-and-gsea.html#compare-nes-values" class="anchor-section" aria-label="Anchor link to header"></a></h2>

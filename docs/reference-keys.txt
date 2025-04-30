@@ -5,6 +5,7 @@ load-in-required-libraries
 configurable-parameters
 download-the-latest-pathway-definition-file
 run-gsea
+system-stats
 timing
 run-fgsea-from-within-r
 load-in-required-libraries-1
@@ -12,6 +13,7 @@ function-to-write-out-fgsea-results
 configurable-parameters-1
 download-the-latest-pathway-definition-file-1
 run-fgsea
+system-stats-1
 timing-1
 results-presented-as-r-table
 compare-outputs-of-fgsea-and-gsea

@@ -1,7 +1,7 @@
 --- 
 title: "Comparison of GSEA and fGSEA"
 author: "Ruth Isserlin"
-date: "2025-04-29"
+date: "2025-04-30"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book

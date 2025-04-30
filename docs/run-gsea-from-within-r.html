@@ -23,7 +23,7 @@
 <meta name="author" content="Ruth Isserlin" />
 
 
-<meta name="date" content="2025-04-29" />
+<meta name="date" content="2025-04-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -167,7 +167,8 @@ div.csl-indent {
 <li class="chapter" data-level="3.2" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#configurable-parameters"><i class="fa fa-check"></i><b>3.2</b> Configurable Parameters</a></li>
 <li class="chapter" data-level="3.3" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#download-the-latest-pathway-definition-file"><i class="fa fa-check"></i><b>3.3</b> Download the latest pathway definition file</a></li>
 <li class="chapter" data-level="3.4" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#run-gsea"><i class="fa fa-check"></i><b>3.4</b> Run GSEA</a></li>
-<li class="chapter" data-level="3.5" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#timing"><i class="fa fa-check"></i><b>3.5</b> Timing</a></li>
+<li class="chapter" data-level="3.5" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#system-stats"><i class="fa fa-check"></i><b>3.5</b> System Stats</a></li>
+<li class="chapter" data-level="3.6" data-path="run-gsea-from-within-r.html"><a href="run-gsea-from-within-r.html#timing"><i class="fa fa-check"></i><b>3.6</b> Timing</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html"><i class="fa fa-check"></i><b>4</b> Run fGSEA from within R</a>
 <ul>
@@ -176,8 +177,9 @@ div.csl-indent {
 <li class="chapter" data-level="4.3" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#configurable-parameters-1"><i class="fa fa-check"></i><b>4.3</b> Configurable Parameters</a></li>
 <li class="chapter" data-level="4.4" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#download-the-latest-pathway-definition-file-1"><i class="fa fa-check"></i><b>4.4</b> Download the latest pathway definition file</a></li>
 <li class="chapter" data-level="4.5" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#run-fgsea"><i class="fa fa-check"></i><b>4.5</b> Run fGSEA</a></li>
-<li class="chapter" data-level="4.6" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#timing-1"><i class="fa fa-check"></i><b>4.6</b> Timing</a></li>
-<li class="chapter" data-level="4.7" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#results-presented-as-r-table"><i class="fa fa-check"></i><b>4.7</b> Results presented as R table</a></li>
+<li class="chapter" data-level="4.6" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#system-stats-1"><i class="fa fa-check"></i><b>4.6</b> System Stats</a></li>
+<li class="chapter" data-level="4.7" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#timing-1"><i class="fa fa-check"></i><b>4.7</b> Timing</a></li>
+<li class="chapter" data-level="4.8" data-path="run-fgsea-from-within-r.html"><a href="run-fgsea-from-within-r.html#results-presented-as-r-table"><i class="fa fa-check"></i><b>4.8</b> Results presented as R table</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="compare-outputs-of-fgsea-and-gsea.html"><a href="compare-outputs-of-fgsea-and-gsea.html"><i class="fa fa-check"></i><b>5</b> Compare Outputs of fGSEA and GSEA</a>
 <ul>
@@ -242,7 +244,13 @@ div.csl-indent {
 <span id="cb1-2"><a href="run-gsea-from-within-r.html#cb1-2" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;RCurl&quot;</span>)}, </span>
 <span id="cb1-3"><a href="run-gsea-from-within-r.html#cb1-3" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) {  </span>
 <span id="cb1-4"><a href="run-gsea-from-within-r.html#cb1-4" tabindex="-1"></a>           <span class="fu">install.packages</span>(<span class="st">&quot;RCurl&quot;</span>)}, </span>
-<span id="cb1-5"><a href="run-gsea-from-within-r.html#cb1-5" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;RCurl&quot;</span>))</span></code></pre></div>
+<span id="cb1-5"><a href="run-gsea-from-within-r.html#cb1-5" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;RCurl&quot;</span>))</span>
+<span id="cb1-6"><a href="run-gsea-from-within-r.html#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="run-gsea-from-within-r.html#cb1-7" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="run-gsea-from-within-r.html#cb1-8" tabindex="-1"></a><span class="fu">tryCatch</span>(<span class="at">expr =</span> { <span class="fu">library</span>(<span class="st">&quot;benchmarkme&quot;</span>)}, </span>
+<span id="cb1-9"><a href="run-gsea-from-within-r.html#cb1-9" tabindex="-1"></a>         <span class="at">error =</span> <span class="cf">function</span>(e) {  </span>
+<span id="cb1-10"><a href="run-gsea-from-within-r.html#cb1-10" tabindex="-1"></a>           <span class="fu">install.packages</span>(<span class="st">&quot;benchmarkme&quot;</span>)}, </span>
+<span id="cb1-11"><a href="run-gsea-from-within-r.html#cb1-11" tabindex="-1"></a>         <span class="at">finally =</span> <span class="fu">library</span>(<span class="st">&quot;benchmarkme&quot;</span>))</span></code></pre></div>
 </div>
 <div id="configurable-parameters" class="section level2 hasAnchor" number="3.2">
 <h2><span class="header-section-number">3.2</span> Configurable Parameters<a href="run-gsea-from-within-r.html#configurable-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -356,13 +364,73 @@ The gsea_jar needs to be the full path to the GSEA 4.3.3 directory that you down
 <span id="cb6-15"><a href="run-gsea-from-within-r.html#cb6-15" tabindex="-1"></a></span>
 <span id="cb6-16"><a href="run-gsea-from-within-r.html#cb6-16" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span></code></pre></div>
 </div>
-<div id="timing" class="section level2 hasAnchor" number="3.5">
-<h2><span class="header-section-number">3.5</span> Timing<a href="run-gsea-from-within-r.html#timing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>GSEA started at 2025-04-29 15:27:58.810297</p>
-<p>GSEA finished at 2025-04-29 15:34:15.140584</p>
+<div id="system-stats" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> System Stats<a href="run-gsea-from-within-r.html#system-stats" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>RAM -</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="run-gsea-from-within-r.html#cb7-1" tabindex="-1"></a><span class="fu">get_ram</span>()</span></code></pre></div>
+<pre><code>## 90.1 GB</code></pre>
+<p>CPU -</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="run-gsea-from-within-r.html#cb9-1" tabindex="-1"></a><span class="fu">get_cpu</span>()</span></code></pre></div>
+<pre><code>## $vendor_id
+## [1] &quot;GenuineIntel&quot;
+## 
+## $model_name
+## [1] &quot;Intel(R) Xeon(R) CPU E5-2697 v2 @ 2.70GHz&quot;
+## 
+## $no_of_cores
+## [1] 24</code></pre>
+<p>R version -</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="run-gsea-from-within-r.html#cb11-1" tabindex="-1"></a><span class="fu">get_r_version</span>()</span></code></pre></div>
+<pre><code>## $platform
+## [1] &quot;x86_64-pc-linux-gnu&quot;
+## 
+## $arch
+## [1] &quot;x86_64&quot;
+## 
+## $os
+## [1] &quot;linux-gnu&quot;
+## 
+## $system
+## [1] &quot;x86_64, linux-gnu&quot;
+## 
+## $status
+## [1] &quot;&quot;
+## 
+## $major
+## [1] &quot;4&quot;
+## 
+## $minor
+## [1] &quot;4.0&quot;
+## 
+## $year
+## [1] &quot;2024&quot;
+## 
+## $month
+## [1] &quot;04&quot;
+## 
+## $day
+## [1] &quot;24&quot;
+## 
+## $`svn rev`
+## [1] &quot;86474&quot;
+## 
+## $language
+## [1] &quot;R&quot;
+## 
+## $version.string
+## [1] &quot;R version 4.4.0 (2024-04-24)&quot;
+## 
+## $nickname
+## [1] &quot;Puppy Cup&quot;</code></pre>
+<p>Run on Intel(R) Xeon(R) CPU E5-2697 v2 @ 2.70GHz with 24 and 9.0146152^{10} of RAM using Linux version #1 SMP PREEMPT_DYNAMIC Fri Nov 29 17:24:06 UTC 2024</p>
+</div>
+<div id="timing" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> Timing<a href="run-gsea-from-within-r.html#timing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>GSEA started at 2025-04-30 14:14:27.865166</p>
+<p>GSEA finished at 2025-04-30 14:20:38.311731</p>
 <p>GSEA total running time -</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="run-gsea-from-within-r.html#cb7-1" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span></code></pre></div>
-<pre><code>## Time difference of 6.272171 mins</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="run-gsea-from-within-r.html#cb13-1" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span></code></pre></div>
+<pre><code>## Time difference of 6.174109 mins</code></pre>
 
 </div>
 </div>

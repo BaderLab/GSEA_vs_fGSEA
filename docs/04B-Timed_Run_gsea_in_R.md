@@ -25,6 +25,12 @@ tryCatch(expr = { library("RCurl")},
          error = function(e) {  
            install.packages("RCurl")}, 
          finally = library("RCurl"))
+
+
+tryCatch(expr = { library("benchmarkme")}, 
+         error = function(e) {  
+           install.packages("benchmarkme")}, 
+         finally = library("benchmarkme"))
 ```
 
 
@@ -168,11 +174,94 @@ if(run_gsea){
 end_time <- Sys.time()
 ```
 
+## System Stats
+
+RAM - 
+
+
+``` r
+get_ram()
+```
+
+```
+## 90.1 GB
+```
+
+CPU - 
+
+
+``` r
+get_cpu()
+```
+
+```
+## $vendor_id
+## [1] "GenuineIntel"
+## 
+## $model_name
+## [1] "Intel(R) Xeon(R) CPU E5-2697 v2 @ 2.70GHz"
+## 
+## $no_of_cores
+## [1] 24
+```
+R version - 
+
+
+``` r
+get_r_version()
+```
+
+```
+## $platform
+## [1] "x86_64-pc-linux-gnu"
+## 
+## $arch
+## [1] "x86_64"
+## 
+## $os
+## [1] "linux-gnu"
+## 
+## $system
+## [1] "x86_64, linux-gnu"
+## 
+## $status
+## [1] ""
+## 
+## $major
+## [1] "4"
+## 
+## $minor
+## [1] "4.0"
+## 
+## $year
+## [1] "2024"
+## 
+## $month
+## [1] "04"
+## 
+## $day
+## [1] "24"
+## 
+## $`svn rev`
+## [1] "86474"
+## 
+## $language
+## [1] "R"
+## 
+## $version.string
+## [1] "R version 4.4.0 (2024-04-24)"
+## 
+## $nickname
+## [1] "Puppy Cup"
+```
+
+Run on Intel(R) Xeon(R) CPU E5-2697 v2 @ 2.70GHz with 24 and 9.0146152\times 10^{10} of RAM using Linux version #1 SMP PREEMPT_DYNAMIC Fri Nov 29 17:24:06 UTC 2024
+
 ## Timing
 
-GSEA started at 2025-04-29 15:27:58.810297
+GSEA started at 2025-04-30 14:14:27.865166
 
-GSEA finished at 2025-04-29 15:34:15.140584
+GSEA finished at 2025-04-30 14:20:38.311731
 
 GSEA total running time - 
 
@@ -182,6 +271,6 @@ end_time - start_time
 ```
 
 ```
-## Time difference of 6.272171 mins
+## Time difference of 6.174109 mins
 ```
 
